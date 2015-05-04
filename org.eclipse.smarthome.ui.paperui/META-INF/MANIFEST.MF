@@ -1,0 +1,21 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Eclipse SmartHome Monitor
+Bundle-SymbolicName: org.eclipse.smarthome.ui.paperui;singleton:=true
+Bundle-Version: 0.8.0.201505032021
+Bundle-ClassPath: patch/,
+ org.eclipse.smarthome.ui.paperui-0.8.0-SNAPSHOT.jar
+Bundle-Vendor: Eclipse.org/SmartHome
+Require-Bundle: javax.servlet
+Built-By: kai
+Bundle-License: http://www.eclipse.org/legal/epl-v10.html
+Build-Jdk: 1.7.0_45
+Created-By: Apache Maven
+Ignore-Package: org.eclipse.smarthome.ui.paperui.internal
+Archiver-Version: Plexus Archiver
+Import-Package: org.osgi.service.component,
+ org.osgi.service.http,
+ org.slf4j
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Private-Package: org.eclipse.smarthome.ui.paperui.internal
+Service-Component: OSGI-INF/*
