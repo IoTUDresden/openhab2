@@ -1,24 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <thing:thing-descriptions bindingId="fingerscanner"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xmlns:thing="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0"
-        xsi:schemaLocation="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0 http://eclipse.org/smarthome/schemas/thing-description-1.0.0.xsd">
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:thing="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0"
+	xsi:schemaLocation="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0 http://eclipse.org/smarthome/schemas/thing-description-1.0.0.xsd">
 
-    <!-- Sample Thing Type -->
-    <thing-type id="identify">
-        <label>FingerScanner Identify Finger</label>
-        <description>Identify a finger and receive the person which has scanned their finger</description>
+	<!-- Sample Thing Type -->
+	<thing-type id="identify">
+		<label>FingerScanner Identify Finger</label>
+		<description>Identify a finger and receive the person which has scanned their finger</description>
 
-        <channels>
-            <channel id="channel_identify" typeId="channel_identify"/>
-        </channels>
-    </thing-type>
+		<channels>
+			<channel id="channel_identify" typeId="channel_identify" />
+			<channel typeId="channel_person" id="channel_person" />
+		</channels>
+	</thing-type>
 
-    <!-- Sample Channel Type -->
-    <channel-type id="channel_identify">
-        <item-type>Switch</item-type>
-        <label>Start Identify</label>
-        <description>Starts the identifying of a finger</description>
-    </channel-type>
+	<!-- Sample Channel Type -->
+	<channel-type id="channel_identify">
+		<item-type>Switch</item-type>
+		<label>Start Identify</label>
+		<description>Starts the identifying of a finger</description>
+	</channel-type>
+
+	<channel-type id="channel_person">
+		<item-type>String</item-type>
+		<label>Identified</label>
+		<description>The last identified Person</description>
+	</channel-type>
 
 </thing:thing-descriptions>

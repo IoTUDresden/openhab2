@@ -36,7 +36,10 @@ public class IdentifyFingerResultReceiver extends RpcResultReceiver {
 		JsonElement obj = getPayload(JsonElement.class);
 
 		if (obj instanceof JsonNull) {
-			logger.debug("person not identified");
+			String message = "person not identified";
+			logger.debug(message);
+			if(observer != null)
+				observer.onError(message);
 			return;
 		}
 

@@ -8,12 +8,15 @@
 package org.openhab.binding.fingerscanner.handler;
 
 import static org.openhab.binding.fingerscanner.FingerScannerBindingConstants.CHANNEL_IDENTIFY;
+import static org.openhab.binding.fingerscanner.FingerScannerBindingConstants.CHANNEL_PERSON;
 
 import org.eclipse.smarthome.core.library.types.OnOffType;
+import org.eclipse.smarthome.core.library.types.StringType;
 import org.eclipse.smarthome.core.thing.ChannelUID;
 import org.eclipse.smarthome.core.thing.Thing;
 import org.eclipse.smarthome.core.thing.binding.BaseThingHandler;
 import org.eclipse.smarthome.core.types.Command;
+import org.openhab.binding.fingerscanner.FingerScannerBindingConstants;
 import org.openhab.binding.fingerscanner.internal.client.FingerscanClient;
 import org.openhab.binding.fingerscanner.internal.data.Person;
 import org.openhab.binding.fingerscanner.internal.handler.IdentifyFingerObserver;
@@ -49,7 +52,7 @@ public class FingerScannerHandler extends BaseThingHandler {
 	public void initialize() {
 		super.initialize();
 		setObserver();
-		client = new FingerscanClient("Fingerscan Client", "192.168.1.6", "8085", identifyFingerObserver);
+		client = new FingerscanClient("Fingerscan Client", "192.168.1.6", "7003", identifyFingerObserver);
 		@SuppressWarnings("unused")
 		boolean connected = client.connect();
 	}
@@ -57,7 +60,6 @@ public class FingerScannerHandler extends BaseThingHandler {
 	@Override
 	public void dispose() {
 		super.dispose();
-		//TODO client disconnect cause not implemented yet :(
 		client.disonnect();
 		client = null;
 	}
@@ -65,11 +67,13 @@ public class FingerScannerHandler extends BaseThingHandler {
 	private void onIdentifySuccess(Person person){
 		//TODO update the ui
 		logger.info("Person Identfied: {}", person.getName());
+		updateState(CHANNEL_PERSON, new StringType(person.getName()));
 	}
 	
 	private void onIdentifyError(String errorMessage){
 		//TODO update the ui
 		logger.info("Person not identified: {}", errorMessage);
+		updateState(CHANNEL_PERSON, new StringType(errorMessage));
 	}
 	
 	private void setObserver(){

@@ -23,6 +23,8 @@ public class FingerScannerBindingConstants {
     public final static ThingTypeUID THING_TYPE_IDENTIFY = new ThingTypeUID(BINDING_ID, "identify");
 
     // List of all Channel ids
-    public final static String CHANNEL_IDENTIFY = "channel_identify";
+    public final static String CHANNEL_IDENTIFY = "channel_identify";   
+    
+    public final static String CHANNEL_PERSON = "channel_person";
 
 }

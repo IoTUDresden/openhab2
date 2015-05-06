@@ -1,6 +1,7 @@
 package org.openhab.binding.fingerscanner.internal.client;
 
 import java.io.IOException;
+
 import java.net.URI;
 import java.util.Observable;
 import java.util.Observer;
@@ -14,6 +15,8 @@ import org.slf4j.LoggerFactory;
 import fr.ocroquette.wampoc.adapters.jetty.JettyClient;
 import fr.ocroquette.wampoc.client.WampClient;
 
+//TODO the wampoc is not the best. Maybe switch to another implementation.
+// The openhab platform provides a http service. Maybe this can be used.
 public class FingerscanClient implements Observer {
 	private static Logger logger = LoggerFactory.getLogger(FingerscanClient.class);
 	
@@ -53,15 +56,10 @@ public class FingerscanClient implements Observer {
 		return true;
 	}
 	
+	//FIXME how can i disconnect the client?
 	public boolean disonnect(){
 		wclient.reset();
-		ClientManager.getInstance().getClients().remove(this);
-//		try {
-//			client.connect(URI.create(""), null);
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-		
+		ClientManager.getInstance().getClients().remove(this);		
 		return true;
 	}
 	
