@@ -1,5 +1,6 @@
 package org.openhab.io.semantic.internal;
 
+import org.eclipse.smarthome.core.items.ItemRegistry;
 import org.eclipse.smarthome.core.thing.ThingRegistry;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
@@ -15,7 +16,10 @@ public class SemanticActivator implements BundleActivator {
 	
     @SuppressWarnings("rawtypes")
 	private ServiceTracker thingRegistryServiceTracker;
+    @SuppressWarnings("rawtypes")
+    private ServiceTracker itemServiceTracker;
 	private ThingRegistry thingRegistry;
+	private ItemRegistry itemRegistry;
 
 	static BundleContext getContext() {
 		return context;
@@ -25,10 +29,51 @@ public class SemanticActivator implements BundleActivator {
 	 * (non-Javadoc)
 	 * @see org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext)
 	 */
-    @SuppressWarnings({ "unchecked", "rawtypes" })
 	public void start(BundleContext bundleContext) throws Exception {
 		SemanticActivator.context = bundleContext;
 		
+//		setRegistryServiceTrackers();
+//        thingRegistryServiceTracker.open();
+//        itemServiceTracker.open();
+        logger.debug("startet semantic access layer");
+
+        //TODO
+        // -get semantic information
+        // -registry change listener for events such when thing removed, updated or added
+        // -register handler
+        // -start server or if possible add service to existing server
+        
+
+        // how to send commands, to an item/thing?
+        // how to get status updates from things/items
+        
+        
+        
+//        for (Item i : itemRegistry.getAll()) {
+//			logger.debug("ITEM: {}", i.getName());
+//		}
+//        
+//        for(Thing t : thingRegistry.getAll()){
+//        	logger.debug("THING: {}", t.getThingTypeUID().getAsString());
+//        }
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
+	 */
+	public void stop(BundleContext bundleContext) throws Exception {
+		SemanticActivator.context = null;
+		thingRegistry = null;
+		itemRegistry = null;
+		thingRegistryServiceTracker.close();
+		itemServiceTracker.close();
+		logger.debug("stopped semantic access layer");
+	}
+	
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+	private void setRegistryServiceTrackers(){
 		thingRegistryServiceTracker = new ServiceTracker(SemanticActivator.context, ThingRegistry.class.getName(), null){
             @Override
             public Object addingService(final ServiceReference reference) {
@@ -43,23 +88,20 @@ public class SemanticActivator implements BundleActivator {
                 }
             }
         };
-        thingRegistryServiceTracker.open();
         
-        //TODO
-        // get semantic information
-        // register handler
-        // start server
+        itemServiceTracker = new ServiceTracker(SemanticActivator.context, ItemRegistry.class.getName(), null){
+            @Override
+            public Object addingService(final ServiceReference reference) {
+                itemRegistry = (ItemRegistry) context.getService(reference);
+                return itemRegistry;
+            }
 
+            @Override
+            public void removedService(final ServiceReference reference, final Object service) {
+                synchronized (SemanticActivator.this) {
+                	itemRegistry = null;
+                }
+            }
+        };	
 	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
-	 */
-	public void stop(BundleContext bundleContext) throws Exception {
-		SemanticActivator.context = null;
-		thingRegistry = null;
-		thingRegistryServiceTracker.close();
-	}
-
 }

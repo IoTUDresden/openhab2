@@ -25,3 +25,4 @@ Import-Package: org.eclipse.smarthome.core.autoupdate,
  org.osgi.util.tracker;version="1.5.1",
  org.slf4j;version="1.7.2"
 Bundle-ActivationPolicy: lazy
+Service-Component: OSGI-INF/semanticService.xml
