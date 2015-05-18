@@ -1,0 +1,1371 @@
+# baseURI: http://semiwa.org/0.1/schema
+# imports: http://qudt.org/1.1/vocab/dimension
+# imports: http://qudt.org/1.1/vocab/dimensionalunit
+# imports: http://qudt.org/1.1/vocab/quantity
+# imports: http://qudt.org/1.1/vocab/unit
+# imports: http://www.ai.sri.com/daml/services/owl-s/1.2/Process.owl
+# imports: http://www.ai.sri.com/daml/services/owl-s/1.2/Profile.owl
+# imports: http://www.ai.sri.com/daml/services/owl-s/1.2/Service.owl
+# imports: http://www.geonames.org/ontology/ontology_v3.1.rdf
+# imports: http://www.linkedmodel.org/schema/dtype
+# imports: http://www.linkedmodel.org/schema/vaem
+# imports: http://www.w3.org/2003/01/geo/wgs84_pos.rdf
+# imports: http://www.w3.org/2004/02/skos/core
+# imports: http://www.w3.org/ns/prov
+
+@prefix Profile:  <http://www.daml.org/services/owl-s/1.2/Profile.owl#> .
+@prefix Service:  <http://www.daml.org/services/owl-s/1.2/Service.owl#> .
+@prefix gn:      <http://www.geonames.org/ontology#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix prov:    <http://www.w3.org/ns/prov#> .
+@prefix qudt:    <http://qudt.org/schema/qudt#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix semiwa:  <http://semiwa.org/0.1/schema#> .
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+@prefix terms:   <http://purl.org/dc/terms/> .
+@prefix unit:    <http://qudt.org/vocab/unit#> .
+@prefix wgs:     <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+
+<http://dbpedia.org/resource/Category:Units_of_measure>
+      rdf:type skos:Concept ;
+      rdfs:label "Units of measure"@en ;
+      owl:sameAs <http://pt.dbpedia.org/resource/Categoria:Unidades_de_medida> , <http://ja.dbpedia.org/resource/Category:物理単位> , <http://fr.dbpedia.org/resource/Catégorie:Unité_de_mesure> , <http://el.dbpedia.org/resource/Κατηγορία:Μονάδες_μέτρησης> , <http://it.dbpedia.org/resource/Categoria:Unità_di_misura> , <http://ru.dbpedia.org/resource/Категория:Единицы_измерения> , <http://cs.dbpedia.org/resource/Kategorie:Jednotky> , <http://ko.dbpedia.org/resource/분류:단위> , <http://pl.dbpedia.org/resource/Kategoria:Jednostki_miar_i_wag> , <http://dbpedia.org/resource/Category:Units_of_measure> , <http://es.dbpedia.org/resource/Categoría:Unidades_de_medida> , <http://de.dbpedia.org/resource/Kategorie:Maßeinheit> ;
+      prov:wasDerivedFrom <http://en.wikipedia.org/wiki/Category:Units_of_measure?oldid=464255207> .
+
+<http://semiwa.org/0.1/schema>
+      rdf:type owl:Ontology ;
+      owl:imports <http://www.geonames.org/ontology/ontology_v3.1.rdf> , <http://www.linkedmodel.org/schema/vaem> , <http://www.w3.org/2004/02/skos/core> , <http://www.w3.org/2003/01/geo/wgs84_pos.rdf> , <http://www.ai.sri.com/daml/services/owl-s/1.2/Profile.owl> , <http://www.linkedmodel.org/schema/dtype> , <http://qudt.org/1.1/vocab/quantity> , <http://www.ai.sri.com/daml/services/owl-s/1.2/Service.owl> , <http://www.w3.org/ns/prov> , <http://www.ai.sri.com/daml/services/owl-s/1.2/Process.owl> , <http://qudt.org/1.1/vocab/dimension> , <http://qudt.org/1.1/vocab/dimensionalunit> , <http://qudt.org/1.1/vocab/unit> ;
+      owl:versionInfo "Created with TopBraid Composer"^^xsd:string .
+
+semiwa:AbstractDataComponent
+      rdf:type owl:Class ;
+      rdfs:comment "The abstract data component provides a combined data resource"^^xsd:string ;
+      rdfs:label "AbstractDataComponent"^^xsd:string ;
+      rdfs:subClassOf semiwa:CommonModule ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:maxQualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger ;
+                owl:onClass xsd:string ;
+                owl:onProperty semiwa:dataValue
+              ] ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:maxQualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger ;
+                owl:onClass qudt:Unit ;
+                owl:onProperty semiwa:unit
+              ] ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:maxQualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger ;
+                owl:onClass xsd:string ;
+                owl:onProperty semiwa:dataDescription
+              ] ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:minQualifiedCardinality
+                        "0"^^xsd:nonNegativeInteger ;
+                owl:onClass semiwa:AbstractDataComponent ;
+                owl:onProperty semiwa:dataComponent
+              ] .
+
+semiwa:Activity
+      rdf:type owl:Class ;
+      rdfs:label "Activity"^^xsd:string ;
+      rdfs:subClassOf semiwa:ActivityBlock ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:onClass xsd:boolean ;
+                owl:onProperty semiwa:active ;
+                owl:qualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger
+              ] ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:onClass qudt:Unit ;
+                owl:onProperty semiwa:unitOfOutput ;
+                owl:qualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger
+              ] ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:maxQualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger ;
+                owl:onClass semiwa:ActivityCapability ;
+                owl:onProperty semiwa:activityCapability
+              ] ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:onClass semiwa:ActivityProcedure ;
+                owl:onProperty semiwa:activityProcedure ;
+                owl:qualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger
+              ] ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:maxQualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger ;
+                owl:onClass owl:Thing ;
+                owl:onProperty semiwa:activityOnFeature
+              ] .
+
+semiwa:ActivityBlock
+      rdf:type owl:Class ;
+      rdfs:label "Sensing"^^xsd:string ;
+      rdfs:subClassOf semiwa:DynamicModule .
+
+semiwa:ActivityCapability
+      rdf:type owl:Class ;
+      rdfs:label "Activity capability"^^xsd:string ;
+      rdfs:subClassOf semiwa:Capability ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:maxQualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger ;
+                owl:onClass semiwa:AbstractDataComponent ;
+                owl:onProperty semiwa:validStates
+              ] ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:maxQualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger ;
+                owl:onClass semiwa:AbstractDataComponent ;
+                owl:onProperty semiwa:validTransitions
+              ] ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:maxQualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger ;
+                owl:onClass semiwa:AbstractDataComponent ;
+                owl:onProperty semiwa:activityType
+              ] ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:maxQualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger ;
+                owl:onClass semiwa:AbstractDataComponent ;
+                owl:onProperty semiwa:executionTime
+              ] .
+
+semiwa:ActivityProcedure
+      rdf:type owl:Class ;
+      rdfs:label "Activity procedure"^^xsd:string ;
+      rdfs:subClassOf semiwa:Procedure ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:maxQualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger ;
+                owl:onClass owl:Thing ;
+                owl:onProperty semiwa:activityOnProperty
+              ] ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:maxQualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger ;
+                owl:onClass semiwa:ActivityCapability ;
+                owl:onProperty semiwa:qualifiedBy
+              ] ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:minQualifiedCardinality
+                        "0"^^xsd:nonNegativeInteger ;
+                owl:onClass semiwa:ActivityProcedure ;
+                owl:onProperty semiwa:basedOn
+              ] ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:maxQualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger ;
+                owl:onClass qudt:Unit ;
+                owl:onProperty semiwa:alternativeUnitOfOutput
+              ] ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:onClass qudt:Unit ;
+                owl:onProperty semiwa:unitOfOutput ;
+                owl:qualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger
+              ] ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:minQualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger ;
+                owl:onClass semiwa:ActuatorCharacteristic ;
+                owl:onProperty semiwa:implementedBy
+              ] .
+
+semiwa:Actuator
+      rdf:type owl:Class ;
+      rdfs:label "Actuator"^^xsd:string ;
+      rdfs:subClassOf semiwa:ActivityBlock ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:maxQualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger ;
+                owl:onClass semiwa:ActuatorDeployment ;
+                owl:onProperty semiwa:deployedAt
+              ] ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:onClass semiwa:ActuatorCharacteristic ;
+                owl:onProperty semiwa:characteristic ;
+                owl:qualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger
+              ] ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:onClass xsd:string ;
+                owl:onProperty semiwa:uID ;
+                owl:qualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger
+              ] ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:minQualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger ;
+                owl:onClass semiwa:Activity ;
+                owl:onProperty semiwa:activity
+              ] .
+
+semiwa:ActuatorCharacteristic
+      rdf:type owl:Class ;
+      rdfs:label "Sensor characteristic"^^xsd:string ;
+      rdfs:subClassOf semiwa:Characteristic ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:minQualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger ;
+                owl:onClass semiwa:ActivityProcedure ;
+                owl:onProperty semiwa:provides
+              ] ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:minQualifiedCardinality
+                        "0"^^xsd:nonNegativeInteger ;
+                owl:onClass semiwa:ActuatorCharacteristic ;
+                owl:onProperty semiwa:component
+              ] .
+
+semiwa:ActuatorDeployment
+      rdf:type owl:Class ;
+      rdfs:label "Actuator deployment"^^xsd:string ;
+      rdfs:subClassOf semiwa:Deployment ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:maxQualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger ;
+                owl:onClass semiwa:Platform ;
+                owl:onProperty semiwa:boundTo
+              ] ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:onClass semiwa:Actuator ;
+                owl:onProperty semiwa:deploys ;
+                owl:qualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger
+              ] ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:onClass xsd:boolean ;
+                owl:onProperty semiwa:mobile ;
+                owl:qualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger
+              ] .
+
+semiwa:ActuatorSensorCollection
+      rdf:type owl:Class ;
+      rdfs:label "Sensor collection"^^xsd:string ;
+      rdfs:subClassOf semiwa:Collection ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:minQualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger ;
+                owl:onClass
+                        [ rdf:type owl:Class ;
+                          owl:unionOf (semiwa:Actuator [ rdf:type owl:Restriction ;
+                                      owl:minQualifiedCardinality
+                                              "1"^^xsd:nonNegativeInteger ;
+                                      owl:onClass semiwa:Sensor ;
+                                      owl:onProperty semiwa:contains
+                                    ])
+                        ] ;
+                owl:onProperty semiwa:contains
+              ] .
+
+semiwa:CalibrationBlock
+      rdf:type owl:Class ;
+      rdfs:label "Conformance"^^xsd:string ;
+      rdfs:subClassOf semiwa:DynamicModule .
+
+semiwa:Capability
+      rdf:type owl:Class ;
+      rdfs:label "Capability"^^xsd:string ;
+      rdfs:subClassOf semiwa:DynamicModule ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:maxQualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger ;
+                owl:onClass semiwa:AbstractDataComponent ;
+                owl:onProperty semiwa:extension
+              ] .
+
+semiwa:Characteristic
+      rdf:type owl:Class ;
+      rdfs:label "Characteristic"^^xsd:string ;
+      rdfs:subClassOf semiwa:StaticModule ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:maxQualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger ;
+                owl:onClass semiwa:AbstractDataComponent ;
+                owl:onProperty semiwa:physicalComponent
+              ] ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:onClass xsd:string ;
+                owl:onProperty semiwa:model ;
+                owl:qualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger
+              ] ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:onClass xsd:string ;
+                owl:onProperty semiwa:manufacturer ;
+                owl:qualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger
+              ] ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:maxQualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger ;
+                owl:onClass semiwa:AbstractDataComponent ;
+                owl:onProperty semiwa:operationalComponent
+              ] ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:maxQualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger ;
+                owl:onClass semiwa:AbstractDataComponent ;
+                owl:onProperty semiwa:connectionType
+              ] ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:minQualifiedCardinality
+                        "0"^^xsd:nonNegativeInteger ;
+                owl:onClass semiwa:Tasking ;
+                owl:onProperty semiwa:tasks
+              ] .
+
+semiwa:Collection
+      rdf:type owl:Class ;
+      rdfs:label "Collection"^^xsd:string ;
+      rdfs:subClassOf semiwa:CollectionBlock ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:maxQualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger ;
+                owl:onClass xsd:string ;
+                owl:onProperty semiwa:description
+              ] ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:onClass xsd:string ;
+                owl:onProperty semiwa:name ;
+                owl:qualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger
+              ] ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:onClass xsd:boolean ;
+                owl:onProperty semiwa:homogeneous ;
+                owl:qualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger
+              ] .
+
+semiwa:CollectionBlock
+      rdf:type owl:Class ;
+      rdfs:label "Collection block"^^xsd:string ;
+      rdfs:subClassOf semiwa:DynamicModule .
+
+semiwa:CommonModule
+      rdf:type owl:Class ;
+      rdfs:label "CommonModule"^^xsd:string ;
+      rdfs:subClassOf semiwa:SeMiWa .
+
+semiwa:ComplexConditionalValue
+      rdf:type owl:Class ;
+      rdfs:label "ComplexConditionalValue"^^xsd:string ;
+      rdfs:subClassOf semiwa:CommonModule ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:minQualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger ;
+                owl:onClass semiwa:ConditionalValue ;
+                owl:onProperty semiwa:fields
+              ] .
+
+semiwa:ConditionalValue
+      rdf:type owl:Class ;
+      rdfs:label "ConditionalValue"^^xsd:string ;
+      rdfs:subClassOf semiwa:CommonModule ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:minQualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger ;
+                owl:onClass semiwa:AbstractDataComponent ;
+                owl:onProperty semiwa:condition
+              ] ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:onClass semiwa:AbstractDataComponent ;
+                owl:onProperty semiwa:dataValue ;
+                owl:qualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger
+              ] .
+
+semiwa:Deployment
+      rdf:type owl:Class ;
+      rdfs:label "Deployment"^^xsd:string ;
+      rdfs:subClassOf semiwa:DeploymentBlock ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:maxQualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger ;
+                owl:onClass semiwa:AbstractDataComponent ;
+                owl:onProperty semiwa:operationArea
+              ] ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:maxQualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger ;
+                owl:onClass xsd:string ;
+                owl:onProperty semiwa:context
+              ] ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:maxQualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger ;
+                owl:onClass semiwa:AbstractDataComponent ;
+                owl:onProperty semiwa:validTime
+              ] ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:maxQualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger ;
+                owl:onClass gn:Feature ;
+                owl:onProperty semiwa:locatedIn
+              ] ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:maxQualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger ;
+                owl:onClass xsd:string ;
+                owl:onProperty semiwa:summary
+              ] ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:maxQualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger ;
+                owl:onClass semiwa:AbstractDataComponent ;
+                owl:onProperty semiwa:deploymentLocation
+              ] .
+
+semiwa:DeploymentBlock
+      rdf:type owl:Class ;
+      rdfs:label "Platform"^^xsd:string ;
+      rdfs:subClassOf semiwa:DynamicModule .
+
+semiwa:DynamicModule
+      rdf:type owl:Class ;
+      rdfs:label "Dynamic module"^^xsd:string ;
+      rdfs:subClassOf semiwa:SeMiWa .
+
+semiwa:MeasurementCapability
+      rdf:type owl:Class ;
+      rdfs:label "Measurement capability"^^xsd:string ;
+      rdfs:subClassOf semiwa:Capability ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:maxQualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger ;
+                owl:onClass semiwa:AbstractDataComponent ;
+                owl:onProperty semiwa:resolution
+              ] ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:maxQualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger ;
+                owl:onClass semiwa:AbstractDataComponent ;
+                owl:onProperty semiwa:sensitivity
+              ] ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:maxQualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger ;
+                owl:onClass semiwa:AbstractDataComponent ;
+                owl:onProperty semiwa:precision
+              ] ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:maxQualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger ;
+                owl:onClass semiwa:AbstractDataComponent ;
+                owl:onProperty semiwa:accuracy
+              ] ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:maxQualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger ;
+                owl:onClass semiwa:AbstractDataComponent ;
+                owl:onProperty semiwa:latency
+              ] ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:maxQualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger ;
+                owl:onClass semiwa:AbstractDataComponent ;
+                owl:onProperty semiwa:drift
+              ] ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:maxQualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger ;
+                owl:onClass semiwa:AbstractDataComponent ;
+                owl:onProperty semiwa:frequency
+              ] ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:maxQualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger ;
+                owl:onClass semiwa:AbstractDataComponent ;
+                owl:onProperty semiwa:range
+              ] ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:maxQualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger ;
+                owl:onClass semiwa:AbstractDataComponent ;
+                owl:onProperty semiwa:selectivity
+              ] ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:maxQualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger ;
+                owl:onClass semiwa:AbstractDataComponent ;
+                owl:onProperty semiwa:detectionLimit
+              ] ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:maxQualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger ;
+                owl:onClass semiwa:AbstractDataComponent ;
+                owl:onProperty semiwa:responseTime
+              ] .
+
+semiwa:Platform
+      rdf:type owl:Class ;
+      rdfs:label "Platform"^^xsd:string ;
+      rdfs:subClassOf semiwa:DeploymentBlock ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:minQualifiedCardinality
+                        "0"^^xsd:nonNegativeInteger ;
+                owl:onClass semiwa:ActuatorDeployment ;
+                owl:onProperty semiwa:deployedActuators
+              ] ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:onClass semiwa:PlatformCharacteristic ;
+                owl:onProperty semiwa:characteristic ;
+                owl:qualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger
+              ] ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:onClass semiwa:PlatformDeployment ;
+                owl:onProperty semiwa:deployedAt ;
+                owl:qualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger
+              ] ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:onClass xsd:string ;
+                owl:onProperty semiwa:uID ;
+                owl:qualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger
+              ] ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:minQualifiedCardinality
+                        "0"^^xsd:nonNegativeInteger ;
+                owl:onClass semiwa:SensorDeployment ;
+                owl:onProperty semiwa:deployedSensor
+              ] ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:onClass xsd:boolean ;
+                owl:onProperty semiwa:mobile ;
+                owl:qualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger
+              ] .
+
+semiwa:PlatformCharacteristic
+      rdf:type owl:Class ;
+      rdfs:label "Platform characteristic"^^xsd:string ;
+      rdfs:subClassOf semiwa:Characteristic .
+
+semiwa:PlatformCollection
+      rdf:type owl:Class ;
+      rdfs:label "Platform collection"^^xsd:string ;
+      rdfs:subClassOf semiwa:Collection ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:minQualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger ;
+                owl:onClass semiwa:Platform ;
+                owl:onProperty semiwa:contains
+              ] .
+
+semiwa:PlatformDeployment
+      rdf:type owl:Class ;
+      rdfs:label "Platform deployment"^^xsd:string ;
+      rdfs:subClassOf semiwa:Deployment ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:onClass semiwa:Platform ;
+                owl:onProperty semiwa:deploys ;
+                owl:qualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger
+              ] ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:onClass semiwa:AbstractDataComponent ;
+                owl:onProperty semiwa:siteCharacteristic ;
+                owl:qualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger
+              ] .
+
+semiwa:Procedure
+      rdf:type owl:Class ;
+      rdfs:label "Procedure"^^xsd:string ;
+      rdfs:subClassOf semiwa:StaticModule ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:maxQualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger ;
+                owl:onClass xsd:string ;
+                owl:onProperty semiwa:method
+              ] .
+
+semiwa:SeMiWa
+      rdf:type owl:Class ;
+      rdfs:label "Se mi wa"^^xsd:string .
+
+semiwa:Sensing
+      rdf:type owl:Class ;
+      rdfs:label "Sensing"^^xsd:string ;
+      rdfs:subClassOf semiwa:SensingBlock ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:maxQualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger ;
+                owl:onClass semiwa:SensorCalibration ;
+                owl:onProperty semiwa:calibrated
+              ] ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:maxQualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger ;
+                owl:onClass owl:Thing ;
+                owl:onProperty semiwa:observedFeature
+              ] ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:maxQualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger ;
+                owl:onClass semiwa:MeasurementCapability ;
+                owl:onProperty semiwa:measurementCapability
+              ] ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:onClass semiwa:SensingProcedure ;
+                owl:onProperty semiwa:sensingProcedure ;
+                owl:qualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger
+              ] ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:onClass xsd:boolean ;
+                owl:onProperty semiwa:active ;
+                owl:qualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger
+              ] .
+
+semiwa:SensingBlock
+      rdf:type owl:Class ;
+      rdfs:label "Sensing"^^xsd:string ;
+      rdfs:subClassOf semiwa:DynamicModule .
+
+semiwa:SensingProcedure
+      rdf:type owl:Class ;
+      rdfs:label "Sensing procedure"^^xsd:string ;
+      rdfs:subClassOf semiwa:Procedure ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:minQualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger ;
+                owl:onClass semiwa:SensorCharacteristic ;
+                owl:onProperty semiwa:implementedBy
+              ] ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:maxQualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger ;
+                owl:onClass semiwa:MeasurementCapability ;
+                owl:onProperty semiwa:qualifiedBy
+              ] ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:onClass qudt:Unit ;
+                owl:onProperty semiwa:unitOfMeasure ;
+                owl:qualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger
+              ] ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:minQualifiedCardinality
+                        "0"^^xsd:nonNegativeInteger ;
+                owl:onClass semiwa:SensingProcedure ;
+                owl:onProperty semiwa:basedOn
+              ] ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:maxQualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger ;
+                owl:onClass owl:Thing ;
+                owl:onProperty semiwa:observedProperty
+              ] .
+
+semiwa:Sensor
+      rdf:type owl:Class ;
+      rdfs:label "Sensor"^^xsd:string ;
+      rdfs:subClassOf semiwa:SensingBlock ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:onClass xsd:string ;
+                owl:onProperty semiwa:type ;
+                owl:qualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger
+              ] ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:minQualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger ;
+                owl:onClass semiwa:Sensing ;
+                owl:onProperty semiwa:senses
+              ] ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:onClass xsd:string ;
+                owl:onProperty semiwa:uID ;
+                owl:qualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger
+              ] ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:maxQualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger ;
+                owl:onClass semiwa:SensorDeployment ;
+                owl:onProperty semiwa:deployedAt
+              ] ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:onClass semiwa:SensorCharacteristic ;
+                owl:onProperty semiwa:characteristic ;
+                owl:qualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger
+              ] .
+
+semiwa:SensorCalibration
+      rdf:type owl:Class ;
+      rdfs:label "Calibration"^^xsd:string ;
+      rdfs:subClassOf semiwa:CalibrationBlock ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:onClass xsd:dateTime ;
+                owl:onProperty semiwa:calibrationDate ;
+                owl:qualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger
+              ] ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:maxQualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger ;
+                owl:onClass xsd:string ;
+                owl:onProperty semiwa:responsibleParty
+              ] .
+
+semiwa:SensorCharacteristic
+      rdf:type owl:Class ;
+      rdfs:label "Sensor characteristic"^^xsd:string ;
+      rdfs:subClassOf semiwa:Characteristic ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:minQualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger ;
+                owl:onClass semiwa:SensingProcedure ;
+                owl:onProperty semiwa:provides
+              ] ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:minQualifiedCardinality
+                        "0"^^xsd:nonNegativeInteger ;
+                owl:onClass semiwa:SensorCharacteristic ;
+                owl:onProperty semiwa:component
+              ] .
+
+semiwa:SensorDeployment
+      rdf:type owl:Class ;
+      rdfs:label "Sensor deployment"^^xsd:string ;
+      rdfs:subClassOf semiwa:Deployment ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:onClass semiwa:Sensor ;
+                owl:onProperty semiwa:deploys ;
+                owl:qualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger
+              ] ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:onClass xsd:boolean ;
+                owl:onProperty semiwa:mobile ;
+                owl:qualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger
+              ] ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:maxQualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger ;
+                owl:onClass semiwa:Platform ;
+                owl:onProperty semiwa:boundTo
+              ] .
+
+semiwa:Service
+      rdf:type owl:Class ;
+      rdfs:label "Service"^^xsd:string ;
+      rdfs:subClassOf semiwa:StaticModule , Service:Service .
+
+semiwa:StaticModule
+      rdf:type owl:Class ;
+      rdfs:label "Static module"^^xsd:string ;
+      rdfs:subClassOf semiwa:SeMiWa .
+
+semiwa:Tasking
+      rdf:type owl:Class ;
+      rdfs:label "Tasking"^^xsd:string ;
+      rdfs:subClassOf semiwa:TaskingBlock ;
+      owl:equivalentClass
+              [ rdf:type owl:Restriction ;
+                owl:onClass semiwa:TaskingService ;
+                owl:onProperty semiwa:taskingService ;
+                owl:qualifiedCardinality
+                        "1"^^xsd:nonNegativeInteger
+              ] .
+
+semiwa:TaskingBlock
+      rdf:type owl:Class ;
+      rdfs:label "TaskingBlock"^^xsd:string ;
+      rdfs:subClassOf semiwa:DynamicModule .
+
+semiwa:TaskingService
+      rdf:type owl:Class ;
+      rdfs:label "TaskingService"^^xsd:string ;
+      rdfs:subClassOf semiwa:Service .
+
+semiwa:accuracy
+      rdf:type owl:ObjectProperty ;
+      rdfs:domain semiwa:MeasurementCapability ;
+      rdfs:label "accuracy"^^xsd:string ;
+      rdfs:range semiwa:AbstractDataComponent .
+
+semiwa:active
+      rdf:type owl:ObjectProperty ;
+      rdfs:domain semiwa:Activity , semiwa:Sensing ;
+      rdfs:label "active"^^xsd:string ;
+      rdfs:range xsd:boolean .
+
+semiwa:activity
+      rdf:type owl:ObjectProperty ;
+      rdfs:domain semiwa:Actuator ;
+      rdfs:label "activity"^^xsd:string ;
+      rdfs:range semiwa:Activity .
+
+semiwa:activityCapability
+      rdf:type owl:ObjectProperty ;
+      rdfs:domain semiwa:Activity ;
+      rdfs:label "activity capability"^^xsd:string ;
+      rdfs:range semiwa:ActivityCapability .
+
+semiwa:activityOnFeature
+      rdf:type owl:ObjectProperty ;
+      rdfs:domain semiwa:Activity ;
+      rdfs:label "activity on feature"^^xsd:string ;
+      rdfs:range owl:Thing .
+
+semiwa:activityOnProperty
+      rdf:type owl:ObjectProperty ;
+      rdfs:domain semiwa:ActivityProcedure ;
+      rdfs:label "activity on property"^^xsd:string ;
+      rdfs:range owl:Thing .
+
+semiwa:activityProcedure
+      rdf:type owl:ObjectProperty ;
+      rdfs:domain semiwa:Activity ;
+      rdfs:label "activity procedure"^^xsd:string ;
+      rdfs:range semiwa:ActivityProcedure .
+
+semiwa:activityType
+      rdf:type owl:ObjectProperty ;
+      rdfs:domain semiwa:ActivityCapability ;
+      rdfs:label "activity type"^^xsd:string ;
+      rdfs:range semiwa:AbstractDataComponent .
+
+semiwa:alternativeUnitOfMeasure
+      rdf:type owl:ObjectProperty ;
+      rdfs:domain semiwa:SensingProcedure ;
+      rdfs:label "alternative unit of measure"^^xsd:string ;
+      rdfs:range qudt:Unit .
+
+semiwa:alternativeUnitOfOutput
+      rdf:type owl:ObjectProperty ;
+      rdfs:domain semiwa:ActivityProcedure ;
+      rdfs:label "alternative unit of output"^^xsd:string ;
+      rdfs:range qudt:Unit .
+
+semiwa:basedOn
+      rdf:type owl:ObjectProperty ;
+      rdfs:domain semiwa:SensingProcedure ;
+      rdfs:label "based on"^^xsd:string ;
+      rdfs:range semiwa:SensingProcedure .
+
+semiwa:boundTo
+      rdf:type owl:ObjectProperty ;
+      rdfs:domain semiwa:SensorDeployment , semiwa:ActuatorDeployment ;
+      rdfs:label "bound to"^^xsd:string ;
+      rdfs:range semiwa:Platform .
+
+semiwa:calibrated
+      rdf:type owl:ObjectProperty ;
+      rdfs:domain semiwa:Sensing ;
+      rdfs:label "calibrated"^^xsd:string ;
+      rdfs:range semiwa:SensorCalibration .
+
+semiwa:calibrationDate
+      rdf:type owl:ObjectProperty ;
+      rdfs:domain semiwa:SensorCalibration ;
+      rdfs:label "calibration date"^^xsd:string ;
+      rdfs:range xsd:dateTime .
+
+semiwa:characteristic
+      rdf:type owl:ObjectProperty ;
+      rdfs:domain semiwa:Actuator , semiwa:Sensor , semiwa:Platform ;
+      rdfs:label "characteristics"^^xsd:string ;
+      rdfs:range semiwa:Characteristic .
+
+semiwa:component
+      rdf:type owl:ObjectProperty ;
+      rdfs:domain semiwa:Characteristic ;
+      rdfs:label "component"^^xsd:string ;
+      rdfs:range semiwa:Characteristic .
+
+semiwa:condition
+      rdf:type rdf:Property ;
+      rdfs:domain semiwa:ConditionalValue ;
+      rdfs:label "condition"^^xsd:string ;
+      rdfs:range semiwa:AbstractDataComponent .
+
+semiwa:conformanceCharacteristic
+      rdf:type owl:ObjectProperty ;
+      rdfs:label "conformance characteristic"^^xsd:string .
+
+semiwa:connectionType
+      rdf:type owl:ObjectProperty ;
+      rdfs:domain semiwa:Characteristic ;
+      rdfs:label "connection type"^^xsd:string ;
+      rdfs:range semiwa:AbstractDataComponent .
+
+semiwa:contains
+      rdf:type owl:ObjectProperty ;
+      rdfs:domain semiwa:PlatformCollection , semiwa:ActuatorSensorCollection ;
+      rdfs:label "contains"^^xsd:string ;
+      rdfs:range semiwa:Sensor , semiwa:Platform .
+
+semiwa:context
+      rdf:type owl:ObjectProperty ;
+      rdfs:domain semiwa:Deployment ;
+      rdfs:label "context"^^xsd:string ;
+      rdfs:range xsd:string .
+
+semiwa:dataComponent
+      rdf:type owl:ObjectProperty ;
+      rdfs:domain semiwa:AbstractDataComponent ;
+      rdfs:label "data component"^^xsd:string ;
+      rdfs:range semiwa:AbstractDataComponent .
+
+semiwa:dataDescription
+      rdf:type owl:ObjectProperty ;
+      rdfs:domain semiwa:AbstractDataComponent ;
+      rdfs:label "data description"^^xsd:string ;
+      rdfs:range xsd:string .
+
+semiwa:dataValue
+      rdf:type rdf:Property ;
+      rdfs:domain semiwa:ConditionalValue ;
+      rdfs:label "dataValue"^^xsd:string ;
+      rdfs:range semiwa:AbstractDataComponent .
+
+semiwa:deployedActuators
+      rdf:type owl:ObjectProperty ;
+      rdfs:domain semiwa:Platform ;
+      rdfs:label "deployed sensor"^^xsd:string ;
+      rdfs:range semiwa:ActuatorDeployment .
+
+semiwa:deployedAt
+      rdf:type owl:ObjectProperty ;
+      rdfs:domain semiwa:Sensor , semiwa:Actuator , semiwa:Platform ;
+      rdfs:label "deployed at"^^xsd:string ;
+      rdfs:range semiwa:Deployment .
+
+semiwa:deployedSensor
+      rdf:type owl:ObjectProperty ;
+      rdfs:domain semiwa:Platform ;
+      rdfs:label "deployed sensor"^^xsd:string ;
+      rdfs:range semiwa:SensorDeployment .
+
+semiwa:deploymentLocation
+      rdf:type owl:ObjectProperty ;
+      rdfs:domain semiwa:Deployment ;
+      rdfs:label "deployment location"^^xsd:string ;
+      rdfs:range semiwa:AbstractDataComponent .
+
+semiwa:deploys
+      rdf:type owl:ObjectProperty ;
+      rdfs:domain semiwa:Deployment ;
+      rdfs:label "deploys"^^xsd:string ;
+      rdfs:range semiwa:Sensor , semiwa:Actuator , semiwa:Platform .
+
+semiwa:description
+      rdf:type owl:ObjectProperty ;
+      rdfs:domain semiwa:Collection ;
+      rdfs:label "description"^^xsd:string ;
+      rdfs:range xsd:string .
+
+semiwa:detectionLimit
+      rdf:type owl:ObjectProperty ;
+      rdfs:domain semiwa:MeasurementCapability ;
+      rdfs:label "detection limit"^^xsd:string ;
+      rdfs:range semiwa:AbstractDataComponent .
+
+semiwa:drift
+      rdf:type owl:ObjectProperty ;
+      rdfs:domain semiwa:MeasurementCapability ;
+      rdfs:label "drift"^^xsd:string ;
+      rdfs:range semiwa:AbstractDataComponent .
+
+semiwa:executionTime
+      rdf:type owl:ObjectProperty ;
+      rdfs:domain semiwa:ActivityCapability ;
+      rdfs:label "execution time"^^xsd:string ;
+      rdfs:range semiwa:AbstractDataComponent .
+
+semiwa:extension
+      rdf:type owl:ObjectProperty ;
+      rdfs:domain semiwa:Capability , semiwa:SensorCalibration ;
+      rdfs:label "extension"^^xsd:string ;
+      rdfs:range owl:Thing .
+
+semiwa:fields
+      rdf:type rdf:Property ;
+      rdfs:domain semiwa:ComplexConditionalValue ;
+      rdfs:label "fields"^^xsd:string ;
+      rdfs:range semiwa:ConditionalValue .
+
+semiwa:frequency
+      rdf:type owl:ObjectProperty ;
+      rdfs:domain semiwa:MeasurementCapability ;
+      rdfs:label "frequency"^^xsd:string ;
+      rdfs:range semiwa:AbstractDataComponent .
+
+semiwa:homogeneous
+      rdf:type owl:ObjectProperty ;
+      rdfs:domain semiwa:Collection ;
+      rdfs:label "homogeneous"^^xsd:string ;
+      rdfs:range xsd:boolean .
+
+semiwa:implementedBy
+      rdf:type owl:ObjectProperty ;
+      rdfs:domain semiwa:SensingProcedure ;
+      rdfs:label "implemented by"^^xsd:string ;
+      rdfs:range semiwa:SensorCharacteristic .
+
+semiwa:label
+      rdf:type owl:ObjectProperty ;
+      rdfs:label "label"^^xsd:string ;
+      rdfs:range xsd:string .
+
+semiwa:latency
+      rdf:type owl:ObjectProperty ;
+      rdfs:domain semiwa:MeasurementCapability ;
+      rdfs:label "latency"^^xsd:string ;
+      rdfs:range semiwa:AbstractDataComponent .
+
+semiwa:locatedIn
+      rdf:type owl:ObjectProperty ;
+      rdfs:domain semiwa:Deployment ;
+      rdfs:label "locatedIn"^^xsd:string ;
+      rdfs:subPropertyOf gn:locatedIn .
+
+semiwa:manufacturer
+      rdf:type owl:ObjectProperty ;
+      rdfs:domain semiwa:Characteristic ;
+      rdfs:label "manufacturer"^^xsd:string ;
+      rdfs:range xsd:string .
+
+semiwa:measurementCapability
+      rdf:type owl:ObjectProperty ;
+      rdfs:domain semiwa:Sensing ;
+      rdfs:label "measurement capability"^^xsd:string ;
+      rdfs:range semiwa:MeasurementCapability .
+
+semiwa:method
+      rdf:type owl:ObjectProperty ;
+      rdfs:domain semiwa:Procedure ;
+      rdfs:label "method"^^xsd:string ;
+      rdfs:range xsd:string .
+
+semiwa:mobile
+      rdf:type owl:ObjectProperty ;
+      rdfs:domain semiwa:SensorDeployment , semiwa:ActuatorDeployment , semiwa:Platform ;
+      rdfs:label "mobile"^^xsd:string ;
+      rdfs:range xsd:boolean .
+
+semiwa:model
+      rdf:type owl:ObjectProperty ;
+      rdfs:domain semiwa:Characteristic ;
+      rdfs:label "model"^^xsd:string ;
+      rdfs:range xsd:string .
+
+semiwa:modelNr
+      rdf:type owl:ObjectProperty ;
+      rdfs:domain semiwa:SensorCharacteristic ;
+      rdfs:label "model nr"^^xsd:string ;
+      rdfs:range xsd:string .
+
+semiwa:name
+      rdf:type owl:ObjectProperty ;
+      rdfs:domain semiwa:Collection ;
+      rdfs:label "name"^^xsd:string ;
+      rdfs:range xsd:string .
+
+semiwa:observedFeature
+      rdf:type owl:ObjectProperty ;
+      rdfs:domain semiwa:Sensing ;
+      rdfs:label "observed fol"^^xsd:string ;
+      rdfs:range owl:Thing .
+
+semiwa:observedProperty
+      rdf:type owl:ObjectProperty ;
+      rdfs:domain semiwa:SensingProcedure ;
+      rdfs:label "observed property"^^xsd:string ;
+      rdfs:range qudt:QuantityKind .
+
+semiwa:operationArea
+      rdf:type owl:ObjectProperty ;
+      rdfs:domain semiwa:Deployment ;
+      rdfs:label "operation area"^^xsd:string ;
+      rdfs:range semiwa:AbstractDataComponent .
+
+semiwa:operationalComponent
+      rdf:type owl:ObjectProperty ;
+      rdfs:domain semiwa:Characteristic ;
+      rdfs:label "operational component"^^xsd:string ;
+      rdfs:range semiwa:AbstractDataComponent .
+
+semiwa:operator
+      rdf:type owl:ObjectProperty ;
+      rdfs:domain semiwa:Platform ;
+      rdfs:label "operator"^^xsd:string ;
+      rdfs:range xsd:string .
+
+semiwa:passed
+      rdf:type owl:ObjectProperty ;
+      rdfs:label "passed"^^xsd:string ;
+      rdfs:range xsd:boolean .
+
+semiwa:physicalComponent
+      rdf:type owl:ObjectProperty ;
+      rdfs:domain semiwa:Characteristic ;
+      rdfs:label "physical component"^^xsd:string ;
+      rdfs:range semiwa:AbstractDataComponent .
+
+semiwa:precision
+      rdf:type owl:ObjectProperty ;
+      rdfs:domain semiwa:MeasurementCapability ;
+      rdfs:label "precision"^^xsd:string ;
+      rdfs:range semiwa:AbstractDataComponent .
+
+semiwa:provides
+      rdf:type owl:ObjectProperty ;
+      rdfs:domain semiwa:Characteristic ;
+      rdfs:label "provides"^^xsd:string ;
+      rdfs:range semiwa:Procedure .
+
+semiwa:qualifiedBy
+      rdf:type owl:ObjectProperty ;
+      rdfs:domain semiwa:Procedure ;
+      rdfs:label "qualified by"^^xsd:string ;
+      rdfs:range semiwa:Capability .
+
+semiwa:range
+      rdf:type owl:ObjectProperty ;
+      rdfs:domain semiwa:MeasurementCapability ;
+      rdfs:label "range"^^xsd:string ;
+      rdfs:range semiwa:AbstractDataComponent .
+
+semiwa:reason
+      rdf:type owl:ObjectProperty ;
+      rdfs:label "reason"^^xsd:string ;
+      rdfs:range xsd:boolean .
+
+semiwa:resolution
+      rdf:type owl:ObjectProperty ;
+      rdfs:domain semiwa:MeasurementCapability ;
+      rdfs:label "resolution"^^xsd:string ;
+      rdfs:range semiwa:AbstractDataComponent .
+
+semiwa:responseTime
+      rdf:type owl:ObjectProperty ;
+      rdfs:domain semiwa:MeasurementCapability ;
+      rdfs:label "response time"^^xsd:string ;
+      rdfs:range semiwa:AbstractDataComponent .
+
+semiwa:responsibleParty
+      rdf:type owl:ObjectProperty ;
+      rdfs:domain semiwa:SensorCalibration ;
+      rdfs:label "calibration agency"^^xsd:string ;
+      rdfs:range xsd:string .
+
+semiwa:restrictedBy
+      rdf:type owl:ObjectProperty ;
+      rdfs:domain semiwa:Deployment , semiwa:SensorCalibration ;
+      rdfs:label "restricted by"^^xsd:string .
+
+semiwa:selectivity
+      rdf:type owl:ObjectProperty ;
+      rdfs:domain semiwa:MeasurementCapability ;
+      rdfs:label "selectivity"^^xsd:string ;
+      rdfs:range semiwa:AbstractDataComponent .
+
+semiwa:senses
+      rdf:type owl:ObjectProperty ;
+      rdfs:domain semiwa:Sensor ;
+      rdfs:label "senses"^^xsd:string ;
+      rdfs:range semiwa:Sensing .
+
+semiwa:sensingProcedure
+      rdf:type owl:ObjectProperty ;
+      rdfs:domain semiwa:Sensing ;
+      rdfs:label "sensing procedure"^^xsd:string ;
+      rdfs:range semiwa:SensingProcedure .
+
+semiwa:sensitivity
+      rdf:type owl:ObjectProperty ;
+      rdfs:domain semiwa:MeasurementCapability ;
+      rdfs:label "sensitivity"^^xsd:string ;
+      rdfs:range semiwa:AbstractDataComponent .
+
+semiwa:siteCharacteristic
+      rdf:type owl:ObjectProperty ;
+      rdfs:domain semiwa:PlatformDeployment ;
+      rdfs:label "site characteristic"^^xsd:string ;
+      rdfs:range semiwa:AbstractDataComponent .
+
+semiwa:summary
+      rdf:type owl:ObjectProperty ;
+      rdfs:domain semiwa:Deployment ;
+      rdfs:label "summary"^^xsd:string ;
+      rdfs:range xsd:string .
+
+semiwa:taskingService
+      rdf:type rdf:Property ;
+      rdfs:domain semiwa:Tasking ;
+      rdfs:label "taskingService"^^xsd:string ;
+      rdfs:range semiwa:TaskingService .
+
+semiwa:tasks
+      rdf:type rdf:Property ;
+      rdfs:domain semiwa:Sensor ;
+      rdfs:label "tasks"^^xsd:string ;
+      rdfs:range semiwa:Tasking .
+
+semiwa:test
+      rdf:type owl:ObjectProperty ;
+      rdfs:label "test"^^xsd:string .
+
+semiwa:type
+      rdf:type owl:ObjectProperty ;
+      rdfs:domain rdfs:Resource ;
+      rdfs:label "type"^^xsd:string ;
+      rdfs:range owl:Thing , xsd:string .
+
+semiwa:uID
+      rdf:type owl:ObjectProperty ;
+      rdfs:domain semiwa:Sensor , semiwa:Actuator , semiwa:Platform ;
+      rdfs:label "serial number"^^xsd:string ;
+      rdfs:range xsd:string .
+
+semiwa:unit
+      rdf:type owl:ObjectProperty ;
+      rdfs:domain semiwa:AbstractDataComponent ;
+      rdfs:label "unit"^^xsd:string ;
+      rdfs:range qudt:Unit .
+
+semiwa:unitOfMeasure
+      rdf:type owl:ObjectProperty ;
+      rdfs:domain semiwa:Sensing , semiwa:SensingProcedure ;
+      rdfs:label "unit of measure"^^xsd:string ;
+      rdfs:range qudt:Unit .
+
+semiwa:unitOfOutput
+      rdf:type owl:ObjectProperty ;
+      rdfs:domain semiwa:ActivityProcedure , semiwa:Activity ;
+      rdfs:label "unit of output"^^xsd:string ;
+      rdfs:range qudt:Unit .
+
+semiwa:validStates
+      rdf:type owl:ObjectProperty ;
+      rdfs:domain semiwa:ActivityCapability ;
+      rdfs:label "valid states"^^xsd:string ;
+      rdfs:range semiwa:AbstractDataComponent .
+
+semiwa:validTime
+      rdf:type owl:ObjectProperty ;
+      rdfs:domain semiwa:Deployment ;
+      rdfs:label "valid time"^^xsd:string ;
+      rdfs:range semiwa:AbstractDataComponent .
+
+semiwa:validTransitions
+      rdf:type owl:ObjectProperty ;
+      rdfs:domain semiwa:ActivityCapability ;
+      rdfs:label "valid transitions"^^xsd:string ;
+      rdfs:range semiwa:AbstractDataComponent .
+
+semiwa:value
+      rdf:type owl:ObjectProperty ;
+      rdfs:domain semiwa:AbstractDataComponent ;
+      rdfs:label "value"^^xsd:string ;
+      rdfs:range xsd:string , xsd:float .

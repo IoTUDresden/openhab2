@@ -33,30 +33,9 @@ public class SemanticActivator implements BundleActivator {
 		SemanticActivator.context = bundleContext;
 		
 //		setRegistryServiceTrackers();
-//        thingRegistryServiceTracker.open();
-//        itemServiceTracker.open();
+//      thingRegistryServiceTracker.open();
+//      itemServiceTracker.open();
         logger.debug("startet semantic access layer");
-
-        //TODO
-        // -get semantic information
-        // -registry change listener for events such when thing removed, updated or added
-        // -register handler
-        // -start server or if possible add service to existing server
-        
-
-        // how to send commands, to an item/thing?
-        // how to get status updates from things/items
-        
-        
-        
-//        for (Item i : itemRegistry.getAll()) {
-//			logger.debug("ITEM: {}", i.getName());
-//		}
-//        
-//        for(Thing t : thingRegistry.getAll()){
-//        	logger.debug("THING: {}", t.getThingTypeUID().getAsString());
-//        }
-
 	}
 
 	/*

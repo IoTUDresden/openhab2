@@ -38,13 +38,11 @@ public class SemanticServiceImpl implements SemanticService {
 	
 	public void activate(){
 		// TODO
-		// register in rest
 		// get the atmosphere stuff
 		logger.debug("Semantic Service activated");
 	}
 	
 	public void deactivate(){
-		//TODO
 		logger.debug("Semantic Service deactivated");
 	}
 
