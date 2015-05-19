@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<thing:thing-descriptions bindingId="libnfcwrapper"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:thing="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0"
+        xsi:schemaLocation="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0 http://eclipse.org/smarthome/schemas/thing-description-1.0.0.xsd">
+
+    <!-- Scan Thing -->
+    <thing-type id="idscan">
+        <label>libnfcWrapper Binding Thing</label>
+        <description>Thing for receiving scanned id from a nfc-tag</description>
+        <channels>
+            <channel id="idscan-result-channel" typeId="idscan-result-channel"/>
+        </channels>
+    </thing-type>
+
+    <!-- Scan Result Type -->
+    <channel-type id="idscan-result-channel">
+        <item-type>String</item-type>
+        <label>ID Scan-Result</label>
+        <description>Channel for receiving the id from a scanned nfc-tag</description>
+    </channel-type>
+
+</thing:thing-descriptions>
