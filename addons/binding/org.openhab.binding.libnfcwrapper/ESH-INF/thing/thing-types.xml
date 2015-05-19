@@ -18,6 +18,7 @@
         <item-type>String</item-type>
         <label>ID Scan-Result</label>
         <description>Channel for receiving the id from a scanned nfc-tag</description>
+        <state readOnly="true"/>
     </channel-type>
 
 </thing:thing-descriptions>

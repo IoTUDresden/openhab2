@@ -7,7 +7,7 @@
  */
 package org.openhab.binding.libnfcwrapper.handler;
 
-import static org.openhab.binding.libnfcwrapper.LibnfcWrapperBindingConstants.*;
+import static org.openhab.binding.libnfcwrapper.LibnfcWrapperBindingConstants.CHANNEL_IDSCAN_RESULT;
 
 import org.eclipse.smarthome.core.library.types.StringType;
 import org.eclipse.smarthome.core.thing.ChannelUID;
@@ -50,13 +50,16 @@ public class LibnfcWrapperHandler extends BaseThingHandler implements TargetFoun
 		}
 		device.initiatorInit();
 		device.setProperty(NfcProperty.NP_INFINITE_SELECT, false);
-		scheduler.execute(new Runnable() {			
-			@Override
-			public void run() {
-				runPolling();			
-			}
-		});
 		updateStatus(ThingStatus.ONLINE);
+		updateState(CHANNEL_IDSCAN_RESULT, new StringType("nothing scanned"));
+		runPolling();
+//		scheduler.execute(new Runnable() {			
+//			@Override
+//			public void run() {
+//				runPolling();			
+//			}
+//		});
+
 	}
 	
 	@Override
@@ -94,27 +97,37 @@ public class LibnfcWrapperHandler extends BaseThingHandler implements TargetFoun
 	@Override
 	public void onError(String arg0) {
 		logger.error("Error happened while polling for nfc target");
+		updateState(CHANNEL_IDSCAN_RESULT, new StringType("error"));
 		updateStatus(ThingStatus.OFFLINE);
 		
-		//TODO check if that works
-		if(!scheduler.isTerminated() || !scheduler.isShutdown())
-			scheduler.shutdownNow();
+//		TODO check if that works
+//		if(!scheduler.isTerminated() || !scheduler.isShutdown())
+//			scheduler.shutdownNow();
 	}
 
 	@Override
 	public void onTargetFound(NfcTarget arg0) {
 		String uid = arg0.getUidAsString();
+		if(uid == null || uid.equals("")){
+			logger.error("error while receiving the id from the nfc target");
+			updateState(CHANNEL_IDSCAN_RESULT, new StringType("error"));
+			return;
+		}
+			
+		logger.debug("found nfc tag with uid: {}", uid);
 		updateState(CHANNEL_IDSCAN_RESULT, new StringType(uid));
 	}
 	
-	//after the first polling the second polling is started
+	//FIXME seems that the polling is not blocking, so you have to place the tag on the reader.
+	//very bad
 	private void runPolling(){
-		device.poll(this);
-		scheduler.execute(new Runnable() {			
-			@Override
-			public void run() {
-				runPolling();				
-			}
-		});
+		device.poll(this); //this method should block till a target is found
+//		scheduler.execute(new Runnable() {			
+//			@Override
+//			public void run() {
+//				runPolling();				
+//			}
+//		});
 	}
+
 }
