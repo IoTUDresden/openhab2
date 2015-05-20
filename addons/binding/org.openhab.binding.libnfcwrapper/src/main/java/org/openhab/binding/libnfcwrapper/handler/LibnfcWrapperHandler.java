@@ -9,6 +9,8 @@ package org.openhab.binding.libnfcwrapper.handler;
 
 import static org.openhab.binding.libnfcwrapper.LibnfcWrapperBindingConstants.CHANNEL_IDSCAN_RESULT;
 
+import java.util.concurrent.TimeUnit;
+
 import org.eclipse.smarthome.core.library.types.StringType;
 import org.eclipse.smarthome.core.thing.ChannelUID;
 import org.eclipse.smarthome.core.thing.Thing;
@@ -52,20 +54,22 @@ public class LibnfcWrapperHandler extends BaseThingHandler implements TargetFoun
 		device.setProperty(NfcProperty.NP_INFINITE_SELECT, false);
 		updateStatus(ThingStatus.ONLINE);
 		updateState(CHANNEL_IDSCAN_RESULT, new StringType("nothing scanned"));
-		runPolling();
-//		scheduler.execute(new Runnable() {			
-//			@Override
-//			public void run() {
-//				runPolling();			
-//			}
-//		});
-
+		
+		//the scheduler runs in background and scan's for targets
+		scheduler.scheduleWithFixedDelay(new Runnable() {			
+			@Override
+			public void run() {
+				runPolling();				
+			}
+		}, 5, 1, TimeUnit.SECONDS);
 	}
 	
 	@Override
 	public void dispose() {
 		super.dispose();
 		updateStatus(ThingStatus.OFFLINE);
+		if(scheduler.isTerminated() || scheduler.isShutdown())
+			scheduler.shutdown();	
 		connection.close();
 	}
 	
@@ -99,10 +103,6 @@ public class LibnfcWrapperHandler extends BaseThingHandler implements TargetFoun
 		logger.error("Error happened while polling for nfc target");
 		updateState(CHANNEL_IDSCAN_RESULT, new StringType("error"));
 		updateStatus(ThingStatus.OFFLINE);
-		
-//		TODO check if that works
-//		if(!scheduler.isTerminated() || !scheduler.isShutdown())
-//			scheduler.shutdownNow();
 	}
 
 	@Override
@@ -118,16 +118,10 @@ public class LibnfcWrapperHandler extends BaseThingHandler implements TargetFoun
 		updateState(CHANNEL_IDSCAN_RESULT, new StringType(uid));
 	}
 	
-	//FIXME seems that the polling is not blocking, so you have to place the tag on the reader.
-	//very bad
+	//FIXME: Sometimes the polling ends without a scanned tag and updates the state to 'error'. 
+	//Maybe timout while polling in the libnfc?
 	private void runPolling(){
 		device.poll(this); //this method should block till a target is found
-//		scheduler.execute(new Runnable() {			
-//			@Override
-//			public void run() {
-//				runPolling();				
-//			}
-//		});
 	}
 
 }
