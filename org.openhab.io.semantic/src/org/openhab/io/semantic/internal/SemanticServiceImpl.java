@@ -3,6 +3,7 @@ package org.openhab.io.semantic.internal;
 import org.eclipse.smarthome.core.events.EventPublisher;
 import org.eclipse.smarthome.core.items.Item;
 import org.eclipse.smarthome.core.items.ItemRegistry;
+import org.eclipse.smarthome.core.thing.ThingRegistry;
 import org.openhab.io.semantic.core.QueryResult;
 import org.openhab.io.semantic.core.SemanticService;
 import org.slf4j.Logger;
@@ -12,6 +13,7 @@ public class SemanticServiceImpl implements SemanticService {
 	private static final Logger logger = LoggerFactory.getLogger(SemanticServiceImpl.class);
 	
 	private ItemRegistry itemRegistry;
+	private ThingRegistry thingRegistry;
 	private EventPublisher eventPublisher;
 	private SemanticManager semanticManager;
 	
@@ -29,6 +31,14 @@ public class SemanticServiceImpl implements SemanticService {
 	
 	public void unsetEventPublisher(){
 		eventPublisher = null;
+	}
+	
+	public void setThingRegistry(ThingRegistry thingRegistry){
+		this.thingRegistry = thingRegistry;
+	}
+	
+	public void unsetThingRegistry(){
+		thingRegistry = null;
 	}
 	
 	public void activate(){
