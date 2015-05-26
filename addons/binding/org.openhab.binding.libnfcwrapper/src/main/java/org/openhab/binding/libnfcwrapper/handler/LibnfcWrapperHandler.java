@@ -110,7 +110,7 @@ public class LibnfcWrapperHandler extends BaseThingHandler implements TargetFoun
 		String uid = arg0.getUidAsString();
 		if(uid == null || uid.equals("")){
 			logger.error("error while receiving the id from the nfc target");
-			updateState(CHANNEL_IDSCAN_RESULT, new StringType("error"));
+			updateState(CHANNEL_IDSCAN_RESULT, new StringType(""));
 			return;
 		}
 			

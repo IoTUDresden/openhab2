@@ -52,7 +52,7 @@ public class FingerScannerHandler extends BaseThingHandler {
 	public void initialize() {
 		super.initialize();
 		setObserver();
-		client = new FingerscanClient("Fingerscan Client", "192.168.1.6", "7003", identifyFingerObserver);
+		client = new FingerscanClient("Fingerscan Client", "localhost", "7003", identifyFingerObserver);
 		@SuppressWarnings("unused")
 		boolean connected = client.connect();
 	}
