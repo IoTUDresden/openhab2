@@ -33,7 +33,7 @@ public class SemanticServiceImpl implements SemanticService {
 	
 	public void activate(){
 		semanticManager = new SemanticManager();
-
+		semanticManager.createInstancesModel(itemRegistry);
 		logger.debug("Semantic Service activated");
 	}
 	
@@ -71,6 +71,8 @@ public class SemanticServiceImpl implements SemanticService {
 	public QueryResult sendCommand(String command, String query) {
 		logger.debug("trying to send command to items: command: {} query: {}", command, query);
 		// TODO Auto-generated method stub
+		
+		
 		return null;
 	}
 
