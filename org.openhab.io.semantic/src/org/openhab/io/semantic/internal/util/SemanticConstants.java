@@ -16,7 +16,7 @@ public class SemanticConstants {
 	/**
 	 * path to the instance skeleton
 	 */
-	public static final String INSTANCE_SKELLETON = "resources/instance_skeleton.ttl";
+	public static final String INSTANCE_SKELETON = "resources/instance_skeleton.ttl";
 	
 	/**
 	 * path to the semiwa structure

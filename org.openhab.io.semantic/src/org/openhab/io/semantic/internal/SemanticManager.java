@@ -2,8 +2,10 @@ package org.openhab.io.semantic.internal;
 
 import org.eclipse.smarthome.core.items.Item;
 import org.eclipse.smarthome.core.items.ItemRegistry;
+import org.eclipse.smarthome.core.thing.ChannelUID;
 import org.eclipse.smarthome.core.thing.Thing;
 import org.eclipse.smarthome.core.thing.ThingRegistry;
+import org.eclipse.smarthome.core.thing.ThingStatus;
 import org.openhab.io.semantic.core.QueryResult;
 import org.openhab.io.semantic.internal.util.SemanticConstants;
 import org.slf4j.Logger;
@@ -27,6 +29,7 @@ public class SemanticManager {
 	 * @param itemRegistry
 	 */
 	public void createInstancesModel(ItemRegistry itemRegistry, ThingRegistry thingRegistry){
+		logger.debug("creating semantic models");
 		createModels();
 		for (Thing thing : thingRegistry.getAll())
 			addThing(thing);
@@ -41,6 +44,7 @@ public class SemanticManager {
 	}
 	
 	public void close(){
+		logger.debug("closing all models");
 		instanceSkeletonModel.close();
 		structureModel.close();
 		openHabInstancesModel.close();
@@ -56,20 +60,23 @@ public class SemanticManager {
 		
 		// must load semiwa schema: can't read via http or via filemapper
 		structureModel.read(SemanticConstants.STRUCTURE, SemanticConstants.TURTLE_STRING);	
-		instanceSkeletonModel.read(SemanticConstants.INSTANCE_SKELLETON, SemanticConstants.TURTLE_STRING);
+		instanceSkeletonModel.read(SemanticConstants.INSTANCE_SKELETON, SemanticConstants.TURTLE_STRING);
 		openHabInstancesModel.read(SemanticConstants.EMPTY_INSTANCE, SemanticConstants.TURTLE_STRING);		
 		structureModel.add(instanceSkeletonModel); //merged model in memory		
 	}
 	
 	private void addThing(Thing thing){
-		if(!thing.isLinked())
-			return;
-		
+		//offline or not linked things are not added
+		if(!thing.isLinked() || thing.getStatus().equals(ThingStatus.OFFLINE))
+			return;		
+				
 	}
 	
 	private void addItem(Item item){
-		
-		
+		//e.g. GroupItem, SwitchItem
+		item.getType();		
+		//e.g. fingerscanner_identify_c6faf529
+		item.getName();
 	}
 	
 	private void removeItem(Item item){
