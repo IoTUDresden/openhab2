@@ -1,0 +1,56 @@
+# baseURI: http://openhab-semantic/0.1/instance
+# imports: http://elite.polito.it/ontologies/dogont.owl
+
+@prefix dogont: <http://elite.polito.it/ontologies/dogont.owl#> .
+@prefix instance: <http://openhab-semantic/0.1/instance#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+dogont:DimmerSwitch_HomematicDimmingActuator
+  rdf:type dogont:DimmerSwitch ;
+  dogont:hasFunctionality instance:LightRegulationFunctionality_OpenHab ;
+  dogont:hasState instance:LightIntensityState_OpenHab ;
+.
+dogont:DiscreteControlFunctionality_OpenHab
+  rdf:type dogont:DiscreteControlFunctionality ;
+.
+dogont:OffCommand_OpenHab
+  rdf:type dogont:OffCommand ;
+.
+dogont:OnCommand_OpenHab
+  rdf:type dogont:OnCommand ;
+.
+<http://openhab-semantic/0.1/instance>
+  rdf:type owl:Ontology ;
+  owl:imports <http://elite.polito.it/ontologies/dogont.owl> ;
+  owl:versionInfo "Created with TopBraid Composer"^^xsd:string ;
+.
+instance:DownCommand_OpenHab
+  rdf:type dogont:DownCommand ;
+  dogont:realCommandName "DOWN"^^xsd:string ;
+.
+instance:LevelControlFunctionality_OpenHab
+  rdf:type dogont:LevelControlFunctionality ;
+  dogont:hasCommand instance:DownCommand_OpenHab ;
+  dogont:hasCommand instance:UpCommand_OpenHab ;
+.
+instance:LightIntensityState_OpenHab
+  rdf:type dogont:LightIntensityState ;
+.
+instance:LightRegulationFunctionality_OpenHab
+  rdf:type dogont:LightRegulationFunctionality ;
+  dogont:hasCommand instance:DownCommand_OpenHab ;
+  dogont:hasCommand instance:UpCommand_OpenHab ;
+.
+instance:UpCommand_OpenHab
+  rdf:type dogont:UpCommand ;
+  dogont:realCommandName "UP"^^xsd:string ;
+.
+instance:VolumeLevelState_OpenHab
+  rdf:type dogont:VolumeLevelState ;
+.
+instance:homematic_radio_controlled_socket_adapter
+  rdf:type owl:Thing ;
+.
