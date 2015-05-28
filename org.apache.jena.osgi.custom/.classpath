@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry exported="true" kind="lib" path="lib/jena-core-2.13.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/commons-codec-1.6.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/commons-csv-1.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/commons-lang3-3.3.2.jar"/>
@@ -12,6 +11,7 @@
 	<classpathentry exported="true" kind="lib" path="lib/jackson-databind-2.3.3.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jcl-over-slf4j-1.7.6.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jena-arq-2.13.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jena-core-2.13.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jena-iri-1.1.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jena-tdb-1.1.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jsonld-java-0.5.1.jar"/>

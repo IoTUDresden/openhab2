@@ -30,7 +30,7 @@ Import-Package: javax.ws.rs;version="2.0.0",
 Bundle-ActivationPolicy: lazy
 Service-Component: OSGI-INF/semanticService.xml,
  OSGI-INF/semanticResource.xml
-Export-Package: org.openhab.io.semantic.core
+Export-Package: org.openhab.io.semantic.core;uses:="org.eclipse.smarthome.core.items"
 Bundle-ClassPath: .,
  lib/commons-codec-1.6.jar,
  lib/commons-csv-1.0.jar,
@@ -43,13 +43,10 @@ Bundle-ClassPath: .,
  lib/jackson-databind-2.3.3.jar,
  lib/jcl-over-slf4j-1.7.6.jar,
  lib/jena-arq-2.13.0.jar,
- lib/jena-core-2.13.0.jar,
  lib/jena-iri-1.1.2.jar,
  lib/jena-tdb-1.1.2.jar,
  lib/jsonld-java-0.5.1.jar,
  lib/libthrift-0.9.2.jar,
- lib/log4j-1.2.17.jar,
- lib/slf4j-api-1.7.6.jar,
- lib/slf4j-log4j12-1.7.6.jar,
  lib/xercesImpl-2.11.0.jar,
- lib/xml-apis-1.4.01.jar
+ lib/xml-apis-1.4.01.jar,
+ lib/jena-core-2.13.0.jar
