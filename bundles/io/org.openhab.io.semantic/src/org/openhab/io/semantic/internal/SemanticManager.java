@@ -27,6 +27,9 @@ public class SemanticManager {
 	private OntModel instanceSkeletonModel;
 	private OntModel openHabInstancesModel;
 
+	public SemanticManager() {
+
+	}
 	
 	/**
 	 * Creates the semantic instances with items currently added to openHAB
