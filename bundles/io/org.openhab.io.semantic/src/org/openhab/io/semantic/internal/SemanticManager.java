@@ -73,6 +73,8 @@ public class SemanticManager {
 		instanceSkeletonModel.read(SemanticConstants.INSTANCE_SKELETON, SemanticConstants.TURTLE_STRING);
 		//this reads the empty instance - so the correct imports and base uri is already set
 		openHabInstancesModel.read(SemanticConstants.EMPTY_INSTANCE, SemanticConstants.TURTLE_STRING);		
+		logger.debug("#################### YEAHHHHHH NOOOOOOOOO EXCEPTION");
+		instanceSkeletonModel.write(System.out);
 	}
 	
 	private void addThing(Thing thing){
