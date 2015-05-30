@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: openHAB Paper UI
+Bundle-SymbolicName: org.openhab.ui.paperui;singleton:=true
+Bundle-Version: 2.0.0.201501201255
+Bundle-ClassPath: org.openhab.ui.paperui-2.0.0-SNAPSHOT.jar
+Bundle-Vendor: openHAB.org
+Require-Bundle: javax.servlet
+Import-Package: org.osgi.service.component,
+ org.osgi.service.http,
+ org.slf4j
+Ignore-Package: org.openhab.ui.paperui.internal
+Bundle-License: http://www.eclipse.org/legal/epl-v10.html
+Private-Package: org.openhab.ui.paperui.internal
+Service-Component: OSGI-INF/*
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
