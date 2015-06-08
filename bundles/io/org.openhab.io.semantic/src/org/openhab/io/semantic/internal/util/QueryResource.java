@@ -1,5 +1,7 @@
 package org.openhab.io.semantic.internal.util;
 
+import org.openhab.io.semantic.internal.ontology.DogontSchema;
+
 /**
  * Contains all required SPARQL querys as string
  * 
@@ -29,5 +31,25 @@ public class QueryResource {
 			+ "WHERE {"
 			+ "       ?subject : %s"
 			+ " \"%s\" . "
+			+ "}";
+	
+	/**
+	 * Use String.format phaseId
+	 */
+	public static final String SubjectByPhaseId = "PREFIX dogont: <" + DogontSchema.NS + "> "
+			+ "SELECT ?subject "
+			+ "WHERE {"
+			+ "	?statevalue dogont:phaseID \"<%s>\" ."
+			+ "	?state dogont:hasStateValue ?statevalue. "
+			+ "	?subject dogont:hasState ?state. "
+			+ "}";
+	
+	/**
+	 * Use String.format phaseId
+	 */
+	public static final String StateValueByPhaseId = "PREFIX dogont: <" + DogontSchema.NS + "> "
+			+ "SELECT ?statevalue "
+			+ "WHERE {"
+			+ "	?statevalue dogont:phaseID \"<%s>\" ."
 			+ "}";
 }

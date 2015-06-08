@@ -20,17 +20,19 @@ public class SemanticConstants {
 	/**
 	 * path to the instance skeleton
 	 */
+
 	public static final String INSTANCE_SKELETON = "resources/instance_skeleton.ttl";
-	
-	/**
-	 * path to the semiwa structure
-	 */
-	public static final String STRUCTURE = "resources/dogont.owl";
 	
 	/**
 	 * namespace for the semiwa instances 
 	 */
 	public static final String NS_INSTANCE = "http://openhab-semantic/0.1/instance#";
+	
+	/**
+	 * namepsace for the semiwa schema
+	 */
+	public static final String NS_SCHEMA = "http://elite.polito.it/ontologies/dogont.owl#";
+
 	
 	/**
 	 * path to the empty instances

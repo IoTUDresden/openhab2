@@ -103,4 +103,9 @@ public class SemanticServiceImpl implements SemanticService {
 		return semanticManager.getInstanceModelAsString();
 	}
 
+	@Override
+	public String getInstanceSkeletonAsString() {
+		return semanticManager.getInstanceModelAsString();
+	}
+
 }

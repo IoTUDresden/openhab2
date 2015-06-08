@@ -5,6 +5,7 @@ import com.hp.hpl.jena.query.Query;
 import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.query.QueryExecutionFactory;
 import com.hp.hpl.jena.query.QueryFactory;
+import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.query.ResultSetFormatter;
 
@@ -49,6 +50,29 @@ public class QueryUtil {
 			String namespace, String value, OntModel deviceOnt) {		
 		return getSubjectByPropertyValue(property, namespace, value, deviceOnt, 
 				QueryResource.SubjectByPropertyValue);
+	}
+	
+	public static String getSubjectByStateValuePhaseId(String phaseId, OntModel model){
+		String queryString = String.format(QueryResource.SubjectByPhaseId, phaseId);
+		return phaseIdQuery(queryString, model);
+	}
+	
+	public static String getStateValueByStateValuePhaseId(String phaseId, OntModel model){
+		String queryString = String.format(QueryResource.StateValueByPhaseId, phaseId);
+		return phaseIdQuery(queryString, model);
+	}
+	
+	private static String phaseIdQuery(String queryString, OntModel model){
+		Query query = QueryFactory.create(queryString);
+		QueryExecution qe = QueryExecutionFactory.create(query, model);
+		ResultSet results = qe.execSelect();
+		if(results.getRowNumber() != 1){
+			qe.close();
+			return null;
+		}
+		String resultXMLString = ResultSetFormatter.asXMLString(results);
+		qe.close();
+		return removeUriTag(resultXMLString);		
 	}
 	
 	private static String getSubjectByPropertyValue(String property,
