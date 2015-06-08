@@ -58,5 +58,12 @@ public class SemanticResource implements RESTResource {
 	public String query(@QueryParam("s") String query){
 		return "query: param: " + query;
 	}
+	
+	@GET
+	@Path("/instanceSkeleton")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String getInstanceSkeleton(){
+		return semanticService.getCurrentInstanceAsString();
+	}
 
 }

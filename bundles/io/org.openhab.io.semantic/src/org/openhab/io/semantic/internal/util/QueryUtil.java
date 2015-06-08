@@ -17,6 +17,10 @@ public class QueryUtil {
 	private static final String URI_TAG = "<uri>";
 	private static final String URI_TAG_END = "</uri>";	
 	
+	private QueryUtil() {
+		// no need for a instance of this
+	}
+	
 	/**
 	 * Gets the subject by property value uncertainty.
 	 *

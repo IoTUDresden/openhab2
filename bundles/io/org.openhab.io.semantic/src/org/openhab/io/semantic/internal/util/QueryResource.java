@@ -10,7 +10,7 @@ public class QueryResource {
 	/**
 	 * Use String.format: Namespace, Property, Value
 	 */
-	public static final String SubjectByPropertyValueUncertainty = "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> "
+	public static final String SubjectByPropertyValueUncertainty = "PREFIX rdfs: <" + SemanticConstants.NS_RDF_SCHEMA +"> "
 			+ "PREFIX : <%s> "
 			+ "SELECT * "
 			+ "WHERE {"
@@ -23,7 +23,7 @@ public class QueryResource {
 	/**
 	 * Use String.format: namespace, property, value
 	 */
-	public static final String SubjectByPropertyValue = "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> "
+	public static final String SubjectByPropertyValue = "PREFIX rdfs: <" + SemanticConstants.NS_RDF_SCHEMA +"> "
 			+ "PREFIX : <%s>"
 			+ "SELECT * "
 			+ "WHERE {"

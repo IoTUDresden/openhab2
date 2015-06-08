@@ -1,7 +1,11 @@
 package org.openhab.io.semantic.internal.util;
 
 public class SemanticConstants {
-	//TODO the files should be located in a openhab config folder, not in this bundle	
+	//TODO the files should be located in a openhab config folder, not in this bundle
+	
+	private SemanticConstants() {
+		// no need for a instance of this
+	}
 	
 	/**
 	 * Base path to the tdb folder
@@ -21,17 +25,12 @@ public class SemanticConstants {
 	/**
 	 * path to the semiwa structure
 	 */
-	public static final String STRUCTURE = "resources/semiwa.ttl";
+	public static final String STRUCTURE = "resources/dogont.owl";
 	
 	/**
 	 * namespace for the semiwa instances 
 	 */
-	public static final String NS_INSTANCE = "http://semiwa.org/0.1/instances#";
-	
-	/**
-	 * namepsace for the semiwa schema
-	 */
-	public static final String NS_SCHEMA = "http://semiwa.org/0.1/schema#";
+	public static final String NS_INSTANCE = "http://openhab-semantic/0.1/instance#";
 	
 	/**
 	 * path to the empty instances
@@ -47,5 +46,10 @@ public class SemanticConstants {
 	 * The Turtle language definition as string
 	 */
 	public static final String TURTLE_STRING = "TURTLE";
+	
+	/**
+	 * Namespace for the rdf schema
+	 */
+	public static final String NS_RDF_SCHEMA = "http://www.w3.org/2000/01/rdf-schema#";
 
 }

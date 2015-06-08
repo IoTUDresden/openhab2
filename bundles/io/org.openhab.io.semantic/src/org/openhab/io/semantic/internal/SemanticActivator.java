@@ -21,11 +21,6 @@ public class SemanticActivator implements BundleActivator {
 	 */
 	public void start(BundleContext bundleContext) throws Exception {
 		SemanticActivator.context = bundleContext;
-		//TODO remove this stuff. only for testing the jena import
-//		DocumentBuilderFactoryImpl.newInstance();
-//		Graph g = GraphBase.emptyGraph;
-//		ModelCom m = new ModelCom(g);
-
         logger.debug("startet semantic access layer");
 	}
 

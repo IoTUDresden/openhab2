@@ -19,4 +19,6 @@ public interface SemanticService {
 	String getRestUrlsForItemsInJson(String query);
 	
 	String getCurrentInstanceAsString();
+	
+	String getInstanceSkeletonAsString();
 }

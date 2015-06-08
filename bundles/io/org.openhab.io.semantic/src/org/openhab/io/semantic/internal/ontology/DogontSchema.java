@@ -1,4 +1,4 @@
-package org.openhab.io.semantic.ontology;
+package org.openhab.io.semantic.internal.ontology;
 
 import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.rdf.model.Resource;
@@ -10,6 +10,9 @@ import com.hp.hpl.jena.rdf.model.ResourceFactory;
  * Automatically generated with TopBraid Composer.
  */
 public class DogontSchema {
+	
+	private DogontSchema() {
+	}
 
     public final static String BASE_URI = "http://elite.polito.it/ontologies/dogont.owl";
 
