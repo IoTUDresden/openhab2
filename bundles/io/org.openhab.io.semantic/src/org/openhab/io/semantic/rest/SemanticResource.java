@@ -8,7 +8,6 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import org.eclipse.smarthome.io.rest.RESTResource;
-import org.openhab.io.semantic.core.QueryResult;
 import org.openhab.io.semantic.core.SemanticService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,7 +45,7 @@ public class SemanticResource implements RESTResource {
 	}
 	
 	@GET
-	@Path("/{uid: [a-zA-Z_0-9]*}")
+	@Path("/select/{uid: [a-zA-Z_0-9]*}")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String getSemanticForUid(@PathParam("uid") String uid){
 		return "recieved uid: " + uid;		
@@ -60,7 +59,7 @@ public class SemanticResource implements RESTResource {
 	}
 	
 	@GET
-	@Path("/instanceSkeleton")
+	@Path("/instance")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String getInstanceSkeleton(){
 		return semanticService.getCurrentInstanceAsString();

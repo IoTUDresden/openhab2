@@ -42,20 +42,20 @@ public class SemanticServiceImpl implements SemanticService {
 	}
 	
 	public void activate(){
-		semanticManager = new SemanticManager();
-		semanticManager.createInstancesModel(itemRegistry, thingRegistry);
+		semanticManager = new SemanticManager(itemRegistry, thingRegistry);
 		logger.debug("Semantic Service activated");
 	}
 	
 	public void deactivate(){
 		logger.debug("Semantic Service deactivated");
+		semanticManager.close();
+		semanticManager = null;
 	}
 	
 	@Override
 	public QueryResult executeQuery(String query) {
 		logger.debug("recieved query: {}", query);
-		// TODO Auto-generated method stub
-		return null;
+		return semanticManager.executeQuery(query);
 	}
 
 	@Override
