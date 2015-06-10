@@ -108,4 +108,11 @@ public class SemanticServiceImpl implements SemanticService {
 		return semanticManager.getInstanceModelAsString();
 	}
 
+	//TODO only for testing
+	@Override
+	@Deprecated
+	public void setAllValues() {
+		semanticManager.addCurrentItemStatesToModelRealStateValues();		
+	}
+
 }

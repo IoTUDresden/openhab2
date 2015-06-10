@@ -7,6 +7,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
+import org.eclipse.smarthome.core.items.ItemRegistry;
+import org.eclipse.smarthome.core.thing.ThingRegistry;
 import org.eclipse.smarthome.io.rest.RESTResource;
 import org.openhab.io.semantic.core.SemanticService;
 import org.slf4j.Logger;
@@ -17,6 +19,8 @@ public class SemanticResource implements RESTResource {
 	private static final Logger logger = LoggerFactory.getLogger(SemanticResource.class);
 	
 	private SemanticService semanticService;
+	private ThingRegistry thingRegistry;
+	private ItemRegistry itemRegistry;
 	
 	public static final String PATH_SEMANTIC = "semantic";
 	
@@ -35,7 +39,23 @@ public class SemanticResource implements RESTResource {
 	
 	public void deactivate(){
 		logger.debug("Semantic rest resource deactivated");
-	}	
+	}
+	
+	public void setThingRegistry(ThingRegistry thingRegistry) {
+		this.thingRegistry = thingRegistry;
+	}
+	
+	public void unsetThingRegistry(){
+		thingRegistry = null;
+	}
+	
+	public void setItemRegistry(ItemRegistry itemRegistry) {
+		this.itemRegistry = itemRegistry;
+	}
+	
+	public void unsetItemRegistry(){
+		itemRegistry = null;
+	}
 	
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)
@@ -63,6 +83,25 @@ public class SemanticResource implements RESTResource {
 	@Produces(MediaType.TEXT_PLAIN)
 	public String getInstanceSkeleton(){
 		return semanticService.getCurrentInstanceAsString();
+	}
+	
+	//TODO only for testing
+	@Deprecated
+	@GET
+	@Path("/testvaluesetting")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String getCurrentValues(){
+		semanticService.setAllValues();
+		return semanticService.getCurrentInstanceAsString();
+	}
+	
+	@GET
+	@Path("/helper")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String getSetupHelper(){
+		ConfigHelper helper = new ConfigHelper();
+		helper.addThingsAndItems(thingRegistry, itemRegistry);
+		return helper.getAsString();
 	}
 
 }

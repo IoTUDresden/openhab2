@@ -21,4 +21,8 @@ public interface SemanticService {
 	String getCurrentInstanceAsString();
 	
 	String getInstanceSkeletonAsString();
+	
+	//TODO only for testing
+	@Deprecated
+	void setAllValues();
 }

@@ -21,7 +21,7 @@ public class QueryResultImpl implements QueryResult {
 
 	@Override
 	public String getAsString() {
-		// TODO Auto-generated method stub
+		// TODO check if this needed
 		return null;
 	}
 
