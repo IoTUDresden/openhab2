@@ -13,7 +13,7 @@ public class QueryResource {
 	 * Use String.format: Namespace, Property, Value
 	 */
 	public static final String SubjectByPropertyValueUncertainty = "PREFIX rdfs: <"
-			+ SemanticConstants.NS_RDF_SCHEMA + "> " 
+			+ SemanticConstants.NS_RDFS_SCHEMA + "> " 
 			+ "PREFIX : <%s> " 
 			+ "SELECT * " 
 			+ "WHERE {"
@@ -23,7 +23,7 @@ public class QueryResource {
 	/**
 	 * Use String.format: namespace, property, value
 	 */
-	public static final String SubjectByPropertyValue = "PREFIX rdfs: <" + SemanticConstants.NS_RDF_SCHEMA + "> " 
+	public static final String SubjectByPropertyValue = "PREFIX rdfs: <" + SemanticConstants.NS_RDFS_SCHEMA + "> " 
 	 + "PREFIX : <%s>" 
 	 + "SELECT * " 
 	 + "WHERE {" + "       ?subject : %s" + " \"%s\" . " + "}";
@@ -47,12 +47,15 @@ public class QueryResource {
 	 * Selects all BuildingThings which have an StateValue
 	 * varNames: instance, state, value, realValue
 	 */
-	public static final String BuildingThingsContainingStateValue = "PREFIX dogont: <" + DogontSchema.NS + "> "
-			+ "SELECT ?instance ?state ?value ?realValue"
-			+ "WHERE {"
-			+ "?class rdfs:subClassOf* dogont:BuildingThing."
-			+ "?instance rdf:type ?class ."
-			+ "?instance dogont:hasState ?state."
-			+ "?state dogont:hasStateValue ?value."
-			+ "?value dogont:realStateValue ?realValue";
+	public static final String BuildingThingsContainingStateValue = ""
+			+ "PREFIX rdfs: <" + SemanticConstants.NS_RDFS_SCHEMA + "> "
+			+ "PREFIX rdf: <" + SemanticConstants.NS_RDF_SYNTAX + "> "
+			+ "PREFIX dogont: <" + DogontSchema.NS + "> "
+			+ "SELECT ?instance ?state ?value ?realValue "
+			+ "WHERE { "
+			+ "?class rdfs:subClassOf* dogont:BuildingThing. "
+			+ "?instance rdf:type ?class . "
+			+ "?instance dogont:hasState ?state. "
+			+ "?state dogont:hasStateValue ?value. "
+			+ "?value dogont:realStateValue ?realValue }";
 }

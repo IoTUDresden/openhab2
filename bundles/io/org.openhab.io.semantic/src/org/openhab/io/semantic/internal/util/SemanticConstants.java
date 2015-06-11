@@ -38,6 +38,11 @@ public class SemanticConstants {
 	public static final String STATE_PREFIX = "State_";
 	
 	/**
+	 * Function_ prefix for individual names, of the type 'Functionality'
+	 */
+	public static final String FUNCTION_PREFIX = "Function_";
+	
+	/**
 	 * the complete prefix incl. dogont namespace and thing prefix for 'BuildingThings'
 	 */
 	public static final String NS_AND_THING_PREFIX = NS_INSTANCE + THING_PREFIX;
@@ -60,6 +65,8 @@ public class SemanticConstants {
 	/**
 	 * Namespace for the rdf schema
 	 */
-	public static final String NS_RDF_SCHEMA = "http://www.w3.org/2000/01/rdf-schema#";
+	public static final String NS_RDFS_SCHEMA = "http://www.w3.org/2000/01/rdf-schema#";
+	
+	public static final String NS_RDF_SYNTAX = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
 
 }

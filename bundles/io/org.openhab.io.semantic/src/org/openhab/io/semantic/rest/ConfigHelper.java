@@ -27,7 +27,7 @@ public class ConfigHelper {
 		for (Thing thing : thingRegistry.getAll())
 			addThing(thing);
 		
-		out.append(" \n\nItems which are not listed under a thing (e.g. items from the compat. layer:\n");
+		out.append(" \n\nItems which are not listed under a thing (e.g. items from the compat. layer):\n");
 		out.append("------------------------------------------------------------------------------\n");
 		for (Item item : itemRegistry.getAll())
 			addItem(item);
@@ -47,14 +47,21 @@ public class ConfigHelper {
 		out.append("\n");
 		out.append(SemanticConstants.THING_PREFIX).append(uid).append("\n");
 		out.append("    Functions:\n");
+		appendFunctionsOrState(SemanticConstants.FUNCTION_PREFIX, thing);
+		out.append("    States:\n");
+		appendFunctionsOrState(SemanticConstants.STATE_PREFIX, thing);
+	}
+	
+	private void appendFunctionsOrState(String stateOrFunctionPrefix, Thing thing){
 		Item tmpItem = null;
 		for (Channel channel : thing.getChannels()) {
 			for (Iterator<Item> iterator = channel.getLinkedItems().iterator(); iterator.hasNext();) {
 				tmpItem = iterator.next();
-				out.append("        ").append(tmpItem.getName()).append("\n");
+				out.append("        ").append(stateOrFunctionPrefix).append(tmpItem.getName()).append("\n");
+				out.append("                Type: ").append(tmpItem.getType()).append("\n");
 				allreadyAddedItems.add(tmpItem.getName());
 			}		
-		}	
+		}		
 	}
 	
 	private void addItem(Item item){
@@ -63,8 +70,10 @@ public class ConfigHelper {
 			return;
 		if(item instanceof GroupItem)
 			groupItems.add(item.getName());
-		else
+		else{
 			out.append(item.getName()).append("\n");
+			out.append("    Type: ").append(item.getType()).append("\n");
+		}
 	}
 
 }

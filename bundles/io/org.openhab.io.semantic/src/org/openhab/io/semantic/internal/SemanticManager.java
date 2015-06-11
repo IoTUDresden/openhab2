@@ -119,6 +119,7 @@ public class SemanticManager {
 		qe.close();		
 	}
 	
+	//TODO check if more than one states supported -> check the query
 	private void addValueToModel(QuerySolution qs){
 		Resource state = qs.getResource("state");
 		Resource value = qs.getResource("value");
@@ -127,19 +128,12 @@ public class SemanticManager {
 		Item item = getItemWithModelStateLocalName(state.getLocalName());
 		if(item == null)
 			return;
-//		Individual valueIndividual = openHabInstancesModel.getIndividual(value.getURI());
-//		if(valueIndividual == null){
-//			logger.error("the StateValue individual '{}' cannot be found in the model", value.getURI());
-//			return;
-//		}
-//		valueIndividual.removeAll(DogontSchema.realStateValue);
-//		valueIndividual.addProperty(DogontSchema.realStateValue, item.getState().toString());
 		Statement stmt = value.getProperty(DogontSchema.realStateValue);
 		stmt.changeObject(item.getState().toString());
 	}
 	
 	private Item getItemWithModelStateLocalName(String localName){
-		if(localName.startsWith(SemanticConstants.STATE_PREFIX)){
+		if(!localName.startsWith(SemanticConstants.STATE_PREFIX)){
 			logger.warn("the state '{}' does not have the correct name prefix", localName);
 			return null;
 		}

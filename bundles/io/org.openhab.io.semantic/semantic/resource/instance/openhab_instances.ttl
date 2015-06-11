@@ -7,3 +7,60 @@
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+dogont:State_fingerscanner_identify_25b1defb_channel_person
+  rdf:type rdf:Statement ;
+  rdf:predicate dogont:hasState ;
+.
+dogont:Thing_fingerscanner_identify_25b1defb
+  rdf:type dogont:AccessControlSystem ;
+  dogont:hasFunctionality instance:Function_fingerscanner_identify_25b1defb_channel_identify ;
+  dogont:hasFunctionality instance:Function_fingerscanner_identify_25b1defb_channel_person ;
+  dogont:hasState instance:State_fingerscanner_identify_25b1defb_channel_person ;
+.
+dogont:Thing_yahooweather_weather_berlin
+  rdf:type dogont:SingleTemperatureSensor ;
+  dogont:hasFunctionality instance:Function_Weather_Temperature ;
+  dogont:hasState instance:State_Weather_Temperature ;
+.
+<http://openhab-semantic/0.1/instance>
+  rdf:type owl:Ontology ;
+  owl:imports <http://elite.polito.it/ontologies/dogont.owl> ;
+  owl:versionInfo "Created with TopBraid Composer"^^xsd:string ;
+.
+instance:Command_fingerscanner_identify_25b1defb_channel_identify
+  rdf:type dogont:OnCommand ;
+.
+instance:Command_fingerscanner_identify_25b1defb_channel_person
+  rdf:type dogont:GetCommand ;
+  dogont:returnType "Object"^^xsd:string ;
+.
+instance:Function_Weather_Temperature
+  rdf:type dogont:TemperatureMeasurementFunctionality ;
+.
+instance:Function_fingerscanner_identify_25b1defb_channel_identify
+  rdf:type dogont:IdentificationFunctionality ;
+  dogont:hasCommand instance:Command_fingerscanner_identify_25b1defb_channel_identify ;
+.
+instance:Function_fingerscanner_identify_25b1defb_channel_person
+  rdf:type dogont:QueryFunctionality ;
+  dogont:hasCommand instance:Command_fingerscanner_identify_25b1defb_channel_person ;
+.
+instance:State_Weather_Temperature
+  rdf:type dogont:TemperatureState ;
+  dogont:hasStateValue [
+      rdf:type dogont:TemperatureStateValue ;
+      dogont:realStateValue "0"^^xsd:string ;
+      dogont:unitOfMeasure <http://purl.oclc.org/NET/muo/ucum/unit/temperature/degree-Celsius> ;
+    ] ;
+.
+instance:State_fingerscanner_identify_25b1defb_channel_person
+  rdf:type dogont:State ;
+  dogont:hasStateValue [
+      rdf:type dogont:AuthenticatedStateValue ;
+      dogont:realStateValue "nobody"^^xsd:string ;
+    ] ;
+.
+instance:homematic_radio_controlled_socket_adapter
+  rdf:type owl:Thing ;
+.
