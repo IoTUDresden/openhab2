@@ -6,6 +6,8 @@ public interface SemanticService {
 	
 	QueryResult executeQuery(String query);
 	
+	QueryResult executeQuery(String query, boolean withLatestValues);
+	
 	boolean addItem(Item item);
 	
 	boolean removeItem(Item item);

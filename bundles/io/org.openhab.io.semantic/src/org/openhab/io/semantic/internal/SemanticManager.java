@@ -14,6 +14,7 @@ import org.openhab.io.semantic.internal.util.SemanticConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.hp.hpl.jena.datatypes.RDFDatatype;
 import com.hp.hpl.jena.ontology.Individual;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.ontology.OntModelSpec;
@@ -63,7 +64,7 @@ public class SemanticManager {
 	 * @return null if queryAsString is null or empty
 	 */
 	public QueryResult executeQuery(String queryAsString) {
-		return executeQuery(queryAsString, true);
+		return executeQuery(queryAsString, false);
 	}
 
 	/**
@@ -71,7 +72,9 @@ public class SemanticManager {
 	 * 
 	 * @param queryAsString
 	 * @param withLatestValues
-	 *            if set to true, this will fill the result set with the latest values for the devices
+	 *            If set to true, this will add the current values of all items to their specific stateValue
+	 *            in the ont model. This may take some time, so set this to true, only if you need the current
+	 *            values.
 	 * @return
 	 */
 	public QueryResult executeQuery(String queryAsString, boolean withLatestValues) {
@@ -110,6 +113,9 @@ public class SemanticManager {
 		openHabInstancesModel.close();
 	}
 	
+	/**
+	 * Adds the current item states to their specific stateValues in the ont model.
+	 */
 	public void addCurrentItemStatesToModelRealStateValues() {
 		Query query = QueryFactory.create(QueryResource.BuildingThingsContainingStateValue);
 		QueryExecution qe = QueryExecutionFactory.create(query, openHabInstancesModel);
@@ -129,7 +135,11 @@ public class SemanticManager {
 		if(item == null)
 			return;
 		Statement stmt = value.getProperty(DogontSchema.realStateValue);
-		stmt.changeObject(item.getState().toString());
+		if(stmt == null)
+			return;
+		RDFDatatype datatype = stmt.getLiteral().getDatatype();	
+		value.removeAll(DogontSchema.realStateValue);
+		value.addProperty(DogontSchema.realStateValue, item.getState().toString(), datatype);
 	}
 	
 	private Item getItemWithModelStateLocalName(String localName){

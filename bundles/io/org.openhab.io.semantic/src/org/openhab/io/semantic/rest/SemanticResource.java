@@ -7,9 +7,11 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
+import org.apache.jena.atlas.json.JsonNull;
 import org.eclipse.smarthome.core.items.ItemRegistry;
 import org.eclipse.smarthome.core.thing.ThingRegistry;
 import org.eclipse.smarthome.io.rest.RESTResource;
+import org.openhab.io.semantic.core.QueryResult;
 import org.openhab.io.semantic.core.SemanticService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -60,7 +62,6 @@ public class SemanticResource implements RESTResource {
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)
 	public String getSemantic(){
-		//select all from the semantic db
 		return semanticService.getCurrentInstanceAsString();
 	}
 	
@@ -68,21 +69,16 @@ public class SemanticResource implements RESTResource {
 	@Path("/select/{uid: [a-zA-Z_0-9]*}")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String getSemanticForUid(@PathParam("uid") String uid){
+		//TODO
 		return "recieved uid: " + uid;		
 	}
 	
 	@GET
 	@Path("/query")
 	@Produces(MediaType.TEXT_PLAIN)
-	public String query(@QueryParam("s") String query){
-		return "query: param: " + query;
-	}
-	
-	@GET
-	@Path("/instance")
-	@Produces(MediaType.TEXT_PLAIN)
-	public String getInstanceSkeleton(){
-		return semanticService.getCurrentInstanceAsString();
+	public String query(@QueryParam("statement") String query, @QueryParam("withlatest") boolean withLatest){
+		QueryResult result = semanticService.executeQuery(query, withLatest);
+		return result == null ? JsonNull.instance.toString() : result.getAsJsonString();
 	}
 	
 	//TODO only for testing

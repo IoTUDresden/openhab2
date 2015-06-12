@@ -53,9 +53,14 @@ public class SemanticServiceImpl implements SemanticService {
 	}
 	
 	@Override
-	public QueryResult executeQuery(String query) {
-		logger.debug("recieved query: {}", query);
-		return semanticManager.executeQuery(query);
+	public QueryResult executeQuery(String query) {		
+		return executeQuery(query, false);
+	}
+	
+	@Override
+	public QueryResult executeQuery(String query, boolean withLatestValues) {
+		logger.debug("received query: {}\nwith latest values: {}", query, withLatestValues);
+		return semanticManager.executeQuery(query, withLatestValues);
 	}
 
 	@Override
@@ -114,5 +119,4 @@ public class SemanticServiceImpl implements SemanticService {
 	public void setAllValues() {
 		semanticManager.addCurrentItemStatesToModelRealStateValues();		
 	}
-
 }

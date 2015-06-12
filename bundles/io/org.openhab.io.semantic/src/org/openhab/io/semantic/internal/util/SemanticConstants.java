@@ -63,10 +63,13 @@ public class SemanticConstants {
 	public static final String TURTLE_STRING = "TURTLE";
 	
 	/**
-	 * Namespace for the rdf schema
+	 * Namespace for the rdfs (rdf-schema)
 	 */
 	public static final String NS_RDFS_SCHEMA = "http://www.w3.org/2000/01/rdf-schema#";
 	
+	/**
+	 * Namespace for the rdf (rdf-syntax)
+	 */
 	public static final String NS_RDF_SYNTAX = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
 
 }

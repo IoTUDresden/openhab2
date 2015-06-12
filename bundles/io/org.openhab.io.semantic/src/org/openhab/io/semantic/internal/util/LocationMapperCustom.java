@@ -25,6 +25,23 @@ public class LocationMapperCustom extends LocationMapper {
 		altMapping("http://semiwa.org/0.1/schema", SemanticConstants.DEFAULT_ONTOLOGY_PATH + "semiwa.ttl");
 		
 		//TODO dogont alternative mapping
+		altMapping("http://elite.polito.it/ontologies/dogont.owl", "");
+		altMapping("http://creativecommons.org/ns", "");
+		altMapping("http://protege.stanford.edu/plugins/owl/protege", "");
+		altMapping("http://xmlns.com/foaf/0.1/", "");
+		altMapping("http://www.owl-ontologies.com/2005/08/07/xsp.owl", "");
+		altMapping("http://purl.org/dc/terms/", "");
+		altMapping("http://purl.org/vocab/vann/", "");
+		altMapping("http://purl.org/NET/muo/ucum/", "");
+		altMapping("http://purl.org/NET/muo/muo-vocab.owl/", "");	
+		altMapping("http://purl.org/goodrelations/v1", "");
+		altMapping("http://www.w3.org/2000/01/rdf-schema", "");
+		altMapping("http://www.w3.org/2003/11/swrl", "");
+		altMapping("http://www.w3.org/2006/12/owl2-xml", "");
+		altMapping("http://www.w3.org/2002/07/owl", "");
+		altMapping("http://www.w3.org/2003/11/swrlb", "");
+		altMapping("http://www.w3.org/2001/XMLSchema", "");
+		altMapping("http://www.w3.org/1999/02/22-rdf-syntax-ns", "");
 	}
 
 }

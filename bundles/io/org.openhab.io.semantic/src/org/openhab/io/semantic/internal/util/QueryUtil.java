@@ -1,16 +1,12 @@
 package org.openhab.io.semantic.internal.util;
 
-import java.util.Map;
-
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.query.Query;
 import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.query.QueryExecutionFactory;
 import com.hp.hpl.jena.query.QueryFactory;
-import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.query.ResultSetFormatter;
-import com.hp.hpl.jena.rdf.model.Resource;
 
 /**
  * Contains some static helper methods for executing SPARQL querys
@@ -63,26 +59,6 @@ public class QueryUtil {
 	public static String getStateValueByStateValuePhaseId(String phaseId, OntModel model){
 		String queryString = String.format(QueryResource.StateValueByPhaseId, phaseId);
 		return phaseIdQuery(queryString, model);
-	}
-	
-	public static void getBuildingThingsWithStateValues(OntModel model){
-		Query query = QueryFactory.create(QueryResource.BuildingThingsContainingStateValue);
-		QueryExecution qe = QueryExecutionFactory.create(query, model);
-		ResultSet results = qe.execSelect();
-		
-		Resource stateResource = null;
-		Resource valueResource = null;
-		String localName = null;
-		while (results.hasNext()) {
-			QuerySolution qs = results.next();
-			stateResource = qs.getResource("state");
-			valueResource = qs.getResource("value");
-			localName = stateResource.getLocalName();
-		}		
-	}
-	
-	private static void addLocalNameAndValueResourceToMap(Map<String, Resource> map){
-		
 	}
 	
 	private static String phaseIdQuery(String queryString, OntModel model){
