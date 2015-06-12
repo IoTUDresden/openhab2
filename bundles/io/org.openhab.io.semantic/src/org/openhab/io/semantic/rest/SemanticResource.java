@@ -74,11 +74,15 @@ public class SemanticResource implements RESTResource {
 	}
 	
 	@GET
-	@Path("/query")
-	@Produces(MediaType.TEXT_PLAIN)
+	@Path("/select")
+	@Produces(MediaType.APPLICATION_JSON)
 	public String query(@QueryParam("statement") String query, @QueryParam("withlatest") boolean withLatest){
-		QueryResult result = semanticService.executeQuery(query, withLatest);
+		QueryResult result = semanticService.executeSelect(query, withLatest);
 		return result == null ? JsonNull.instance.toString() : result.getAsJsonString();
+	}
+	
+	public String ask(@QueryParam("statement") String query, @QueryParam("withlatest") boolean withLatest){
+		return null;
 	}
 	
 	//TODO only for testing

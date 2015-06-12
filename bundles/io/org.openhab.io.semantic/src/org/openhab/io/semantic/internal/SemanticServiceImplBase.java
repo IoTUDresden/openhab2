@@ -2,12 +2,12 @@ package org.openhab.io.semantic.internal;
 
 import java.io.ByteArrayOutputStream;
 
+import org.eclipse.smarthome.core.events.EventPublisher;
 import org.eclipse.smarthome.core.items.Item;
 import org.eclipse.smarthome.core.items.ItemNotFoundException;
 import org.eclipse.smarthome.core.items.ItemRegistry;
 import org.eclipse.smarthome.core.thing.Thing;
 import org.eclipse.smarthome.core.thing.ThingRegistry;
-import org.openhab.io.semantic.core.QueryResult;
 import org.openhab.io.semantic.internal.ontology.DogontSchema;
 import org.openhab.io.semantic.internal.util.QueryResource;
 import org.openhab.io.semantic.internal.util.SemanticConstants;
@@ -30,91 +30,53 @@ import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.Statement;
 
 /**
- * The SemanticManager handels all operations with the ontology models.
+ * Base Class for the SemanticService Implementation
  * 
  * @author André Kühnert
- * 
  */
-@Deprecated
-public class SemanticManager {
-	private static final Logger logger = LoggerFactory.getLogger(SemanticManager.class);
-	private ItemRegistry itemRegistry;
-	private ThingRegistry thingRegistry;
-
-	private OntModel openHabInstancesModel;
-
-	/**
-	 * Default constructor.
-	 * 
-	 * Reads the semantic instances and checks if all things/items, which are added in openHAB, have
-	 * an instance in the semantic model.
-	 */
-	public SemanticManager(ItemRegistry itemRegistry, ThingRegistry thingRegistry) {
-		// TODO the registries must be removed, in order to enable the correct implementation of the
-		// bundle
+public class SemanticServiceImplBase {
+	private static final Logger logger = LoggerFactory.getLogger(SemanticServiceImplBase.class);
+	
+	protected ItemRegistry itemRegistry;
+	protected ThingRegistry thingRegistry;
+	protected EventPublisher eventPublisher;
+	
+	protected OntModel openHabInstancesModel;
+	
+	
+	public void setItemRegistry(ItemRegistry itemRegistry){
 		this.itemRegistry = itemRegistry;
+	}
+	
+	public void unsetItemRegistry(){
+		itemRegistry = null;		
+	}
+	
+	public void setEventPublisher(EventPublisher eventPublisher){
+		this.eventPublisher = eventPublisher;
+	}
+	
+	public void unsetEventPublisher(){
+		eventPublisher = null;
+	}
+	
+	public void setThingRegistry(ThingRegistry thingRegistry){
 		this.thingRegistry = thingRegistry;
-		logger.debug("creating semantic models");
+	}
+	
+	public void unsetThingRegistry(){
+		thingRegistry = null;
+	}
+	
+	public void activate(){
 		createModels();
-		checkPresenceOfIndividuals();
+		checkPresenceOfIndividuals();		
+		logger.debug("Semantic Service activated");
 	}
-
-	/**
-	 * Executes an ask query
-	 * 
-	 * @param askString
-	 * @param withLatestValues
-	 *            If set to true, this will add the current values of all items to their specific
-	 *            stateValue in the ont model and then execute the query. This may take some time,
-	 *            so set this to true, only if you need the current values.
-	 * @return
-	 */
-	public boolean executeAsk(String askString, boolean withLatestValues) {
-		QueryExecution qe = getQueryExecution(askString, withLatestValues);
-		if (qe == null)
-			return false;
-		return qe.execAsk();
-	}
-
-	public boolean executeAsk(String askString) {
-		return executeAsk(askString, false);
-	}
-
-	/**
-	 * Executes a query, with the select statement
-	 * 
-	 * @param queryAsString
-	 * @return null if queryAsString is null or empty
-	 */
-	public QueryResult executeSelect(String queryAsString) {
-		return executeSelect(queryAsString, false);
-	}
-
-	/**
-	 * Executes a query, with the select statement
-	 * 
-	 * @param queryAsString
-	 * @param withLatestValues
-	 *            If set to true, this will add the current values of all items to their specific
-	 *            stateValue in the ont model and then execute the query. This may take some time,
-	 *            so set this to true, only if you need the current values.
-	 * @return
-	 */
-	public QueryResult executeSelect(String queryAsString, boolean withLatestValues) {
-		if (queryAsString == null || queryAsString.isEmpty())
-			return null;
-		if (withLatestValues)
-			addCurrentItemStatesToModelRealStateValues();
-		Query query = QueryFactory.create(queryAsString);
-		QueryExecution qe = QueryExecutionFactory.create(query, openHabInstancesModel);
-		ResultSet resultSet = qe.execSelect();
-		QueryResult queryResult = new QueryResultImpl(resultSet);
-		qe.close();
-		return queryResult;
-	}
-
-	public String selectBuildingThing(String uid) {
-		return null;
+	
+	public void deactivate(){
+		logger.debug("Semantic Service deactivated");
+		openHabInstancesModel.close();
 	}
 
 	/**
@@ -129,14 +91,6 @@ public class SemanticManager {
 	}
 
 	/**
-	 * Closes all models.
-	 */
-	public void close() {
-		logger.debug("closing all models");
-		openHabInstancesModel.close();
-	}
-
-	/**
 	 * Adds the current item states to their specific stateValues in the ont model.
 	 */
 	public void addCurrentItemStatesToModelRealStateValues() {
@@ -146,6 +100,20 @@ public class SemanticManager {
 		while (results.hasNext())
 			addValueToModel(results.next());
 		qe.close();
+	}
+	
+	/**
+	 * Gets the item from the item registry
+	 * @param name
+	 * @return null, if not found
+	 */
+	protected Item getItem(String name) {
+		try {
+			return itemRegistry.getItem(name);
+		} catch (ItemNotFoundException e) {
+			logger.error("Item with name '{}' not found. Wrong name in the instance model?", name);
+			return null;
+		}
 	}
 
 	// TODO check if more than one states supported -> check the query
@@ -173,16 +141,7 @@ public class SemanticManager {
 		localName = localName.replaceFirst(SemanticConstants.STATE_PREFIX, "");
 		return getItem(localName);
 	}
-
-	private Item getItem(String name) {
-		try {
-			return itemRegistry.getItem(name);
-		} catch (ItemNotFoundException e) {
-			logger.error("Item with name '{}' not found. Wrong name in the instance model?", name);
-			return null;
-		}
-	}
-
+	
 	private void createModels() {
 		Model modelInstances = ModelFactory.createDefaultModel();
 		OntModelSpec spec = new OntModelSpec(OntModelSpec.OWL_MEM);
@@ -207,15 +166,8 @@ public class SemanticManager {
 	}
 
 	private void addSimpleThing(Thing thing) {
-		// TODO generate a simple semantic annotation to complete the semantic model
+		// TODO generate a simple semantic annotation for items which have no model instance 
+		// to complete the semantic model
 	}
 
-	private QueryExecution getQueryExecution(String queryAsString, boolean withLatestValues) {
-		if (queryAsString == null || queryAsString.isEmpty())
-			return null;
-		if (withLatestValues)
-			addCurrentItemStatesToModelRealStateValues();
-		Query query = QueryFactory.create(queryAsString);
-		return QueryExecutionFactory.create(query, openHabInstancesModel);
-	}
 }

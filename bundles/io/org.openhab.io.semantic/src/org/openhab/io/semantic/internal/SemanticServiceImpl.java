@@ -1,66 +1,52 @@
 package org.openhab.io.semantic.internal;
 
-import org.eclipse.smarthome.core.events.EventPublisher;
 import org.eclipse.smarthome.core.items.Item;
-import org.eclipse.smarthome.core.items.ItemRegistry;
-import org.eclipse.smarthome.core.thing.ThingRegistry;
 import org.openhab.io.semantic.core.QueryResult;
 import org.openhab.io.semantic.core.SemanticService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class SemanticServiceImpl implements SemanticService {
+import com.hp.hpl.jena.query.Query;
+import com.hp.hpl.jena.query.QueryExecution;
+import com.hp.hpl.jena.query.QueryExecutionFactory;
+import com.hp.hpl.jena.query.QueryFactory;
+import com.hp.hpl.jena.query.ResultSet;
+
+/**
+ * Implementation of the semantic service
+ * 
+ * @author André Kühnert
+ *
+ */
+public class SemanticServiceImpl extends SemanticServiceImplBase implements SemanticService {
 	private static final Logger logger = LoggerFactory.getLogger(SemanticServiceImpl.class);
 	
-	private ItemRegistry itemRegistry;
-	private ThingRegistry thingRegistry;
-	private EventPublisher eventPublisher;
-	private SemanticManager semanticManager;
-	
-	public void setItemRegistry(ItemRegistry itemRegistry){
-		this.itemRegistry = itemRegistry;
-	}
-	
-	public void unsetItemRegistry(){
-		itemRegistry = null;		
-	}
-	
-	public void setEventPublisher(EventPublisher eventPublisher){
-		this.eventPublisher = eventPublisher;
-	}
-	
-	public void unsetEventPublisher(){
-		eventPublisher = null;
-	}
-	
-	public void setThingRegistry(ThingRegistry thingRegistry){
-		this.thingRegistry = thingRegistry;
-	}
-	
-	public void unsetThingRegistry(){
-		thingRegistry = null;
-	}
-	
-	public void activate(){
-		semanticManager = new SemanticManager(itemRegistry, thingRegistry);
-		logger.debug("Semantic Service activated");
-	}
-	
-	public void deactivate(){
-		logger.debug("Semantic Service deactivated");
-		semanticManager.close();
-		semanticManager = null;
+	@Override
+	public QueryResult executeSelect(String queryAsString) {		
+		return executeSelect(queryAsString, false);
 	}
 	
 	@Override
-	public QueryResult executeQuery(String query) {		
-		return executeQuery(query, false);
+	public QueryResult executeSelect(String queryAsString, boolean withLatestValues) {
+		logger.debug("received query: {}\nwith latest values: {}", queryAsString, withLatestValues);
+		QueryExecution qe = getQueryExecution(queryAsString, withLatestValues);
+		ResultSet resultSet = qe.execSelect();
+		QueryResult queryResult = new QueryResultImpl(resultSet);
+		qe.close();
+		return queryResult;
 	}
 	
 	@Override
-	public QueryResult executeQuery(String query, boolean withLatestValues) {
-		logger.debug("received query: {}\nwith latest values: {}", query, withLatestValues);
-		return semanticManager.executeQuery(query, withLatestValues);
+	public boolean executeAsk(String askString, boolean withLatestValues) {
+		QueryExecution qe = getQueryExecution(askString, withLatestValues);
+		if (qe == null)
+			return false;
+		return qe.execAsk();
+	}
+
+	@Override
+	public boolean executeAsk(String askString) {
+		return executeAsk(askString, false);
 	}
 
 	@Override
@@ -85,9 +71,7 @@ public class SemanticServiceImpl implements SemanticService {
 	@Override
 	public QueryResult sendCommand(String command, String query) {
 		logger.debug("trying to send command to items: command: {} query: {}", command, query);
-		// TODO Auto-generated method stub
-		
-		
+		// TODO Auto-generated method stub		
 		return null;
 	}
 
@@ -105,18 +89,27 @@ public class SemanticServiceImpl implements SemanticService {
 
 	@Override
 	public String getCurrentInstanceAsString() {
-		return semanticManager.getInstanceModelAsString();
+		return getInstanceModelAsString();
 	}
 
 	@Override
 	public String getInstanceSkeletonAsString() {
-		return semanticManager.getInstanceModelAsString();
+		//TODO read another model with the instances
+		return getInstanceModelAsString();
 	}
 
-	//TODO only for testing
 	@Override
 	@Deprecated
 	public void setAllValues() {
-		semanticManager.addCurrentItemStatesToModelRealStateValues();		
+		addCurrentItemStatesToModelRealStateValues();		
+	}
+	
+	private QueryExecution getQueryExecution(String queryAsString, boolean withLatestValues) {
+		if (queryAsString == null || queryAsString.isEmpty())
+			return null;
+		if (withLatestValues)
+			addCurrentItemStatesToModelRealStateValues();
+		Query query = QueryFactory.create(queryAsString);
+		return QueryExecutionFactory.create(query, openHabInstancesModel);
 	}
 }
