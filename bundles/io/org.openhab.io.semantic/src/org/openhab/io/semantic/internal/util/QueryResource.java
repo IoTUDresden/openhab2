@@ -44,7 +44,7 @@ public class QueryResource {
 			+ "SELECT ?statevalue " + "WHERE {" + "	?statevalue dogont:phaseID \"<%s>\" ." + "}";
 
 	/**
-	 * Selects all BuildingThings which have an StateValue
+	 * Selects all BuildingThings which have an StateValue.<br>
 	 * varNames: instance, state, value, realValue
 	 */
 	public static final String BuildingThingsContainingStateValue = ""
@@ -58,4 +58,18 @@ public class QueryResource {
 			+ "?instance dogont:hasState ?state. "
 			+ "?state dogont:hasStateValue ?value. "
 			+ "?value dogont:realStateValue ?realValue }";
+	
+	/**
+	 * Ask query. True if the given resource is a subClassOf* Functionality.<br>
+	 * Use String.format local resource name
+	 */
+	public static final String ResourceIsSubClassOfFunctionality = ""
+			+ "PREFIX rdfs: <" + SemanticConstants.NS_RDFS_SCHEMA + "> "
+			+ "PREFIX instance: <" + SemanticConstants.NS_INSTANCE + "> " 
+			+ "ASK "
+			+ "{ "
+			+ "	instance:%s "
+			+ "	rdf:type ?type. "
+			+ "	?type rdfs:subClassOf* dogont:Functionality "
+			+ "}";
 }

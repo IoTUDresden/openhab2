@@ -150,11 +150,9 @@ public class SemanticServiceImplBase {
 	}
 
 	private void checkPresenceOfIndividuals() {
-		Individual individual = null;
-		String thingUid = null;
 		for (Thing thing : thingRegistry.getAll()) {
-			thingUid = thing.getThingTypeUID().getAsString();
-			individual = openHabInstancesModel
+			String thingUid = thing.getThingTypeUID().getAsString();
+			Individual individual = openHabInstancesModel
 					.getIndividual(SemanticConstants.NS_AND_THING_PREFIX + thingUid);
 			if (individual == null) {
 				logger.warn(

@@ -3,13 +3,14 @@ package org.openhab.io.semantic.core;
 import org.eclipse.smarthome.core.items.Item;
 
 /**
- * The Semantic Service provides methods to access the things and items of openhab via semantic annotation.
+ * The Semantic Service provides methods to access the things and items of openhab via semantic
+ * annotation.
  * 
  * @author André Kühnert
  *
  */
 public interface SemanticService {
-	
+
 	/**
 	 * Executes a query, with the select statement
 	 * 
@@ -17,7 +18,7 @@ public interface SemanticService {
 	 * @return null if queryAsString is null or empty
 	 */
 	QueryResult executeSelect(String queryAsString);
-	
+
 	/**
 	 * Executes a query, with the select statement
 	 * 
@@ -29,7 +30,7 @@ public interface SemanticService {
 	 * @return
 	 */
 	QueryResult executeSelect(String queryAsString, boolean withLatestValues);
-	
+
 	/**
 	 * Executes an ask query
 	 * 
@@ -37,7 +38,7 @@ public interface SemanticService {
 	 * @return
 	 */
 	boolean executeAsk(String askString);
-	
+
 	/**
 	 * Executes an ask query
 	 * 
@@ -49,27 +50,50 @@ public interface SemanticService {
 	 * @return
 	 */
 	boolean executeAsk(String askString, boolean withLatestValues);
-	
-	QueryResult sendCommand(String command, String query);
-	
+
+	/**
+	 * Sends a command to all items which are selected by the query. The query must contain a
+	 * variable, which holds the function of the specific item/thing. If the query contains no such
+	 * variable, than no command is send to the openhab event bus.
+	 * 
+	 * @param command
+	 *            the command as String. e.g. 'ON', 'OFF', 'TOGGLE', 'DOWN', 'UP'
+	 * @param query
+	 * @return the result of the query
+	 */
+	QueryResult sendCommand(String query, String command);
+
+	/**
+	 * Sends a command to all items which are selected by the query. The query must contain a
+	 * variable, which holds the function of the specific item/thing. If the query contains no such
+	 * variable, than no command is send to the openhab event bus.
+	 * 
+	 * @param query
+	 * @param command
+	 * @param withLatestValues
+	 * @return  the result of the query
+	 */
+	QueryResult sendCommand(String query, String command, boolean withLatestValues);
+
 	boolean addItem(Item item);
-	
+
 	boolean removeItem(Item item);
-	
+
 	boolean removeItem(String uid);
-	
+
 	String getRestUrlForItem(String uid);
-	
+
 	String getRestUrlsForItemsInJson(String query);
-	
+
 	/**
 	 * Gets the current model instance as string
+	 * 
 	 * @return
 	 */
 	String getCurrentInstanceAsString();
-	
+
 	String getInstanceSkeletonAsString();
-	
+
 	/**
 	 * Sets all current item states to the model.
 	 */
