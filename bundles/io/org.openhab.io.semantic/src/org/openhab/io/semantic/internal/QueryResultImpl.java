@@ -10,6 +10,7 @@ import com.hp.hpl.jena.query.ResultSetFormatter;
 public class QueryResultImpl implements QueryResult {
 	private ByteArrayOutputStream jsonOutStream;
 	
+	//TODO refactor - cause problems 
 	public QueryResultImpl(ResultSet resultSet) {
 		processResults(resultSet);
 	}

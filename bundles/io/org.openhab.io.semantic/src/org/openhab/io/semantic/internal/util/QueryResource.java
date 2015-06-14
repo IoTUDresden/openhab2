@@ -64,8 +64,10 @@ public class QueryResource {
 	 * Use String.format local resource name
 	 */
 	public static final String ResourceIsSubClassOfFunctionality = ""
+			+ "PREFIX rdf: <" + SemanticConstants.NS_RDF_SYNTAX + "> "
 			+ "PREFIX rdfs: <" + SemanticConstants.NS_RDFS_SCHEMA + "> "
-			+ "PREFIX instance: <" + SemanticConstants.NS_INSTANCE + "> " 
+			+ "PREFIX instance: <" + SemanticConstants.NS_INSTANCE + "> "
+			+ "PREFIX dogont: <" + DogontSchema.NS + "> " 
 			+ "ASK "
 			+ "{ "
 			+ "	instance:%s "

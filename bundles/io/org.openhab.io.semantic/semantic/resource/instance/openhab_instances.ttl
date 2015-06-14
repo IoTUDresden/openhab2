@@ -41,10 +41,15 @@ instance:Function_Weather_Temperature
 instance:Function_fingerscanner_identify_25b1defb_channel_identify
   rdf:type dogont:IdentificationFunctionality ;
   dogont:hasCommand instance:Command_fingerscanner_identify_25b1defb_channel_identify ;
+  dogont:hasCommand instance:OffCommand_fingerscanner_identify_25b1defb_channel_identify ;
+  dogont:hasCommand instance:ToggleCommand_fingerscanner_identify_25b1defb_channel_identify ;
 .
 instance:Function_fingerscanner_identify_25b1defb_channel_person
   rdf:type dogont:QueryFunctionality ;
   dogont:hasCommand instance:Command_fingerscanner_identify_25b1defb_channel_person ;
+.
+instance:OffCommand_fingerscanner_identify_25b1defb_channel_identify
+  rdf:type dogont:OffCommand ;
 .
 instance:State_Weather_Temperature
   rdf:type dogont:TemperatureState ;
@@ -60,6 +65,9 @@ instance:State_fingerscanner_identify_25b1defb_channel_person
       rdf:type dogont:AuthenticatedStateValue ;
       dogont:realStateValue "nobody"^^xsd:string ;
     ] ;
+.
+instance:ToggleCommand_fingerscanner_identify_25b1defb_channel_identify
+  rdf:type dogont:ToggleCommand ;
 .
 instance:homematic_radio_controlled_socket_adapter
   rdf:type owl:Thing ;

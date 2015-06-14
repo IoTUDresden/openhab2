@@ -3,9 +3,16 @@ package org.openhab.io.semantic.internal;
 import java.util.Iterator;
 
 import org.eclipse.smarthome.core.items.Item;
+import org.eclipse.smarthome.core.library.items.RollershutterItem;
+import org.eclipse.smarthome.core.library.items.SwitchItem;
+import org.eclipse.smarthome.core.library.types.OnOffType;
+import org.eclipse.smarthome.core.library.types.UpDownType;
+import org.eclipse.smarthome.core.types.Command;
+import org.eclipse.smarthome.core.types.TypeParser;
 import org.openhab.io.semantic.core.QueryResult;
 import org.openhab.io.semantic.core.SemanticService;
 import org.openhab.io.semantic.internal.util.QueryResource;
+import org.openhab.io.semantic.internal.util.SemanticConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,12 +32,12 @@ import com.hp.hpl.jena.rdf.model.RDFNode;
  */
 public class SemanticServiceImpl extends SemanticServiceImplBase implements SemanticService {
 	private static final Logger logger = LoggerFactory.getLogger(SemanticServiceImpl.class);
-	
+
 	@Override
-	public QueryResult executeSelect(String queryAsString) {		
+	public QueryResult executeSelect(String queryAsString) {
 		return executeSelect(queryAsString, false);
 	}
-	
+
 	@Override
 	public QueryResult executeSelect(String queryAsString, boolean withLatestValues) {
 		logger.debug("received select: {}\nwith latest values: {}", queryAsString, withLatestValues);
@@ -40,7 +47,7 @@ public class SemanticServiceImpl extends SemanticServiceImplBase implements Sema
 		qe.close();
 		return queryResult;
 	}
-	
+
 	@Override
 	public boolean executeAsk(String askString, boolean withLatestValues) {
 		logger.debug("received ask: {}\nwith latest values: {}", askString, withLatestValues);
@@ -56,24 +63,38 @@ public class SemanticServiceImpl extends SemanticServiceImplBase implements Sema
 	}
 
 	@Override
-	public QueryResult sendCommand(String query, String command) {	
+	public QueryResult sendCommand(String query, String command) {
 		return sendCommand(query, command, false);
 	}
-	
+
 	@Override
 	public QueryResult sendCommand(String query, String command, boolean withLatestValues) {
 		logger.debug("trying to send command to items: command: {} query: {}", command, query);
 		QueryExecution qe = getQueryExecution(query, withLatestValues);
 		ResultSet rs = qe.execSelect();
-		QueryResult qr = new QueryResultImpl(rs);
+		String varName = null;
+		boolean isFirst = true;
 		while (rs.hasNext()) {
 			QuerySolution qs = rs.next();
-			String varName = getFunctionVarFromQuerySolution(qs);
-			//TODO go on here
-		}		
+			if (isFirst) {
+				varName = getFunctionVarFromQuerySolution(qs);
+				if (varName == null) {
+					logger.error("No functions found under the varnames. No command is send. Check the query");
+					QueryResult qr = new QueryResultImpl(rs);
+					qe.close();
+					return qr;
+				}
+				isFirst = false;
+			}
+			postCommandToEventBus(qs, varName, command);
+		}
+		//TODO check if the correct result set is returned. if the result set is changed to 
+		// json before the while loop, rs.hasNext will always be false
+		QueryResult qr = new QueryResultImpl(rs);
+		qe.close();
 		return qr;
 	}
-	
+
 	@Override
 	public boolean addItem(Item item) {
 		logger.debug("trying to add item to semantic resource: {}", item.getName());
@@ -112,30 +133,70 @@ public class SemanticServiceImpl extends SemanticServiceImplBase implements Sema
 
 	@Override
 	public String getInstanceSkeletonAsString() {
-		//TODO read another model with the instances
+		// TODO read another model with the instances
 		return getInstanceModelAsString();
 	}
 
 	@Override
 	@Deprecated
 	public void setAllValues() {
-		addCurrentItemStatesToModelRealStateValues();		
+		addCurrentItemStatesToModelRealStateValues();
 	}
-	
-	private String getFunctionVarFromQuerySolution(QuerySolution querySolution){
+
+	private void postCommandToEventBus(QuerySolution querySolution, String varName, String command) {
+		RDFNode node = querySolution.get(varName);
+		String localName = node.asResource().getLocalName();
+		if (!localName.startsWith(SemanticConstants.FUNCTION_PREFIX)) {
+			logger.error("Wrong name prefix. '{}' should be a function and start with '{}'", localName,
+					SemanticConstants.FUNCTION_PREFIX);
+			return;
+		}
+		localName = localName.replaceFirst(SemanticConstants.FUNCTION_PREFIX, "");
+		Item item = getItem(localName);
+		if (item == null) {
+			logger.error("item with name '{}' not found.", localName);
+			return;
+		}
+		Command cmd = getCommand(command, item);
+		if(command == null){
+			logger.error("command '{}' not found or not supported by the item '{}'", command, localName);
+			return;
+		}
+		eventPublisher.postCommand(localName, cmd);
+	}
+
+	private Command getCommand(String value, Item item) {
+		Command command = null;
+		if ("toggle".equalsIgnoreCase(value)
+				&& (item instanceof SwitchItem || item instanceof RollershutterItem)) {
+			if (OnOffType.ON.equals(item.getStateAs(OnOffType.class)))
+				command = OnOffType.OFF;
+			if (OnOffType.OFF.equals(item.getStateAs(OnOffType.class)))
+				command = OnOffType.ON;
+			if (UpDownType.UP.equals(item.getStateAs(UpDownType.class)))
+				command = UpDownType.DOWN;
+			if (UpDownType.DOWN.equals(item.getStateAs(UpDownType.class)))
+				command = UpDownType.UP;
+		} else {
+			command = TypeParser.parseCommand(item.getAcceptedCommandTypes(), value);
+		}
+		return command;
+	}
+
+	private String getFunctionVarFromQuerySolution(QuerySolution querySolution) {
 		for (Iterator<String> iterator = querySolution.varNames(); iterator.hasNext();) {
 			String varName = iterator.next();
 			RDFNode node = querySolution.get(varName);
-			if(!node.isResource())
+			if (!node.isResource())
 				continue;
 			String queryTmp = node.asResource().getLocalName();
 			queryTmp = String.format(QueryResource.ResourceIsSubClassOfFunctionality, queryTmp);
-			if(executeAsk(queryTmp))
-				return varName;					
+			if (executeAsk(queryTmp))
+				return varName;
 		}
 		return null;
 	}
-	
+
 	private QueryExecution getQueryExecution(String queryAsString, boolean withLatestValues) {
 		if (queryAsString == null || queryAsString.isEmpty())
 			return null;
