@@ -9,6 +9,7 @@ import org.eclipse.smarthome.core.items.ItemRegistry;
 import org.eclipse.smarthome.core.thing.Thing;
 import org.eclipse.smarthome.core.thing.ThingRegistry;
 import org.openhab.io.semantic.internal.ontology.DogontSchema;
+import org.openhab.io.semantic.internal.util.LocationMapperCustom;
 import org.openhab.io.semantic.internal.util.QueryResource;
 import org.openhab.io.semantic.internal.util.SemanticConstants;
 import org.slf4j.Logger;
@@ -28,6 +29,7 @@ import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.Statement;
+import com.hp.hpl.jena.util.LocationMapper;
 
 /**
  * Base Class for the SemanticService Implementation
@@ -69,8 +71,9 @@ public class SemanticServiceImplBase {
 	}
 	
 	public void activate(){
+//		LocationMapper.setGlobalLocationMapper(new LocationMapperCustom());
 		createModels();
-		checkPresenceOfIndividuals();		
+		checkPresenceOfIndividuals();
 		logger.debug("Semantic Service activated");
 	}
 	
