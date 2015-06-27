@@ -6,13 +6,18 @@ import org.openhab.io.semantic.core.QueryResult;
 
 import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.query.ResultSetFormatter;
+import com.hp.hpl.jena.query.ResultSetRewindable;
 
 public class QueryResultImpl implements QueryResult {
 	private ByteArrayOutputStream jsonOutStream;
 	
-	//TODO refactor - cause problems 
 	public QueryResultImpl(ResultSet resultSet) {
 		processResults(resultSet);
+	}
+	
+	public QueryResultImpl(ResultSetRewindable rewindableResultSet){
+		processResults(rewindableResultSet);
+		rewindableResultSet.reset();
 	}
 
 	private void processResults(ResultSet resultSet) {

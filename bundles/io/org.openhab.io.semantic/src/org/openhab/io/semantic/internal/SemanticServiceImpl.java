@@ -22,6 +22,8 @@ import com.hp.hpl.jena.query.QueryExecutionFactory;
 import com.hp.hpl.jena.query.QueryFactory;
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
+import com.hp.hpl.jena.query.ResultSetFactory;
+import com.hp.hpl.jena.query.ResultSetRewindable;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 
 /**
@@ -72,15 +74,18 @@ public class SemanticServiceImpl extends SemanticServiceImplBase implements Sema
 		logger.debug("trying to send command to items: command: {} query: {}", command, query);
 		QueryExecution qe = getQueryExecution(query, withLatestValues);
 		ResultSet rs = qe.execSelect();
+		ResultSetRewindable rsw = ResultSetFactory.copyResults(rs);
+		QueryResult qr = new QueryResultImpl(rsw);
+		//after the rs is consumed, the iterator has no next element. The rs must be reset
+//		rsw.reset();
 		String varName = null;
 		boolean isFirst = true;
-		while (rs.hasNext()) {
-			QuerySolution qs = rs.next();
+		while (rsw.hasNext()) {
+			QuerySolution qs = rsw.next();
 			if (isFirst) {
 				varName = getFunctionVarFromQuerySolution(qs);
 				if (varName == null) {
 					logger.error("No functions found under the varnames. No command is send. Check the query");
-					QueryResult qr = new QueryResultImpl(rs);
 					qe.close();
 					return qr;
 				}
@@ -88,9 +93,6 @@ public class SemanticServiceImpl extends SemanticServiceImplBase implements Sema
 			}
 			postCommandToEventBus(qs, varName, command);
 		}
-		//TODO check if the correct result set is returned. if the result set is changed to 
-		// json before the while loop, rs.hasNext will always be false
-		QueryResult qr = new QueryResultImpl(rs);
 		qe.close();
 		return qr;
 	}

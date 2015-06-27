@@ -82,12 +82,12 @@ public class SemanticResource implements RESTResource {
 	@POST
 	@Path("/post/command")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response postCommand(SemanticPostCommandBean command){
+	public Response postCommand(SemanticPostCommandBean commandBean){
 		//http://stackoverflow.com/questions/8194408/how-to-access-parameters-in-a-restful-post-method/8194612#8194612
-		if(command == null || command.statement == null || command.command == null 
-				|| command.statement.isEmpty() || command.command.isEmpty())
+		if(commandBean == null || commandBean.statement == null || commandBean.command == null 
+				|| commandBean.statement.isEmpty() || commandBean.command.isEmpty())
 			return Response.status(Status.BAD_REQUEST).build();		
-		QueryResult qr = semanticService.sendCommand(command.statement, command.command, command.withlatest);
+		QueryResult qr = semanticService.sendCommand(commandBean.statement, commandBean.command, commandBean.withlatest);
 		return Response.ok(qr.getAsJsonString(), MediaType.APPLICATION_JSON).build();
 	}
 	
