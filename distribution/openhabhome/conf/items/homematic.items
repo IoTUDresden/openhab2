@@ -1,0 +1,18 @@
+
+/* Dimmer 1 */
+Dimmer HomematicDimmer_1 "Dimmer [%d %%]" (CS_Homematic_Dimmer_1) {homematic="address=JEQ0193817, channel=1, parameter=LEVEL"}
+
+/* Dimmer 2 */
+Dimmer HomematicDimmer_2 "Dimmer 2 [%d %%]" (CS_Homematic_Dimmer_2) {homematic="address=JEQ0567833, channel=1, parameter=LEVEL"}
+
+/*Klingel 1 */
+Switch HomematicLightGong_1 "Licht" (CS_Homematic_Chime_1) {homematic="address=JEQ0129257, channel=1, parameter=STATE"}
+Switch HomematicGong_1 "Sound" (CS_Homematic_Chime_1) {homematic="address=JEQ0129257, channel=2, parameter=STATE"}
+
+/* Motion Detector */
+Number HomematicMotionIndicatorBrightness_1 "Helligkeit [%d]" (CS_Homematic_Motion) {homematic="address=JEQ0266367, channel=1, parameter=BRIGHTNESS"}
+Switch HomematicMotionIndicator_1 "Bewegung" (CS_Homematic_Motion) {homematic="address=JEQ0266367, channel=1, parameter=MOTION"}
+
+
+/* Window Contact 1*/
+String Bath_Window "Fenster 1 [%s]" (CS_Homematic_Window_1) {homematic="address=JEQ0712908, channel=1, parameter=STATE"}

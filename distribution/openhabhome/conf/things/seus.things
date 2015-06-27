@@ -1,0 +1,5 @@
+/* Fingerscanner */
+fingerscanner:identify:base
+
+/* NFC */
+libnfcwrapper:idscan:base

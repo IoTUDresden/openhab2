@@ -1,0 +1,44 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: openHAB homematic Binding
+Bundle-SymbolicName: org.openhab.binding.homematic;singleton:=true
+Bundle-Version: 1.7.0
+Bundle-ClassPath: org.openhab.binding.homematic-1.7.0.jar
+Bundle-Activator: org.openhab.binding.homematic.internal.bus.HomematicActivator
+Bundle-Vendor: openHAB.org
+Export-Package: org.openhab.binding.homematic.internal.common,
+ org.openhab.binding.homematic.internal.communicator.client,
+ org.openhab.binding.homematic.internal.communicator.client.interfaces
+Import-Package: javax.xml.bind,
+ javax.xml.bind.annotation,
+ org.apache.commons.httpclient,
+ org.apache.commons.httpclient.methods,
+ org.apache.commons.httpclient.params,
+ org.apache.commons.lang,
+ org.apache.commons.lang.builder,
+ org.apache.commons.lang.math,
+ org.apache.commons.lang.reflect,
+ org.apache.commons.logging,
+ org.openhab.core.binding,
+ org.openhab.core.events,
+ org.openhab.core.items,
+ org.openhab.core.library.items,
+ org.openhab.core.library.types,
+ org.openhab.core.types,
+ org.openhab.model.item.binding,
+ org.osgi.framework,
+ org.osgi.service.cm,
+ org.osgi.service.component,
+ org.osgi.service.event,
+ org.slf4j
+Built-By: thomasee
+Bundle-Description: This is the homematic binding of the open Home Automation Bus (openHAB)
+Bundle-DocURL: http://www.openhab.org
+Ignore-Package: org.openhab.binding.homematic.internal
+Created-By: Apache Maven 3.2.1
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-License: http://www.eclipse.org/legal/epl-v10.html
+Private-Package: org.openhab.binding.homematic.internal
+Build-Jdk: 1.7.0_71
+Service-Component: OSGI-INF/homematicbinding.xml, OSGI-INF/genericbindingprovider.xml
+Archiver-Version: Plexus Archiver

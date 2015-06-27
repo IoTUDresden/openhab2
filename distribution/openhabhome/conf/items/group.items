@@ -1,0 +1,32 @@
+Group CustomStuff "Custom Stuff" ["home-group"]
+
+/* Tinkerforge */
+Group CS_Tinkerforge "Tinkerforge Brick 1" (CustomStuff)
+Group CS_Tinkerforge_Lcd "Tinkerforge 20x4 LCD 1" (CustomStuff)
+
+Group CS_Tinkerforge_2 "Tinkerforge Brick 2" (CustomStuff)
+Group CS_Tinkerforge_Lcd_2 "Tinkerforge 20x4 LCD 2" (CustomStuff)
+
+/* Homematic */
+/*Group CS_Homematic "Homematic" (CustomStuff)*/
+
+/* Homematic Bewegungsmelder */
+Group CS_Homematic_Motion "Bewegungsmelder 1" (CustomStuff)
+
+/* Homematic Dimmer 1 */
+Group CS_Homematic_Dimmer_1 "Dimmer 1" (CustomStuff)
+
+/* Homematic Dimmer 2 */
+Group CS_Homematic_Dimmer_2 "Dimmer 2" (CustomStuff)
+
+/* Chime 1 */
+Group CS_Homematic_Chime_1 "Klingel 1" (CustomStuff)
+
+/* Window Contact 1 */
+Group CS_Homematic_Window_1 "Fenster 1" (CustomStuff)
+
+/* Fingerscanner */
+Group CS_Fingerscan "Fingerprint Reader" (CustomStuff)
+
+/* NFC */
+Group CS_Nfc "NFC Reader" (CustomStuff)
