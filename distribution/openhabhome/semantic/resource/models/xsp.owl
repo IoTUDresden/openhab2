@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+2	<rdf:RDF
+3	    xmlns="http://www.owl-ontologies.com/2005/08/07/xsp.owl#"
+4	    xml:base="http://www.owl-ontologies.com/2005/08/07/xsp.owl"
+5	    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+6	    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+7	    xmlns:owl="http://www.w3.org/2002/07/owl#">
+8	
+9	  <owl:Ontology rdf:about=""/>
+10	
+11	
+12	  <owl:AnnotationProperty rdf:ID="base"/>
+13	
+14	  <owl:AnnotationProperty rdf:ID="fractionDigits"/>
+15	
+16	  <owl:AnnotationProperty rdf:ID="length"/>
+17	
+18	  <owl:AnnotationProperty rdf:ID="maxExclusive"/>
+19	
+20	  <owl:AnnotationProperty rdf:ID="maxInclusive"/>
+21	
+22	  <owl:AnnotationProperty rdf:ID="maxLength"/>
+23	
+24	  <owl:AnnotationProperty rdf:ID="minExclusive"/>
+25	
+26	  <owl:AnnotationProperty rdf:ID="minInclusive"/>
+27	
+28	  <owl:AnnotationProperty rdf:ID="minLength"/>
+29	
+30	  <owl:AnnotationProperty rdf:ID="pattern"/>
+31	
+32	  <owl:AnnotationProperty rdf:ID="totalDigits"/>
+33	
+34	</rdf:RDF>

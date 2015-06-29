@@ -1,0 +1,3885 @@
+# baseURI: http://purl.oclc.org/NET/muo/ucum/
+# imports: http://purl.oclc.org/NET/muo/muo-vocab.owl
+
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix localFun: <http://example.org/localFun> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ucum: <http://purl.oclc.org/NET/muo/ucum/> .
+@prefix uomvocab: <http://purl.oclc.org/NET/muo/muo#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://purl.oclc.org/NET/muo/muo-vocab.owl>
+  rdf:type owl:Ontology ;
+.
+ucum:
+  rdf:type owl:Ontology ;
+  dc:contributor "Gunther Schadow, Clement J. McDonald" ;
+  dc:creator "Diego Berrueta and Luis Polo" ;
+  dc:date "2008" ;
+  dc:rights """(c) MyMobileWeb project, 2008
+      Based on the UCUM data (c) Gunther Schadow, Clement J. McDonald, 2005""" ;
+  dc:source "The Unified Code for Units of Measure (UCUM)"@en ;
+  rdfs:comment """
+         The instances of this ontology have been automatically
+         generated from the UCUM (The Unified Code for Units of Measure).
+         See http://aurora.rg.iupui.edu/UCUM/ for more details
+         on UCUM. The members of the MyMobileWeb consortium
+         explicitly acknowledge the copyright of the data from
+         the UCUM ontology."""@en ;
+  rdfs:label "Units of measurement ontology"@en ;
+  owl:imports <http://purl.oclc.org/NET/muo/muo-vocab.owl> ;
+.
+ucum:UnitOf-apoth
+  rdf:type owl:Class ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:subClassOf uomvocab:UnitOfMeasurement ;
+.
+ucum:UnitOf-avoirdupois
+  rdf:type owl:Class ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:subClassOf uomvocab:UnitOfMeasurement ;
+.
+ucum:UnitOf-brit-length
+  rdf:type owl:Class ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:subClassOf uomvocab:UnitOfMeasurement ;
+.
+ucum:UnitOf-brit-volumes
+  rdf:type owl:Class ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:subClassOf uomvocab:UnitOfMeasurement ;
+.
+ucum:UnitOf-cgs
+  rdf:type owl:Class ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:subClassOf uomvocab:UnitOfMeasurement ;
+.
+ucum:UnitOf-chemical
+  rdf:type owl:Class ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:subClassOf uomvocab:UnitOfMeasurement ;
+.
+ucum:UnitOf-clinical
+  rdf:type owl:Class ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:subClassOf uomvocab:UnitOfMeasurement ;
+.
+ucum:UnitOf-const
+  rdf:type owl:Class ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:subClassOf uomvocab:UnitOfMeasurement ;
+.
+ucum:UnitOf-dimless
+  rdf:type owl:Class ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:subClassOf uomvocab:UnitOfMeasurement ;
+.
+ucum:UnitOf-heat
+  rdf:type owl:Class ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:subClassOf uomvocab:UnitOfMeasurement ;
+.
+ucum:UnitOf-infotech
+  rdf:type owl:Class ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:subClassOf uomvocab:UnitOfMeasurement ;
+.
+ucum:UnitOf-intcust
+  rdf:type owl:Class ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:subClassOf uomvocab:UnitOfMeasurement ;
+.
+ucum:UnitOf-iso1000
+  rdf:type owl:Class ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:subClassOf uomvocab:UnitOfMeasurement ;
+.
+ucum:UnitOf-levels
+  rdf:type owl:Class ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:subClassOf uomvocab:UnitOfMeasurement ;
+.
+ucum:UnitOf-misc
+  rdf:type owl:Class ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:subClassOf uomvocab:UnitOfMeasurement ;
+.
+ucum:UnitOf-si
+  rdf:type owl:Class ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:subClassOf uomvocab:UnitOfMeasurement ;
+.
+ucum:UnitOf-troy
+  rdf:type owl:Class ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:subClassOf uomvocab:UnitOfMeasurement ;
+.
+ucum:UnitOf-typeset
+  rdf:type owl:Class ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:subClassOf uomvocab:UnitOfMeasurement ;
+.
+ucum:UnitOf-us-lengths
+  rdf:type owl:Class ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:subClassOf uomvocab:UnitOfMeasurement ;
+.
+ucum:UnitOf-us-volumes
+  rdf:type owl:Class ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:subClassOf uomvocab:UnitOfMeasurement ;
+.
+ucum:code1
+  rdf:type owl:DatatypeProperty ;
+  rdf:type owl:FunctionalProperty ;
+.
+ucum:code2
+  rdf:type owl:DatatypeProperty ;
+  rdf:type owl:FunctionalProperty ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/acceleration>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "acceleration"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/acidity>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "acidity"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/action>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "action"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/action-area>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "action area"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/amount-of-information>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "amount of information"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/amount-of-substance>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "amount of substance"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/arbitrary>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "arbitrary"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/arbitrary-biologic-activity>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "arbitrary biologic activity"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/area>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "area"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/biologic-activity-antistreptolysin-O>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "biologic activity antistreptolysin O"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/biologic-activity-of-amylase>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "biologic activity of amylase"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/biologic-activity-of-anticardiolipin-IgA>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "biologic activity of anticardiolipin IgA"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/biologic-activity-of-anticardiolipin-IgG>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "biologic activity of anticardiolipin IgG"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/biologic-activity-of-anticardiolipin-IgM>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "biologic activity of anticardiolipin IgM"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/biologic-activity-of-factor-VIII-inhibitor>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "biologic activity of factor VIII inhibitor"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/biologic-activity-of-phosphatase>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "biologic activity of phosphatase"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/biologic-activity-of-tuberculin>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "biologic activity of tuberculin"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/brightness>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "brightness"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/catalytic-activity>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "catalytic activity"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/depth-of-water>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "depth of water"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/dose-equivalent>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "dose equivalent"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/dry-volume>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "dry volume"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/dynamic-viscosity>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "dynamic viscosity"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/electric-capacitance>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "electric capacitance"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/electric-charge>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "electric charge"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/electric-conductance>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "electric conductance"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/electric-current>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "electric current"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/electric-permittivity>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "electric permittivity"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/electric-potential>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "electric potential"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/electric-potential-level>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "electric potential level"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/electric-resistance>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "electric resistance"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/energy>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "energy"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/energy-dose>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "energy dose"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/fluid-resistance>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "fluid resistance"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/fluid-volume>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "fluid volume"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/flux-of-magnetic-induction>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "flux of magnetic induction"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/force>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "force"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/fraction>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "fraction"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/frequency>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "frequency"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/gauge-of-catheters>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "gauge of catheters"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/height-of-horses>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "height of horses"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/homeopathic-potency>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "homeopathic potency"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/illuminance>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "illuminance"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/inductance>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "inductance"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/ion-dose>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "ion dose"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/kinematic-viscosity>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "kinematic viscosity"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/length>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "length"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/level>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "level"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/lineic-number>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "lineic number"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/lum.-intensity-density>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "lum. intensity density"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/luminous-flux>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "luminous flux"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/luminous-intensity>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "luminous intensity"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/magentic-flux>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "magentic flux"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/magnetic-field-intensity>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "magnetic field intensity"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/magnetic-flux-density>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "magnetic flux density"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/magnetic-permeability>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "magnetic permeability"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/magnetic-tension>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "magnetic tension"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/mass>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "mass"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/mass-fraction>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "mass fraction"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/metabolic-cost-of-physical-activity>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "metabolic cost of physical activity"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/number>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "number"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/plane-angle>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "plane angle"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/power>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "power"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/power-level>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "power level"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/pressure>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "pressure"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/pressure-level>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "pressure level"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/radioactivity>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "radioactivity"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/refraction-of-a-lens>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "refraction of a lens"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/sedimentation-coefficient>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "sedimentation coefficient"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/signal-transmission-rate>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "signal transmission rate"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/solid-angle>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "solid angle"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/temperature>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "temperature"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/time>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "time"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/unclassified>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "(unclassified)"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/velocity>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "velocity"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/view-area-in-microscope>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "view area in microscope"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/volume>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "volume"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/physical-quality/x-ray-attenuation>
+  rdf:type uomvocab:PhysicalQuality ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "x-ray attenuation"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/prefix/atto>
+  rdf:type uomvocab:Prefix ;
+  uomvocab:factor "1e-18" ;
+  uomvocab:prefSymbol "a" ;
+  ucum:code1 "a" ;
+  ucum:code2 "A" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "atto"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/prefix/centi>
+  rdf:type uomvocab:Prefix ;
+  uomvocab:factor "1e-2" ;
+  uomvocab:prefSymbol "c" ;
+  ucum:code1 "c" ;
+  ucum:code2 "C" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "centi"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/prefix/deci>
+  rdf:type uomvocab:Prefix ;
+  uomvocab:factor "1e-1" ;
+  uomvocab:prefSymbol "d" ;
+  ucum:code1 "d" ;
+  ucum:code2 "D" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "deci"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/prefix/deka>
+  rdf:type uomvocab:Prefix ;
+  uomvocab:factor "1e1" ;
+  uomvocab:prefSymbol "da" ;
+  ucum:code1 "da" ;
+  ucum:code2 "DA" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "deka"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/prefix/exa>
+  rdf:type uomvocab:Prefix ;
+  uomvocab:factor "1e18" ;
+  uomvocab:prefSymbol "E" ;
+  ucum:code1 "E" ;
+  ucum:code2 "EX" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "exa"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/prefix/femto>
+  rdf:type uomvocab:Prefix ;
+  uomvocab:factor "1e-15" ;
+  uomvocab:prefSymbol "f" ;
+  ucum:code1 "f" ;
+  ucum:code2 "F" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "femto"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/prefix/gibi>
+  rdf:type uomvocab:Prefix ;
+  uomvocab:factor "1073741824" ;
+  uomvocab:prefSymbol "Gi" ;
+  ucum:code1 "Gi" ;
+  ucum:code2 "GIB" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "gibi"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/prefix/giga>
+  rdf:type uomvocab:Prefix ;
+  uomvocab:factor "1e9" ;
+  uomvocab:prefSymbol "G" ;
+  ucum:code1 "G" ;
+  ucum:code2 "GA" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "giga"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/prefix/hecto>
+  rdf:type uomvocab:Prefix ;
+  uomvocab:factor "1e2" ;
+  uomvocab:prefSymbol "h" ;
+  ucum:code1 "h" ;
+  ucum:code2 "H" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "hecto"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/prefix/kibi>
+  rdf:type uomvocab:Prefix ;
+  uomvocab:factor "1024" ;
+  uomvocab:prefSymbol "Ki" ;
+  ucum:code1 "Ki" ;
+  ucum:code2 "KIB" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "kibi"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/prefix/kilo>
+  rdf:type uomvocab:Prefix ;
+  uomvocab:factor "1e3" ;
+  uomvocab:prefSymbol "k" ;
+  ucum:code1 "k" ;
+  ucum:code2 "K" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "kilo"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/prefix/mebi>
+  rdf:type uomvocab:Prefix ;
+  uomvocab:factor "1048576" ;
+  uomvocab:prefSymbol "Mi" ;
+  ucum:code1 "Mi" ;
+  ucum:code2 "MIB" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "mebi"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/prefix/mega>
+  rdf:type uomvocab:Prefix ;
+  uomvocab:factor "1e6" ;
+  uomvocab:prefSymbol "M" ;
+  ucum:code1 "M" ;
+  ucum:code2 "MA" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "mega"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/prefix/micro>
+  rdf:type uomvocab:Prefix ;
+  uomvocab:factor "1e-6" ;
+  uomvocab:prefSymbol "μ" ;
+  ucum:code1 "u" ;
+  ucum:code2 "U" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "micro"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/prefix/milli>
+  rdf:type uomvocab:Prefix ;
+  uomvocab:factor "1e-3" ;
+  uomvocab:prefSymbol "m" ;
+  ucum:code1 "m" ;
+  ucum:code2 "M" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "milli"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/prefix/nano>
+  rdf:type uomvocab:Prefix ;
+  uomvocab:factor "1e-9" ;
+  uomvocab:prefSymbol "n" ;
+  ucum:code1 "n" ;
+  ucum:code2 "N" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "nano"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/prefix/peta>
+  rdf:type uomvocab:Prefix ;
+  uomvocab:factor "1e15" ;
+  uomvocab:prefSymbol "P" ;
+  ucum:code1 "P" ;
+  ucum:code2 "PT" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "peta"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/prefix/pico>
+  rdf:type uomvocab:Prefix ;
+  uomvocab:factor "1e-12" ;
+  uomvocab:prefSymbol "p" ;
+  ucum:code1 "p" ;
+  ucum:code2 "P" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "pico"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/prefix/tebi>
+  rdf:type uomvocab:Prefix ;
+  uomvocab:factor "1099511627776" ;
+  uomvocab:prefSymbol "Ti" ;
+  ucum:code1 "Ti" ;
+  ucum:code2 "TIB" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "tebi"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/prefix/tera>
+  rdf:type uomvocab:Prefix ;
+  uomvocab:factor "1e12" ;
+  uomvocab:prefSymbol "T" ;
+  ucum:code1 "T" ;
+  ucum:code2 "TR" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "tera"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/prefix/yocto>
+  rdf:type uomvocab:Prefix ;
+  uomvocab:factor "1e-24" ;
+  uomvocab:prefSymbol "y" ;
+  ucum:code1 "y" ;
+  ucum:code2 "YO" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "yocto"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/prefix/yotta>
+  rdf:type uomvocab:Prefix ;
+  uomvocab:factor "1e24" ;
+  uomvocab:prefSymbol "Y" ;
+  ucum:code1 "Y" ;
+  ucum:code2 "YA" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "yotta"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/prefix/zepto>
+  rdf:type uomvocab:Prefix ;
+  uomvocab:factor "1e-21" ;
+  uomvocab:prefSymbol "z" ;
+  ucum:code1 "z" ;
+  ucum:code2 "ZO" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "zepto"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/prefix/zetta>
+  rdf:type uomvocab:Prefix ;
+  uomvocab:factor "1e21" ;
+  uomvocab:prefSymbol "Z" ;
+  ucum:code1 "Z" ;
+  ucum:code2 "ZA" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "zetta"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/acceleration/Gal>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-cgs ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/acceleration> ;
+  uomvocab:prefSymbol "Gal" ;
+  ucum:code1 "Gal" ;
+  ucum:code2 "GL" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "Gal"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/acceleration/standard-acceleration-of-free-fall>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-const ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/acceleration> ;
+  uomvocab:prefSymbol """
+               <i>g<sub>n</sub>
+               </i>
+            """^^rdf:XMLLiteral ;
+  ucum:code1 "[g]" ;
+  ucum:code2 "[G]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "standard acceleration of free fall"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/acidity/pH>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-chemical ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/acidity> ;
+  uomvocab:prefSymbol "pH" ;
+  ucum:code1 "[pH]" ;
+  ucum:code2 "[PH]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "pH"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/action-area/barn>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-misc ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/action-area> ;
+  uomvocab:prefSymbol "b" ;
+  ucum:code1 "b" ;
+  ucum:code2 "BRN" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "barn"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/action/Planck-constant>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-const ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/action> ;
+  uomvocab:prefSymbol """
+               <i>h</i>
+            """^^rdf:XMLLiteral ;
+  ucum:code1 "[h]" ;
+  ucum:code2 "[H]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "Planck constant"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/amount-of-information/bit-1>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-infotech ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/amount-of-information> ;
+  uomvocab:prefSymbol """bit<sub>s</sub>
+            """^^rdf:XMLLiteral ;
+  ucum:code1 "bit_s" ;
+  ucum:code2 "BIT_S" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "bit"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/amount-of-information/bit-2>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-infotech ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/amount-of-information> ;
+  uomvocab:prefSymbol "bit" ;
+  ucum:code1 "bit" ;
+  ucum:code2 "BIT" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "bit"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/amount-of-information/byte>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-infotech ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/amount-of-information> ;
+  uomvocab:prefSymbol "B" ;
+  ucum:code1 "By" ;
+  ucum:code2 "BY" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "byte"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/amount-of-substance/equivalents>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-chemical ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/amount-of-substance> ;
+  uomvocab:prefSymbol "eq" ;
+  ucum:code1 "eq" ;
+  ucum:code2 "EQ" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "equivalents"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/amount-of-substance/mole>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-si ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/amount-of-substance> ;
+  uomvocab:prefSymbol "mol" ;
+  ucum:code1 "mol" ;
+  ucum:code2 "MOL" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "mole"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/amount-of-substance/osmole-of-dissolved-particles>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-chemical ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/amount-of-substance> ;
+  uomvocab:prefSymbol "osm" ;
+  ucum:code1 "osm" ;
+  ucum:code2 "OSM" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "osmole of dissolved particles"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/arbitrary-biologic-activity/Kunkel-unit>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-chemical ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/arbitrary-biologic-activity> ;
+  ucum:code1 "[knk'U]" ;
+  ucum:code2 "[KNK'U]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "Kunkel unit"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/arbitrary-biologic-activity/Mac-Lagan-unit>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-chemical ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/arbitrary-biologic-activity> ;
+  ucum:code1 "[mclg'U]" ;
+  ucum:code2 "[MCLG'U]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "Mac Lagan unit"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/arbitrary/United-States-Pharmacopeia-unit>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-chemical ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/arbitrary> ;
+  uomvocab:prefSymbol "U.S.P." ;
+  ucum:code1 "[USP'U]" ;
+  ucum:code2 "[USP'U]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "United States Pharmacopeia unit"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/arbitrary/arbitary-unit>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-chemical ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/arbitrary> ;
+  uomvocab:prefSymbol "arb. U" ;
+  ucum:code1 "[arb'U]" ;
+  ucum:code2 "[ARB'U]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "arbitary unit"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/arbitrary/international-unit>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-chemical ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/arbitrary> ;
+  uomvocab:prefSymbol "i.U." ;
+  ucum:code1 "[iU]" ;
+  ucum:code2 "[IU]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "international unit"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/area/acre-1>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-us-lengths ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/area> ;
+  ucum:code1 "[acr_us]" ;
+  ucum:code2 "[ACR_US]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "acre"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/area/acre-2>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-brit-length ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/area> ;
+  ucum:code1 "[acr_br]" ;
+  ucum:code2 "[ACR_BR]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "acre"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/area/are>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-iso1000 ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/area> ;
+  uomvocab:prefSymbol "a" ;
+  ucum:code1 "ar" ;
+  ucum:code2 "AR" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "are"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/area/circular-mil>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-intcust ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/area> ;
+  uomvocab:prefSymbol "circ.mil" ;
+  ucum:code1 "[cml_i]" ;
+  ucum:code2 "[CML_I]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "circular mil"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/area/section>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-us-lengths ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/area> ;
+  ucum:code1 "[sct]" ;
+  ucum:code2 "[SCT]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "section"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/area/square-foot>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-intcust ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/area> ;
+  ucum:code1 "[sft_i]" ;
+  ucum:code2 "[SFT_I]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "square foot"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/area/square-inch>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-intcust ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/area> ;
+  ucum:code1 "[sin_i]" ;
+  ucum:code2 "[SIN_I]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "square inch"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/area/square-mile>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-us-lengths ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/area> ;
+  ucum:code1 "[smi_us]" ;
+  ucum:code2 "[SMI_US]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "square mile"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/area/square-rod>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-us-lengths ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/area> ;
+  ucum:code1 "[srd_us]" ;
+  ucum:code2 "[SRD_US]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "square rod"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/area/square-yard>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-intcust ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/area> ;
+  ucum:code1 "[syd_i]" ;
+  ucum:code2 "[SYD_I]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "square yard"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/area/township>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-us-lengths ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/area> ;
+  ucum:code1 "[twp]" ;
+  ucum:code2 "[TWP]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "township"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/biologic-activity-antistreptolysin-O/Todd-unit>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-chemical ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/biologic-activity-antistreptolysin-O> ;
+  ucum:code1 "[todd'U]" ;
+  ucum:code2 "[TODD'U]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "Todd unit"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/biologic-activity-of-amylase/Dye-unit>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-chemical ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/biologic-activity-of-amylase> ;
+  ucum:code1 "[dye'U]" ;
+  ucum:code2 "[DYE'U]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "Dye unit"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/biologic-activity-of-amylase/Somogyi-unit>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-chemical ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/biologic-activity-of-amylase> ;
+  ucum:code1 "[smgy'U]" ;
+  ucum:code2 "[SMGY'U]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "Somogyi unit"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/biologic-activity-of-anticardiolipin-IgA/APL-unit>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-chemical ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/biologic-activity-of-anticardiolipin-IgA> ;
+  ucum:code1 "[APL'U]" ;
+  ucum:code2 "[APL'U]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "APL unit"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/biologic-activity-of-anticardiolipin-IgG/GPL-unit>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-chemical ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/biologic-activity-of-anticardiolipin-IgG> ;
+  ucum:code1 "[GPL'U]" ;
+  ucum:code2 "[GPL'U]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "GPL unit"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/biologic-activity-of-anticardiolipin-IgM/MPL-unit>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-chemical ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/biologic-activity-of-anticardiolipin-IgM> ;
+  ucum:code1 "[MPL'U]" ;
+  ucum:code2 "[MPL'U]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "MPL unit"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/biologic-activity-of-factor-VIII-inhibitor/Bethesda-unit>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-chemical ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/biologic-activity-of-factor-VIII-inhibitor> ;
+  ucum:code1 "[beth'U]" ;
+  ucum:code2 "[BETH'U]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "Bethesda unit"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/biologic-activity-of-phosphatase/Bodansky-unit>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-chemical ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/biologic-activity-of-phosphatase> ;
+  ucum:code1 "[bdsk'U]" ;
+  ucum:code2 "[BDSK'U]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "Bodansky unit"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/biologic-activity-of-phosphatase/King-Armstrong-unit>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-chemical ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/biologic-activity-of-phosphatase> ;
+  ucum:code1 "[ka'U]" ;
+  ucum:code2 "[KA'U]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "King-Armstrong unit"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/biologic-activity-of-tuberculin/tuberculin-unit>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-chemical ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/biologic-activity-of-tuberculin> ;
+  ucum:code1 "[tb'U]" ;
+  ucum:code2 "[TB'U]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "tuberculin unit"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/brightness/Lambert>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-cgs ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/brightness> ;
+  uomvocab:prefSymbol "L" ;
+  ucum:code1 "Lmb" ;
+  ucum:code2 "LMB" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "Lambert"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/catalytic-activity/Unit>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-chemical ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/catalytic-activity> ;
+  uomvocab:prefSymbol "U" ;
+  ucum:code1 "U" ;
+  ucum:code2 "U" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "Unit"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/catalytic-activity/katal>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-chemical ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/catalytic-activity> ;
+  uomvocab:prefSymbol "kat" ;
+  ucum:code1 "kat" ;
+  ucum:code2 "KAT" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "katal"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/depth-of-water/fathom>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-intcust ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/depth-of-water> ;
+  uomvocab:prefSymbol "fth" ;
+  ucum:code1 "[fth_i]" ;
+  ucum:code2 "[FTH_I]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "fathom"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/dose-equivalent/Sievert>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-si ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/dose-equivalent> ;
+  uomvocab:prefSymbol "Sv" ;
+  ucum:code1 "Sv" ;
+  ucum:code2 "SV" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "Sievert"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/dose-equivalent/radiation-equivalent-man>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-cgs ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/dose-equivalent> ;
+  uomvocab:prefSymbol "REM" ;
+  ucum:code1 "REM" ;
+  ucum:code2 "[REM]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "radiation equivalent man"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/dry-volume/bushel>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-us-volumes ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/dry-volume> ;
+  ucum:code1 "[bu_us]" ;
+  ucum:code2 "[BU_US]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "bushel"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/dry-volume/dry-pint>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-us-volumes ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/dry-volume> ;
+  ucum:code1 "[dpt_us]" ;
+  ucum:code2 "[DPT_US]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "dry pint"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/dry-volume/dry-quart>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-us-volumes ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/dry-volume> ;
+  ucum:code1 "[dqt_us]" ;
+  ucum:code2 "[DQT_US]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "dry quart"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/dry-volume/historical-winchester-gallon>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-us-volumes ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/dry-volume> ;
+  ucum:code1 "[gal_wi]" ;
+  ucum:code2 "[GAL_WI]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "historical winchester gallon"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/dry-volume/peck>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-us-volumes ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/dry-volume> ;
+  ucum:code1 "[pk_us]" ;
+  ucum:code2 "[PK_US]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "peck"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/dynamic-viscosity/Poise>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-cgs ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/dynamic-viscosity> ;
+  uomvocab:prefSymbol "P" ;
+  ucum:code1 "P" ;
+  ucum:code2 "P" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "Poise"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/electric-capacitance/Farad>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-si ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/electric-capacitance> ;
+  uomvocab:prefSymbol "F" ;
+  ucum:code1 "F" ;
+  ucum:code2 "F" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "Farad"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/electric-charge/Coulomb>
+  rdf:type uomvocab:BaseUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/electric-charge> ;
+  uomvocab:prefSymbol "C" ;
+  ucum:code1 "C" ;
+  ucum:code2 "C" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "Coulomb"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/electric-charge/elementary-charge>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-const ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/electric-charge> ;
+  uomvocab:prefSymbol """
+               <i>e</i>
+            """^^rdf:XMLLiteral ;
+  ucum:code1 "[e]" ;
+  ucum:code2 "[E]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "elementary charge"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/electric-conductance/Siemens>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-si ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/electric-conductance> ;
+  uomvocab:prefSymbol "S" ;
+  ucum:code1 "S" ;
+  ucum:code2 "SIE" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "Siemens"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/electric-conductance/mho>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-misc ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/electric-conductance> ;
+  uomvocab:prefSymbol "mho" ;
+  ucum:code1 "mho" ;
+  ucum:code2 "MHO" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "mho"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/electric-current/Ampere>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-si ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/electric-current> ;
+  uomvocab:prefSymbol "A" ;
+  ucum:code1 "A" ;
+  ucum:code2 "A" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "Ampère"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/electric-current/Biot>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-cgs ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/electric-current> ;
+  uomvocab:prefSymbol "Bi" ;
+  ucum:code1 "Bi" ;
+  ucum:code2 "BI" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "Biot"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/electric-permittivity/permittivity-of-vacuum>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-const ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/electric-permittivity> ;
+  uomvocab:prefSymbol """
+               <i>ε<sub>
+                     <r>0</r>
+                  </sub>
+               </i>
+            """^^rdf:XMLLiteral ;
+  ucum:code1 "[eps_0]" ;
+  ucum:code2 "[eps_0]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "permittivity of vacuum"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/electric-potential-level/bel-microvolt>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-levels ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/electric-potential-level> ;
+  uomvocab:prefSymbol "B(μV)" ;
+  ucum:code1 "B[uV]" ;
+  ucum:code2 "B[UV]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "bel microvolt"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/electric-potential-level/bel-millivolt>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-levels ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/electric-potential-level> ;
+  uomvocab:prefSymbol "B(mV)" ;
+  ucum:code1 "B[mV]" ;
+  ucum:code2 "B[MV]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "bel millivolt"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/electric-potential-level/bel-volt>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-levels ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/electric-potential-level> ;
+  uomvocab:prefSymbol "B(V)" ;
+  ucum:code1 "B[V]" ;
+  ucum:code2 "B[V]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "bel volt"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/electric-potential/Volt>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-si ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/electric-potential> ;
+  uomvocab:prefSymbol "V" ;
+  ucum:code1 "V" ;
+  ucum:code2 "V" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "Volt"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/electric-resistance/Ohm>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-si ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/electric-resistance> ;
+  uomvocab:prefSymbol "Ω" ;
+  ucum:code1 "Ohm" ;
+  ucum:code2 "OHM" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "Ohm"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/energy-dose/Gray>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-si ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/energy-dose> ;
+  uomvocab:prefSymbol "Gy" ;
+  ucum:code1 "Gy" ;
+  ucum:code2 "GY" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "Gray"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/energy-dose/radiation-absorbed-dose>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-cgs ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/energy-dose> ;
+  uomvocab:prefSymbol "RAD" ;
+  ucum:code1 "RAD" ;
+  ucum:code2 "[RAD]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "radiation absorbed dose"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/energy/British-thermal-unit>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-heat ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/energy> ;
+  uomvocab:prefSymbol "btu" ;
+  ucum:code1 "[Btu]" ;
+  ucum:code2 "[BTU]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "British thermal unit"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/energy/British-thermal-unit-at-39_F>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-heat ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/energy> ;
+  uomvocab:prefSymbol """Btu<sub>39°F</sub>
+            """^^rdf:XMLLiteral ;
+  ucum:code1 "[Btu_39]" ;
+  ucum:code2 "[BTU_39]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "British thermal unit at 39 °F"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/energy/British-thermal-unit-at-59_F>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-heat ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/energy> ;
+  uomvocab:prefSymbol """Btu<sub>59°F</sub>
+            """^^rdf:XMLLiteral ;
+  ucum:code1 "[Btu_59]" ;
+  ucum:code2 "[BTU_59]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "British thermal unit at 59 °F"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/energy/British-thermal-unit-at-60_F>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-heat ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/energy> ;
+  uomvocab:prefSymbol """Btu<sub>60°F</sub>
+            """^^rdf:XMLLiteral ;
+  ucum:code1 "[Btu_60]" ;
+  ucum:code2 "[BTU_60]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "British thermal unit at 60 °F"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/energy/Joule>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-si ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/energy> ;
+  uomvocab:prefSymbol "J" ;
+  ucum:code1 "J" ;
+  ucum:code2 "J" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "Joule"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/energy/calorie>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-heat ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/energy> ;
+  uomvocab:prefSymbol "cal" ;
+  ucum:code1 "cal" ;
+  ucum:code2 "CAL" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "calorie"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/energy/calorie-at-15_C>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-heat ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/energy> ;
+  uomvocab:prefSymbol """cal<sub>15°C</sub>
+            """^^rdf:XMLLiteral ;
+  ucum:code1 "cal_[15]" ;
+  ucum:code2 "CAL_[15]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "calorie at 15 °C"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/energy/calorie-at-20_C>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-heat ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/energy> ;
+  uomvocab:prefSymbol """cal<sub>20°C</sub>
+            """^^rdf:XMLLiteral ;
+  ucum:code1 "cal_[20]" ;
+  ucum:code2 "CAL_[20]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "calorie at 20 °C"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/energy/electronvolt>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-iso1000 ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/energy> ;
+  uomvocab:prefSymbol "eV" ;
+  ucum:code1 "eV" ;
+  ucum:code2 "EV" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "electronvolt"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/energy/erg>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-cgs ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/energy> ;
+  uomvocab:prefSymbol "erg" ;
+  ucum:code1 "erg" ;
+  ucum:code2 "ERG" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "erg"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/energy/international-table-British-thermal-unit>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-heat ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/energy> ;
+  uomvocab:prefSymbol """Btu<sub>IT</sub>
+            """^^rdf:XMLLiteral ;
+  ucum:code1 "[Btu_IT]" ;
+  ucum:code2 "[BTU_IT]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "international table British thermal unit"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/energy/international-table-calorie>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-heat ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/energy> ;
+  uomvocab:prefSymbol """cal<sub>IT</sub>
+            """^^rdf:XMLLiteral ;
+  ucum:code1 "cal_IT" ;
+  ucum:code2 "CAL_IT" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "international table calorie"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/energy/mean-British-thermal-unit>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-heat ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/energy> ;
+  uomvocab:prefSymbol """Btu<sub>m</sub>
+            """^^rdf:XMLLiteral ;
+  ucum:code1 "[Btu_m]" ;
+  ucum:code2 "[BTU_M]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "mean British thermal unit"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/energy/mean-calorie>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-heat ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/energy> ;
+  uomvocab:prefSymbol """cal<sub>m</sub>
+            """^^rdf:XMLLiteral ;
+  ucum:code1 "cal_m" ;
+  ucum:code2 "CAL_M" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "mean calorie"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/energy/nutrition-label-Calories>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-heat ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/energy> ;
+  uomvocab:prefSymbol "Cal" ;
+  ucum:code1 "[Cal]" ;
+  ucum:code2 "[CAL]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "nutrition label Calories"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/energy/thermochemical-British-thermal-unit>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-heat ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/energy> ;
+  uomvocab:prefSymbol """Btu<sub>th</sub>
+            """^^rdf:XMLLiteral ;
+  ucum:code1 "[Btu_th]" ;
+  ucum:code2 "[BTU_TH]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "thermochemical British thermal unit"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/energy/thermochemical-calorie>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-heat ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/energy> ;
+  uomvocab:prefSymbol """cal<sub>th</sub>
+            """^^rdf:XMLLiteral ;
+  ucum:code1 "cal_th" ;
+  ucum:code2 "CAL_TH" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "thermochemical calorie"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/fluid-resistance/peripheral-vascular-resistance-unit>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-clinical ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/fluid-resistance> ;
+  uomvocab:prefSymbol "P.R.U." ;
+  ucum:code1 "[PRU]" ;
+  ucum:code2 "[PRU]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "peripheral vascular resistance unit"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/fluid-volume/Queen_Anne_s-wine-gallon>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-us-volumes ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/fluid-volume> ;
+  ucum:code1 "[gal_us]" ;
+  ucum:code2 "[GAL_US]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "Queen Anne's wine gallon"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/fluid-volume/barrel>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-us-volumes ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/fluid-volume> ;
+  ucum:code1 "[bbl_us]" ;
+  ucum:code2 "[BBL_US]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "barrel"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/fluid-volume/cord>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-us-volumes ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/fluid-volume> ;
+  ucum:code1 "[crd_us]" ;
+  ucum:code2 "[CRD_US]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "cord"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/fluid-volume/fluid-dram>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-us-volumes ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/fluid-volume> ;
+  ucum:code1 "[fdr_us]" ;
+  ucum:code2 "[FDR_US]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "fluid dram"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/fluid-volume/fluid-ounce>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-us-volumes ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/fluid-volume> ;
+  uomvocab:prefSymbol "oz fl" ;
+  ucum:code1 "[foz_us]" ;
+  ucum:code2 "[FOZ_US]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "fluid ounce"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/fluid-volume/gill>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-us-volumes ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/fluid-volume> ;
+  ucum:code1 "[gil_us]" ;
+  ucum:code2 "[GIL_US]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "gill"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/fluid-volume/minim>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-us-volumes ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/fluid-volume> ;
+  ucum:code1 "[min_us]" ;
+  ucum:code2 "[MIN_US]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "minim"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/fluid-volume/pint>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-us-volumes ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/fluid-volume> ;
+  ucum:code1 "[pt_us]" ;
+  ucum:code2 "[PT_US]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "pint"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/fluid-volume/quart>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-us-volumes ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/fluid-volume> ;
+  ucum:code1 "[qt_us]" ;
+  ucum:code2 "[QT_US]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "quart"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/flux-of-magnetic-induction/Maxwell>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-cgs ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/flux-of-magnetic-induction> ;
+  uomvocab:prefSymbol "Mx" ;
+  ucum:code1 "Mx" ;
+  ucum:code2 "MX" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "Maxwell"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/force/Newton>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-si ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/force> ;
+  uomvocab:prefSymbol "N" ;
+  ucum:code1 "N" ;
+  ucum:code2 "N" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "Newton"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/force/dyne>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-cgs ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/force> ;
+  uomvocab:prefSymbol "dyn" ;
+  ucum:code1 "dyn" ;
+  ucum:code2 "DYN" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "dyne"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/force/gram-force>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-const ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/force> ;
+  uomvocab:prefSymbol "gf" ;
+  ucum:code1 "gf" ;
+  ucum:code2 "GF" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "gram-force"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/force/pound-force>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-const ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/force> ;
+  uomvocab:prefSymbol "lbf" ;
+  ucum:code1 "[lbf_av]" ;
+  ucum:code2 "[LBF_AV]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "pound force"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/fraction/parts-per-billion>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-dimless ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/fraction> ;
+  uomvocab:prefSymbol "ppb" ;
+  ucum:code1 "[ppb]" ;
+  ucum:code2 "[PPB]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "parts per billion"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/fraction/parts-per-million>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-dimless ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/fraction> ;
+  uomvocab:prefSymbol "ppm" ;
+  ucum:code1 "[ppm]" ;
+  ucum:code2 "[PPM]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "parts per million"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/fraction/parts-per-thousand>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-dimless ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/fraction> ;
+  uomvocab:prefSymbol "ppth" ;
+  ucum:code1 "[ppth]" ;
+  ucum:code2 "[PPTH]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "parts per thousand"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/fraction/parts-per-trillion>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-dimless ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/fraction> ;
+  uomvocab:prefSymbol "pptr" ;
+  ucum:code1 "[pptr]" ;
+  ucum:code2 "[PPTR]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "parts per trillion"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/fraction/percent>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-dimless ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/fraction> ;
+  uomvocab:prefSymbol "%" ;
+  ucum:code1 "%" ;
+  ucum:code2 "%" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "percent"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/frequency/Herz>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-si ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/frequency> ;
+  uomvocab:prefSymbol "Hz" ;
+  ucum:code1 "Hz" ;
+  ucum:code2 "HZ" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "Herz"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/gauge-of-catheters/Charriere>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-clinical ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/gauge-of-catheters> ;
+  uomvocab:prefSymbol "Ch" ;
+  ucum:code1 "[Ch]" ;
+  ucum:code2 "[CH]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "Charrière"@en ;
+  rdfs:label "french"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/height-of-horses/hand>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-intcust ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/height-of-horses> ;
+  uomvocab:prefSymbol "hd" ;
+  ucum:code1 "[hd_i]" ;
+  ucum:code2 "[HD_I]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "hand"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/homeopathic-potency/homeopathic-potency-of-centesimal-series>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-clinical ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/homeopathic-potency> ;
+  uomvocab:prefSymbol "C" ;
+  ucum:code1 "[hp_C]" ;
+  ucum:code2 "[HP_C]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "homeopathic potency of centesimal series"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/homeopathic-potency/homeopathic-potency-of-decimal-series>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-clinical ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/homeopathic-potency> ;
+  uomvocab:prefSymbol "X" ;
+  ucum:code1 "[hp_X]" ;
+  ucum:code2 "[HP_X]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "homeopathic potency of decimal series"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/illuminance/lux>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-si ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/illuminance> ;
+  uomvocab:prefSymbol "lx" ;
+  ucum:code1 "lx" ;
+  ucum:code2 "LX" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "lux"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/illuminance/phot>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-cgs ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/illuminance> ;
+  uomvocab:prefSymbol "ph" ;
+  ucum:code1 "ph" ;
+  ucum:code2 "PHT" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "phot"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/inductance/Henry>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-si ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/inductance> ;
+  uomvocab:prefSymbol "H" ;
+  ucum:code1 "H" ;
+  ucum:code2 "H" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "Henry"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/ion-dose/Roentgen>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-cgs ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/ion-dose> ;
+  uomvocab:prefSymbol "R" ;
+  ucum:code1 "R" ;
+  ucum:code2 "ROE" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "Roentgen"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/kinematic-viscosity/Stokes>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-cgs ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/kinematic-viscosity> ;
+  uomvocab:prefSymbol "St" ;
+  ucum:code1 "St" ;
+  ucum:code2 "ST" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "Stokes"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/length/Angstrom>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-misc ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/length> ;
+  uomvocab:prefSymbol "Å" ;
+  ucum:code1 "Ao" ;
+  ucum:code2 "AO" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "Ångström"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/length/Gunter_s-chain-1>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-us-lengths ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/length> ;
+  ucum:code1 "[ch_us]" ;
+  ucum:code2 "[CH_US]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "Gunter's chain"@en ;
+  rdfs:label "Surveyor's chain"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/length/Gunter_s-chain-2>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-brit-length ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/length> ;
+  ucum:code1 "[ch_br]" ;
+  ucum:code2 "[CH_BR]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "Gunter's chain"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/length/Printer_s-pica>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-typeset ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/length> ;
+  ucum:code1 "[pca_pr]" ;
+  ucum:code2 "[PCA_PR]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "Printer's pica"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/length/Printer_s-point>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-typeset ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/length> ;
+  ucum:code1 "[pnt_pr]" ;
+  ucum:code2 "[PNT_PR]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "Printer's point"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/length/Ramden_s-chain>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-us-lengths ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/length> ;
+  ucum:code1 "[rch_us]" ;
+  ucum:code2 "[RCH_US]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "Engineer's chain"@en ;
+  rdfs:label "Ramden's chain"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/length/astronomic-unit>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-iso1000 ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/length> ;
+  uomvocab:prefSymbol "AU" ;
+  ucum:code1 "AU" ;
+  ucum:code2 "ASU" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "astronomic unit"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/length/cicero>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-typeset ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/length> ;
+  ucum:code1 "[cicero]" ;
+  ucum:code2 "[CICERO]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "Didot's pica"@en ;
+  rdfs:label "cicero"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/length/didot>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-typeset ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/length> ;
+  ucum:code1 "[didot]" ;
+  ucum:code2 "[DIDOT]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "Didot's point"@en ;
+  rdfs:label "didot"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/length/fathom-1>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-us-lengths ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/length> ;
+  ucum:code1 "[fth_us]" ;
+  ucum:code2 "[FTH_US]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "fathom"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/length/fathom-2>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-brit-length ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/length> ;
+  ucum:code1 "[fth_br]" ;
+  ucum:code2 "[FTH_BR]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "fathom"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/length/foot-1>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-intcust ;
+  uomvocab:altSymbol "'" ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/length> ;
+  uomvocab:prefSymbol "ft" ;
+  ucum:code1 "[ft_i]" ;
+  ucum:code2 "[FT_I]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "foot"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/length/foot-2>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-us-lengths ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/length> ;
+  uomvocab:prefSymbol """ft<sub>us</sub>
+            """^^rdf:XMLLiteral ;
+  ucum:code1 "[ft_us]" ;
+  ucum:code2 "[FT_US]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "foot"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/length/foot-3>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-brit-length ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/length> ;
+  ucum:code1 "[ft_br]" ;
+  ucum:code2 "[FT_BR]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "foot"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/length/furlong>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-us-lengths ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/length> ;
+  ucum:code1 "[fur_us]" ;
+  ucum:code2 "[FUR_US]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "furlong"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/length/inch-1>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-intcust ;
+  uomvocab:altSymbol "''" ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/length> ;
+  uomvocab:prefSymbol "in" ;
+  ucum:code1 "[in_i]" ;
+  ucum:code2 "[IN_I]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "inch"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/length/inch-2>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-us-lengths ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/length> ;
+  ucum:code1 "[in_us]" ;
+  ucum:code2 "[IN_US]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "inch"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/length/inch-3>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-brit-length ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/length> ;
+  ucum:code1 "[in_br]" ;
+  ucum:code2 "[IN_BR]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "inch"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/length/light-year>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-const ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/length> ;
+  uomvocab:prefSymbol "l.y." ;
+  ucum:code1 "[ly]" ;
+  ucum:code2 "[LY]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "light-year"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/length/ligne>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-typeset ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/length> ;
+  ucum:code1 "[ligne]" ;
+  ucum:code2 "[LIGNE]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "French line"@en ;
+  rdfs:label "ligne"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/length/line>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-typeset ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/length> ;
+  ucum:code1 "[lne]" ;
+  ucum:code2 "[LNE]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "line"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/length/link-for-Gunter_s-chain-1>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-us-lengths ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/length> ;
+  ucum:code1 "[lk_us]" ;
+  ucum:code2 "[LK_US]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "link for Gunter's chain"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/length/link-for-Gunter_s-chain-2>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-brit-length ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/length> ;
+  ucum:code1 "[lk_br]" ;
+  ucum:code2 "[LK_BR]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "link for Gunter's chain"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/length/link-for-Ramden_s-chain>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-us-lengths ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/length> ;
+  ucum:code1 "[rlk_us]" ;
+  ucum:code2 "[RLK_US]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "link for Ramden's chain"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/length/meter>
+  rdf:type uomvocab:BaseUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/length> ;
+  uomvocab:prefSymbol "m" ;
+  ucum:code1 "m" ;
+  ucum:code2 "M" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "meter"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/length/mil-1>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-intcust ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/length> ;
+  uomvocab:prefSymbol "mil" ;
+  ucum:code1 "[mil_i]" ;
+  ucum:code2 "[MIL_I]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "mil"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/length/mil-2>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-us-lengths ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/length> ;
+  ucum:code1 "[mil_us]" ;
+  ucum:code2 "[MIL_US]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "mil"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/length/mile-1>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-us-lengths ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/length> ;
+  ucum:code1 "[mi_us]" ;
+  ucum:code2 "[MI_US]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "mile"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/length/mile-2>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-brit-length ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/length> ;
+  ucum:code1 "[mi_br]" ;
+  ucum:code2 "[MI_BR]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "mile"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/length/nautic-mile-1>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-intcust ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/length> ;
+  uomvocab:prefSymbol "n.mi" ;
+  ucum:code1 "[nmi_i]" ;
+  ucum:code2 "[NMI_I]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "nautic mile"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/length/nautic-mile-2>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-brit-length ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/length> ;
+  ucum:code1 "[nmi_br]" ;
+  ucum:code2 "[NMI_BR]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "nautic mile"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/length/pace>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-brit-length ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/length> ;
+  ucum:code1 "[pc_br]" ;
+  ucum:code2 "[PC_BR]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "pace"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/length/parsec>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-iso1000 ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/length> ;
+  uomvocab:prefSymbol "pc" ;
+  ucum:code1 "pc" ;
+  ucum:code2 "PRS" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "parsec"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/length/pica>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-typeset ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/length> ;
+  ucum:code1 "[pca]" ;
+  ucum:code2 "[PCA]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "pica"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/length/pied>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-typeset ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/length> ;
+  ucum:code1 "[pied]" ;
+  ucum:code2 "[PIED]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "French foot"@en ;
+  rdfs:label "pied"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/length/point>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-typeset ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/length> ;
+  ucum:code1 "[pnt]" ;
+  ucum:code2 "[PNT]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "point"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/length/pouce>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-typeset ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/length> ;
+  ucum:code1 "[pouce]" ;
+  ucum:code2 "[POUCE]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "French inch"@en ;
+  rdfs:label "pouce"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/length/rod-1>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-us-lengths ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/length> ;
+  ucum:code1 "[rd_us]" ;
+  ucum:code2 "[RD_US]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "rod"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/length/rod-2>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-brit-length ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/length> ;
+  ucum:code1 "[rd_br]" ;
+  ucum:code2 "[RD_BR]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "rod"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/length/statute-mile>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-intcust ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/length> ;
+  uomvocab:prefSymbol "mi" ;
+  ucum:code1 "[mi_i]" ;
+  ucum:code2 "[MI_I]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "statute mile"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/length/yard-1>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-intcust ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/length> ;
+  uomvocab:prefSymbol "yd" ;
+  ucum:code1 "[yd_i]" ;
+  ucum:code2 "[YD_I]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "yard"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/length/yard-2>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-us-lengths ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/length> ;
+  ucum:code1 "[yd_us]" ;
+  ucum:code2 "[YD_US]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "yard"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/length/yard-3>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-brit-length ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/length> ;
+  ucum:code1 "[yd_br]" ;
+  ucum:code2 "[YD_BR]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "yard"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/level/bel>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-levels ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/level> ;
+  uomvocab:prefSymbol "B" ;
+  ucum:code1 "B" ;
+  ucum:code2 "B" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "bel"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/level/neper>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-levels ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/level> ;
+  uomvocab:prefSymbol "Np" ;
+  ucum:code1 "Np" ;
+  ucum:code2 "NEP" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "neper"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/lineic-number/Kayser>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-cgs ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/lineic-number> ;
+  uomvocab:prefSymbol "K" ;
+  ucum:code1 "Ky" ;
+  ucum:code2 "KY" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "Kayser"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/lineic-number/mesh>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-clinical ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/lineic-number> ;
+  ucum:code1 "[mesh_i]" ;
+  ucum:code2 "[MESH_I]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "mesh"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/lum.-intensity-density/stilb>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-cgs ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/lum.-intensity-density> ;
+  uomvocab:prefSymbol "sb" ;
+  ucum:code1 "sb" ;
+  ucum:code2 "SB" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "stilb"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/luminous-flux/lumen>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-si ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/luminous-flux> ;
+  uomvocab:prefSymbol "lm" ;
+  ucum:code1 "lm" ;
+  ucum:code2 "LM" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "lumen"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/luminous-intensity/candela>
+  rdf:type uomvocab:BaseUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/luminous-intensity> ;
+  uomvocab:prefSymbol "cd" ;
+  ucum:code1 "cd" ;
+  ucum:code2 "CD" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "candela"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/magentic-flux/Weber>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-si ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/magentic-flux> ;
+  uomvocab:prefSymbol "Wb" ;
+  ucum:code1 "Wb" ;
+  ucum:code2 "WB" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "Weber"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/magnetic-field-intensity/Oersted>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-cgs ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/magnetic-field-intensity> ;
+  uomvocab:prefSymbol "Oe" ;
+  ucum:code1 "Oe" ;
+  ucum:code2 "OE" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "Oersted"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/magnetic-flux-density/Gauss>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-cgs ;
+  uomvocab:altSymbol "G" ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/magnetic-flux-density> ;
+  uomvocab:prefSymbol "Gs" ;
+  ucum:code1 "G" ;
+  ucum:code2 "GS" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "Gauss"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/magnetic-flux-density/Tesla>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-si ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/magnetic-flux-density> ;
+  uomvocab:prefSymbol "T" ;
+  ucum:code1 "T" ;
+  ucum:code2 "T" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "Tesla"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/magnetic-permeability/permeability-of-vacuum>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-const ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/magnetic-permeability> ;
+  uomvocab:prefSymbol """
+               <i>μ<sub>
+                     <r>0</r>
+                  </sub>
+               </i>
+            """^^rdf:XMLLiteral ;
+  ucum:code1 "[mu_0]" ;
+  ucum:code2 "[mu_0]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "permeability of vacuum"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/magnetic-tension/Gilbert>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-cgs ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/magnetic-tension> ;
+  uomvocab:prefSymbol "Gb" ;
+  ucum:code1 "Gb" ;
+  ucum:code2 "GB" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "Gilbert"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/mass-fraction/carat-of-gold-alloys>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-misc ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/mass-fraction> ;
+  uomvocab:prefSymbol """ct<sub>
+                  <r>Au</r>
+               </sub>
+            """^^rdf:XMLLiteral ;
+  ucum:code1 "[car_Au]" ;
+  ucum:code2 "[CAR_AU]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "carat of gold alloys"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/mass-fraction/gram-percent>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-chemical ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/mass-fraction> ;
+  uomvocab:prefSymbol "g%" ;
+  ucum:code1 "g%" ;
+  ucum:code2 "G%" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "gram percent"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/mass/dram-1>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-avoirdupois ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/mass> ;
+  ucum:code1 "[dr_av]" ;
+  ucum:code2 "[DR_AV]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "dram"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/mass/dram-2>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-apoth ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/mass> ;
+  ucum:code1 "[dr_ap]" ;
+  ucum:code2 "[DR_AP]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "drachm"@en ;
+  rdfs:label "dram"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/mass/electron-mass>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-const ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/mass> ;
+  uomvocab:prefSymbol """
+               <i>m<sub>
+                     <r>e</r>
+                  </sub>
+               </i>
+            """^^rdf:XMLLiteral ;
+  ucum:code1 "[m_e]" ;
+  ucum:code2 "[M_E]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "electron mass"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/mass/grain>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-avoirdupois ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/mass> ;
+  ucum:code1 "[gr]" ;
+  ucum:code2 "[GR]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "grain"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/mass/gram>
+  rdf:type uomvocab:BaseUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/mass> ;
+  uomvocab:prefSymbol "g" ;
+  ucum:code1 "g" ;
+  ucum:code2 "G" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "gram"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/mass/long-hunderdweight>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-avoirdupois ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/mass> ;
+  ucum:code1 "[lcwt_av]" ;
+  ucum:code2 "[LCWT_AV]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "British hundredweight"@en ;
+  rdfs:label "long hunderdweight"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/mass/long-ton>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-avoirdupois ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/mass> ;
+  ucum:code1 "[lton_av]" ;
+  ucum:code2 "[LTON_AV]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "British ton"@en ;
+  rdfs:label "long ton"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/mass/metric-carat>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-misc ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/mass> ;
+  uomvocab:prefSymbol """ct<sub>m</sub>
+            """^^rdf:XMLLiteral ;
+  ucum:code1 "[car_m]" ;
+  ucum:code2 "[CAR_M]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "metric carat"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/mass/ounce-1>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-avoirdupois ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/mass> ;
+  uomvocab:prefSymbol "oz" ;
+  ucum:code1 "[oz_av]" ;
+  ucum:code2 "[OZ_AV]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "ounce"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/mass/ounce-2>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-troy ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/mass> ;
+  ucum:code1 "[oz_tr]" ;
+  ucum:code2 "[OZ_TR]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "ounce"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/mass/ounce-3>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-apoth ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/mass> ;
+  ucum:code1 "[oz_ap]" ;
+  ucum:code2 "[OZ_AP]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "ounce"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/mass/pennyweight>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-troy ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/mass> ;
+  ucum:code1 "[pwt_tr]" ;
+  ucum:code2 "[PWT_TR]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "pennyweight"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/mass/pound-1>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-avoirdupois ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/mass> ;
+  uomvocab:prefSymbol "lb" ;
+  ucum:code1 "[lb_av]" ;
+  ucum:code2 "[LB_AV]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "pound"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/mass/pound-2>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-troy ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/mass> ;
+  ucum:code1 "[lb_tr]" ;
+  ucum:code2 "[LB_TR]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "pound"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/mass/pound-3>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-apoth ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/mass> ;
+  ucum:code1 "[lb_ap]" ;
+  ucum:code2 "[LB_AP]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "pound"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/mass/proton-mass>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-const ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/mass> ;
+  uomvocab:prefSymbol """
+               <i>m<sub>
+                     <r>p</r>
+                  </sub>
+               </i>
+            """^^rdf:XMLLiteral ;
+  ucum:code1 "[m_p]" ;
+  ucum:code2 "[M_P]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "proton mass"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/mass/scruple>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-apoth ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/mass> ;
+  ucum:code1 "[sc_ap]" ;
+  ucum:code2 "[SC_AP]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "scruple"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/mass/short-hundredweight>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-avoirdupois ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/mass> ;
+  ucum:code1 "[scwt_av]" ;
+  ucum:code2 "[SCWT_AV]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "U.S. hundredweight"@en ;
+  rdfs:label "short hundredweight"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/mass/short-ton>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-avoirdupois ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/mass> ;
+  ucum:code1 "[ston_av]" ;
+  ucum:code2 "[STON_AV]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "U.S. ton"@en ;
+  rdfs:label "short ton"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/mass/stone>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-avoirdupois ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/mass> ;
+  ucum:code1 "[stone_av]" ;
+  ucum:code2 "[STONE_AV]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "British stone"@en ;
+  rdfs:label "stone"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/mass/tonne>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-iso1000 ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/mass> ;
+  uomvocab:prefSymbol "t" ;
+  ucum:code1 "t" ;
+  ucum:code2 "TNE" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "tonne"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/mass/unified-atomic-mass-unit>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-iso1000 ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/mass> ;
+  uomvocab:prefSymbol "u" ;
+  ucum:code1 "u" ;
+  ucum:code2 "AMU" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "unified atomic mass unit"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/metabolic-cost-of-physical-activity/metabolic-equivalent>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-clinical ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/metabolic-cost-of-physical-activity> ;
+  uomvocab:prefSymbol "MET" ;
+  ucum:code1 "[MET]" ;
+  ucum:code2 "[MET]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "metabolic equivalent"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/number/the-number-pi>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-dimless ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/number> ;
+  uomvocab:prefSymbol "π" ;
+  ucum:code1 "[pi]" ;
+  ucum:code2 "[PI]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "the number pi"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/number/the-number-ten-for-arbitrary-powers-1>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-dimless ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/number> ;
+  uomvocab:prefSymbol """10<sup>n</sup>
+            """^^rdf:XMLLiteral ;
+  ucum:code1 "10*" ;
+  ucum:code2 "10*" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "the number ten for arbitrary powers"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/number/the-number-ten-for-arbitrary-powers-2>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-dimless ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/number> ;
+  uomvocab:prefSymbol """10<sup>n</sup>
+            """^^rdf:XMLLiteral ;
+  ucum:code1 "10^" ;
+  ucum:code2 "10^" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "the number ten for arbitrary powers"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/plane-angle/circle>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-misc ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/plane-angle> ;
+  uomvocab:prefSymbol "circ" ;
+  ucum:code1 "circ" ;
+  ucum:code2 "CIRC" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "circle"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/plane-angle/degree>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-iso1000 ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/plane-angle> ;
+  uomvocab:prefSymbol "°" ;
+  ucum:code1 "deg" ;
+  ucum:code2 "DEG" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "degree"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/plane-angle/gon>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-iso1000 ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/plane-angle> ;
+  uomvocab:prefSymbol """□<sup>g</sup>
+            """^^rdf:XMLLiteral ;
+  ucum:code1 "gon" ;
+  ucum:code2 "GON" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "gon"@en ;
+  rdfs:label "grade"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/plane-angle/minute>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-iso1000 ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/plane-angle> ;
+  uomvocab:prefSymbol "'" ;
+  ucum:code1 "'" ;
+  ucum:code2 "'" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "minute"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/plane-angle/radian>
+  rdf:type uomvocab:BaseUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/plane-angle> ;
+  uomvocab:prefSymbol "rad" ;
+  ucum:code1 "rad" ;
+  ucum:code2 "RAD" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "radian"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/plane-angle/second>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-iso1000 ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/plane-angle> ;
+  uomvocab:prefSymbol "''" ;
+  ucum:code1 "''" ;
+  ucum:code2 "''" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "second"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/power-level/bel-kilowatt>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-levels ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/power-level> ;
+  uomvocab:prefSymbol "B(kW)" ;
+  ucum:code1 "B[kW]" ;
+  ucum:code2 "B[KW]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "bel kilowatt"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/power-level/bel-watt>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-levels ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/power-level> ;
+  uomvocab:prefSymbol "B(W)" ;
+  ucum:code1 "B[W]" ;
+  ucum:code2 "B[W]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "bel watt"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/power/Watt>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-si ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/power> ;
+  uomvocab:prefSymbol "W" ;
+  ucum:code1 "W" ;
+  ucum:code2 "W" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "Watt"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/power/horsepower>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-heat ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/power> ;
+  ucum:code1 "[HP]" ;
+  ucum:code2 "[HP]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "horsepower"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/pressure-level/bel-sound-pressure>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-levels ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/pressure-level> ;
+  uomvocab:prefSymbol "B(SPL)" ;
+  ucum:code1 "B[SPL]" ;
+  ucum:code2 "B[SPL]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "bel sound pressure"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/pressure/Pascal>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-si ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/pressure> ;
+  uomvocab:prefSymbol "Pa" ;
+  ucum:code1 "Pa" ;
+  ucum:code2 "PAL" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "Pascal"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/pressure/bar>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-iso1000 ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/pressure> ;
+  uomvocab:prefSymbol "bar" ;
+  ucum:code1 "bar" ;
+  ucum:code2 "BAR" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "bar"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/pressure/inch-of-mercury-column>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-clinical ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/pressure> ;
+  uomvocab:prefSymbol "in Hg" ;
+  ucum:code1 "[in_i'Hg]" ;
+  ucum:code2 "[IN_i'HG]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "inch of mercury column"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/pressure/inch-of-water-column>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-clinical ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/pressure> ;
+  uomvocab:prefSymbol """in H<sub>
+                  <r>2</r>
+               </sub>O"""^^rdf:XMLLiteral ;
+  ucum:code1 "[in_i'H2O]" ;
+  ucum:code2 "[IN_I'H2O]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "inch of water column"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/pressure/meter-of-mercury-column>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-clinical ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/pressure> ;
+  uomvocab:prefSymbol "m Hg" ;
+  ucum:code1 "m[Hg]" ;
+  ucum:code2 "M[HG]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "meter of mercury column"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/pressure/meter-of-water-column>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-clinical ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/pressure> ;
+  uomvocab:prefSymbol """m H<sub>
+                  <r>2</r>
+               </sub>O"""^^rdf:XMLLiteral ;
+  ucum:code1 "m[H2O]" ;
+  ucum:code2 "M[H2O]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "meter of water column"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/pressure/pound-per-sqare-inch>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-misc ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/pressure> ;
+  uomvocab:prefSymbol "psi" ;
+  ucum:code1 "[psi]" ;
+  ucum:code2 "[PSI]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "pound per sqare inch"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/pressure/standard-atmosphere>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-const ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/pressure> ;
+  uomvocab:prefSymbol "atm" ;
+  ucum:code1 "atm" ;
+  ucum:code2 "ATM" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "standard atmosphere"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/pressure/technical-atmosphere>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-misc ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/pressure> ;
+  uomvocab:prefSymbol "at" ;
+  ucum:code1 "att" ;
+  ucum:code2 "ATT" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "technical atmosphere"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/radioactivity/Becquerel>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-si ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/radioactivity> ;
+  uomvocab:prefSymbol "Bq" ;
+  ucum:code1 "Bq" ;
+  ucum:code2 "BQ" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "Becquerel"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/radioactivity/Curie>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-cgs ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/radioactivity> ;
+  uomvocab:prefSymbol "Ci" ;
+  ucum:code1 "Ci" ;
+  ucum:code2 "CI" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "Curie"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/refraction-of-a-lens/diopter>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-clinical ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/refraction-of-a-lens> ;
+  uomvocab:prefSymbol "dpt" ;
+  ucum:code1 "[diop]" ;
+  ucum:code2 "[DIOP]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "diopter"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/sedimentation-coefficient/Svedberg-unit>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-chemical ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/sedimentation-coefficient> ;
+  uomvocab:prefSymbol "S" ;
+  ucum:code1 "[S]" ;
+  ucum:code2 "[S]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "Svedberg unit"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/signal-transmission-rate/baud>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-infotech ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/signal-transmission-rate> ;
+  uomvocab:prefSymbol "Bd" ;
+  ucum:code1 "Bd" ;
+  ucum:code2 "Bd" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "baud"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/solid-angle/spere>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-misc ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/solid-angle> ;
+  uomvocab:prefSymbol "sph" ;
+  ucum:code1 "sph" ;
+  ucum:code2 "SPH" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "spere"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/solid-angle/streadian>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-si ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/solid-angle> ;
+  uomvocab:prefSymbol "sr" ;
+  ucum:code1 "sr" ;
+  ucum:code2 "SR" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "streadian"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/temperature/Kelvin>
+  rdf:type uomvocab:BaseUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/temperature> ;
+  uomvocab:prefSymbol "K" ;
+  ucum:code1 "K" ;
+  ucum:code2 "K" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "Kelvin"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/temperature/degree-Celsius>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-si ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/temperature> ;
+  uomvocab:prefSymbol "°C" ;
+  ucum:code1 "Cel" ;
+  ucum:code2 "CEL" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "degree Celsius"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/temperature/degree-Fahrenheit>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-heat ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/temperature> ;
+  uomvocab:prefSymbol "°F" ;
+  ucum:code1 "[degF]" ;
+  ucum:code2 "[DEGF]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "degree Fahrenheit"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/time/day>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-iso1000 ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/time> ;
+  uomvocab:prefSymbol "d" ;
+  ucum:code1 "d" ;
+  ucum:code2 "D" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "day"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/time/hour>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-iso1000 ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/time> ;
+  uomvocab:prefSymbol "h" ;
+  ucum:code1 "h" ;
+  ucum:code2 "HR" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "hour"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/time/mean-Gregorian-month>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-iso1000 ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/time> ;
+  uomvocab:prefSymbol """mo<sub>g</sub>
+            """^^rdf:XMLLiteral ;
+  ucum:code1 "mo_g" ;
+  ucum:code2 "MO_G" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "mean Gregorian month"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/time/mean-Gregorian-year>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-iso1000 ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/time> ;
+  uomvocab:prefSymbol """a<sub>g</sub>
+            """^^rdf:XMLLiteral ;
+  ucum:code1 "a_g" ;
+  ucum:code2 "ANN_G" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "mean Gregorian year"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/time/mean-Julian-month>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-iso1000 ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/time> ;
+  uomvocab:prefSymbol """mo<sub>j</sub>
+            """^^rdf:XMLLiteral ;
+  ucum:code1 "mo_j" ;
+  ucum:code2 "MO_J" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "mean Julian month"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/time/mean-Julian-year>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-iso1000 ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/time> ;
+  uomvocab:prefSymbol """a<sub>j</sub>
+            """^^rdf:XMLLiteral ;
+  ucum:code1 "a_j" ;
+  ucum:code2 "ANN_J" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "mean Julian year"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/time/minute>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-iso1000 ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/time> ;
+  uomvocab:prefSymbol "min" ;
+  ucum:code1 "min" ;
+  ucum:code2 "MIN" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "minute"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/time/month>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-iso1000 ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/time> ;
+  uomvocab:prefSymbol "mo" ;
+  ucum:code1 "mo" ;
+  ucum:code2 "MO" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "month"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/time/second>
+  rdf:type uomvocab:BaseUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/time> ;
+  uomvocab:prefSymbol "s" ;
+  ucum:code1 "s" ;
+  ucum:code2 "S" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "second"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/time/synodal-month>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-iso1000 ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/time> ;
+  uomvocab:prefSymbol """mo<sub>s</sub>
+            """^^rdf:XMLLiteral ;
+  ucum:code1 "mo_s" ;
+  ucum:code2 "MO_S" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "synodal month"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/time/tropical-year>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-iso1000 ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/time> ;
+  uomvocab:prefSymbol """a<sub>t</sub>
+            """^^rdf:XMLLiteral ;
+  ucum:code1 "a_t" ;
+  ucum:code2 "ANN_T" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "tropical year"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/time/week>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-iso1000 ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/time> ;
+  uomvocab:prefSymbol "wk" ;
+  ucum:code1 "wk" ;
+  ucum:code2 "WK" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "week"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/time/year>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-iso1000 ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/time> ;
+  uomvocab:prefSymbol "a" ;
+  ucum:code1 "a" ;
+  ucum:code2 "ANN" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "year"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/unclassified/Boltzmann-constant>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-const ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/unclassified> ;
+  uomvocab:prefSymbol """
+               <i>k</i>
+            """^^rdf:XMLLiteral ;
+  ucum:code1 "[k]" ;
+  ucum:code2 "[K]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "Boltzmann constant"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/unclassified/Newtonian-constant-of-gravitation>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-const ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/unclassified> ;
+  uomvocab:prefSymbol """
+               <i>G</i>
+            """^^rdf:XMLLiteral ;
+  ucum:code1 "[G]" ;
+  ucum:code2 "[GC]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "Newtonian constant of gravitation"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/velocity/knot-1>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-intcust ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/velocity> ;
+  uomvocab:prefSymbol "knot" ;
+  ucum:code1 "[kn_i]" ;
+  ucum:code2 "[KN_I]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "knot"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/velocity/knot-2>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-brit-length ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/velocity> ;
+  ucum:code1 "[kn_br]" ;
+  ucum:code2 "[KN_BR]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "knot"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/velocity/velocity-of-light>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-const ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/velocity> ;
+  uomvocab:prefSymbol """
+               <i>c</i>
+            """^^rdf:XMLLiteral ;
+  ucum:code1 "[c]" ;
+  ucum:code2 "[C]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "velocity of light"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/view-area-in-microscope/high-power-field>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-chemical ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/view-area-in-microscope> ;
+  uomvocab:prefSymbol "HPF" ;
+  ucum:code1 "[HPF]" ;
+  ucum:code2 "[HPF]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "high power field"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/view-area-in-microscope/low-power-field>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-chemical ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/view-area-in-microscope> ;
+  uomvocab:prefSymbol "LPF" ;
+  ucum:code1 "[LPF]" ;
+  ucum:code2 "[LPF]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "low power field"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/volume/board-foot>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-intcust ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/volume> ;
+  ucum:code1 "[bf_i]" ;
+  ucum:code2 "[BF_I]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "board foot"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/volume/bushel>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-brit-volumes ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/volume> ;
+  ucum:code1 "[bu_br]" ;
+  ucum:code2 "[BU_BR]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "bushel"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/volume/cord>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-intcust ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/volume> ;
+  ucum:code1 "[cr_i]" ;
+  ucum:code2 "[CR_I]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "cord"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/volume/cubic-foot>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-intcust ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/volume> ;
+  ucum:code1 "[cft_i]" ;
+  ucum:code2 "[CFT_I]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "cubic foot"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/volume/cubic-inch>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-intcust ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/volume> ;
+  ucum:code1 "[cin_i]" ;
+  ucum:code2 "[CIN_I]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "cubic inch"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/volume/cubic-yard>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-intcust ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/volume> ;
+  uomvocab:prefSymbol "cu.yd" ;
+  ucum:code1 "[cyd_i]" ;
+  ucum:code2 "[CYD_I]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "cubic yard"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/volume/cup>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-us-volumes ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/volume> ;
+  ucum:code1 "[cup_us]" ;
+  ucum:code2 "[CUP_US]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "cup"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/volume/drop>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-clinical ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/volume> ;
+  uomvocab:prefSymbol "drp" ;
+  ucum:code1 "[drp]" ;
+  ucum:code2 "[DRP]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "drop"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/volume/fluid-dram>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-brit-volumes ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/volume> ;
+  ucum:code1 "[fdr_br]" ;
+  ucum:code2 "[FDR_BR]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "fluid dram"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/volume/fluid-ounce>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-brit-volumes ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/volume> ;
+  ucum:code1 "[foz_br]" ;
+  ucum:code2 "[FOZ_BR]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "fluid ounce"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/volume/gallon>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-brit-volumes ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/volume> ;
+  ucum:code1 "[gal_br]" ;
+  ucum:code2 "[GAL_BR]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "gallon"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/volume/gill>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-brit-volumes ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/volume> ;
+  ucum:code1 "[gil_br]" ;
+  ucum:code2 "[GIL_BR]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "gill"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/volume/liter-1>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-iso1000 ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/volume> ;
+  uomvocab:prefSymbol "l" ;
+  ucum:code1 "l" ;
+  ucum:code2 "L" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "liter"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/volume/liter-2>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-iso1000 ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/volume> ;
+  uomvocab:prefSymbol "L" ;
+  ucum:code1 "L" ;
+  ucum:code2 "" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "liter"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/volume/minim>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-brit-volumes ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/volume> ;
+  ucum:code1 "[min_br]" ;
+  ucum:code2 "[MIN_BR]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "minim"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/volume/peck>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-brit-volumes ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/volume> ;
+  ucum:code1 "[pk_br]" ;
+  ucum:code2 "[PK_BR]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "peck"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/volume/pint>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-brit-volumes ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/volume> ;
+  ucum:code1 "[pt_br]" ;
+  ucum:code2 "[PT_BR]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "pint"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/volume/quart>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-brit-volumes ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/volume> ;
+  ucum:code1 "[qt_br]" ;
+  ucum:code2 "[QT_BR]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "quart"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/volume/stere>
+  rdf:type uomvocab:MetricUnit ;
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-misc ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/volume> ;
+  uomvocab:prefSymbol "st" ;
+  ucum:code1 "st" ;
+  ucum:code2 "STR" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "stere"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/volume/tablespoon>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-us-volumes ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/volume> ;
+  ucum:code1 "[tbs_us]" ;
+  ucum:code2 "[TBS_US]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "tablespoon"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/volume/teaspoon>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-us-volumes ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/volume> ;
+  ucum:code1 "[tsp_us]" ;
+  ucum:code2 "[TSP_US]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "teaspoon"@en ;
+.
+<http://purl.oclc.org/NET/muo/ucum/unit/x-ray-attenuation/Hounsfield-unit>
+  rdf:type uomvocab:UnitOfMeasurement ;
+  rdf:type ucum:UnitOf-clinical ;
+  uomvocab:measuresQuality <http://purl.oclc.org/NET/muo/ucum/physical-quality/x-ray-attenuation> ;
+  uomvocab:prefSymbol "HF" ;
+  ucum:code1 "[hnsf'U]" ;
+  ucum:code2 "[HNSF'U]" ;
+  rdfs:isDefinedBy ucum: ;
+  rdfs:label "Hounsfield unit"@en ;
+.
+dc:contributor
+  rdf:type owl:AnnotationProperty ;
+.
+dc:creator
+  rdf:type owl:AnnotationProperty ;
+.
+dc:date
+  rdf:type owl:AnnotationProperty ;
+.
+dc:rights
+  rdf:type owl:AnnotationProperty ;
+.
+dc:source
+  rdf:type owl:AnnotationProperty ;
+.
+[
+  rdf:type owl:AllDifferent ;
+  owl:distinctMembers (
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/length>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/time>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/mass>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/plane-angle>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/temperature>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/electric-charge>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/luminous-intensity>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/number>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/fraction>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/amount-of-substance>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/solid-angle>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/frequency>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/force>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/pressure>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/energy>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/power>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/electric-current>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/electric-potential>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/electric-capacitance>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/electric-resistance>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/electric-conductance>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/magentic-flux>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/magnetic-flux-density>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/inductance>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/luminous-flux>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/illuminance>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/radioactivity>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/energy-dose>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/dose-equivalent>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/volume>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/area>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/velocity>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/action>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/unclassified>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/electric-permittivity>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/magnetic-permeability>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/acceleration>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/lineic-number>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/dynamic-viscosity>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/kinematic-viscosity>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/flux-of-magnetic-induction>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/magnetic-field-intensity>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/magnetic-tension>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/lum.-intensity-density>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/brightness>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/ion-dose>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/depth-of-water>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/height-of-horses>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/fluid-volume>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/dry-volume>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/fluid-resistance>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/refraction-of-a-lens>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/gauge-of-catheters>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/x-ray-attenuation>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/metabolic-cost-of-physical-activity>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/homeopathic-potency>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/acidity>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/mass-fraction>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/sedimentation-coefficient>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/view-area-in-microscope>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/catalytic-activity>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/arbitrary>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/biologic-activity-of-anticardiolipin-IgG>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/biologic-activity-of-anticardiolipin-IgM>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/biologic-activity-of-anticardiolipin-IgA>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/biologic-activity-of-factor-VIII-inhibitor>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/biologic-activity-antistreptolysin-O>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/biologic-activity-of-amylase>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/biologic-activity-of-phosphatase>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/arbitrary-biologic-activity>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/biologic-activity-of-tuberculin>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/level>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/pressure-level>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/electric-potential-level>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/power-level>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/action-area>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/amount-of-information>
+      <http://purl.oclc.org/NET/muo/ucum/physical-quality/signal-transmission-rate>
+    ) ;
+].
+[
+  rdf:type owl:AllDifferent ;
+  owl:distinctMembers (
+      <http://purl.oclc.org/NET/muo/ucum/prefix/yotta>
+      <http://purl.oclc.org/NET/muo/ucum/prefix/zetta>
+      <http://purl.oclc.org/NET/muo/ucum/prefix/exa>
+      <http://purl.oclc.org/NET/muo/ucum/prefix/peta>
+      <http://purl.oclc.org/NET/muo/ucum/prefix/tera>
+      <http://purl.oclc.org/NET/muo/ucum/prefix/giga>
+      <http://purl.oclc.org/NET/muo/ucum/prefix/mega>
+      <http://purl.oclc.org/NET/muo/ucum/prefix/kilo>
+      <http://purl.oclc.org/NET/muo/ucum/prefix/hecto>
+      <http://purl.oclc.org/NET/muo/ucum/prefix/deka>
+      <http://purl.oclc.org/NET/muo/ucum/prefix/deci>
+      <http://purl.oclc.org/NET/muo/ucum/prefix/centi>
+      <http://purl.oclc.org/NET/muo/ucum/prefix/milli>
+      <http://purl.oclc.org/NET/muo/ucum/prefix/micro>
+      <http://purl.oclc.org/NET/muo/ucum/prefix/nano>
+      <http://purl.oclc.org/NET/muo/ucum/prefix/pico>
+      <http://purl.oclc.org/NET/muo/ucum/prefix/femto>
+      <http://purl.oclc.org/NET/muo/ucum/prefix/atto>
+      <http://purl.oclc.org/NET/muo/ucum/prefix/zepto>
+      <http://purl.oclc.org/NET/muo/ucum/prefix/yocto>
+      <http://purl.oclc.org/NET/muo/ucum/prefix/kibi>
+      <http://purl.oclc.org/NET/muo/ucum/prefix/mebi>
+      <http://purl.oclc.org/NET/muo/ucum/prefix/gibi>
+      <http://purl.oclc.org/NET/muo/ucum/prefix/tebi>
+    ) ;
+].
+[
+  rdf:type owl:AllDifferent ;
+  owl:distinctMembers (
+      <http://purl.oclc.org/NET/muo/ucum/unit/length/meter>
+      <http://purl.oclc.org/NET/muo/ucum/unit/time/second>
+      <http://purl.oclc.org/NET/muo/ucum/unit/mass/gram>
+      <http://purl.oclc.org/NET/muo/ucum/unit/plane-angle/radian>
+      <http://purl.oclc.org/NET/muo/ucum/unit/temperature/Kelvin>
+      <http://purl.oclc.org/NET/muo/ucum/unit/electric-charge/Coulomb>
+      <http://purl.oclc.org/NET/muo/ucum/unit/luminous-intensity/candela>
+      <http://purl.oclc.org/NET/muo/ucum/unit/number/the-number-ten-for-arbitrary-powers-1>
+      <http://purl.oclc.org/NET/muo/ucum/unit/number/the-number-ten-for-arbitrary-powers-2>
+      <http://purl.oclc.org/NET/muo/ucum/unit/number/the-number-pi>
+      <http://purl.oclc.org/NET/muo/ucum/unit/fraction/percent>
+      <http://purl.oclc.org/NET/muo/ucum/unit/fraction/parts-per-thousand>
+      <http://purl.oclc.org/NET/muo/ucum/unit/fraction/parts-per-million>
+      <http://purl.oclc.org/NET/muo/ucum/unit/fraction/parts-per-billion>
+      <http://purl.oclc.org/NET/muo/ucum/unit/fraction/parts-per-trillion>
+      <http://purl.oclc.org/NET/muo/ucum/unit/amount-of-substance/mole>
+      <http://purl.oclc.org/NET/muo/ucum/unit/solid-angle/streadian>
+      <http://purl.oclc.org/NET/muo/ucum/unit/frequency/Herz>
+      <http://purl.oclc.org/NET/muo/ucum/unit/force/Newton>
+      <http://purl.oclc.org/NET/muo/ucum/unit/pressure/Pascal>
+      <http://purl.oclc.org/NET/muo/ucum/unit/energy/Joule>
+      <http://purl.oclc.org/NET/muo/ucum/unit/power/Watt>
+      <http://purl.oclc.org/NET/muo/ucum/unit/electric-current/Ampere>
+      <http://purl.oclc.org/NET/muo/ucum/unit/electric-potential/Volt>
+      <http://purl.oclc.org/NET/muo/ucum/unit/electric-capacitance/Farad>
+      <http://purl.oclc.org/NET/muo/ucum/unit/electric-resistance/Ohm>
+      <http://purl.oclc.org/NET/muo/ucum/unit/electric-conductance/Siemens>
+      <http://purl.oclc.org/NET/muo/ucum/unit/magentic-flux/Weber>
+      <http://purl.oclc.org/NET/muo/ucum/unit/temperature/degree-Celsius>
+      <http://purl.oclc.org/NET/muo/ucum/unit/magnetic-flux-density/Tesla>
+      <http://purl.oclc.org/NET/muo/ucum/unit/inductance/Henry>
+      <http://purl.oclc.org/NET/muo/ucum/unit/luminous-flux/lumen>
+      <http://purl.oclc.org/NET/muo/ucum/unit/illuminance/lux>
+      <http://purl.oclc.org/NET/muo/ucum/unit/radioactivity/Becquerel>
+      <http://purl.oclc.org/NET/muo/ucum/unit/energy-dose/Gray>
+      <http://purl.oclc.org/NET/muo/ucum/unit/dose-equivalent/Sievert>
+      <http://purl.oclc.org/NET/muo/ucum/unit/plane-angle/gon>
+      <http://purl.oclc.org/NET/muo/ucum/unit/plane-angle/degree>
+      <http://purl.oclc.org/NET/muo/ucum/unit/plane-angle/minute>
+      <http://purl.oclc.org/NET/muo/ucum/unit/plane-angle/second>
+      <http://purl.oclc.org/NET/muo/ucum/unit/volume/liter-1>
+      <http://purl.oclc.org/NET/muo/ucum/unit/volume/liter-2>
+      <http://purl.oclc.org/NET/muo/ucum/unit/area/are>
+      <http://purl.oclc.org/NET/muo/ucum/unit/time/minute>
+      <http://purl.oclc.org/NET/muo/ucum/unit/time/hour>
+      <http://purl.oclc.org/NET/muo/ucum/unit/time/day>
+      <http://purl.oclc.org/NET/muo/ucum/unit/time/tropical-year>
+      <http://purl.oclc.org/NET/muo/ucum/unit/time/mean-Julian-year>
+      <http://purl.oclc.org/NET/muo/ucum/unit/time/mean-Gregorian-year>
+      <http://purl.oclc.org/NET/muo/ucum/unit/time/year>
+      <http://purl.oclc.org/NET/muo/ucum/unit/time/week>
+      <http://purl.oclc.org/NET/muo/ucum/unit/time/synodal-month>
+      <http://purl.oclc.org/NET/muo/ucum/unit/time/mean-Julian-month>
+      <http://purl.oclc.org/NET/muo/ucum/unit/time/mean-Gregorian-month>
+      <http://purl.oclc.org/NET/muo/ucum/unit/time/month>
+      <http://purl.oclc.org/NET/muo/ucum/unit/mass/tonne>
+      <http://purl.oclc.org/NET/muo/ucum/unit/pressure/bar>
+      <http://purl.oclc.org/NET/muo/ucum/unit/mass/unified-atomic-mass-unit>
+      <http://purl.oclc.org/NET/muo/ucum/unit/energy/electronvolt>
+      <http://purl.oclc.org/NET/muo/ucum/unit/length/astronomic-unit>
+      <http://purl.oclc.org/NET/muo/ucum/unit/length/parsec>
+      <http://purl.oclc.org/NET/muo/ucum/unit/velocity/velocity-of-light>
+      <http://purl.oclc.org/NET/muo/ucum/unit/action/Planck-constant>
+      <http://purl.oclc.org/NET/muo/ucum/unit/unclassified/Boltzmann-constant>
+      <http://purl.oclc.org/NET/muo/ucum/unit/electric-permittivity/permittivity-of-vacuum>
+      <http://purl.oclc.org/NET/muo/ucum/unit/magnetic-permeability/permeability-of-vacuum>
+      <http://purl.oclc.org/NET/muo/ucum/unit/electric-charge/elementary-charge>
+      <http://purl.oclc.org/NET/muo/ucum/unit/mass/electron-mass>
+      <http://purl.oclc.org/NET/muo/ucum/unit/mass/proton-mass>
+      <http://purl.oclc.org/NET/muo/ucum/unit/unclassified/Newtonian-constant-of-gravitation>
+      <http://purl.oclc.org/NET/muo/ucum/unit/acceleration/standard-acceleration-of-free-fall>
+      <http://purl.oclc.org/NET/muo/ucum/unit/pressure/standard-atmosphere>
+      <http://purl.oclc.org/NET/muo/ucum/unit/length/light-year>
+      <http://purl.oclc.org/NET/muo/ucum/unit/force/gram-force>
+      <http://purl.oclc.org/NET/muo/ucum/unit/force/pound-force>
+      <http://purl.oclc.org/NET/muo/ucum/unit/lineic-number/Kayser>
+      <http://purl.oclc.org/NET/muo/ucum/unit/acceleration/Gal>
+      <http://purl.oclc.org/NET/muo/ucum/unit/force/dyne>
+      <http://purl.oclc.org/NET/muo/ucum/unit/energy/erg>
+      <http://purl.oclc.org/NET/muo/ucum/unit/dynamic-viscosity/Poise>
+      <http://purl.oclc.org/NET/muo/ucum/unit/electric-current/Biot>
+      <http://purl.oclc.org/NET/muo/ucum/unit/kinematic-viscosity/Stokes>
+      <http://purl.oclc.org/NET/muo/ucum/unit/flux-of-magnetic-induction/Maxwell>
+      <http://purl.oclc.org/NET/muo/ucum/unit/magnetic-flux-density/Gauss>
+      <http://purl.oclc.org/NET/muo/ucum/unit/magnetic-field-intensity/Oersted>
+      <http://purl.oclc.org/NET/muo/ucum/unit/magnetic-tension/Gilbert>
+      <http://purl.oclc.org/NET/muo/ucum/unit/lum.-intensity-density/stilb>
+      <http://purl.oclc.org/NET/muo/ucum/unit/brightness/Lambert>
+      <http://purl.oclc.org/NET/muo/ucum/unit/illuminance/phot>
+      <http://purl.oclc.org/NET/muo/ucum/unit/radioactivity/Curie>
+      <http://purl.oclc.org/NET/muo/ucum/unit/ion-dose/Roentgen>
+      <http://purl.oclc.org/NET/muo/ucum/unit/energy-dose/radiation-absorbed-dose>
+      <http://purl.oclc.org/NET/muo/ucum/unit/dose-equivalent/radiation-equivalent-man>
+      <http://purl.oclc.org/NET/muo/ucum/unit/length/inch-1>
+      <http://purl.oclc.org/NET/muo/ucum/unit/length/foot-1>
+      <http://purl.oclc.org/NET/muo/ucum/unit/length/yard-1>
+      <http://purl.oclc.org/NET/muo/ucum/unit/length/statute-mile>
+      <http://purl.oclc.org/NET/muo/ucum/unit/depth-of-water/fathom>
+      <http://purl.oclc.org/NET/muo/ucum/unit/length/nautic-mile-1>
+      <http://purl.oclc.org/NET/muo/ucum/unit/velocity/knot-1>
+      <http://purl.oclc.org/NET/muo/ucum/unit/area/square-inch>
+      <http://purl.oclc.org/NET/muo/ucum/unit/area/square-foot>
+      <http://purl.oclc.org/NET/muo/ucum/unit/area/square-yard>
+      <http://purl.oclc.org/NET/muo/ucum/unit/volume/cubic-inch>
+      <http://purl.oclc.org/NET/muo/ucum/unit/volume/cubic-foot>
+      <http://purl.oclc.org/NET/muo/ucum/unit/volume/cubic-yard>
+      <http://purl.oclc.org/NET/muo/ucum/unit/volume/board-foot>
+      <http://purl.oclc.org/NET/muo/ucum/unit/volume/cord>
+      <http://purl.oclc.org/NET/muo/ucum/unit/length/mil-1>
+      <http://purl.oclc.org/NET/muo/ucum/unit/area/circular-mil>
+      <http://purl.oclc.org/NET/muo/ucum/unit/height-of-horses/hand>
+      <http://purl.oclc.org/NET/muo/ucum/unit/length/foot-2>
+      <http://purl.oclc.org/NET/muo/ucum/unit/length/yard-2>
+      <http://purl.oclc.org/NET/muo/ucum/unit/length/inch-2>
+      <http://purl.oclc.org/NET/muo/ucum/unit/length/rod-1>
+      <http://purl.oclc.org/NET/muo/ucum/unit/length/Gunter_s-chain-1>
+      <http://purl.oclc.org/NET/muo/ucum/unit/length/link-for-Gunter_s-chain-1>
+      <http://purl.oclc.org/NET/muo/ucum/unit/length/Ramden_s-chain>
+      <http://purl.oclc.org/NET/muo/ucum/unit/length/link-for-Ramden_s-chain>
+      <http://purl.oclc.org/NET/muo/ucum/unit/length/fathom-1>
+      <http://purl.oclc.org/NET/muo/ucum/unit/length/furlong>
+      <http://purl.oclc.org/NET/muo/ucum/unit/length/mile-1>
+      <http://purl.oclc.org/NET/muo/ucum/unit/area/acre-1>
+      <http://purl.oclc.org/NET/muo/ucum/unit/area/square-rod>
+      <http://purl.oclc.org/NET/muo/ucum/unit/area/square-mile>
+      <http://purl.oclc.org/NET/muo/ucum/unit/area/section>
+      <http://purl.oclc.org/NET/muo/ucum/unit/area/township>
+      <http://purl.oclc.org/NET/muo/ucum/unit/length/mil-2>
+      <http://purl.oclc.org/NET/muo/ucum/unit/length/inch-3>
+      <http://purl.oclc.org/NET/muo/ucum/unit/length/foot-3>
+      <http://purl.oclc.org/NET/muo/ucum/unit/length/rod-2>
+      <http://purl.oclc.org/NET/muo/ucum/unit/length/Gunter_s-chain-2>
+      <http://purl.oclc.org/NET/muo/ucum/unit/length/link-for-Gunter_s-chain-2>
+      <http://purl.oclc.org/NET/muo/ucum/unit/length/fathom-2>
+      <http://purl.oclc.org/NET/muo/ucum/unit/length/pace>
+      <http://purl.oclc.org/NET/muo/ucum/unit/length/yard-3>
+      <http://purl.oclc.org/NET/muo/ucum/unit/length/mile-2>
+      <http://purl.oclc.org/NET/muo/ucum/unit/length/nautic-mile-2>
+      <http://purl.oclc.org/NET/muo/ucum/unit/velocity/knot-2>
+      <http://purl.oclc.org/NET/muo/ucum/unit/area/acre-2>
+      <http://purl.oclc.org/NET/muo/ucum/unit/fluid-volume/Queen_Anne_s-wine-gallon>
+      <http://purl.oclc.org/NET/muo/ucum/unit/fluid-volume/barrel>
+      <http://purl.oclc.org/NET/muo/ucum/unit/fluid-volume/quart>
+      <http://purl.oclc.org/NET/muo/ucum/unit/fluid-volume/pint>
+      <http://purl.oclc.org/NET/muo/ucum/unit/fluid-volume/gill>
+      <http://purl.oclc.org/NET/muo/ucum/unit/fluid-volume/fluid-ounce>
+      <http://purl.oclc.org/NET/muo/ucum/unit/fluid-volume/fluid-dram>
+      <http://purl.oclc.org/NET/muo/ucum/unit/fluid-volume/minim>
+      <http://purl.oclc.org/NET/muo/ucum/unit/fluid-volume/cord>
+      <http://purl.oclc.org/NET/muo/ucum/unit/dry-volume/bushel>
+      <http://purl.oclc.org/NET/muo/ucum/unit/dry-volume/historical-winchester-gallon>
+      <http://purl.oclc.org/NET/muo/ucum/unit/dry-volume/peck>
+      <http://purl.oclc.org/NET/muo/ucum/unit/dry-volume/dry-quart>
+      <http://purl.oclc.org/NET/muo/ucum/unit/dry-volume/dry-pint>
+      <http://purl.oclc.org/NET/muo/ucum/unit/volume/tablespoon>
+      <http://purl.oclc.org/NET/muo/ucum/unit/volume/teaspoon>
+      <http://purl.oclc.org/NET/muo/ucum/unit/volume/cup>
+      <http://purl.oclc.org/NET/muo/ucum/unit/volume/gallon>
+      <http://purl.oclc.org/NET/muo/ucum/unit/volume/peck>
+      <http://purl.oclc.org/NET/muo/ucum/unit/volume/bushel>
+      <http://purl.oclc.org/NET/muo/ucum/unit/volume/quart>
+      <http://purl.oclc.org/NET/muo/ucum/unit/volume/pint>
+      <http://purl.oclc.org/NET/muo/ucum/unit/volume/gill>
+      <http://purl.oclc.org/NET/muo/ucum/unit/volume/fluid-ounce>
+      <http://purl.oclc.org/NET/muo/ucum/unit/volume/fluid-dram>
+      <http://purl.oclc.org/NET/muo/ucum/unit/volume/minim>
+      <http://purl.oclc.org/NET/muo/ucum/unit/mass/grain>
+      <http://purl.oclc.org/NET/muo/ucum/unit/mass/pound-1>
+      <http://purl.oclc.org/NET/muo/ucum/unit/mass/ounce-1>
+      <http://purl.oclc.org/NET/muo/ucum/unit/mass/dram-1>
+      <http://purl.oclc.org/NET/muo/ucum/unit/mass/short-hundredweight>
+      <http://purl.oclc.org/NET/muo/ucum/unit/mass/long-hunderdweight>
+      <http://purl.oclc.org/NET/muo/ucum/unit/mass/short-ton>
+      <http://purl.oclc.org/NET/muo/ucum/unit/mass/long-ton>
+      <http://purl.oclc.org/NET/muo/ucum/unit/mass/stone>
+      <http://purl.oclc.org/NET/muo/ucum/unit/mass/pennyweight>
+      <http://purl.oclc.org/NET/muo/ucum/unit/mass/ounce-2>
+      <http://purl.oclc.org/NET/muo/ucum/unit/mass/pound-2>
+      <http://purl.oclc.org/NET/muo/ucum/unit/mass/scruple>
+      <http://purl.oclc.org/NET/muo/ucum/unit/mass/dram-2>
+      <http://purl.oclc.org/NET/muo/ucum/unit/mass/ounce-3>
+      <http://purl.oclc.org/NET/muo/ucum/unit/mass/pound-3>
+      <http://purl.oclc.org/NET/muo/ucum/unit/length/line>
+      <http://purl.oclc.org/NET/muo/ucum/unit/length/point>
+      <http://purl.oclc.org/NET/muo/ucum/unit/length/pica>
+      <http://purl.oclc.org/NET/muo/ucum/unit/length/Printer_s-point>
+      <http://purl.oclc.org/NET/muo/ucum/unit/length/Printer_s-pica>
+      <http://purl.oclc.org/NET/muo/ucum/unit/length/pied>
+      <http://purl.oclc.org/NET/muo/ucum/unit/length/pouce>
+      <http://purl.oclc.org/NET/muo/ucum/unit/length/ligne>
+      <http://purl.oclc.org/NET/muo/ucum/unit/length/didot>
+      <http://purl.oclc.org/NET/muo/ucum/unit/length/cicero>
+      <http://purl.oclc.org/NET/muo/ucum/unit/temperature/degree-Fahrenheit>
+      <http://purl.oclc.org/NET/muo/ucum/unit/energy/calorie-at-15_C>
+      <http://purl.oclc.org/NET/muo/ucum/unit/energy/calorie-at-20_C>
+      <http://purl.oclc.org/NET/muo/ucum/unit/energy/mean-calorie>
+      <http://purl.oclc.org/NET/muo/ucum/unit/energy/international-table-calorie>
+      <http://purl.oclc.org/NET/muo/ucum/unit/energy/thermochemical-calorie>
+      <http://purl.oclc.org/NET/muo/ucum/unit/energy/calorie>
+      <http://purl.oclc.org/NET/muo/ucum/unit/energy/nutrition-label-Calories>
+      <http://purl.oclc.org/NET/muo/ucum/unit/energy/British-thermal-unit-at-39_F>
+      <http://purl.oclc.org/NET/muo/ucum/unit/energy/British-thermal-unit-at-59_F>
+      <http://purl.oclc.org/NET/muo/ucum/unit/energy/British-thermal-unit-at-60_F>
+      <http://purl.oclc.org/NET/muo/ucum/unit/energy/mean-British-thermal-unit>
+      <http://purl.oclc.org/NET/muo/ucum/unit/energy/international-table-British-thermal-unit>
+      <http://purl.oclc.org/NET/muo/ucum/unit/energy/thermochemical-British-thermal-unit>
+      <http://purl.oclc.org/NET/muo/ucum/unit/energy/British-thermal-unit>
+      <http://purl.oclc.org/NET/muo/ucum/unit/power/horsepower>
+      <http://purl.oclc.org/NET/muo/ucum/unit/pressure/meter-of-water-column>
+      <http://purl.oclc.org/NET/muo/ucum/unit/pressure/meter-of-mercury-column>
+      <http://purl.oclc.org/NET/muo/ucum/unit/pressure/inch-of-water-column>
+      <http://purl.oclc.org/NET/muo/ucum/unit/pressure/inch-of-mercury-column>
+      <http://purl.oclc.org/NET/muo/ucum/unit/fluid-resistance/peripheral-vascular-resistance-unit>
+      <http://purl.oclc.org/NET/muo/ucum/unit/refraction-of-a-lens/diopter>
+      <http://purl.oclc.org/NET/muo/ucum/unit/lineic-number/mesh>
+      <http://purl.oclc.org/NET/muo/ucum/unit/gauge-of-catheters/Charriere>
+      <http://purl.oclc.org/NET/muo/ucum/unit/volume/drop>
+      <http://purl.oclc.org/NET/muo/ucum/unit/x-ray-attenuation/Hounsfield-unit>
+      <http://purl.oclc.org/NET/muo/ucum/unit/metabolic-cost-of-physical-activity/metabolic-equivalent>
+      <http://purl.oclc.org/NET/muo/ucum/unit/homeopathic-potency/homeopathic-potency-of-decimal-series>
+      <http://purl.oclc.org/NET/muo/ucum/unit/homeopathic-potency/homeopathic-potency-of-centesimal-series>
+      <http://purl.oclc.org/NET/muo/ucum/unit/amount-of-substance/equivalents>
+      <http://purl.oclc.org/NET/muo/ucum/unit/amount-of-substance/osmole-of-dissolved-particles>
+      <http://purl.oclc.org/NET/muo/ucum/unit/acidity/pH>
+      <http://purl.oclc.org/NET/muo/ucum/unit/mass-fraction/gram-percent>
+      <http://purl.oclc.org/NET/muo/ucum/unit/sedimentation-coefficient/Svedberg-unit>
+      <http://purl.oclc.org/NET/muo/ucum/unit/view-area-in-microscope/high-power-field>
+      <http://purl.oclc.org/NET/muo/ucum/unit/view-area-in-microscope/low-power-field>
+      <http://purl.oclc.org/NET/muo/ucum/unit/catalytic-activity/katal>
+      <http://purl.oclc.org/NET/muo/ucum/unit/catalytic-activity/Unit>
+      <http://purl.oclc.org/NET/muo/ucum/unit/arbitrary/international-unit>
+      <http://purl.oclc.org/NET/muo/ucum/unit/arbitrary/arbitary-unit>
+      <http://purl.oclc.org/NET/muo/ucum/unit/arbitrary/United-States-Pharmacopeia-unit>
+      <http://purl.oclc.org/NET/muo/ucum/unit/biologic-activity-of-anticardiolipin-IgG/GPL-unit>
+      <http://purl.oclc.org/NET/muo/ucum/unit/biologic-activity-of-anticardiolipin-IgM/MPL-unit>
+      <http://purl.oclc.org/NET/muo/ucum/unit/biologic-activity-of-anticardiolipin-IgA/APL-unit>
+      <http://purl.oclc.org/NET/muo/ucum/unit/biologic-activity-of-factor-VIII-inhibitor/Bethesda-unit>
+      <http://purl.oclc.org/NET/muo/ucum/unit/biologic-activity-antistreptolysin-O/Todd-unit>
+      <http://purl.oclc.org/NET/muo/ucum/unit/biologic-activity-of-amylase/Dye-unit>
+      <http://purl.oclc.org/NET/muo/ucum/unit/biologic-activity-of-amylase/Somogyi-unit>
+      <http://purl.oclc.org/NET/muo/ucum/unit/biologic-activity-of-phosphatase/Bodansky-unit>
+      <http://purl.oclc.org/NET/muo/ucum/unit/biologic-activity-of-phosphatase/King-Armstrong-unit>
+      <http://purl.oclc.org/NET/muo/ucum/unit/arbitrary-biologic-activity/Kunkel-unit>
+      <http://purl.oclc.org/NET/muo/ucum/unit/arbitrary-biologic-activity/Mac-Lagan-unit>
+      <http://purl.oclc.org/NET/muo/ucum/unit/biologic-activity-of-tuberculin/tuberculin-unit>
+      <http://purl.oclc.org/NET/muo/ucum/unit/level/neper>
+      <http://purl.oclc.org/NET/muo/ucum/unit/level/bel>
+      <http://purl.oclc.org/NET/muo/ucum/unit/pressure-level/bel-sound-pressure>
+      <http://purl.oclc.org/NET/muo/ucum/unit/electric-potential-level/bel-volt>
+      <http://purl.oclc.org/NET/muo/ucum/unit/electric-potential-level/bel-millivolt>
+      <http://purl.oclc.org/NET/muo/ucum/unit/electric-potential-level/bel-microvolt>
+      <http://purl.oclc.org/NET/muo/ucum/unit/power-level/bel-watt>
+      <http://purl.oclc.org/NET/muo/ucum/unit/power-level/bel-kilowatt>
+      <http://purl.oclc.org/NET/muo/ucum/unit/volume/stere>
+      <http://purl.oclc.org/NET/muo/ucum/unit/length/Angstrom>
+      <http://purl.oclc.org/NET/muo/ucum/unit/action-area/barn>
+      <http://purl.oclc.org/NET/muo/ucum/unit/pressure/technical-atmosphere>
+      <http://purl.oclc.org/NET/muo/ucum/unit/electric-conductance/mho>
+      <http://purl.oclc.org/NET/muo/ucum/unit/pressure/pound-per-sqare-inch>
+      <http://purl.oclc.org/NET/muo/ucum/unit/plane-angle/circle>
+      <http://purl.oclc.org/NET/muo/ucum/unit/solid-angle/spere>
+      <http://purl.oclc.org/NET/muo/ucum/unit/mass/metric-carat>
+      <http://purl.oclc.org/NET/muo/ucum/unit/mass-fraction/carat-of-gold-alloys>
+      <http://purl.oclc.org/NET/muo/ucum/unit/amount-of-information/bit-1>
+      <http://purl.oclc.org/NET/muo/ucum/unit/amount-of-information/bit-2>
+      <http://purl.oclc.org/NET/muo/ucum/unit/amount-of-information/byte>
+      <http://purl.oclc.org/NET/muo/ucum/unit/signal-transmission-rate/baud>
+    ) ;
+].

@@ -59,8 +59,6 @@ public class FingerScannerHandler extends BaseThingHandler {
         		scan();
         	}            	
         }
-        //dirty fix to switch the button back to off
-        resetSwitch();
         resetSwitch();
 	}
 	

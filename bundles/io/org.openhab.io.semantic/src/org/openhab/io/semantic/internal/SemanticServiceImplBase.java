@@ -29,6 +29,7 @@ import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.Statement;
+import com.hp.hpl.jena.util.FileManager;
 import com.hp.hpl.jena.util.LocationMapper;
 
 /**
@@ -71,9 +72,13 @@ public class SemanticServiceImplBase {
 	}
 	
 	public void activate(){
-//		LocationMapper.setGlobalLocationMapper(new LocationMapperCustom());
+		LocationMapperCustom locationMapper = new LocationMapperCustom();
+		LocationMapper.setGlobalLocationMapper(locationMapper);
+		FileManager.get().setLocationMapper(locationMapper);	
+		
 		createModels();
-		checkPresenceOfIndividuals();
+		//TODO remove not present instances
+//		checkPresenceOfIndividuals();
 		logger.debug("Semantic Service activated");
 	}
 	

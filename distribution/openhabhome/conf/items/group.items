@@ -26,7 +26,7 @@ Group CS_Homematic_Chime_1 "Klingel 1" (CustomStuff)
 Group CS_Homematic_Window_1 "Fenster 1" (CustomStuff)
 
 /* Fingerscanner */
-Group CS_Fingerscan "Fingerprint Reader" (CustomStuff)
+/*Group CS_Fingerscan "Fingerprint Reader" (CustomStuff)*/
 
 /* NFC */
-Group CS_Nfc "NFC Reader" (CustomStuff)
+/*Group CS_Nfc "NFC Reader" (CustomStuff)*/

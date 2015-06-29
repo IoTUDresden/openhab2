@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+	<classpathentry exported="true" kind="lib" path="semantic/"/>
 	<classpathentry exported="true" kind="lib" path="lib/log4j-1.2.17.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/slf4j-api-1.7.6.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/slf4j-log4j12-1.7.6.jar"/>
@@ -13,7 +14,7 @@
 			<attribute name="javadoc_location" value="file:/home/andii_kaa/workspaceOpenHAB2/bundles/io/org.openhab.io.semantic/doc/javadoc-arq/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/jena-core-2.13.0.jar">
+	<classpathentry exported="true" kind="lib" path="lib/jena-core-2.13.0.jar" sourcepath="/home/andkue/.m2/repository/org/apache/jena/jena-core/2.13.0/jena-core-2.13.0-sources.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="file:/home/andii_kaa/workspaceOpenHAB2/bundles/io/org.openhab.io.semantic/doc/javadoc-core/"/>
 		</attributes>

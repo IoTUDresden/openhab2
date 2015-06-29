@@ -1,7 +1,7 @@
 
 /* Fingerscan */
-Switch fingerscan_start "Start scan" (CS_Fingerscan) {channel="fingerscanner:identify:base:channel_identify"}
-String fingerscan_identify "Identified" (CS_Fingerscan) {channel="fingerscanner:identify:base:channel_person"}
+/*Switch fingerscan_start "Start scan" (CS_Fingerscan) {channel="fingerscanner:identify:base:channel_identify"}
+String fingerscan_identify "Identified" (CS_Fingerscan) {channel="fingerscanner:identify:base:channel_person"}*/
 
 /*NFC */
-String nfc_id "Id" (CS_Nfc) {channel="ibnfcwrapper:idscan:base:idscan_result_channel"}
+/*String nfc_id "Id" (CS_Nfc) {channel="ibnfcwrapper:idscan:base:idscan_result_channel"}*/

@@ -7,20 +7,16 @@
  */
 package org.openhab.binding.fingerscanner.internal;
 
-import static org.openhab.binding.fingerscanner.FingerScannerBindingConstants.*;
+import static org.openhab.binding.fingerscanner.FingerScannerBindingConstants.THING_TYPE_IDENTIFY;
 
 import java.util.Collections;
 import java.util.Set;
 
-import org.openhab.binding.fingerscanner.handler.FingerScannerHandler;
-
-import org.eclipse.smarthome.config.core.Configuration;
-import org.eclipse.smarthome.core.thing.Bridge;
 import org.eclipse.smarthome.core.thing.Thing;
 import org.eclipse.smarthome.core.thing.ThingTypeUID;
-import org.eclipse.smarthome.core.thing.ThingUID;
 import org.eclipse.smarthome.core.thing.binding.BaseThingHandlerFactory;
 import org.eclipse.smarthome.core.thing.binding.ThingHandler;
+import org.openhab.binding.fingerscanner.handler.FingerScannerHandler;
 
 /**
  * The {@link FingerScannerHandlerFactory} is responsible for creating things and thing 
