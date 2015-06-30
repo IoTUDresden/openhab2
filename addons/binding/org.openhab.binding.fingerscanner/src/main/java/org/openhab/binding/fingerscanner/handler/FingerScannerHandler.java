@@ -11,6 +11,7 @@ import static org.openhab.binding.fingerscanner.FingerScannerBindingConstants.CH
 import static org.openhab.binding.fingerscanner.FingerScannerBindingConstants.CHANNEL_PERSON;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.eclipse.smarthome.core.library.types.OnOffType;
 import org.eclipse.smarthome.core.library.types.StringType;
@@ -95,7 +96,12 @@ public class FingerScannerHandler extends BaseThingHandler {
 	}
 	
 	private void resetSwitch(){
-		updateState(CHANNEL_IDENTIFY, OnOffType.OFF);	
+		scheduler.schedule(new Runnable() {			
+			@Override
+			public void run() {
+				updateState(CHANNEL_IDENTIFY, OnOffType.OFF);				
+			}
+		}, 1, TimeUnit.SECONDS);
 	}
 	
 	private void cleanupAndCloseConnections() {
