@@ -25,6 +25,9 @@ Group CS_Homematic_Chime_1 "Klingel 1" (CustomStuff)
 /* Window Contact 1 */
 Group CS_Homematic_Window_1 "Fenster 1" (CustomStuff)
 
+/* Keymatic */
+Group CS_Keymatic_1 "Tür 1" (CustomStuff)
+
 /* Fingerscanner */
 /*Group CS_Fingerscan "Fingerprint Reader" (CustomStuff)*/
 
