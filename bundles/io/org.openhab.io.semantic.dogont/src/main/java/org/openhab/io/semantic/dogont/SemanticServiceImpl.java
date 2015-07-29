@@ -52,28 +52,28 @@ public class SemanticServiceImpl extends SemanticServiceImplBase implements Sema
 	}
 
 	@Override
-	public boolean executeAsk(String askString, boolean withLatestValues) {
-		logger.debug("received ask: {}\nwith latest values: {}", askString, withLatestValues);
-		QueryExecution qe = getQueryExecution(askString, withLatestValues);
+	public boolean executeAsk(String askAsString, boolean withLatestValues) {
+		logger.debug("received ask: {}\nwith latest values: {}", askAsString, withLatestValues);
+		QueryExecution qe = getQueryExecution(askAsString, withLatestValues);
 		if (qe == null)
 			return false;
 		return qe.execAsk();
 	}
 
 	@Override
-	public boolean executeAsk(String askString) {
-		return executeAsk(askString, false);
+	public boolean executeAsk(String askAsString) {
+		return executeAsk(askAsString, false);
 	}
 
 	@Override
-	public QueryResult sendCommand(String query, String command) {
-		return sendCommand(query, command, false);
+	public QueryResult sendCommand(String queryAsString, String command) {
+		return sendCommand(queryAsString, command, false);
 	}
 
 	@Override
-	public QueryResult sendCommand(String query, String command, boolean withLatestValues) {
-		logger.debug("trying to send command to items: command: {} query: {}", command, query);
-		QueryExecution qe = getQueryExecution(query, withLatestValues);
+	public QueryResult sendCommand(String queryAsString, String command, boolean withLatestValues) {
+		logger.debug("trying to send command to items: command: {} query: {}", command, queryAsString);
+		QueryExecution qe = getQueryExecution(queryAsString, withLatestValues);
 		ResultSet rs = qe.execSelect();
 		ResultSetRewindable rsw = ResultSetFactory.copyResults(rs);
 		QueryResult qr = new QueryResultImpl(rsw);

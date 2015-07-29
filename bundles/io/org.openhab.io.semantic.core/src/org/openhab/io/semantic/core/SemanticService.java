@@ -34,22 +34,22 @@ public interface SemanticService {
 	/**
 	 * Executes an ask query
 	 * 
-	 * @param askString
+	 * @param askAsString
 	 * @return
 	 */
-	boolean executeAsk(String askString);
+	boolean executeAsk(String askAsString);
 
 	/**
 	 * Executes an ask query
 	 * 
-	 * @param askString
+	 * @param askAsString
 	 * @param withLatestValues
 	 *            If set to true, this will add the current values of all items to their specific
 	 *            stateValue in the ont model and then execute the query. This may take some time,
 	 *            so set this to true, only if you need the current values.
 	 * @return
 	 */
-	boolean executeAsk(String askString, boolean withLatestValues);
+	boolean executeAsk(String askAsString, boolean withLatestValues);
 
 	/**
 	 * Sends a command to all items which are selected by the query. The query must contain a
@@ -58,22 +58,22 @@ public interface SemanticService {
 	 * 
 	 * @param command
 	 *            the command as String. e.g. 'ON', 'OFF', 'TOGGLE', 'DOWN', 'UP'
-	 * @param query
+	 * @param queryAsString
 	 * @return the result of the query
 	 */
-	QueryResult sendCommand(String query, String command);
+	QueryResult sendCommand(String queryAsString, String command);
 
 	/**
 	 * Sends a command to all items which are selected by the query. The query must contain a
 	 * variable, which holds the function of the specific item/thing. If the query contains no such
 	 * variable, than no command is send to the openhab event bus.
 	 * 
-	 * @param query
+	 * @param queryAsString
 	 * @param command
 	 * @param withLatestValues
 	 * @return  the result of the query
 	 */
-	QueryResult sendCommand(String query, String command, boolean withLatestValues);
+	QueryResult sendCommand(String queryAsString, String command, boolean withLatestValues);
 
 	/**
 	 * Gets the current model instance as string
