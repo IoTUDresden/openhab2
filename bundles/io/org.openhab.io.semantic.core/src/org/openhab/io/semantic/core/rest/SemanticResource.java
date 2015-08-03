@@ -17,6 +17,7 @@ import org.eclipse.smarthome.core.thing.ThingRegistry;
 import org.eclipse.smarthome.io.rest.RESTResource;
 import org.openhab.io.semantic.core.QueryResult;
 import org.openhab.io.semantic.core.SemanticService;
+import org.openhab.io.semantic.core.internal.util.ConfigHelper;
 import org.openhab.io.semantic.core.internal.util.SemanticPostCommandBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
