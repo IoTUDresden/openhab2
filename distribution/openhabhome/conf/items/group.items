@@ -1,4 +1,5 @@
 Group CustomStuff "Custom Stuff" ["home-group"]
+Group NotUsed "not used" ["home-group"]
 
 /* Tinkerforge */
 Group CS_Tinkerforge "Tinkerforge Brick 1" (CustomStuff)
@@ -6,6 +7,8 @@ Group CS_Tinkerforge_Lcd "Tinkerforge 20x4 LCD 1" (CustomStuff)
 
 Group CS_Tinkerforge_2 "Tinkerforge Brick 2" (CustomStuff)
 Group CS_Tinkerforge_Lcd_2 "Tinkerforge 20x4 LCD 2" (CustomStuff)
+
+
 
 /* Homematic */
 /*Group CS_Homematic "Homematic" (CustomStuff)*/
@@ -33,3 +36,7 @@ Group CS_Keymatic_1 "Tür 1" (CustomStuff)
 
 /* NFC */
 /*Group CS_Nfc "NFC Reader" (CustomStuff)*/
+
+Group NU_Button "Simple Switch" (NotUsed)
+
+Group CS_Hue "Philips Hue" (CustomStuff)
