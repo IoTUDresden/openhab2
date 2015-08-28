@@ -112,6 +112,9 @@ instance:Function_fingerscanner_identify_c6faf529_channel_person
   rdf:type dogont:QueryFunctionality ;
   dogont:hasCommand instance:Command_fingerscanner_identify_c6faf529_channel_person ;
 .
+instance:Kitchen_Mueller
+  rdf:type dogont:Kitchen ;
+.
 instance:OffCommand_1
   rdf:type dogont:OffCommand ;
 .
@@ -175,7 +178,7 @@ instance:State_HomematicMotionIndicator_1
     ] ;
 .
 instance:State_IrTemp
-  rdf:type dogont:State ;
+  rdf:type dogont:TemperatureState ;
   dogont:hasStateValue [
       rdf:type dogont:TemperatureStateValue ;
       dogont:realStateValue "0"^^xsd:string ;
@@ -240,6 +243,7 @@ instance:Thing_HomematicDimmer_1
   rdf:type dogont:DimmerSwitch ;
   dogont:hasFunctionality instance:Function_HomematicDimmer_1 ;
   dogont:hasState instance:State_HomematicDimmer_1 ;
+  dogont:isIn instance:Kitchen_Mueller ;
 .
 instance:Thing_HomematicDimmer_2
   rdf:type dogont:DimmerSwitch ;
@@ -259,6 +263,7 @@ instance:Thing_IrTemp
   dogont:hasFunctionality instance:Function_IrTemp ;
   dogont:hasState instance:State_AmbTemp ;
   dogont:hasState instance:State_IrTemp ;
+  dogont:isIn instance:Kitchen_Mueller ;
 .
 instance:Thing_TinkerforgeAmbientLight
   rdf:type dogont:LightSensor ;
