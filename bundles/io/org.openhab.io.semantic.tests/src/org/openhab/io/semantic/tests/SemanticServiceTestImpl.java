@@ -93,4 +93,14 @@ public class SemanticServiceTestImpl implements SemanticService {
 		return false;
 	}
 
+	@Override
+	public String getTypeName(String itemName) {
+		return "default type name";
+	}
+
+	@Override
+	public String getLocationName(String itemName) {
+		return "default location name";
+	}
+
 }

@@ -208,4 +208,16 @@ public class SemanticServiceImpl extends SemanticServiceImplBase implements Sema
 		Query query = QueryFactory.create(queryAsString);
 		return QueryExecutionFactory.create(query, openHabInstancesModel);
 	}
+
+	@Override
+	public String getTypeName(String itemName) {
+		logger.debug("get semantic type name for openhab item '{}'", itemName);
+		return null;
+	}
+
+	@Override
+	public String getLocationName(String itemName) {
+		logger.debug("get semantic location name for openhab item '{}'", itemName);
+		return null;
+	}
 }

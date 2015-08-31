@@ -1,5 +1,1 @@
-/* Fingerscanner */
-/*fingerscanner:identify:base*/
-
-/* NFC */
-/*libnfcwrapper:idscan:base*/
+/*Bridge hue:bridge:first [ipAddress="192.168.1.13", userName="SEUSSEUSSEUSSEUS"] { LCT001 bulb1 [lightId="1"] }*/

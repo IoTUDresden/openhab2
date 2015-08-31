@@ -16,3 +16,7 @@ Switch HomematicMotionIndicator_1 "Bewegung" (CS_Homematic_Motion) {homematic="a
 
 /* Window Contact 1*/
 String Bath_Window "Fenster 1 [%s]" (CS_Homematic_Window_1) {homematic="address=JEQ0712908, channel=1, parameter=STATE"}
+
+/* Door */
+Switch Keymatic_1 			"Verschließen [map(HM-Sec-Key-S.map):%s]" 	(CS_Keymatic_1) { homematic="address=JEQ0710776, channel=1, parameter=STATE" }
+Switch Keymatic_Open_1 		"Öffnen" 		(CS_Keymatic_1) { homematic="address=JEQ0710776, forceUpdate=true, channel=1, parameter=OPEN", autoUpdate="false" }

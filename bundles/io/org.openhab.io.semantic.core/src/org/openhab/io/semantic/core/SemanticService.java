@@ -71,9 +71,27 @@ public interface SemanticService {
 	 * @param queryAsString
 	 * @param command
 	 * @param withLatestValues
-	 * @return  the result of the query
+	 * @return the result of the query
 	 */
 	QueryResult sendCommand(String queryAsString, String command, boolean withLatestValues);
+
+	/**
+	 * Gets the Type of a given item.
+	 * 
+	 * @param itemName
+	 *            OpenHab Item Name
+	 * @return
+	 */
+	String getTypeName(String itemName);
+
+	/**
+	 * Gets the location name of a given item.
+	 * 
+	 * @param itemName
+	 *            OpenHab Item Name
+	 * @return
+	 */
+	String getLocationName(String itemName);
 
 	/**
 	 * Gets the current model instance as string
@@ -89,15 +107,19 @@ public interface SemanticService {
 	 */
 	@Deprecated
 	void setAllValues();
-	
+
 	@Deprecated
 	boolean addItem(Item item);
+
 	@Deprecated
 	boolean removeItem(Item item);
+
 	@Deprecated
 	boolean removeItem(String uid);
+
 	@Deprecated
 	String getRestUrlForItem(String uid);
+
 	@Deprecated
 	String getRestUrlsForItemsInJson(String query);
 }

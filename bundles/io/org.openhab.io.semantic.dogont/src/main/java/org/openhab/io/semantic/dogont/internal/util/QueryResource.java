@@ -74,4 +74,8 @@ public class QueryResource {
 			+ "	rdf:type ?type. "
 			+ "	?type rdfs:subClassOf* dogont:Functionality "
 			+ "}";
+	
+	public static final String LocationNameOfItem = "";
+	
+	public static final String TypeNameofItem = "";
 }
