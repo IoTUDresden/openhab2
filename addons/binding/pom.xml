@@ -25,6 +25,7 @@
     <module>org.openhab.binding.sonos</module>
     <module>org.openhab.binding.autelis</module>
 	<module>org.openhab.binding.ipp</module>
+    <module>org.openhab.binding.kodi</module>
   </modules>
 
 </project>
