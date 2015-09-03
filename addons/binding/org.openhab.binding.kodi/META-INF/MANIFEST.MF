@@ -8,8 +8,11 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ClassPath: .
 Import-Package: 
  com.google.gson;version="2.2.4",
- javax.ws.rs.client;version="2.0.0",
- javax.ws.rs.core;version="2.0.1",
+ org.eclipse.jetty.client;version="9.2.9",
+ org.eclipse.jetty.client.api;version="9.2.9",
+ org.eclipse.jetty.client.http;version="9.2.9",
+ org.eclipse.jetty.client.util;version="9.2.9",
+ org.eclipse.jetty.util.component;version="9.2.9",
  org.eclipse.smarthome.config.core,
  org.eclipse.smarthome.core.library.types,
  org.eclipse.smarthome.core.thing,

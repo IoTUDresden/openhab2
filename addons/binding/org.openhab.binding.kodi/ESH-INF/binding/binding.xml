@@ -5,7 +5,7 @@
         xsi:schemaLocation="http://eclipse.org/smarthome/schemas/binding/v1.0.0 http://eclipse.org/smarthome/schemas/binding-1.0.0.xsd">
 
     <name>Kodi Binding</name>
-    <description>This is the binding for Kodi.</description>
+    <description>This is the binding for Kodi (XBMC).</description>
     <author>Andre Kuehnert</author>
 
 </binding:binding>

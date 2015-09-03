@@ -20,9 +20,20 @@ public class KodiBindingConstants {
     public static final String BINDING_ID = "kodi";
     
     // List of all Thing Type UIDs
-    public final static ThingTypeUID THING_TYPE_SAMPLE = new ThingTypeUID(BINDING_ID, "sample");
+    public final static ThingTypeUID THING_TYPE_KODICONTROL = new ThingTypeUID(BINDING_ID, "kodicontrol");
 
     // List of all Channel ids
-    public final static String CHANNEL_1 = "channel1";
+    /**
+     * Sends or receive a notification from/to Kodi
+     */
+    public final static String CHANNEL_GUI_SHOW_NOTIFICATION_CHANNEL = "gui-show-notification-channel";
+    
+    //List of all Parameters
+    /**
+     * The IP of the Kodi Instance
+     */
+    public final static String PARAMETER_IP = "ip";
+    
+    
 
 }

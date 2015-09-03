@@ -1,24 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <thing:thing-descriptions bindingId="kodi"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xmlns:thing="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0"
-        xsi:schemaLocation="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0 http://eclipse.org/smarthome/schemas/thing-description-1.0.0.xsd">
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:thing="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0"
+	xsi:schemaLocation="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0 http://eclipse.org/smarthome/schemas/thing-description-1.0.0.xsd">
 
-    <!-- Sample Thing Type -->
-    <thing-type id="sample">
-        <label>Kodi Binding Thing</label>
-        <description>Sample thing for Kodi Binding</description>
+	<!-- KodiControl Thing Type -->
+	<thing-type id="kodicontrol">
+		<label>KodiControl Thing</label>
+		<description>With the help of KodiControl you can send action (e.g. notifications) to Kodi</description>
 
-        <channels>
-            <channel id="channel1" typeId="sample-channel"/>
-        </channels>
-    </thing-type>
+		<channels>
+			<channel id="gui-show-notification" typeId="gui-show-notification-channel" />
+		</channels>
 
-    <!-- Sample Channel Type -->
-    <channel-type id="sample-channel">
-        <item-type>kodiItem</item-type>
-        <label>Kodi Binding Channel</label>
-        <description>Sample channel for Kodi Binding</description>
-    </channel-type>
+		<!-- KodiControl Params-->
+		<config-description>
+			<parameter name="ip" type="text" required="true">
+				<label>IP</label>
+				<description>The IP of the Kodi Instance</description>
+				<default>http://192.168.2.103:8080</default>
+			</parameter>
+		</config-description>
+		
+	</thing-type>
+
+	<!-- Gui Notification Channel Type -->
+	<channel-type id="gui-show-notification-channel">
+		<item-type>String</item-type>
+		<label>Notification</label>
+		<description>Sends or receive a notification from/to Kodi</description>
+	</channel-type>
 
 </thing:thing-descriptions>
