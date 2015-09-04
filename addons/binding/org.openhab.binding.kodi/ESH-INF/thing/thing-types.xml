@@ -10,7 +10,9 @@
 		<description>With the help of KodiControl you can send action (e.g. notifications) to Kodi</description>
 
 		<channels>
-			<channel id="gui-show-notification" typeId="gui-show-notification-channel" />
+			<channel id="friendly-name" typeId="friendly-name" />
+			<channel id="uptime" typeId="uptime" />
+			<channel id="gui-show-notification" typeId="gui-show-notification" />
 		</channels>
 
 		<!-- KodiControl Params-->
@@ -20,15 +22,41 @@
 				<description>The IP of the Kodi Instance</description>
 				<default>http://192.168.2.103:8080</default>
 			</parameter>
+			
+			<parameter name="displaytime" type="integer" required="true">
+				<label>Message Display Time</label>
+				<description>The Display time describes how long the message should be vissible in Kodi (Default 5 seconds).</description>
+				<default>5000</default>
+			</parameter>
+			
+			<parameter name="refreshtime" type="integer" required="true">
+				<label>Refreshtime</label>
+				<description>The refreshtime for main information (e.g. uptime) (Default 60 seconds).</description>
+				<default>60</default>
+			</parameter>
 		</config-description>
 		
 	</thing-type>
 
-	<!-- Gui Notification Channel Type -->
-	<channel-type id="gui-show-notification-channel">
+	<!-- Channel Types -->
+	<channel-type id="gui-show-notification">
 		<item-type>String</item-type>
 		<label>Notification</label>
 		<description>Sends or receive a notification from/to Kodi</description>
+		<state readOnly="true"/>
 	</channel-type>
-
+	
+	<channel-type id="uptime">
+		<item-type>String</item-type>
+		<label>Uptime</label>
+		<description>The uptime from Kodi</description>
+		<state readOnly="true"/>
+	</channel-type>
+	
+	<channel-type id="friendly-name">
+		<item-type>String</item-type>
+		<label>Friendly Name</label>
+		<description>The friendly name from Kodi</description>
+		<state readOnly="true"/>
+	</channel-type>
 </thing:thing-descriptions>

@@ -26,13 +26,30 @@ public class KodiBindingConstants {
     /**
      * Sends or receive a notification from/to Kodi
      */
-    public final static String CHANNEL_GUI_SHOW_NOTIFICATION_CHANNEL = "gui-show-notification-channel";
+    public final static String CHANNEL_GUI_SHOW_NOTIFICATION_CHANNEL = "gui-show-notification";
+    
+    /**
+     * The friendly name of the Kodi instance
+     */
+    public final static String CHANNEL_FRIENDLY_NAME = "friendly-name";
+    
+    /**
+     * Uptime from Kodi
+     */
+    public final static String CHANNEL_UPTIME = "uptime";
     
     //List of all Parameters
     /**
      * The IP of the Kodi Instance
      */
     public final static String PARAMETER_IP = "ip";
+    
+    /**
+     * The Display time describes how long the message should be vissible in Kodi.
+     */
+    public final static String PARAMETER_DISPLAYTIME = "displaytime";
+    
+    public final static String PARAMETER_REFRESHTIME = "refreshtime";
     
     
 

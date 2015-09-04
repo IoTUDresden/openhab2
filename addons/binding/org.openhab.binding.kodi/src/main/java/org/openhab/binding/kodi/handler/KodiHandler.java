@@ -9,12 +9,18 @@ package org.openhab.binding.kodi.handler;
 
 import static org.openhab.binding.kodi.KodiBindingConstants.*;
 
+import java.math.BigDecimal;
+import java.util.concurrent.TimeUnit;
+
+import org.eclipse.smarthome.core.library.types.StringType;
 import org.eclipse.smarthome.core.thing.ChannelUID;
 import org.eclipse.smarthome.core.thing.Thing;
 import org.eclipse.smarthome.core.thing.ThingStatus;
+import org.eclipse.smarthome.core.thing.ThingStatusDetail;
 import org.eclipse.smarthome.core.thing.binding.BaseThingHandler;
 import org.eclipse.smarthome.core.types.Command;
-import org.openhab.binding.kodi.internal.util.KodiJsonRpcVersion;
+import org.openhab.binding.kodi.internal.responses.KodiInfoLabels;
+import org.openhab.binding.kodi.internal.responses.KodiJsonRpcVersion;
 import org.openhab.binding.kodi.internal.util.KodiRemote;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,7 +35,9 @@ public class KodiHandler extends BaseThingHandler {
 	private Logger logger = LoggerFactory.getLogger(KodiHandler.class);
 
 	private String ip = null;
+	private int displayTime = 5000;
 	private KodiRemote remote = null;
+	private int refreshTime = 60;
 
 	public KodiHandler(Thing thing) {
 		super(thing);
@@ -38,41 +46,52 @@ public class KodiHandler extends BaseThingHandler {
 	@Override
 	public void handleCommand(ChannelUID channelUID, Command command) {
 		if (channelUID.getId().equals(CHANNEL_GUI_SHOW_NOTIFICATION_CHANNEL)) {
-			// TODO: handle command
-
-			// Note: if communication with thing fails for some reason,
-			// indicate that by setting the status with detail information
-			// updateStatus(ThingStatus.OFFLINE, ThingStatusDetail.COMMUNICATION_ERROR,
-			// "Could not control device at IP address x.x.x.x");
+			if (!(command instanceof StringType)) {
+				logger.error("The Kodi Item: {} supports only string commands",
+						CHANNEL_GUI_SHOW_NOTIFICATION_CHANNEL);
+				return;
+			}
+			remote.sendNotification("OpenHabMessage", command.toString(), displayTime);
+			updateState(CHANNEL_GUI_SHOW_NOTIFICATION_CHANNEL, StringType.valueOf(command.toString()));
 		}
 	}
 
 	@Override
 	public void initialize() {
-		// TODO: Initialize the thing. If done set status to ONLINE to indicate proper working.
-		// Long running initialization should be done asynchronously in background.
-
-		ip = (String) getConfig().get(PARAMETER_IP);		
+		ip = (String) getConfig().get(PARAMETER_IP);
+		BigDecimal temp = (BigDecimal) getConfig().get(PARAMETER_DISPLAYTIME);
+		displayTime = temp.intValue();
+		temp = (BigDecimal) getConfig().get(PARAMETER_REFRESHTIME);
+		refreshTime = temp.intValue();
 
 		try {
 			remote = new KodiRemote(ip);
 			KodiJsonRpcVersion version = remote.getJsonRpcVersion();
-			logger.debug("Connected to Kodi. Version: major: {}, minor: {}, patch: {}", version.getMajor(),
-					version.getMinor(), version.getPatch());
+			logger.debug("Connected to Kodi. Version: {}", version.toString());
 		} catch (Exception e) {
 			logger.error("Cant connect to Kodi on '{}'", ip);
-			updateStatus(ThingStatus.OFFLINE);
+			updateStatus(ThingStatus.OFFLINE, ThingStatusDetail.COMMUNICATION_ERROR,
+					"Can not connect to Kodi");
 			e.printStackTrace();
 			return;
 		}
-
+		
+		updateState(CHANNEL_FRIENDLY_NAME, StringType.EMPTY);
+		updateState(CHANNEL_UPTIME, StringType.EMPTY);
+		updateState(CHANNEL_GUI_SHOW_NOTIFICATION_CHANNEL, StringType.EMPTY);
 		updateStatus(ThingStatus.ONLINE);
 
-		// Note: When initialization can NOT be done set the status with more details for further
-		// analysis. See also class ThingStatusDetail for all available status details.
-		// Add a description to give user information to understand why thing does not work
-		// as expected. E.g.
-		// updateStatus(ThingStatus.OFFLINE, ThingStatusDetail.CONFIGURATION_ERROR,
-		// "Can not access device as username and/or password are invalid");
+		scheduler.scheduleWithFixedDelay(new Runnable() {
+			@Override
+			public void run() {
+				updateInfos();
+			}
+		}, 5, refreshTime, TimeUnit.SECONDS);
+	}
+
+	private void updateInfos() {
+		KodiInfoLabels infos = remote.getKodiInfos("System.Uptime", "System.FriendlyName");
+		updateState(CHANNEL_FRIENDLY_NAME, StringType.valueOf(infos.getInfo("System.FriendlyName")));
+		updateState(CHANNEL_UPTIME, StringType.valueOf(infos.getInfo("System.Uptime")));
 	}
 }

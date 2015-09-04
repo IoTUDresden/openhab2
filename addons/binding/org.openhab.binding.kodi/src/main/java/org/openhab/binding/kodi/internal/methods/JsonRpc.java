@@ -8,8 +8,8 @@ public class JsonRpc {
 		
 		public Version() {
 			super(JSONRPC_VERSION);
+			addProperty("id", 1);
 		}
-		
 	}
 
 }

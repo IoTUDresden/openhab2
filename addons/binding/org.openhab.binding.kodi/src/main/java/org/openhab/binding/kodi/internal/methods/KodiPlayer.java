@@ -1,6 +1,8 @@
 package org.openhab.binding.kodi.internal.methods;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 
 public class KodiPlayer {
 	
@@ -51,5 +53,22 @@ public class KodiPlayer {
 			itemObj.addProperty(type.getAsString(), path);
 			return itemObj;
 		}		
+	}
+	
+	public static class GetProperties extends KodiJsonRpc{
+		public static final String PLAYER_GETPROPERTIES = "Player.GetProperties";
+
+		public GetProperties(int playerid, String... properties) {
+			super(PLAYER_GETPROPERTIES);
+			addProperty("id", 1);
+			addProperties(properties);
+		}
+		
+		private void addProperties(String[] properties){
+			JsonArray props = new JsonArray();
+			for (int i = 0; i < properties.length; i++)
+				props.add(new JsonPrimitive(properties[i]));
+			addParam("properties", props);
+		}
 	}
 }

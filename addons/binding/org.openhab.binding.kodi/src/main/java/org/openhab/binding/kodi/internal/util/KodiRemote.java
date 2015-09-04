@@ -7,7 +7,6 @@ import java.util.concurrent.TimeoutException;
 import org.eclipse.jetty.client.HttpClient;
 import org.eclipse.jetty.client.api.ContentProvider;
 import org.eclipse.jetty.client.api.ContentResponse;
-import org.eclipse.jetty.client.api.Request;
 import org.eclipse.jetty.client.api.Response.CompleteListener;
 import org.eclipse.jetty.client.api.Result;
 import org.eclipse.jetty.client.util.StringContentProvider;
@@ -16,11 +15,11 @@ import org.openhab.binding.kodi.internal.methods.KodiGui;
 import org.openhab.binding.kodi.internal.methods.KodiJsonRpc;
 import org.openhab.binding.kodi.internal.methods.KodiPlayer;
 import org.openhab.binding.kodi.internal.methods.KodiPlayer.PlayerOpenType;
+import org.openhab.binding.kodi.internal.methods.Xbmc;
+import org.openhab.binding.kodi.internal.responses.KodiInfoLabels;
+import org.openhab.binding.kodi.internal.responses.KodiJsonRpcVersion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 
 //For post
 //	http://<your-ip>:<your-port>/jsonrpc
@@ -37,11 +36,13 @@ import com.google.gson.JsonParser;
  *
  */
 public class KodiRemote {
+	public static final String MEDIA_TYPE_JSON = "application/json";
+
 	private static final Logger logger = LoggerFactory.getLogger(KodiRemote.class);
 
 	// Default authentication
 	private static final String defaultAuth = "kodi:kodi";
-	private static final String jsonRpc = "jsonrpc";
+	private static final String jsonRpc = "/jsonrpc";
 
 	private final String auth;
 	private final String serverBaseUri;
@@ -50,7 +51,7 @@ public class KodiRemote {
 	private HttpClient client;
 
 	/**
-	 * This creates a new Kodi Remote. The Default Passwort and Username is used.
+	 * This creates a new Kodi Remote. The default password and username is used.
 	 * 
 	 * @param serverBaseUri
 	 * @throws Exception
@@ -88,16 +89,16 @@ public class KodiRemote {
 	 *            how long should the message display (milliseconds)
 	 */
 	public void sendNotification(String title, String message, int displayTime) {
-		 KodiGui.ShowNotification notification = new KodiGui.ShowNotification(title, message, displayTime);
-		 postKodiJsonRpcAsync(notification);
+		KodiGui.ShowNotification notification = new KodiGui.ShowNotification(title, message, displayTime);
+		postKodiJsonRpcAsync(notification);
 	}
 
 	/**
 	 * Path of a folder, or the item (movie, sound file, picture)
 	 */
 	public void open(String itemPath, PlayerOpenType type) {
-		 KodiPlayer.Open open = new KodiPlayer.Open(itemPath, type);
-		 postKodiJsonRpcAsync(open);
+		KodiPlayer.Open open = new KodiPlayer.Open(itemPath, type);
+		postKodiJsonRpcAsync(open);
 	}
 
 	/**
@@ -107,8 +108,8 @@ public class KodiRemote {
 	 *            e.g. 1
 	 */
 	public void stop(int playerId) {
-		 KodiPlayer.Stop stop = new KodiPlayer.Stop(playerId);
-		 postKodiJsonRpcAsync(stop);
+		KodiPlayer.Stop stop = new KodiPlayer.Stop(playerId);
+		postKodiJsonRpcAsync(stop);
 	}
 
 	/**
@@ -120,15 +121,14 @@ public class KodiRemote {
 	public ContentResponse postKodiJsonRpc(KodiJsonRpc kodiJsonRpc) {
 		logger.debug("JSON-RPC: {}", kodiJsonRpc.getAsJsonString());
 		ContentProvider content = new StringContentProvider(kodiJsonRpc.getAsJsonString());
+
 		ContentResponse response = null;
 
 		try {
-			Request rq = client.POST(serverBaseUri)
-					.path(jsonRpc)
-					.header("Authorization", "Basic " + creds)
-					.content(content, "application/json");
-			logger.debug("Reques: {}", rq.toString());
-			response = rq.send();
+			response = client.POST(serverBaseUri).path(jsonRpc)
+					.header("Authorization", "Basic ".concat(creds))
+					.content(content, MEDIA_TYPE_JSON)
+					.send();
 		} catch (InterruptedException | TimeoutException | ExecutionException e) {
 			e.printStackTrace();
 			return null;
@@ -148,10 +148,9 @@ public class KodiRemote {
 		ContentProvider content = new StringContentProvider(kodiJsonRpc.getAsJsonString());
 
 		client.POST(serverBaseUri)
-		.path(jsonRpc)
-		.header("Authorization", "Basic ".concat(creds))
-		.content(content, "application/json")
-		.send(new CompleteListener() {
+			.path(jsonRpc)
+			.header("Authorization", "Basic ".concat(creds))
+			.content(content, MEDIA_TYPE_JSON).send(new CompleteListener() {
 					@Override
 					public void onComplete(Result result) {
 						logger.debug("Async Response Status for Kodi Method '{}': {}",
@@ -162,23 +161,30 @@ public class KodiRemote {
 
 	public KodiJsonRpcVersion getJsonRpcVersion() {
 		JsonRpc.Version rpc = new JsonRpc.Version();
-		 ContentResponse response = postKodiJsonRpc(rpc);		 
-		 String content = response.getContentAsString();
-		 JsonObject jsonResponse = new JsonParser().parse(content).getAsJsonObject();
-		 JsonObject json = jsonResponse.getAsJsonObject("properties");
-		 int minor = json.get("minor").getAsInt();
-		 int patch = json.get("patch").getAsInt();
-		 int major = json.get("major").getAsInt();
-		 KodiJsonRpcVersion version = new KodiJsonRpcVersion(minor, patch, major);
-		 return version;
+		ContentResponse response = postKodiJsonRpc(rpc);
+		String content = response.getContentAsString();
+		return KodiJsonRpcVersion.fromJson(content);
+	}
+	
+	/**
+	 * Get the Info Lables from <a href=http://kodi.wiki/index.php?title=InfoLabels>Kodi Wiki</a>
+	 * @param labels
+	 * @return
+	 */
+	public KodiInfoLabels getKodiInfos(String... labels){
+		Xbmc.GetInfoLabels getLabels = new Xbmc.GetInfoLabels(labels);
+		ContentResponse response = postKodiJsonRpc(getLabels);
+		String content = response.getContentAsString();
+		return KodiInfoLabels.fromJson(content);
 	}
 
 	/**
 	 * Stop this Client
-	 * @throws Exception 
+	 * 
+	 * @throws Exception
 	 */
 	public void stop() throws Exception {
-		 client.stop();
+		client.stop();
 	}
 
 }
