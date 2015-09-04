@@ -1,1 +1,3 @@
 /*Bridge hue:bridge:first [ipAddress="192.168.1.13", userName="SEUSSEUSSEUSSEUS"] { LCT001 bulb1 [lightId="1"] }*/
+
+kodi:kodicontrol:firstinstance [ip="http://192.168.2.103:8080", displaytime=5000, refreshtime=60000]

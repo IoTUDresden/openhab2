@@ -34,6 +34,9 @@ Group CS_Keymatic_1 "Tür 1" (CustomStuff)
 /* Fingerscanner */
 /*Group CS_Fingerscan "Fingerprint Reader" (CustomStuff)*/
 
+/* Kodi */
+Group CS_Kodi "Kodi" (CustomStuff)
+
 /* NFC */
 /*Group CS_Nfc "NFC Reader" (CustomStuff)*/
 

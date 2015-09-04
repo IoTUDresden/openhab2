@@ -1,0 +1,7 @@
+String kodi_friendly_name "Notification" (CS_Kodi) {channel="kodi:kodicontrol:firstinstance:friendly-name"}
+
+String kodi_uptime "Uptime" (CS_Kodi) {channel="kodi:kodicontrol:firstinstance:uptime"}
+
+String kodi_notification "Notification" (CS_Kodi) {channel="kodi:kodicontrol:firstinstance:gui-show-notification"}
+
+

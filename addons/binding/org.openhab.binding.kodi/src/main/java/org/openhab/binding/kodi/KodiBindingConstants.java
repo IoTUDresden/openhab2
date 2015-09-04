@@ -49,6 +49,9 @@ public class KodiBindingConstants {
      */
     public final static String PARAMETER_DISPLAYTIME = "displaytime";
     
+    /**
+     * The refreshtime for main information (e.g. uptime)
+     */
     public final static String PARAMETER_REFRESHTIME = "refreshtime";
     
     
