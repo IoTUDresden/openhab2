@@ -58,12 +58,15 @@ public class KodiHandler extends BaseThingHandler {
 
 	@Override
 	public void initialize() {
-		ip = (String) getConfig().get(PARAMETER_IP);
-		BigDecimal temp = (BigDecimal) getConfig().get(PARAMETER_DISPLAYTIME);
-		displayTime = temp.intValue();
-		temp = (BigDecimal) getConfig().get(PARAMETER_REFRESHTIME);
-		refreshTime = temp.intValue();
-
+		setConfigValues();
+		if(!startClient())
+			return;	
+		setDefaultValues();
+		startBackgroundWorker();
+		updateStatus(ThingStatus.ONLINE);
+	}
+	
+	private boolean startClient(){
 		try {
 			remote = new KodiRemote(ip);
 			KodiJsonRpcVersion version = remote.getJsonRpcVersion();
@@ -73,20 +76,32 @@ public class KodiHandler extends BaseThingHandler {
 			updateStatus(ThingStatus.OFFLINE, ThingStatusDetail.COMMUNICATION_ERROR,
 					"Can not connect to Kodi");
 			e.printStackTrace();
-			return;
+			return false;
 		}
-		
-		updateState(CHANNEL_FRIENDLY_NAME, StringType.EMPTY);
-		updateState(CHANNEL_UPTIME, StringType.EMPTY);
-		updateState(CHANNEL_GUI_SHOW_NOTIFICATION_CHANNEL, StringType.EMPTY);
-		updateStatus(ThingStatus.ONLINE);
-
+		return true;
+	}
+	
+	private void startBackgroundWorker(){
 		scheduler.scheduleWithFixedDelay(new Runnable() {
 			@Override
 			public void run() {
 				updateInfos();
 			}
-		}, 5, refreshTime, TimeUnit.SECONDS);
+		}, 5, refreshTime, TimeUnit.SECONDS);		
+	}
+	
+	private void setDefaultValues(){
+		updateState(CHANNEL_FRIENDLY_NAME, StringType.EMPTY);
+		updateState(CHANNEL_UPTIME, StringType.EMPTY);
+		updateState(CHANNEL_GUI_SHOW_NOTIFICATION_CHANNEL, StringType.EMPTY);	
+	}
+	
+	private void setConfigValues(){
+		ip = (String) getConfig().get(PARAMETER_IP);
+		BigDecimal temp = (BigDecimal) getConfig().get(PARAMETER_DISPLAYTIME);
+		displayTime = temp.intValue();
+		temp = (BigDecimal) getConfig().get(PARAMETER_REFRESHTIME);
+		refreshTime = temp.intValue();		
 	}
 
 	private void updateInfos() {
