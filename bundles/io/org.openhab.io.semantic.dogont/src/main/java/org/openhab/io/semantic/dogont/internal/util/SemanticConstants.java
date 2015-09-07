@@ -77,5 +77,10 @@ public class SemanticConstants {
 	 * Namespace for the rdf (rdf-syntax)
 	 */
 	public static final String NS_RDF_SYNTAX = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
+	
+	/**
+	 * Namespace for uomvocab
+	 */
+	public static final String NS_UOMVOCAB = "http://purl.oclc.org/NET/muo/muo#";
 
 }

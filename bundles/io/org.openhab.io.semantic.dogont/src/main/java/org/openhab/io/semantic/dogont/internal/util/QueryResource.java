@@ -13,7 +13,8 @@ public class QueryResource {
 			+ "PREFIX rdfs: <" + SemanticConstants.NS_RDFS_SCHEMA + "> "
 			+ "PREFIX rdf: <" + SemanticConstants.NS_RDF_SYNTAX + "> "
 			+ "PREFIX dogont: <" + DogontSchema.NS + "> "
-			+ "PREFIX instance: <" + SemanticConstants.NS_INSTANCE + "> ";
+			+ "PREFIX instance: <" + SemanticConstants.NS_INSTANCE + "> "
+			+ "PREFIX uomvocab: <" + SemanticConstants.NS_UOMVOCAB + "> ";
 
 	/**
 	 * Use String.format: Namespace, Property, Value
@@ -120,11 +121,12 @@ public class QueryResource {
 	 * Gets all State items with their location name, and the type name for state and the thing
 	 */
 	public static final String AllSensors = Prefix
-			+ "SELECT ?instance ?shortName ?typeName ?location ?thingName ?unit ?symbol "
+			+ "SELECT ?instance ?shortName ?openHabName ?typeName ?location ?thingName ?unit ?symbol "
 			+ " WHERE { "
 			+ "  ?class rdfs:subClassOf* dogont:State . "
 			+ "	 ?instance rdf:type ?class . "
 			+ "  bind(strafter(str(?instance),str(instance:)) as ?shortName) . "
+			+ "  bind(strafter(str(?shortName),str(\"State_\")) as ?openHabName) ."
 			+	"bind(strafter(str(?class),str(dogont:)) as ?typeName) . "
 			+	"?thing dogont:hasState ?instance . "
 			+	"?thing rdf:type ?thingType . "
@@ -139,4 +141,6 @@ public class QueryResource {
 			+	" ?unit uomvocab:prefSymbol ?symbol . "
 			+	"} "			
 			+"}";
+	
+	
 }
