@@ -1,5 +1,11 @@
 package org.openhab.io.semantic.dogont.internal.util;
 
+/**
+ * Constants for the work with the semantic model.
+ * 
+ * @author André Kühnert
+ *
+ */
 public class SemanticConstants {
 	//TODO the files should be located in a openhab config folder, not in this bundle
 	

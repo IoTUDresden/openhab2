@@ -108,8 +108,6 @@ public class SemanticResource implements RESTResource {
 		return String.format(JSON_BOOLEAN_FORMAT, result);
 	}
 	
-	//TODO only for testing
-	@Deprecated
 	@GET
 	@Path("/testvaluesetting")
 	@Produces(MediaType.TEXT_PLAIN)

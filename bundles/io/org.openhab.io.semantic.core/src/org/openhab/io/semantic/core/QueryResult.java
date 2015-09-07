@@ -6,11 +6,11 @@ package org.openhab.io.semantic.core;
  * @author André Kühnert
  */
 public interface QueryResult {
-	@Deprecated
-	String getAsString();
 
 	/**
-	 * Gets the result from a semantic query as a string in json format
+	 * Gets the result from a semantic query as a string in json format.<br>
+	 * The SPARQL Query Result is serialize to Json. The output has the same format as described in
+	 * <a href="http://www.w3.org/TR/rdf-sparql-json-res/"> Serializing SPARQL Query Results</a>.
 	 * 
 	 * @return String in Json-format
 	 */

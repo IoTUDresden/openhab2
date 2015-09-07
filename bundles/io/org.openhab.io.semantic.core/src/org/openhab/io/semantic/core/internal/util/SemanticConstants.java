@@ -1,7 +1,11 @@
 package org.openhab.io.semantic.core.internal.util;
 
+/**
+ * Constants for name prefixes in the semantic model
+ * @author André Kühnert
+ *
+ */
 public class SemanticConstants {
-	//TODO the files should be located in a openhab config folder, not in this bundle
 	
 	private SemanticConstants() {
 		// no need for a instance of this

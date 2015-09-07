@@ -4,7 +4,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * Simple bean for receiving the post command via rest on the semantic layer
+ * Simple bean for receiving the post command via rest on the semantic layer.
  * 
  * @author André Kühnert
  */

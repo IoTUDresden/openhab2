@@ -1,6 +1,5 @@
 package org.openhab.io.semantic.core;
 
-import org.eclipse.smarthome.core.items.Item;
 
 /**
  * The Semantic Service provides methods to access the things and items of openhab via semantic
@@ -100,26 +99,16 @@ public interface SemanticService {
 	 */
 	String getCurrentInstanceAsString();
 
-	String getInstanceSkeletonAsString();
-
 	/**
 	 * Sets all current item states to the model.
 	 */
-	@Deprecated
 	void setAllValues();
 
-	@Deprecated
-	boolean addItem(Item item);
-
-	@Deprecated
-	boolean removeItem(Item item);
-
-	@Deprecated
-	boolean removeItem(String uid);
-
-	@Deprecated
+	/**
+	 * Gets the OpenHab REST link for the given item, specified by its semantic model uid
+	 * (cause the uid in the semantic model and the uid for openhab can be different).
+	 * @param uid
+	 * @return
+	 */
 	String getRestUrlForItem(String uid);
-
-	@Deprecated
-	String getRestUrlsForItemsInJson(String query);
 }

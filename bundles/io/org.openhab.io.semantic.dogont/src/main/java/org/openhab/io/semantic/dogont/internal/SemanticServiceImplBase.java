@@ -71,6 +71,9 @@ public class SemanticServiceImplBase {
 		thingRegistry = null;
 	}
 	
+	/**
+	 * Activation method for the semantic service. This method is used by OSGI to activate this service.
+	 */
 	public void activate(){
 		LocationMapperCustom locationMapper = new LocationMapperCustom();
 		LocationMapper.setGlobalLocationMapper(locationMapper);
@@ -82,6 +85,9 @@ public class SemanticServiceImplBase {
 		logger.debug("Dogont Semantic Service activated");
 	}
 	
+	/**
+	 * Deactivation method for the semantic service. This method is used by OSGI to deactivate this service.
+	 */
 	public void deactivate(){
 		logger.debug("Dogont Semantic Service deactivated");
 		openHabInstancesModel.close();

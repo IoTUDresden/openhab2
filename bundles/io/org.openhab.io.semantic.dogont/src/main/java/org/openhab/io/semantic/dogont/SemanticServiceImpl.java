@@ -28,7 +28,8 @@ import com.hp.hpl.jena.query.ResultSetRewindable;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 
 /**
- * Implementation of the semantic service
+ * Implementation of the semantic service, with the <a
+ * href="http://lov.okfn.org/dataset/lov/vocabs/dogont">Dogont</a> Ontology.
  * 
  * @author André Kühnert
  *
@@ -77,8 +78,6 @@ public class SemanticServiceImpl extends SemanticServiceImplBase implements Sema
 		ResultSet rs = qe.execSelect();
 		ResultSetRewindable rsw = ResultSetFactory.copyResults(rs);
 		QueryResult qr = new QueryResultImpl(rsw);
-		//after the rs is consumed, the iterator has no next element. The rs must be reset
-//		rsw.reset();
 		String varName = null;
 		boolean isFirst = true;
 		while (rsw.hasNext()) {
@@ -99,33 +98,8 @@ public class SemanticServiceImpl extends SemanticServiceImplBase implements Sema
 	}
 
 	@Override
-	public boolean addItem(Item item) {
-		logger.debug("trying to add item to semantic resource: {}", item.getName());
-		return false;
-	}
-
-	@Override
-	public boolean removeItem(Item item) {
-		logger.debug("trying to remove item from semantic resource: {}", item.getName());
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean removeItem(String uid) {
-		logger.debug("trying to remove item from semantic resource: UID: {}", uid);
-		return false;
-	}
-
-	@Override
 	public String getRestUrlForItem(String uid) {
 		logger.debug("get rest url for item with uid: {}", uid);
-		return null;
-	}
-
-	@Override
-	public String getRestUrlsForItemsInJson(String query) {
-		logger.debug("get rest urls for items received with query: {}", query);
 		return null;
 	}
 
@@ -135,13 +109,6 @@ public class SemanticServiceImpl extends SemanticServiceImplBase implements Sema
 	}
 
 	@Override
-	public String getInstanceSkeletonAsString() {
-		// TODO read another model with the instances
-		return getInstanceModelAsString();
-	}
-
-	@Override
-	@Deprecated
 	public void setAllValues() {
 		addCurrentItemStatesToModelRealStateValues();
 	}
@@ -161,7 +128,7 @@ public class SemanticServiceImpl extends SemanticServiceImplBase implements Sema
 			return;
 		}
 		Command cmd = getCommand(command, item);
-		if(command == null){
+		if (command == null) {
 			logger.error("command '{}' not found or not supported by the item '{}'", command, localName);
 			return;
 		}

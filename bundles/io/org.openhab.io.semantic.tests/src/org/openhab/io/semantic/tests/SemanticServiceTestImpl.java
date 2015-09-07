@@ -1,6 +1,5 @@
 package org.openhab.io.semantic.tests;
 
-import org.eclipse.smarthome.core.items.Item;
 import org.openhab.io.semantic.core.QueryResult;
 import org.openhab.io.semantic.core.SemanticService;
 import org.slf4j.Logger;
@@ -53,44 +52,15 @@ public class SemanticServiceTestImpl implements SemanticService {
 	}
 
 	@Override
-	public String getInstanceSkeletonAsString() {
-		return "static test instance";
-	}
-
-	@Override
 	public void setAllValues() {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public boolean removeItem(String uid) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
 	public String getRestUrlForItem(String uid) {
 		// TODO Auto-generated method stub
 		return null;
-	}
-
-	@Override
-	public String getRestUrlsForItemsInJson(String query) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean addItem(Item item) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean removeItem(Item item) {
-		// TODO Auto-generated method stub
-		return false;
 	}
 
 	@Override
