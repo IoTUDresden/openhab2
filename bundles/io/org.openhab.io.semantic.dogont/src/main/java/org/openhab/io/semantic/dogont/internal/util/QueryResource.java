@@ -120,7 +120,7 @@ public class QueryResource {
 	 * Gets all State items with their location name, and the type name for state and the thing
 	 */
 	public static final String AllSensors = Prefix
-			+ "SELECT ?instance ?shortName ?typeName ?location ?thingName "
+			+ "SELECT ?instance ?shortName ?typeName ?location ?thingName ?unit ?symbol "
 			+ " WHERE { "
 			+ "  ?class rdfs:subClassOf* dogont:State . "
 			+ "	 ?instance rdf:type ?class . "
@@ -133,5 +133,10 @@ public class QueryResource {
 			+		"?thing dogont:isIn ?loc . "
 			+		"?loc rdfs:label ?location . "
 			+	"} "
+			+	" optional { "
+			+	"	?instance dogont:hasStateValue ?value . "
+			+	"	?value dogont:unitOfMeasure ?unit . "
+			+	" ?unit uomvocab:prefSymbol ?symbol . "
+			+	"} "			
 			+"}";
 }
