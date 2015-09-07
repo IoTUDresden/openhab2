@@ -73,4 +73,10 @@ public class SemanticServiceTestImpl implements SemanticService {
 		return "default location name";
 	}
 
+	@Override
+	public QueryResult getAllSensors() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
