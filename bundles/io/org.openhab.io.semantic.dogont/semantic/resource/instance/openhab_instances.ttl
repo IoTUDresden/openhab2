@@ -107,6 +107,7 @@ instance:Function_fingerscanner_identify_c6faf529_channel_person
 .
 instance:Kitchen_Mueller
   rdf:type dogont:Kitchen ;
+  rdfs:label "Kueche"^^xsd:string ;
 .
 instance:Lobby_Mueller
   rdf:type dogont:Lobby ;

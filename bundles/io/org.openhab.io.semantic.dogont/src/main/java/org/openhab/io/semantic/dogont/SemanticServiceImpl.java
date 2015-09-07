@@ -25,6 +25,7 @@ import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.query.ResultSetFactory;
 import com.hp.hpl.jena.query.ResultSetRewindable;
+import com.hp.hpl.jena.rdf.model.Literal;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 
 /**
@@ -182,9 +183,43 @@ public class SemanticServiceImpl extends SemanticServiceImplBase implements Sema
 		return null;
 	}
 
+	/**
+	 * Gets the location name for an item, thing or state. If the param 'itemName' does not start
+	 * with on of these prefixes, it is tried to find a matching thing, functionality or state (in this order).
+	 * 
+	 * @param itemName
+	 * @return null if no location was specified or the thing, state, func was not found.
+	 */
 	@Override
 	public String getLocationName(String itemName) {
-		logger.debug("get semantic location name for openhab item '{}'", itemName);
-		return null;
+		logger.debug("get semantic location name for item or thing '{}'", itemName);
+		if (itemName.startsWith(SemanticConstants.THING_PREFIX))
+			return getLocationRealname(QueryResource.LocationNameOfThing, itemName);
+		if (itemName.startsWith(SemanticConstants.FUNCTION_PREFIX))
+			return getLocationRealname(QueryResource.LocationNameOfFunctionality, itemName);
+		if (itemName.startsWith(SemanticConstants.STATE_PREFIX))
+			return getLocationRealname(QueryResource.LocationNameOfState, itemName);
+
+		String loc = getLocationName(SemanticConstants.THING_PREFIX + itemName);
+		if (loc != null)
+			return loc;
+		loc = getLocationName(SemanticConstants.FUNCTION_PREFIX + itemName);
+		if (loc != null)
+			return loc;
+		loc = getLocationName(SemanticConstants.STATE_PREFIX + itemName);
+		return loc;
+	}
+
+	private String getLocationRealname(String baseQueryString, String stateOrFunctionOrThingName) {
+		String queryAsString = String.format(baseQueryString, stateOrFunctionOrThingName);
+		QueryExecution query = getQueryExecution(queryAsString, false);
+		ResultSet resultSet = query.execSelect();
+		if (!resultSet.hasNext())
+			return null;
+		Literal node = resultSet.next().getLiteral("realname");
+		query.close();
+		if(node == null)
+			return null;
+		return node.getString();
 	}
 }

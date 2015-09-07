@@ -80,6 +80,13 @@ public class SemanticResource implements RESTResource {
 		return "recieved uid: " + uid;		
 	}
 	
+	@GET
+	@Path("select/{uid: [a-zA-Z_0-9]*}/location")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String getLocationName(@PathParam("uid") String uid){
+		return semanticService.getLocationName(uid);
+	}
+	
 	@POST
 	@Path("/post/command")
 	@Consumes(MediaType.APPLICATION_JSON)

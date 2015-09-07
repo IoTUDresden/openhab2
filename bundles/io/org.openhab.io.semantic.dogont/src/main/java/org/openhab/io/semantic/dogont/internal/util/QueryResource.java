@@ -8,6 +8,12 @@ import org.openhab.io.semantic.dogont.internal.ontology.DogontSchema;
  * @author André Kühnert
  */
 public class QueryResource {
+	
+	public static final String Prefix = ""
+			+ "PREFIX rdfs: <" + SemanticConstants.NS_RDFS_SCHEMA + "> "
+			+ "PREFIX rdf: <" + SemanticConstants.NS_RDF_SYNTAX + "> "
+			+ "PREFIX dogont: <" + DogontSchema.NS + "> "
+			+ "PREFIX instance: <" + SemanticConstants.NS_INSTANCE + "> ";
 
 	/**
 	 * Use String.format: Namespace, Property, Value
@@ -75,7 +81,38 @@ public class QueryResource {
 			+ "	?type rdfs:subClassOf* dogont:Functionality "
 			+ "}";
 	
-	public static final String LocationNameOfItem = "";
+	/**
+	 * Query for receiving the location name for a thing.
+	 * Use String.format instance uri of the thing
+	 */
+	public static final String LocationNameOfThing = Prefix
+			+ "SELECT ?location ?realname "
+			+ "WHERE { "
+			+ " instance:%s dogont:isIn ?location . "
+			+ "	?location rdfs:label ?realname . "
+			+ "} ";
 	
-	public static final String TypeNameofItem = "";
+	/**
+	 * Query for receiving the location name for a state.
+	 * Use String.format instance uri of the state.
+	 */
+	public static final String LocationNameOfFunctionality = Prefix 
+			+ "SELECT ?location ?realname "
+			+ "WHERE { "
+			+ " ?thing dogont:hasFunctionality instance:%s . "
+			+ " ?thing dogont:isIn ?location . "
+			+ " ?location rdfs:label ?realname . "
+			+ "} ";
+	
+	/**
+	 * Query for receiving the location name for a state.
+	 * Use String.format instance uri of the state.
+	 */
+	public static final String LocationNameOfState = Prefix 
+			+ "SELECT ?location ?realname "
+			+ "WHERE { "
+			+ " ?thing dogont:hasState instance:%s ."
+			+ " ?thing dogont:isIn ?location . "
+			+ " ?location rdfs:label ?realname . "
+			+ "} ";
 }
