@@ -114,6 +114,48 @@ public class SemanticServiceImpl extends SemanticServiceImplBase implements Sema
 		addCurrentItemStatesToModelRealStateValues();
 	}
 
+	@Override
+	public String getTypeName(String itemName) {
+		logger.debug("get semantic type name for openhab item '{}'", itemName);
+		return null;
+	}
+
+	/**
+	 * Gets the location name for an item, thing or state. If the param 'itemName' does not start
+	 * with on of these prefixes, it is tried to find a matching thing, functionality or state (in this order).
+	 * 
+	 * @param itemName
+	 * @return null if no location was specified or the thing, state, func was not found.
+	 */
+	@Override
+	public String getLocationName(String itemName) {
+		logger.debug("get semantic location name for item or thing '{}'", itemName);
+		if (itemName.startsWith(SemanticConstants.THING_PREFIX))
+			return getLocationRealname(QueryResource.LocationNameOfThing, itemName);
+		if (itemName.startsWith(SemanticConstants.FUNCTION_PREFIX))
+			return getLocationRealname(QueryResource.LocationNameOfFunctionality, itemName);
+		if (itemName.startsWith(SemanticConstants.STATE_PREFIX))
+			return getLocationRealname(QueryResource.LocationNameOfState, itemName);
+
+		String loc = getLocationName(SemanticConstants.THING_PREFIX + itemName);
+		if (loc != null)
+			return loc;
+		loc = getLocationName(SemanticConstants.FUNCTION_PREFIX + itemName);
+		if (loc != null)
+			return loc;
+		loc = getLocationName(SemanticConstants.STATE_PREFIX + itemName);
+		return loc;
+	}
+
+	@Override
+	public QueryResult getAllSensors() {
+		QueryExecution queryExecution = getQueryExecution(QueryResource.AllSensors, false);
+		ResultSet rs = queryExecution.execSelect();
+		QueryResult result = new QueryResultImpl(rs);
+		queryExecution.close();
+		return result;
+	}	
+	
 	private void postCommandToEventBus(QuerySolution querySolution, String varName, String command) {
 		RDFNode node = querySolution.get(varName);
 		String localName = node.asResource().getLocalName();
@@ -135,7 +177,7 @@ public class SemanticServiceImpl extends SemanticServiceImplBase implements Sema
 		}
 		eventPublisher.postCommand(localName, cmd);
 	}
-
+	
 	private Command getCommand(String value, Item item) {
 		Command command = null;
 		if ("toggle".equalsIgnoreCase(value)
@@ -176,40 +218,7 @@ public class SemanticServiceImpl extends SemanticServiceImplBase implements Sema
 		Query query = QueryFactory.create(queryAsString);
 		return QueryExecutionFactory.create(query, openHabInstancesModel);
 	}
-
-	@Override
-	public String getTypeName(String itemName) {
-		logger.debug("get semantic type name for openhab item '{}'", itemName);
-		return null;
-	}
-
-	/**
-	 * Gets the location name for an item, thing or state. If the param 'itemName' does not start
-	 * with on of these prefixes, it is tried to find a matching thing, functionality or state (in this order).
-	 * 
-	 * @param itemName
-	 * @return null if no location was specified or the thing, state, func was not found.
-	 */
-	@Override
-	public String getLocationName(String itemName) {
-		logger.debug("get semantic location name for item or thing '{}'", itemName);
-		if (itemName.startsWith(SemanticConstants.THING_PREFIX))
-			return getLocationRealname(QueryResource.LocationNameOfThing, itemName);
-		if (itemName.startsWith(SemanticConstants.FUNCTION_PREFIX))
-			return getLocationRealname(QueryResource.LocationNameOfFunctionality, itemName);
-		if (itemName.startsWith(SemanticConstants.STATE_PREFIX))
-			return getLocationRealname(QueryResource.LocationNameOfState, itemName);
-
-		String loc = getLocationName(SemanticConstants.THING_PREFIX + itemName);
-		if (loc != null)
-			return loc;
-		loc = getLocationName(SemanticConstants.FUNCTION_PREFIX + itemName);
-		if (loc != null)
-			return loc;
-		loc = getLocationName(SemanticConstants.STATE_PREFIX + itemName);
-		return loc;
-	}
-
+	
 	private String getLocationRealname(String baseQueryString, String stateOrFunctionOrThingName) {
 		String queryAsString = String.format(baseQueryString, stateOrFunctionOrThingName);
 		QueryExecution query = getQueryExecution(queryAsString, false);

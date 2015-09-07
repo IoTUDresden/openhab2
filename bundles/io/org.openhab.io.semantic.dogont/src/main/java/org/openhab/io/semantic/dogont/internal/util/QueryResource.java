@@ -115,4 +115,23 @@ public class QueryResource {
 			+ " ?thing dogont:isIn ?location . "
 			+ " ?location rdfs:label ?realname . "
 			+ "} ";
+	
+	/**
+	 * Gets all State items with their location name, and the type name for state and the thing
+	 */
+	public static final String AllSensors = Prefix
+			+ "SELECT ?instance ?shortName ?typeName ?location ?thingName "
+			+ " WHERE { "
+			+ "  ?class rdfs:subClassOf* dogont:State . "
+			+ "	 ?instance rdf:type ?class . "
+			+ "  bind(strafter(str(?instance),str(instance:)) as ?shortName) . "
+			+	"bind(strafter(str(?class),str(dogont:)) as ?typeName) . "
+			+	"?thing dogont:hasState ?instance . "
+			+	"?thing rdf:type ?thingType . "
+			+	"bind(strafter(str(?thingType),str(dogont:)) as ?thingName) . "
+			+	"optional { "
+			+		"?thing dogont:isIn ?loc . "
+			+		"?loc rdfs:label ?location . "
+			+	"} "
+			+"}";
 }

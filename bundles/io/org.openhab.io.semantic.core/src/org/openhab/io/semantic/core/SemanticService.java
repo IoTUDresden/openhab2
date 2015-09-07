@@ -111,4 +111,15 @@ public interface SemanticService {
 	 * @return
 	 */
 	String getRestUrlForItem(String uid);
+	
+	/**
+	 * Gets all Sensors. 
+	 * @return Vars: ?instance ?shortName ?typeName ?location(optional) ?thingName<br>
+	 * - instance: the instance in the model <br>
+	 * - shortName: the short name of the instance <br> 
+	 * - typeName: the name of the instance type <br>
+	 * - location: the name of the location where the sensor is placed<br>
+	 * - thingName: the name of the type which encapsulates the sensor 
+	 */
+	QueryResult getAllSensors();
 }

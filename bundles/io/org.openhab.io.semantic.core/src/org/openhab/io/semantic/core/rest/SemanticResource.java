@@ -116,6 +116,14 @@ public class SemanticResource implements RESTResource {
 	}
 	
 	@GET
+	@Path("/sensors")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String getAllSensors(){
+		QueryResult qr = semanticService.getAllSensors();
+		return qr.getAsJsonString();
+	}
+	
+	@GET
 	@Path("/testvaluesetting")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String getCurrentValues(){
