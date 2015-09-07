@@ -11,12 +11,6 @@ public class QueryResultTestImpl implements QueryResult {
 	}
 
 	@Override
-	public String getAsString() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public String getAsJsonString() {
 		return result;
 	}
