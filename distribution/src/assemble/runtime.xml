@@ -14,7 +14,9 @@
 	  <excludes>
 		<exclude>**/demo*.*</exclude>
 		<exclude>conf/services/logging.cfg</exclude>
+		<exclude>conf/services/classicui.cfg</exclude>
 	  	<exclude>**/persistence/*.persist</exclude>
+	  	<exclude>userdata/**</exclude>
 	  </excludes>
     </fileSet>
   </fileSets>
@@ -63,20 +65,7 @@
 				</excludes>
       </unpackOptions>      
       <includes>
-      	<include>*:org.openhab.runtime.product:zip:*</include>
-      </includes>
-    </dependencySet>
-    <dependencySet>
-    	<useStrictFiltering>true</useStrictFiltering>
-    	<useProjectArtifact>false</useProjectArtifact>
-		<useTransitiveDependencies>false</useTransitiveDependencies>
-      <outputDirectory>addons</outputDirectory>
-      <unpack>false</unpack>
-      <includes>
-      	<include>org.eclipse.smarthome.ui:org.eclipse.smarthome.ui.paperui:jar:*</include>
-      	<include>org.openhab.ui:org.openhab.ui.paperui:jar:*</include>
-      	<include>org.openhab.binding:*:jar:*</include>
-      	<include>org.eclipse.smarthome.binding:*:jar:*</include>
+      	<include>*:org.openhab.product.runtime:zip:*</include>
       </includes>
     </dependencySet>
   </dependencySets>

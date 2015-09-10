@@ -28,16 +28,21 @@
 				<description>Port of the LAN gateway</description>
 				<default>62910</default>
 			</parameter>
-			<parameter name="refreshInterval" type="integer" required="false">
+			<parameter name="refreshInterval" type="integer" required="false" min="1">
 				<label>Refresh Interval</label>
-				<description>The refresh interval in ms which is used to poll given
+				<description>The refresh interval in seconds which is used to poll given
 					MAX! Cube.
 				</description>
-				<default>30000</default>
+				<default>30</default>
 			</parameter>
 			<parameter name="serialNumber" type="text" required="true">
 				<label>Serial Number</label>
 				<description>The Serial Number identifies one specific device.
+				</description>
+			</parameter>
+			<parameter name="rfAddress" type="text" required="false">
+				<label>RF Address</label>
+				<description>The RF Address used for communication between the devices.
 				</description>
 			</parameter>
 			<parameter name="exclusive" type="boolean" required="false">
@@ -57,16 +62,6 @@
 			</parameter>
 		</config-description>
 
-<!-- 
-		<properties>
-			<property name="RfHexAddress">RF address (HEX)</property>
-			<property name="FirmwareVersion">Firmware version</property>
-			<property name="ConnectionId">Connection ID</property>
-			<property name="CubeTimeState">CubeTimeState</property>
-			<property name="NTPCounter">NTPCounter</property>
-		</properties>
- -->
- 
 	</bridge-type>
 
 	<channel-type id="free_mem" advanced="true">
