@@ -8,8 +8,6 @@ Group CS_Tinkerforge_Lcd "Tinkerforge 20x4 LCD 1" (CustomStuff)
 Group CS_Tinkerforge_2 "Tinkerforge Brick 2" (CustomStuff)
 Group CS_Tinkerforge_Lcd_2 "Tinkerforge 20x4 LCD 2" (CustomStuff)
 
-
-
 /* Homematic */
 /*Group CS_Homematic "Homematic" (CustomStuff)*/
 
@@ -32,13 +30,13 @@ Group CS_Homematic_Window_1 "Fenster 1" (CustomStuff)
 Group CS_Keymatic_1 "Tür 1" (CustomStuff)
 
 /* Fingerscanner */
-/*Group CS_Fingerscan "Fingerprint Reader" (CustomStuff)*/
+Group CS_Fingerscan "Fingerprint Reader" (CustomStuff)
 
 /* Kodi */
 Group CS_Kodi "Kodi" (CustomStuff)
 
 /* NFC */
-/*Group CS_Nfc "NFC Reader" (CustomStuff)*/
+Group CS_Nfc "NFC Reader" (CustomStuff)
 
 Group NU_Button "Simple Switch" (NotUsed)
 

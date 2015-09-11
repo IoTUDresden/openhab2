@@ -1,0 +1,2 @@
+/* NFC Reader*/
+String nfc_uid "Uid" (CS_Nfc) {channel="libnfcwrapper:idscan:firstinstance:idscan-result-channel"}
