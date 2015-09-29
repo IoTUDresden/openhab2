@@ -33,6 +33,8 @@ public class KodiBindingConstants {
      */
     public final static String CHANNEL_PLAY_FILE = "player-play-file";
     
+    public final static String CHANNEL_STOP = "player-stop";
+    
     /**
      * The friendly name of the Kodi instance
      */

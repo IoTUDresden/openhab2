@@ -7,11 +7,19 @@
  */
 package org.openhab.binding.kodi.handler;
 
-import static org.openhab.binding.kodi.KodiBindingConstants.*;
+import static org.openhab.binding.kodi.KodiBindingConstants.CHANNEL_FRIENDLY_NAME;
+import static org.openhab.binding.kodi.KodiBindingConstants.CHANNEL_GUI_SHOW_NOTIFICATION_CHANNEL;
+import static org.openhab.binding.kodi.KodiBindingConstants.CHANNEL_PLAY_FILE;
+import static org.openhab.binding.kodi.KodiBindingConstants.CHANNEL_STOP;
+import static org.openhab.binding.kodi.KodiBindingConstants.CHANNEL_UPTIME;
+import static org.openhab.binding.kodi.KodiBindingConstants.PARAMETER_DISPLAYTIME;
+import static org.openhab.binding.kodi.KodiBindingConstants.PARAMETER_IP;
+import static org.openhab.binding.kodi.KodiBindingConstants.PARAMETER_REFRESHTIME;
 
 import java.math.BigDecimal;
 import java.util.concurrent.TimeUnit;
 
+import org.eclipse.smarthome.core.library.types.OnOffType;
 import org.eclipse.smarthome.core.library.types.StringType;
 import org.eclipse.smarthome.core.thing.ChannelUID;
 import org.eclipse.smarthome.core.thing.Thing;
@@ -50,6 +58,8 @@ public class KodiHandler extends BaseThingHandler {
 			showNotification(command);
 		else if(channelUID.getId().equals(CHANNEL_PLAY_FILE))
 			playFile(command);
+		else if(channelUID.getId().equals(CHANNEL_STOP))
+			playerStop(command);
 	}
 
 	@Override
@@ -80,6 +90,18 @@ public class KodiHandler extends BaseThingHandler {
 		}
 		remote.open(command.toString(), PlayerOpenType.FILE);
 		updateState(CHANNEL_PLAY_FILE, StringType.valueOf(command.toString()));			
+	}
+	
+	private void playerStop(Command command){
+		if (!(command instanceof OnOffType)) {
+			logger.error("The Kodi Item: {} supports only OnOff commands",
+					CHANNEL_PLAY_FILE);
+			return;
+		}
+		if(!command.equals(OnOffType.ON))
+			return;
+		remote.stop(1);
+		resetSwitch();		
 	}
 	
 	private boolean startClient(){
@@ -124,5 +146,14 @@ public class KodiHandler extends BaseThingHandler {
 		KodiInfoLabels infos = remote.getKodiInfos("System.Uptime", "System.FriendlyName");
 		updateState(CHANNEL_FRIENDLY_NAME, StringType.valueOf(infos.getInfo("System.FriendlyName")));
 		updateState(CHANNEL_UPTIME, StringType.valueOf(infos.getInfo("System.Uptime")));
+	}
+	
+	private void resetSwitch(){
+		scheduler.schedule(new Runnable() {			
+			@Override
+			public void run() {
+				updateState(CHANNEL_STOP, OnOffType.OFF);				
+			}
+		}, 500, TimeUnit.MILLISECONDS);
 	}
 }
