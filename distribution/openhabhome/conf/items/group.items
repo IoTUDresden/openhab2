@@ -1,5 +1,5 @@
 Group CustomStuff "Custom Stuff" ["home-group"]
-Group NotUsed "not used" ["home-group"]
+Group NotUsed "hidden" ["home-group"]
 
 /* Tinkerforge */
 Group CS_Tinkerforge "Tinkerforge Brick 1" (CustomStuff)
@@ -38,6 +38,6 @@ Group CS_Kodi "Kodi" (CustomStuff)
 /* NFC */
 Group CS_Nfc "NFC Reader" (CustomStuff)
 
-Group NU_Button "Simple Switch" (NotUsed)
+Group NU_Button "hidden helper" (NotUsed)
 
 Group CS_Hue "Philips Hue" (CustomStuff)

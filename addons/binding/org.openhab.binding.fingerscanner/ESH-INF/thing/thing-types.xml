@@ -10,19 +10,19 @@
 		<description>Identify a finger and receive the person which has scanned their finger</description>
 
 		<channels>
-			<channel id="channel_identify" typeId="channel_identify" />
-			<channel typeId="channel_person" id="channel_person" />
+			<channel id="channel-identify" typeId="channel-identify" />
+			<channel id="channel-person"  typeId="channel-person" />
 		</channels>
 	</thing-type>
 
 	<!-- Sample Channel Type -->
-	<channel-type id="channel_identify">
+	<channel-type id="channel-identify">
 		<item-type>Switch</item-type>
 		<label>Start Identify</label>
 		<description>Starts the identifying of a finger</description>
 	</channel-type>
 
-	<channel-type id="channel_person">
+	<channel-type id="channel-person">
 		<item-type>String</item-type>
 		<label>Identified</label>
 		<description>The last identified Person</description>
