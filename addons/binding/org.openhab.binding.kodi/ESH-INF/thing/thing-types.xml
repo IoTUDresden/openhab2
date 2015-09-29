@@ -43,7 +43,6 @@
 		<item-type>String</item-type>
 		<label>Notification</label>
 		<description>Sends or receive a notification from/to Kodi</description>
-		<state readOnly="true"/>
 	</channel-type>
 	
 	<channel-type id="uptime">
