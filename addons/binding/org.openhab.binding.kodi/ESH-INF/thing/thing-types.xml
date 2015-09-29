@@ -13,6 +13,7 @@
 			<channel id="friendly-name" typeId="friendly-name" />
 			<channel id="uptime" typeId="uptime" />
 			<channel id="gui-show-notification" typeId="gui-show-notification" />
+			<channel id="player-play-file" typeId="player-play-file"/>
 		</channels>
 
 		<!-- KodiControl Params-->
@@ -57,5 +58,11 @@
 		<label>Friendly Name</label>
 		<description>The friendly name from Kodi</description>
 		<state readOnly="true"/>
+	</channel-type>
+	
+	<channel-type id="player-play-file">
+		<item-type>String</item-type>
+		<label>Play File</label>
+		<description>Plays the given file</description>
 	</channel-type>
 </thing:thing-descriptions>

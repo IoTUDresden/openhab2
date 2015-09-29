@@ -19,6 +19,7 @@ import org.eclipse.smarthome.core.thing.ThingStatus;
 import org.eclipse.smarthome.core.thing.ThingStatusDetail;
 import org.eclipse.smarthome.core.thing.binding.BaseThingHandler;
 import org.eclipse.smarthome.core.types.Command;
+import org.openhab.binding.kodi.internal.methods.KodiPlayer.PlayerOpenType;
 import org.openhab.binding.kodi.internal.responses.KodiInfoLabels;
 import org.openhab.binding.kodi.internal.responses.KodiJsonRpcVersion;
 import org.openhab.binding.kodi.internal.util.KodiRemote;
@@ -45,15 +46,10 @@ public class KodiHandler extends BaseThingHandler {
 
 	@Override
 	public void handleCommand(ChannelUID channelUID, Command command) {
-		if (channelUID.getId().equals(CHANNEL_GUI_SHOW_NOTIFICATION_CHANNEL)) {
-			if (!(command instanceof StringType)) {
-				logger.error("The Kodi Item: {} supports only string commands",
-						CHANNEL_GUI_SHOW_NOTIFICATION_CHANNEL);
-				return;
-			}
-			remote.sendNotification("OpenHabMessage", command.toString(), displayTime);
-			updateState(CHANNEL_GUI_SHOW_NOTIFICATION_CHANNEL, StringType.valueOf(command.toString()));
-		}
+		if (channelUID.getId().equals(CHANNEL_GUI_SHOW_NOTIFICATION_CHANNEL))
+			showNotification(command);
+		else if(channelUID.getId().equals(CHANNEL_PLAY_FILE))
+			playFile(command);
 	}
 
 	@Override
@@ -64,6 +60,26 @@ public class KodiHandler extends BaseThingHandler {
 		setDefaultValues();
 		startBackgroundWorker();
 		updateStatus(ThingStatus.ONLINE);
+	}
+	
+	private void showNotification(Command command){
+		if (!(command instanceof StringType)) {
+			logger.error("The Kodi Item: {} supports only string commands",
+					CHANNEL_GUI_SHOW_NOTIFICATION_CHANNEL);
+			return;
+		}
+		remote.sendNotification("OpenHabMessage", command.toString(), displayTime);
+		updateState(CHANNEL_GUI_SHOW_NOTIFICATION_CHANNEL, StringType.valueOf(command.toString()));		
+	}
+	
+	private void playFile(Command command){
+		if (!(command instanceof StringType)) {
+			logger.error("The Kodi Item: {} supports only string commands",
+					CHANNEL_PLAY_FILE);
+			return;
+		}
+		remote.open(command.toString(), PlayerOpenType.FILE);
+		updateState(CHANNEL_PLAY_FILE, StringType.valueOf(command.toString()));			
 	}
 	
 	private boolean startClient(){

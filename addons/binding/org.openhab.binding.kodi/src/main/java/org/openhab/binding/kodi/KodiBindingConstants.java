@@ -29,6 +29,11 @@ public class KodiBindingConstants {
     public final static String CHANNEL_GUI_SHOW_NOTIFICATION_CHANNEL = "gui-show-notification";
     
     /**
+     * Plays the given file
+     */
+    public final static String CHANNEL_PLAY_FILE = "player-play-file";
+    
+    /**
      * The friendly name of the Kodi instance
      */
     public final static String CHANNEL_FRIENDLY_NAME = "friendly-name";
