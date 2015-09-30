@@ -95,12 +95,12 @@ public class KodiHandler extends BaseThingHandler {
 	private void playerStop(Command command){
 		if (!(command instanceof OnOffType)) {
 			logger.error("The Kodi Item: {} supports only OnOff commands",
-					CHANNEL_PLAY_FILE);
+					CHANNEL_STOP);
 			return;
 		}
 		if(!command.equals(OnOffType.ON))
 			return;
-		remote.stop(1);
+		remote.stop(0);
 		resetSwitch();		
 	}
 	
