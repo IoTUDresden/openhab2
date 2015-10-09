@@ -1,6 +1,7 @@
 package org.openhab.io.semantic.dogont.internal;
 
 import java.io.ByteArrayOutputStream;
+import java.util.UUID;
 
 import org.eclipse.smarthome.core.events.EventPublisher;
 import org.eclipse.smarthome.core.items.Item;
@@ -17,6 +18,7 @@ import org.slf4j.LoggerFactory;
 
 import com.hp.hpl.jena.datatypes.RDFDatatype;
 import com.hp.hpl.jena.ontology.Individual;
+import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.ontology.OntModelSpec;
 import com.hp.hpl.jena.query.Query;
@@ -80,6 +82,10 @@ public class SemanticServiceImplBase {
 		FileManager.get().setLocationMapper(locationMapper);	
 		
 		createModels();
+		
+		//for performance messurement
+//		createDummyInstances();
+		
 		//TODO remove not present instances
 //		checkPresenceOfIndividuals();
 		logger.debug("Dogont Semantic Service activated");
@@ -163,6 +169,7 @@ public class SemanticServiceImplBase {
 		openHabInstancesModel.read(SemanticConstants.INSTANCE_FILE, SemanticConstants.TURTLE_STRING);
 	}
 
+	@SuppressWarnings("unused")
 	private void checkPresenceOfIndividuals() {
 		for (Thing thing : thingRegistry.getAll()) {
 			String thingUid = thing.getThingTypeUID().getAsString();
@@ -175,6 +182,15 @@ public class SemanticServiceImplBase {
 				addSimpleThing(thing);
 			}
 		}
+	}
+	
+	@SuppressWarnings("unused")
+	private void createDummyInstances(){
+		//create dummys here
+		OntClass sensor = openHabInstancesModel.getOntClass(DogontSchema.Sensor.getURI());
+		Individual newSensorInstance = openHabInstancesModel
+				.createIndividual(SemanticConstants.NS_INSTANCE + "Sensor_" + UUID.randomUUID().toString(), sensor);		
+//		newSensorInstance.addProperty(Semiwa.uID, "sdfsdf345sdf");		
 	}
 
 	private void addSimpleThing(Thing thing) {
