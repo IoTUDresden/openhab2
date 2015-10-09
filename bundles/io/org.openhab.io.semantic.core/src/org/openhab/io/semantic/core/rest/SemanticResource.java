@@ -91,11 +91,14 @@ public class SemanticResource implements RESTResource {
 	@Path("/post/command")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response postCommand(SemanticPostCommandBean commandBean){
-		//http://stackoverflow.com/questions/8194408/how-to-access-parameters-in-a-restful-post-method/8194612#8194612
+		long start = System.nanoTime();
 		if(commandBean == null || commandBean.statement == null || commandBean.command == null 
 				|| commandBean.statement.isEmpty() || commandBean.command.isEmpty())
 			return Response.status(Status.BAD_REQUEST).build();		
 		QueryResult qr = semanticService.sendCommand(commandBean.statement, commandBean.command, commandBean.withlatest);
+		long end = System.nanoTime();
+		double time = calcTimeDifInMs(start, end);
+		logger.debug("sending semantic command takes {} ms", time);
 		return Response.ok(qr.getAsJsonString(), MediaType.APPLICATION_JSON).build();
 	}
 	
@@ -103,7 +106,11 @@ public class SemanticResource implements RESTResource {
 	@Path("/select")
 	@Produces(MediaType.APPLICATION_JSON)
 	public String select(@QueryParam("statement") String query, @QueryParam("withlatest") boolean withLatest){
+		long start = System.nanoTime();
 		QueryResult result = semanticService.executeSelect(query, withLatest);
+		long end = System.nanoTime();
+		double time = calcTimeDifInMs(start, end);
+		logger.debug("execute semantic select takes {} ms", time);
 		return result == null ? JsonNull.instance.toString() : result.getAsJsonString();
 	}
 	
@@ -111,7 +118,11 @@ public class SemanticResource implements RESTResource {
 	@Path("/ask")
 	@Produces(MediaType.APPLICATION_JSON)
 	public String ask(@QueryParam("statement") String query, @QueryParam("withlatest") boolean withLatest){
+		long start = System.nanoTime();
 		boolean result = semanticService.executeAsk(query, withLatest);
+		long end = System.nanoTime();
+		double time = calcTimeDifInMs(start, end);
+		logger.debug("execute semantic ask takes {} ms", time);
 		return String.format(JSON_BOOLEAN_FORMAT, result);
 	}
 	
@@ -138,5 +149,9 @@ public class SemanticResource implements RESTResource {
 		ConfigHelper helper = new ConfigHelper();
 		helper.addThingsAndItems(thingRegistry, itemRegistry);
 		return helper.getAsString();
+	}
+	
+	private static double calcTimeDifInMs(long start, long end){
+		return (end - start)/1e6;
 	}
 }
