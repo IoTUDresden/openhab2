@@ -197,8 +197,8 @@ public class SemanticServiceImplBase {
 	private void createDummyInstances(){	
 		for (int i = 0; i < 1e1; i++)
 			createDummyTempSensor();
+		logger.debug("Dummy Sensors Created");
 		
-		//TODO Dummy Classes
 		for (int i = 0; i < 1e1; i++)
 			createDummyClass();
 	}
