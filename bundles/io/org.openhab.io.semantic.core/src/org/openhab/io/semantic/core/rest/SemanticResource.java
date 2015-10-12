@@ -1,5 +1,9 @@
 package org.openhab.io.semantic.core.rest;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -99,6 +103,8 @@ public class SemanticResource implements RESTResource {
 		long end = System.nanoTime();
 		double time = calcTimeDifInMs(start, end);
 		logger.debug("sending semantic command takes {} ms", time);
+		
+		writeToFile("commandTime", "Command Time: " + time);
 		return Response.ok(qr.getAsJsonString(), MediaType.APPLICATION_JSON).build();
 	}
 	
@@ -111,6 +117,8 @@ public class SemanticResource implements RESTResource {
 		long end = System.nanoTime();
 		double time = calcTimeDifInMs(start, end);
 		logger.debug("execute semantic select takes {} ms", time);
+		
+		writeToFile("selectTime", "Select Time: " + time);
 		return result == null ? JsonNull.instance.toString() : result.getAsJsonString();
 	}
 	
@@ -123,6 +131,9 @@ public class SemanticResource implements RESTResource {
 		long end = System.nanoTime();
 		double time = calcTimeDifInMs(start, end);
 		logger.debug("execute semantic ask takes {} ms", time);
+		//TODO remove, only for evaluation stuff
+		writeToFile("askTime", "Ask Time: " + time);
+		
 		return String.format(JSON_BOOLEAN_FORMAT, result);
 	}
 	
@@ -149,6 +160,29 @@ public class SemanticResource implements RESTResource {
 		ConfigHelper helper = new ConfigHelper();
 		helper.addThingsAndItems(thingRegistry, itemRegistry);
 		return helper.getAsString();
+	}
+	
+	private static synchronized void writeToFile(String filename, String value){
+		File file = null;
+		FileWriter writer = null;
+		try {
+			file = new File(filename);
+			if(!file.exists())
+				file.createNewFile();
+			writer = new FileWriter(file, true);
+			writer.append("\n");
+			writer.append(value);			
+		} catch(Exception e){
+			e.printStackTrace();
+		}		
+		finally {
+			try {
+				writer.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
 	}
 	
 	private static double calcTimeDifInMs(long start, long end){
