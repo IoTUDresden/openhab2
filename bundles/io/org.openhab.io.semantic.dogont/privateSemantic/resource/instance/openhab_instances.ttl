@@ -24,6 +24,9 @@ instance:Command_fingerscanner_identify_c6faf529_channel_person
   rdf:type dogont:GetCommand ;
   dogont:returnType "Object"^^xsd:string ;
 .
+instance:DisplayCommand_OpenHab
+  rdf:type dogont:DisplayCommand ;
+.
 instance:DownCommand_OpenHab
   rdf:type dogont:DownCommand ;
 .
@@ -63,10 +66,13 @@ instance:Function_HomematicMotionIndicator_1
 instance:Function_IrTemp
   rdf:type dogont:TemperatureMeasurementFunctionality ;
 .
+instance:Function_Keymatic_1
+  rdf:type dogont:OpenCloseFunctionality ;
+.
 instance:Function_LCDBacklight
   rdf:type dogont:OnOffFunctionality ;
-  dogont:hasCommand instance:OffCommand_2 ;
-  dogont:hasCommand instance:OnCommand_1 ;
+  dogont:hasCommand instance:OffCommand_OpenHab ;
+  dogont:hasCommand instance:OnCommand_OpenHab ;
 .
 instance:Function_LCDBacklight_2
   rdf:type dogont:OnOffFunctionality ;
@@ -87,30 +93,49 @@ instance:Function_TinkerforgeAmbientLight_2
     ] ;
 .
 instance:Function_TinkerforgeLcd
-  rdf:type dogont:SingleValuedNotificationFunctionality ;
+  rdf:type dogont:DisplayFunctionality ;
+  dogont:hasCommand instance:DisplayCommand_OpenHab ;
 .
 instance:Function_TinkerforgeLcd_2
-  rdf:type dogont:SingleValuedNotificationFunctionality ;
+  rdf:type dogont:DisplayFunctionality ;
+  dogont:hasCommand instance:DisplayCommand_OpenHab ;
 .
 instance:Function_Weather_Temperature
   rdf:type dogont:TemperatureMeasurementFunctionality ;
 .
 instance:Function_fingerscanner_identify_c6faf529_channel_identify
   rdf:type dogont:IdentificationFunctionality ;
-  dogont:hasCommand instance:Command_fingerscanner_identify_c6faf529_channel_identify ;
-  dogont:hasCommand instance:OffCommand_fingerscanner_identify_c6faf529_channel_identify ;
-  dogont:hasCommand instance:ToggleCommand_fingerscanner_identify_c6faf529_channel_identify ;
+  dogont:hasCommand instance:OffCommand_OpenHab ;
+  dogont:hasCommand instance:OnCommand_OpenHab ;
+  dogont:hasCommand instance:ToggleCommand_OpenHab ;
 .
 instance:Function_fingerscanner_identify_c6faf529_channel_person
   rdf:type dogont:QueryFunctionality ;
   dogont:hasCommand instance:Command_fingerscanner_identify_c6faf529_channel_person ;
 .
+instance:Function_kodi_notification
+  rdf:type dogont:DisplayFunctionality ;
+  dogont:hasCommand instance:DisplayCommand_OpenHab ;
+.
+instance:Function_kodi_play_file
+  rdf:type dogont:SoundFunctionality ;
+  dogont:hasCommand instance:PlayCommand_OpenHab ;
+.
+instance:Function_kodi_stop
+  rdf:type dogont:SoundFunctionality ;
+  dogont:hasCommand instance:StopPlayingCommand_OpenHab ;
+.
 instance:Kitchen_Mueller
   rdf:type dogont:Kitchen ;
   rdfs:label "Kueche"^^xsd:string ;
 .
+instance:LivingRoom_Mueller
+  rdf:type dogont:LivingRoom ;
+  rdfs:label "Wohnzimmer"^^xsd:string ;
+.
 instance:Lobby_Mueller
   rdf:type dogont:Lobby ;
+  rdfs:label "Flur"^^xsd:string ;
 .
 instance:OffCommand_1
   rdf:type dogont:OffCommand ;
@@ -130,12 +155,22 @@ instance:OnCommand_1
 instance:OnCommand_OpenHab
   rdf:type dogont:OnCommand ;
 .
+instance:PlayCommand_OpenHab
+  rdf:type dogont:PlayCommand ;
+.
 instance:State_AmbTemp
   rdf:type dogont:TemperatureState ;
   dogont:hasStateValue [
       rdf:type dogont:TemperatureStateValue ;
       dogont:realStateValue "3"^^xsd:string ;
       dogont:unitOfMeasure <http://purl.oclc.org/NET/muo/ucum/unit/temperature/degree-Celsius> ;
+    ] ;
+.
+instance:State_Current_Location
+  rdf:type dogont:PresenceState ;
+  dogont:hasStateValue [
+      rdf:type dogont:PresentStateValue ;
+      dogont:realStateValue "Kueche"^^xsd:string ;
     ] ;
 .
 instance:State_HomematicDimmer_1
@@ -188,6 +223,13 @@ instance:State_IrTemp
       dogont:unitOfMeasure <http://purl.oclc.org/NET/muo/ucum/unit/temperature/degree-Celsius> ;
     ] ;
 .
+instance:State_Keymatic_1
+  rdf:type dogont:OpenCloseState ;
+  dogont:hasStateValue [
+      rdf:type dogont:OpenStateValue ;
+      dogont:realStateValue "CLOSED"^^xsd:string ;
+    ] ;
+.
 instance:State_LCDBacklight
   rdf:type dogont:OnOffState ;
   dogont:hasStateValue [
@@ -204,6 +246,7 @@ instance:State_TinkerforgeAmbientLight
   rdf:type dogont:LightIntensityState ;
   dogont:hasStateValue [
       rdf:type dogont:BrightnessStateValue ;
+      dogont:realStateValue "10"^^xsd:string ;
       dogont:unitOfMeasure <http://purl.oclc.org/NET/muo/ucum/unit/illuminance/lux> ;
     ] ;
 .
@@ -211,7 +254,7 @@ instance:State_TinkerforgeAmbientLight_2
   rdf:type dogont:LightIntensityState ;
   dogont:hasStateValue [
       rdf:type dogont:BrightnessStateValue ;
-      dogont:realStateValue "0"^^xsd:string ;
+      dogont:realStateValue "300"^^xsd:string ;
       dogont:unitOfMeasure <http://purl.oclc.org/NET/muo/ucum/unit/illuminance/lux> ;
     ] ;
 .
@@ -242,6 +285,20 @@ instance:State_fingerscanner_identify_c6faf529_channel_person
       dogont:realStateValue "nobody"^^xsd:string ;
     ] ;
 .
+instance:State_nfc_uid
+  rdf:type dogont:PresenceState ;
+  dogont:hasStateValue [
+      rdf:type dogont:AuthenticatedStateValue ;
+      dogont:realStateValue "nobody"^^xsd:string ;
+    ] ;
+.
+instance:StopPlayingCommand_OpenHab
+  rdf:type dogont:StopPlayingCommand ;
+.
+instance:Thing_Current_Location
+  rdf:type dogont:PresenceSensor ;
+  dogont:hasState instance:State_Current_Location ;
+.
 instance:Thing_HomematicDimmer_1
   rdf:type dogont:DimmerSwitch ;
   dogont:hasFunctionality instance:Function_HomematicDimmer_1 ;
@@ -252,6 +309,7 @@ instance:Thing_HomematicDimmer_2
   rdf:type dogont:DimmerSwitch ;
   dogont:hasFunctionality instance:Function_HomematicDimmer_2 ;
   dogont:hasState instance:State_HomematicDimmer_2 ;
+  dogont:isIn instance:LivingRoom_Mueller ;
 .
 instance:Thing_HomematicGong_1
   rdf:type dogont:Buzzer ;
@@ -259,6 +317,7 @@ instance:Thing_HomematicGong_1
   dogont:hasFunctionality instance:Function_HomematicLightGong_1 ;
   dogont:hasState instance:State_HomematicGong_1 ;
   dogont:hasState instance:State_HomematicLightGong_1 ;
+  dogont:isIn instance:Lobby_Mueller ;
 .
 instance:Thing_HomematicMotionIndicator_1
   rdf:type dogont:MovementSensor ;
@@ -279,11 +338,13 @@ instance:Thing_TinkerforgeAmbientLight
   rdf:type dogont:LightSensor ;
   dogont:hasFunctionality instance:Function_TinkerforgeAmbientLight ;
   dogont:hasState instance:State_TinkerforgeAmbientLight ;
+  dogont:isIn instance:Kitchen_Mueller ;
 .
 instance:Thing_TinkerforgeAmbientLight_2
   rdf:type dogont:LightSensor ;
   dogont:hasFunctionality instance:Function_TinkerforgeAmbientLight_2 ;
   dogont:hasState instance:State_TinkerforgeAmbientLight_2 ;
+  dogont:isIn instance:LivingRoom_Mueller ;
 .
 instance:Thing_TinkerforgeLcd
   rdf:type dogont:Communication ;
@@ -291,6 +352,7 @@ instance:Thing_TinkerforgeLcd
   dogont:hasFunctionality instance:Function_TinkerforgeLcd ;
   dogont:hasState instance:State_LCDBacklight ;
   dogont:hasState instance:State_TinkerforgeLcd ;
+  dogont:isIn instance:Lobby_Mueller ;
 .
 instance:Thing_TinkerforgeLcd_2
   rdf:type dogont:Communication ;
@@ -298,6 +360,7 @@ instance:Thing_TinkerforgeLcd_2
   dogont:hasFunctionality instance:Function_TinkerforgeLcd_2 ;
   dogont:hasState instance:State_LCDBacklight_2 ;
   dogont:hasState instance:State_TinkerforgeLcd_2 ;
+  dogont:isIn instance:Kitchen_Mueller ;
 .
 instance:Thing_fingerscanner_identify_c6faf529
   rdf:type dogont:AccessControlSystem ;
@@ -305,10 +368,24 @@ instance:Thing_fingerscanner_identify_c6faf529
   dogont:hasFunctionality instance:Function_fingerscanner_identify_c6faf529_channel_person ;
   dogont:hasState instance:State_fingerscanner_identify_c6faf529_channel_person ;
 .
+instance:Thing_keymatic_1
+  rdf:type dogont:DoorActuator ;
+  dogont:hasFunctionality instance:Function_Keymatic_1 ;
+  dogont:hasState instance:State_Keymatic_1 ;
+  dogont:isIn instance:Lobby_Mueller ;
+.
+instance:Thing_libnfcwrapper_idscan_firstinstance
+  rdf:type dogont:AccessControlSystem ;
+  dogont:hasState instance:State_nfc_uid ;
+  dogont:isIn instance:Lobby_Mueller ;
+.
 instance:Thing_yahooweather_weather_berlin
   rdf:type dogont:SingleTemperatureSensor ;
   dogont:hasFunctionality instance:Function_Weather_Temperature ;
   dogont:hasState instance:State_Weather_Temperature ;
+.
+instance:ToggleCommand_OpenHab
+  rdf:type dogont:ToggleCommand ;
 .
 instance:ToggleCommand_fingerscanner_identify_c6faf529_channel_identify
   rdf:type dogont:ToggleCommand ;
@@ -318,4 +395,11 @@ instance:UpCommand_OpenHab
 .
 instance:homematic_radio_controlled_socket_adapter
   rdf:type owl:Thing ;
+.
+instance:kodi_kodicontrol_firstinstance
+  rdf:type dogont:Tv ;
+  dogont:hasFunctionality instance:Function_kodi_notification ;
+  dogont:hasFunctionality instance:Function_kodi_play_file ;
+  dogont:hasFunctionality instance:Function_kodi_stop ;
+  dogont:isIn instance:LivingRoom_Mueller ;
 .

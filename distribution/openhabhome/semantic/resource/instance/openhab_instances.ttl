@@ -117,6 +117,14 @@ instance:Function_kodi_notification
   rdf:type dogont:DisplayFunctionality ;
   dogont:hasCommand instance:DisplayCommand_OpenHab ;
 .
+instance:Function_kodi_play_file
+  rdf:type dogont:SoundFunctionality ;
+  dogont:hasCommand instance:PlayCommand_OpenHab ;
+.
+instance:Function_kodi_stop
+  rdf:type dogont:SoundFunctionality ;
+  dogont:hasCommand instance:StopPlayingCommand_OpenHab ;
+.
 instance:Kitchen_Mueller
   rdf:type dogont:Kitchen ;
   rdfs:label "Kueche"^^xsd:string ;
@@ -147,6 +155,9 @@ instance:OnCommand_1
 instance:OnCommand_OpenHab
   rdf:type dogont:OnCommand ;
 .
+instance:PlayCommand_OpenHab
+  rdf:type dogont:PlayCommand ;
+.
 instance:State_AmbTemp
   rdf:type dogont:TemperatureState ;
   dogont:hasStateValue [
@@ -159,7 +170,7 @@ instance:State_Current_Location
   rdf:type dogont:PresenceState ;
   dogont:hasStateValue [
       rdf:type dogont:PresentStateValue ;
-      dogont:realStateValue "Wohnzimmer"^^xsd:string ;
+      dogont:realStateValue "Kueche"^^xsd:string ;
     ] ;
 .
 instance:State_HomematicDimmer_1
@@ -235,6 +246,7 @@ instance:State_TinkerforgeAmbientLight
   rdf:type dogont:LightIntensityState ;
   dogont:hasStateValue [
       rdf:type dogont:BrightnessStateValue ;
+      dogont:realStateValue "10"^^xsd:string ;
       dogont:unitOfMeasure <http://purl.oclc.org/NET/muo/ucum/unit/illuminance/lux> ;
     ] ;
 .
@@ -242,7 +254,7 @@ instance:State_TinkerforgeAmbientLight_2
   rdf:type dogont:LightIntensityState ;
   dogont:hasStateValue [
       rdf:type dogont:BrightnessStateValue ;
-      dogont:realStateValue "0"^^xsd:string ;
+      dogont:realStateValue "300"^^xsd:string ;
       dogont:unitOfMeasure <http://purl.oclc.org/NET/muo/ucum/unit/illuminance/lux> ;
     ] ;
 .
@@ -280,6 +292,9 @@ instance:State_nfc_uid
       dogont:realStateValue "nobody"^^xsd:string ;
     ] ;
 .
+instance:StopPlayingCommand_OpenHab
+  rdf:type dogont:StopPlayingCommand ;
+.
 instance:Thing_Current_Location
   rdf:type dogont:PresenceSensor ;
   dogont:hasState instance:State_Current_Location ;
@@ -294,6 +309,7 @@ instance:Thing_HomematicDimmer_2
   rdf:type dogont:DimmerSwitch ;
   dogont:hasFunctionality instance:Function_HomematicDimmer_2 ;
   dogont:hasState instance:State_HomematicDimmer_2 ;
+  dogont:isIn instance:LivingRoom_Mueller ;
 .
 instance:Thing_HomematicGong_1
   rdf:type dogont:Buzzer ;
@@ -322,11 +338,13 @@ instance:Thing_TinkerforgeAmbientLight
   rdf:type dogont:LightSensor ;
   dogont:hasFunctionality instance:Function_TinkerforgeAmbientLight ;
   dogont:hasState instance:State_TinkerforgeAmbientLight ;
+  dogont:isIn instance:Kitchen_Mueller ;
 .
 instance:Thing_TinkerforgeAmbientLight_2
   rdf:type dogont:LightSensor ;
   dogont:hasFunctionality instance:Function_TinkerforgeAmbientLight_2 ;
   dogont:hasState instance:State_TinkerforgeAmbientLight_2 ;
+  dogont:isIn instance:LivingRoom_Mueller ;
 .
 instance:Thing_TinkerforgeLcd
   rdf:type dogont:Communication ;
@@ -381,5 +399,7 @@ instance:homematic_radio_controlled_socket_adapter
 instance:kodi_kodicontrol_firstinstance
   rdf:type dogont:Tv ;
   dogont:hasFunctionality instance:Function_kodi_notification ;
+  dogont:hasFunctionality instance:Function_kodi_play_file ;
+  dogont:hasFunctionality instance:Function_kodi_stop ;
   dogont:isIn instance:LivingRoom_Mueller ;
 .
