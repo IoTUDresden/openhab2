@@ -84,7 +84,7 @@ public class SemanticServiceImplBase {
 		createModels();
 		
 		//for performance messurement
-//		createDummyInstances();
+		createDummyInstances();
 		
 		//TODO remove not present instances
 //		checkPresenceOfIndividuals();
@@ -184,13 +184,30 @@ public class SemanticServiceImplBase {
 		}
 	}
 	
-	@SuppressWarnings("unused")
 	private void createDummyInstances(){
-		//create dummys here
-		OntClass sensor = openHabInstancesModel.getOntClass(DogontSchema.Sensor.getURI());
+		//create dummys here		
+		for (int i = 0; i < 1e1; i++)
+			createDummyTempSensor();
+		
+		//TODO Dummy Classes
+	}
+	
+	private void createDummyTempSensor(){
+		String sensorUid = UUID.randomUUID().toString();
+		OntClass sensorClass = openHabInstancesModel.getOntClass(DogontSchema.TemperatureSensor.getURI());
 		Individual newSensorInstance = openHabInstancesModel
-				.createIndividual(SemanticConstants.NS_INSTANCE + "Sensor_" + UUID.randomUUID().toString(), sensor);		
-//		newSensorInstance.addProperty(Semiwa.uID, "sdfsdf345sdf");		
+				.createIndividual(SemanticConstants.NS_INSTANCE + "DummySensor_" + sensorUid, sensorClass);	
+		
+		OntClass stateClass = openHabInstancesModel.getOntClass(DogontSchema.TemperatureState.getURI());
+		Individual stateInstance = openHabInstancesModel
+				.createIndividual(SemanticConstants.NS_INSTANCE + "State_DummySensor_" + sensorUid, stateClass);
+		newSensorInstance.addProperty(DogontSchema.hasStateValue, stateInstance);	
+		OntClass stateValueClass = openHabInstancesModel.getOntClass(DogontSchema.TemperatureStateValue.getURI());
+		Individual stateValueInstance= openHabInstancesModel.createIndividual(stateValueClass);
+		stateInstance.addProperty(DogontSchema.hasStateValue, stateValueInstance);
+		
+		//TODO add the realStateValue
+//		stateValueInstance.addProperty(DogontSchema.realStateValue, "0", )
 	}
 
 	private void addSimpleThing(Thing thing) {

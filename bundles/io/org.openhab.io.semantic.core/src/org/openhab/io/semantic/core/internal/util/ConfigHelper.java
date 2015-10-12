@@ -73,6 +73,7 @@ public class ConfigHelper {
 		appendFunctionsOrState(SemanticConstants.STATE_PREFIX, thing);
 	}
 
+	//TODO fix deprecation
 	private void appendFunctionsOrState(String stateOrFunctionPrefix, Thing thing) {
 		Item tmpItem = null;
 		for (Channel channel : thing.getChannels()) {
