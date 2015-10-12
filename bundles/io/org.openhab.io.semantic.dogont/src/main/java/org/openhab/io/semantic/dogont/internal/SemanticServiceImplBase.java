@@ -27,6 +27,7 @@ import com.hp.hpl.jena.query.QueryExecutionFactory;
 import com.hp.hpl.jena.query.QueryFactory;
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
+import com.hp.hpl.jena.rdf.model.Literal;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Resource;
@@ -83,7 +84,7 @@ public class SemanticServiceImplBase {
 		
 		createModels();
 		
-		//for performance messurement
+		//for performance measurement
 		createDummyInstances();
 		
 		//TODO remove not present instances
@@ -142,9 +143,11 @@ public class SemanticServiceImplBase {
 		Resource value = qs.getResource("value");
 		if (state == null || value == null)
 			return;
+		
 		Item item = getItemWithModelStateLocalName(state.getLocalName());
 		if (item == null)
 			return;
+		
 		Statement stmt = value.getProperty(DogontSchema.realStateValue);
 		if (stmt == null)
 			return;
@@ -158,6 +161,12 @@ public class SemanticServiceImplBase {
 			logger.warn("the state '{}' does not have the correct name prefix", localName);
 			return null;
 		}
+		
+		//Hardcoded for performance measurement stuff
+		if(localName.startsWith("State_DummySensor")){
+			return getItem("IrTemp");
+		}		
+		
 		localName = localName.replaceFirst(SemanticConstants.STATE_PREFIX, "");
 		return getItem(localName);
 	}
@@ -184,30 +193,40 @@ public class SemanticServiceImplBase {
 		}
 	}
 	
-	private void createDummyInstances(){
-		//create dummys here		
+	//creates dummy instances for performance tests
+	private void createDummyInstances(){	
 		for (int i = 0; i < 1e1; i++)
 			createDummyTempSensor();
 		
 		//TODO Dummy Classes
+		for (int i = 0; i < 1e1; i++)
+			createDummyClass();
 	}
 	
-	private void createDummyTempSensor(){
+	private void createDummyTempSensor() {
 		String sensorUid = UUID.randomUUID().toString();
 		OntClass sensorClass = openHabInstancesModel.getOntClass(DogontSchema.TemperatureSensor.getURI());
 		Individual newSensorInstance = openHabInstancesModel
-				.createIndividual(SemanticConstants.NS_INSTANCE + "DummySensor_" + sensorUid, sensorClass);	
-		
+				.createIndividual(SemanticConstants.NS_INSTANCE + "DummySensor_" + sensorUid, sensorClass);
+
 		OntClass stateClass = openHabInstancesModel.getOntClass(DogontSchema.TemperatureState.getURI());
 		Individual stateInstance = openHabInstancesModel
 				.createIndividual(SemanticConstants.NS_INSTANCE + "State_DummySensor_" + sensorUid, stateClass);
-		newSensorInstance.addProperty(DogontSchema.hasStateValue, stateInstance);	
-		OntClass stateValueClass = openHabInstancesModel.getOntClass(DogontSchema.TemperatureStateValue.getURI());
-		Individual stateValueInstance= openHabInstancesModel.createIndividual(stateValueClass);
-		stateInstance.addProperty(DogontSchema.hasStateValue, stateValueInstance);
+		newSensorInstance.addProperty(DogontSchema.hasState, stateInstance);
 		
-		//TODO add the realStateValue
-//		stateValueInstance.addProperty(DogontSchema.realStateValue, "0", )
+		OntClass stateValueClass = openHabInstancesModel.getOntClass(DogontSchema.TemperatureStateValue.getURI());
+		Individual stateValueInstance = openHabInstancesModel.createIndividual(stateValueClass);
+		stateInstance.addProperty(DogontSchema.hasStateValue, stateValueInstance);
+
+		Literal literal = openHabInstancesModel.createTypedLiteral("2");
+		stateValueInstance.addProperty(DogontSchema.realStateValue, literal);
+	}
+	
+	private void createDummyClass(){
+		String classUid = UUID.randomUUID().toString();
+		OntClass newClass = openHabInstancesModel.createClass(SemanticConstants.NS_INSTANCE + "DummyClass_" + classUid);
+		OntClass tempClass = openHabInstancesModel.getOntClass(DogontSchema.TemperatureSensor.getURI());		
+		tempClass.addSubClass(newClass);
 	}
 
 	private void addSimpleThing(Thing thing) {
