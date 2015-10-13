@@ -85,7 +85,7 @@ public class SemanticServiceImplBase {
 		createModels();
 		
 		//for performance measurement
-		createDummyInstances();
+//		createDummyInstances();
 		
 		//TODO remove not present instances
 //		checkPresenceOfIndividuals();
@@ -197,7 +197,6 @@ public class SemanticServiceImplBase {
 	private void createDummyInstances(){	
 		for (int i = 0; i < 1e1; i++)
 			createDummyTempSensor();
-		logger.debug("Dummy Sensors Created");
 		
 		for (int i = 0; i < 1e1; i++)
 			createDummyClass();
