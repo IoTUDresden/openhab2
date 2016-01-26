@@ -7,20 +7,16 @@
  */
 package org.openhab.binding.helloworldexample.internal;
 
-import static org.openhab.binding.helloworldexample.HelloWorldExampleBindingConstants.*;
+import static org.openhab.binding.helloworldexample.HelloWorldExampleBindingConstants.THING_TYPE_SAMPLE;
 
 import java.util.Collections;
 import java.util.Set;
 
-import org.openhab.binding.helloworldexample.handler.HelloWorldExampleHandler;
-
-import org.eclipse.smarthome.config.core.Configuration;
-import org.eclipse.smarthome.core.thing.Bridge;
 import org.eclipse.smarthome.core.thing.Thing;
 import org.eclipse.smarthome.core.thing.ThingTypeUID;
-import org.eclipse.smarthome.core.thing.ThingUID;
 import org.eclipse.smarthome.core.thing.binding.BaseThingHandlerFactory;
 import org.eclipse.smarthome.core.thing.binding.ThingHandler;
+import org.openhab.binding.helloworldexample.handler.HelloWorldExampleHandler;
 
 /**
  * The {@link HelloWorldExampleHandlerFactory} is responsible for creating things and thing 

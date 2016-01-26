@@ -7,20 +7,16 @@
  */
 package org.openhab.binding.libnfcwrapper.internal;
 
-import static org.openhab.binding.libnfcwrapper.LibnfcWrapperBindingConstants.*;
+import static org.openhab.binding.libnfcwrapper.LibnfcWrapperBindingConstants.THING_TYPE_IDSCAN;
 
 import java.util.Collections;
 import java.util.Set;
 
-import org.openhab.binding.libnfcwrapper.handler.LibnfcWrapperHandler;
-
-import org.eclipse.smarthome.config.core.Configuration;
-import org.eclipse.smarthome.core.thing.Bridge;
 import org.eclipse.smarthome.core.thing.Thing;
 import org.eclipse.smarthome.core.thing.ThingTypeUID;
-import org.eclipse.smarthome.core.thing.ThingUID;
 import org.eclipse.smarthome.core.thing.binding.BaseThingHandlerFactory;
 import org.eclipse.smarthome.core.thing.binding.ThingHandler;
+import org.openhab.binding.libnfcwrapper.handler.LibnfcWrapperHandler;
 
 /**
  * The {@link LibnfcWrapperHandlerFactory} is responsible for creating things and thing 

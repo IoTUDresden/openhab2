@@ -194,6 +194,7 @@ public class SemanticServiceImplBase {
 	}
 	
 	//creates dummy instances for performance tests
+	@SuppressWarnings("unused")
 	private void createDummyInstances(){	
 		for (int i = 0; i < 1e1; i++)
 			createDummyTempSensor();

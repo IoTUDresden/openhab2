@@ -80,7 +80,6 @@ public class SemanticResource implements RESTResource {
 	@Path("/select/{uid: [a-zA-Z_0-9]*}")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String getSemanticForUid(@PathParam("uid") String uid){
-		//TODO
 		return "recieved uid: " + uid;		
 	}
 	
@@ -104,7 +103,7 @@ public class SemanticResource implements RESTResource {
 		double time = calcTimeDifInMs(start, end);
 		logger.debug("sending semantic command takes {} ms", time);
 		
-		writeToFile("commandTime", String.valueOf(time));
+		//writeToFile("commandTime", String.valueOf(time));
 		return Response.ok(qr.getAsJsonString(), MediaType.APPLICATION_JSON).build();
 	}
 	
@@ -118,7 +117,7 @@ public class SemanticResource implements RESTResource {
 		double time = calcTimeDifInMs(start, end);
 		logger.debug("execute semantic select takes {} ms", time);
 		
-		writeToFile("selectTime", String.valueOf(time));
+		//writeToFile("selectTime", String.valueOf(time));
 		return result == null ? JsonNull.instance.toString() : result.getAsJsonString();
 	}
 	
@@ -132,8 +131,7 @@ public class SemanticResource implements RESTResource {
 		double time = calcTimeDifInMs(start, end);
 		logger.debug("execute semantic ask takes {} ms", time);
 		
-		//TODO remove, only for evaluation stuff
-		writeToFile("askTime", String.valueOf(time));		
+		//writeToFile("askTime", String.valueOf(time));		
 		return String.format(JSON_BOOLEAN_FORMAT, result);
 	}
 	
@@ -162,6 +160,9 @@ public class SemanticResource implements RESTResource {
 		return helper.getAsString();
 	}
 	
+	//writes text to a file
+	//was used for performance measurement
+	@SuppressWarnings("unused")
 	private static synchronized void writeToFile(String filename, String value){
 		File file = null;
 		FileWriter writer = null;

@@ -53,13 +53,11 @@ public class SemanticServiceTestImpl implements SemanticService {
 
 	@Override
 	public void setAllValues() {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public String getRestUrlForItem(String uid) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -75,7 +73,6 @@ public class SemanticServiceTestImpl implements SemanticService {
 
 	@Override
 	public QueryResult getAllSensors() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
