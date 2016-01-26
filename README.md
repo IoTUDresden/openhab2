@@ -1,3 +1,3 @@
 
-OpenHab2 fork.
+OpenHab2-Addons fork.
 
