@@ -13,24 +13,23 @@ import org.slf4j.LoggerFactory;
  *
  */
 public class DogontActivator implements BundleActivator {
-	private static final Logger logger = LoggerFactory.getLogger(DogontActivator.class);
+    private static final Logger logger = LoggerFactory.getLogger(DogontActivator.class);
 
-	private static BundleContext context;	
+    private static BundleContext context;
 
-	static BundleContext getContext() {
-		return context;
-	}
+    static BundleContext getContext() {
+        return context;
+    }
 
-	@Override
-	public void start(BundleContext bundleContext) throws Exception {
-		DogontActivator.context = bundleContext;
+    @Override
+    public void start(BundleContext bundleContext) throws Exception {
+        DogontActivator.context = bundleContext;
         logger.debug("startet dogont bundle");
-	}
+    }
 
-	@Override
-	public void stop(BundleContext bundleContext) throws Exception {
-		DogontActivator.context = null;
-		logger.debug("stopped dogont bundle");
-	}
-
+    @Override
+    public void stop(BundleContext bundleContext) throws Exception {
+        DogontActivator.context = null;
+        logger.debug("stopped dogont bundle");
+    }
 }
