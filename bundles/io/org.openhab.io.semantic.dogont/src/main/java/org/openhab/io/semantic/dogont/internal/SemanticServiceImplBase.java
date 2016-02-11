@@ -32,6 +32,7 @@ import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.Statement;
+import com.hp.hpl.jena.shared.Lock;
 import com.hp.hpl.jena.util.FileManager;
 import com.hp.hpl.jena.util.LocationMapper;
 
@@ -84,7 +85,9 @@ public class SemanticServiceImplBase {
         // TODO automatic creation of resources
         // TODO update state value if state change happens on items (maybe use sparql)
         // TODO make model modifications threadsafe
-        // https://jena.apache.org/documentation/notes/concurrency-howto.html
+        // - https://jena.apache.org/documentation/notes/concurrency-howto.html
+        // - maybe transactions are the better way to go
+        // https://jena.apache.org/documentation/tdb/tdb_transactions.html#multi-threaded-use
 
         createModels();
 
@@ -111,7 +114,12 @@ public class SemanticServiceImplBase {
      */
     public String getInstanceModelAsString() {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        openHabInstancesModel.write(out);
+        openHabInstancesModel.enterCriticalSection(Lock.READ);
+        try {
+            openHabInstancesModel.write(out);
+        } finally {
+            openHabInstancesModel.leaveCriticalSection();
+        }
         return new String(out.toByteArray());
     }
 
@@ -119,6 +127,7 @@ public class SemanticServiceImplBase {
      * Adds the current item states to their specific stateValues in the ont model.
      */
     public void addCurrentItemStatesToModelRealStateValues() {
+        // TODO this as update or insert stmt
         Query query = QueryFactory.create(QueryResource.BuildingThingsContainingStateValue);
         QueryExecution qe = QueryExecutionFactory.create(query, openHabInstancesModel);
         ResultSet results = qe.execSelect();
