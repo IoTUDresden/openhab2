@@ -40,7 +40,6 @@ public class SemanticServiceImplBase extends AbstractItemEventSubscriber {
     protected ThingRegistry thingRegistry;
     protected EventPublisher eventPublisher;
 
-    // protected OntModel openHabInstancesModel;
     protected Dataset openHabDataSet;
 
     private boolean isReady = false;
