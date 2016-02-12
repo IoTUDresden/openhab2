@@ -2,37 +2,29 @@ package org.openhab.io.semantic.dogont.internal;
 
 import java.io.ByteArrayOutputStream;
 
-import org.eclipse.smarthome.core.common.registry.RegistryChangeListener;
 import org.eclipse.smarthome.core.events.EventPublisher;
 import org.eclipse.smarthome.core.items.Item;
 import org.eclipse.smarthome.core.items.ItemNotFoundException;
 import org.eclipse.smarthome.core.items.ItemRegistry;
-import org.eclipse.smarthome.core.thing.Thing;
+import org.eclipse.smarthome.core.items.events.AbstractItemEventSubscriber;
+import org.eclipse.smarthome.core.items.events.ItemStateEvent;
 import org.eclipse.smarthome.core.thing.ThingRegistry;
-import org.openhab.io.semantic.dogont.internal.ontology.DogontSchema;
 import org.openhab.io.semantic.dogont.internal.util.LocationMapperCustom;
 import org.openhab.io.semantic.dogont.internal.util.QueryResource;
 import org.openhab.io.semantic.dogont.internal.util.SemanticConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.hp.hpl.jena.datatypes.RDFDatatype;
-import com.hp.hpl.jena.ontology.Individual;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.ontology.OntModelSpec;
 import com.hp.hpl.jena.query.Dataset;
-import com.hp.hpl.jena.query.Query;
-import com.hp.hpl.jena.query.QueryExecution;
-import com.hp.hpl.jena.query.QueryExecutionFactory;
-import com.hp.hpl.jena.query.QueryFactory;
-import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ReadWrite;
-import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
-import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.tdb.TDBFactory;
+import com.hp.hpl.jena.update.UpdateAction;
+import com.hp.hpl.jena.update.UpdateFactory;
+import com.hp.hpl.jena.update.UpdateRequest;
 import com.hp.hpl.jena.util.FileManager;
 import com.hp.hpl.jena.util.LocationMapper;
 
@@ -41,15 +33,17 @@ import com.hp.hpl.jena.util.LocationMapper;
  *
  * @author André Kühnert
  */
-public class SemanticServiceImplBase {
+public class SemanticServiceImplBase extends AbstractItemEventSubscriber {
     private static final Logger logger = LoggerFactory.getLogger(SemanticServiceImplBase.class);
 
     protected ItemRegistry itemRegistry;
     protected ThingRegistry thingRegistry;
     protected EventPublisher eventPublisher;
 
-    protected OntModel openHabInstancesModel;
+    // protected OntModel openHabInstancesModel;
     protected Dataset openHabDataSet;
+
+    private boolean isReady = false;
 
     public void setItemRegistry(ItemRegistry itemRegistry) {
         this.itemRegistry = itemRegistry;
@@ -75,24 +69,6 @@ public class SemanticServiceImplBase {
         thingRegistry = null;
     }
 
-    // Listener for items
-    private RegistryChangeListener<Item> itemListener = new RegistryChangeListener<Item>() {
-        @Override
-        public void added(Item element) {
-            // TODO add to instance
-        }
-
-        @Override
-        public void removed(Item element) {
-            // TODO remove from instance
-        }
-
-        @Override
-        public void updated(Item oldElement, Item element) {
-            updateStateValue(element);
-        }
-    };
-
     /**
      * Activation method for the semantic service. This method is used by OSGI to activate this service.
      */
@@ -109,13 +85,13 @@ public class SemanticServiceImplBase {
         // https://jena.apache.org/documentation/tdb/tdb_transactions.html#multi-threaded-use
 
         createModels();
-        itemRegistry.addRegistryChangeListener(itemListener);
 
         // for performance measurement
         // createDummyInstances();
 
         // TODO remove not present instances
         // checkPresenceOfIndividuals();
+        isReady = true;
         logger.debug("Dogont Semantic Service activated");
     }
 
@@ -124,8 +100,6 @@ public class SemanticServiceImplBase {
      */
     public void deactivate() {
         logger.debug("Dogont Semantic Service deactivated");
-        itemRegistry.removeRegistryChangeListener(itemListener);
-        openHabInstancesModel.close();
     }
 
     /**
@@ -146,16 +120,12 @@ public class SemanticServiceImplBase {
 
     /**
      * Adds the current item states to their specific stateValues in the ont model.
+     *
+     * @deprecated no need for this. values are up to date. semantic service listen to item state updates
      */
+    @Deprecated
     public void addCurrentItemStatesToModelRealStateValues() {
-        // TODO this as update or insert stmt
-        Query query = QueryFactory.create(QueryResource.BuildingThingsContainingStateValue);
-        QueryExecution qe = QueryExecutionFactory.create(query, openHabInstancesModel);
-        ResultSet results = qe.execSelect();
-        while (results.hasNext()) {
-            addValueToModel(results.next());
-        }
-        qe.close();
+
     }
 
     /**
@@ -173,43 +143,6 @@ public class SemanticServiceImplBase {
         }
     }
 
-    // TODO check if more than one states supported -> check the query
-    private void addValueToModel(QuerySolution qs) {
-        Resource state = qs.getResource("state");
-        Resource value = qs.getResource("value");
-        if (state == null || value == null) {
-            return;
-        }
-
-        Item item = getItemWithModelStateLocalName(state.getLocalName());
-        if (item == null) {
-            return;
-        }
-
-        Statement stmt = value.getProperty(DogontSchema.realStateValue);
-        if (stmt == null) {
-            return;
-        }
-        RDFDatatype datatype = stmt.getLiteral().getDatatype();
-        value.removeAll(DogontSchema.realStateValue);
-        value.addProperty(DogontSchema.realStateValue, item.getState().toString(), datatype);
-    }
-
-    private Item getItemWithModelStateLocalName(String localName) {
-        if (!localName.startsWith(SemanticConstants.STATE_PREFIX)) {
-            logger.warn("the state '{}' does not have the correct name prefix", localName);
-            return null;
-        }
-
-        // Hardcoded for performance measurement stuff
-        if (localName.startsWith("State_DummySensor")) {
-            return getItem("IrTemp");
-        }
-
-        localName = localName.replaceFirst(SemanticConstants.STATE_PREFIX, "");
-        return getItem(localName);
-    }
-
     private void createModels() {
         openHabDataSet = TDBFactory.createDataset(SemanticConstants.TDB_PATH_BASE);
 
@@ -218,10 +151,11 @@ public class SemanticServiceImplBase {
             try {
                 Model modelInstances = ModelFactory.createDefaultModel();
                 OntModelSpec spec = new OntModelSpec(OntModelSpec.OWL_MEM);
-                openHabInstancesModel = ModelFactory.createOntologyModel(spec, modelInstances);
+                OntModel openHabInstancesModel = ModelFactory.createOntologyModel(spec, modelInstances);
                 openHabInstancesModel.read(SemanticConstants.INSTANCE_FILE, SemanticConstants.TURTLE_STRING);
                 openHabDataSet.addNamedModel(SemanticConstants.MODEL_NAME, openHabInstancesModel);
                 openHabDataSet.commit();
+                openHabInstancesModel.close();
             } finally {
                 openHabDataSet.end();
             }
@@ -230,27 +164,31 @@ public class SemanticServiceImplBase {
         }
     }
 
-    @SuppressWarnings("unused")
-    private void checkPresenceOfIndividuals() {
-        for (Thing thing : thingRegistry.getAll()) {
-            String thingUid = thing.getThingTypeUID().getAsString();
-            Individual individual = openHabInstancesModel
-                    .getIndividual(SemanticConstants.NS_AND_THING_PREFIX + thingUid);
-            if (individual == null) {
-                logger.warn("An instance of the thing with uid '{}' was not found in the semantic instance model.",
-                        thingUid);
-                addSimpleThing(thing);
-            }
+    @Override
+    protected void receiveUpdate(ItemStateEvent updateEvent) {
+        if (!isReady) {
+            return;
+        }
+        String updateString = String.format(QueryResource.UpdateStateValue, updateEvent.getItemState().toString(),
+                updateEvent.getItemName());
+        UpdateRequest update = UpdateFactory.create(updateString);
+        openHabDataSet.begin(ReadWrite.WRITE);
+        try {
+            UpdateAction.execute(update, getOpenHabNamedModel());
+            openHabDataSet.commit();
+        } finally {
+            openHabDataSet.end();
         }
     }
 
-    private void updateStateValue(Item item) {
-        // TODO update stmt
-    }
-
-    private void addSimpleThing(Thing thing) {
-        // TODO generate a simple semantic annotation for items which have no model instance
-        // to complete the semantic model
+    /**
+     * Gets the {@link SemanticConstants#MODEL_NAME} named model from the dataset.
+     * Due to thread safety this should be done within a {@link Dataset#begin(ReadWrite)} transaction.
+     *
+     * @return
+     */
+    protected Model getOpenHabNamedModel() {
+        return openHabDataSet.getNamedModel(SemanticConstants.MODEL_NAME);
     }
 
 }

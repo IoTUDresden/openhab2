@@ -142,5 +142,19 @@ public class QueryResource {
 			+	"} "			
 			+"}";
 	
+	/**
+	 * Update stmt for updating real state values in the sematic model.
+	 * Use String.format new Value, item name (the openhab item name can be used, 
+	 * cause the state prefix is contained in the query)
+	 * 
+	 */
+	public static final String UpdateStateValue = Prefix + "\n"
+	        + "DELETE { ?stateValue dogont:realStateValue ?realStateValue } "
+	        + "INSERT { ?stateValue dogont:realStateValue \"%s\" } "
+	        + "WHERE { "
+	        + "    instance:" + SemanticConstants.STATE_PREFIX + "%s dogont:hasStateValue  ?stateValue . "
+	        + "    ?stateValue dogont:realStateValue ?realStateValue . "
+	        + "}";
+	
 	
 }
