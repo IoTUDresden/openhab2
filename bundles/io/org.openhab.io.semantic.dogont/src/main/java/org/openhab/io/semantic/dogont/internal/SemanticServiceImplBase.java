@@ -1,8 +1,8 @@
 package org.openhab.io.semantic.dogont.internal;
 
 import java.io.ByteArrayOutputStream;
-import java.util.UUID;
 
+import org.eclipse.smarthome.core.common.registry.RegistryChangeListener;
 import org.eclipse.smarthome.core.events.EventPublisher;
 import org.eclipse.smarthome.core.items.Item;
 import org.eclipse.smarthome.core.items.ItemNotFoundException;
@@ -18,21 +18,21 @@ import org.slf4j.LoggerFactory;
 
 import com.hp.hpl.jena.datatypes.RDFDatatype;
 import com.hp.hpl.jena.ontology.Individual;
-import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.ontology.OntModelSpec;
+import com.hp.hpl.jena.query.Dataset;
 import com.hp.hpl.jena.query.Query;
 import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.query.QueryExecutionFactory;
 import com.hp.hpl.jena.query.QueryFactory;
 import com.hp.hpl.jena.query.QuerySolution;
+import com.hp.hpl.jena.query.ReadWrite;
 import com.hp.hpl.jena.query.ResultSet;
-import com.hp.hpl.jena.rdf.model.Literal;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.Statement;
-import com.hp.hpl.jena.shared.Lock;
+import com.hp.hpl.jena.tdb.TDBFactory;
 import com.hp.hpl.jena.util.FileManager;
 import com.hp.hpl.jena.util.LocationMapper;
 
@@ -49,6 +49,7 @@ public class SemanticServiceImplBase {
     protected EventPublisher eventPublisher;
 
     protected OntModel openHabInstancesModel;
+    protected Dataset openHabDataSet;
 
     public void setItemRegistry(ItemRegistry itemRegistry) {
         this.itemRegistry = itemRegistry;
@@ -74,6 +75,24 @@ public class SemanticServiceImplBase {
         thingRegistry = null;
     }
 
+    // Listener for items
+    private RegistryChangeListener<Item> itemListener = new RegistryChangeListener<Item>() {
+        @Override
+        public void added(Item element) {
+            // TODO add to instance
+        }
+
+        @Override
+        public void removed(Item element) {
+            // TODO remove from instance
+        }
+
+        @Override
+        public void updated(Item oldElement, Item element) {
+            updateStateValue(element);
+        }
+    };
+
     /**
      * Activation method for the semantic service. This method is used by OSGI to activate this service.
      */
@@ -90,6 +109,7 @@ public class SemanticServiceImplBase {
         // https://jena.apache.org/documentation/tdb/tdb_transactions.html#multi-threaded-use
 
         createModels();
+        itemRegistry.addRegistryChangeListener(itemListener);
 
         // for performance measurement
         // createDummyInstances();
@@ -104,6 +124,7 @@ public class SemanticServiceImplBase {
      */
     public void deactivate() {
         logger.debug("Dogont Semantic Service deactivated");
+        itemRegistry.removeRegistryChangeListener(itemListener);
         openHabInstancesModel.close();
     }
 
@@ -114,11 +135,11 @@ public class SemanticServiceImplBase {
      */
     public String getInstanceModelAsString() {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        openHabInstancesModel.enterCriticalSection(Lock.READ);
+        openHabDataSet.begin(ReadWrite.READ);
         try {
-            openHabInstancesModel.write(out);
+            openHabDataSet.getNamedModel(SemanticConstants.MODEL_NAME).write(out);
         } finally {
-            openHabInstancesModel.leaveCriticalSection();
+            openHabDataSet.end();
         }
         return new String(out.toByteArray());
     }
@@ -190,10 +211,23 @@ public class SemanticServiceImplBase {
     }
 
     private void createModels() {
-        Model modelInstances = ModelFactory.createDefaultModel();
-        OntModelSpec spec = new OntModelSpec(OntModelSpec.OWL_MEM);
-        openHabInstancesModel = ModelFactory.createOntologyModel(spec, modelInstances);
-        openHabInstancesModel.read(SemanticConstants.INSTANCE_FILE, SemanticConstants.TURTLE_STRING);
+        openHabDataSet = TDBFactory.createDataset(SemanticConstants.TDB_PATH_BASE);
+
+        openHabDataSet.begin(ReadWrite.WRITE);
+        if (!openHabDataSet.containsNamedModel(SemanticConstants.MODEL_NAME)) {
+            try {
+                Model modelInstances = ModelFactory.createDefaultModel();
+                OntModelSpec spec = new OntModelSpec(OntModelSpec.OWL_MEM);
+                openHabInstancesModel = ModelFactory.createOntologyModel(spec, modelInstances);
+                openHabInstancesModel.read(SemanticConstants.INSTANCE_FILE, SemanticConstants.TURTLE_STRING);
+                openHabDataSet.addNamedModel(SemanticConstants.MODEL_NAME, openHabInstancesModel);
+                openHabDataSet.commit();
+            } finally {
+                openHabDataSet.end();
+            }
+        } else {
+            openHabDataSet.abort();
+        }
     }
 
     @SuppressWarnings("unused")
@@ -210,42 +244,8 @@ public class SemanticServiceImplBase {
         }
     }
 
-    // creates dummy instances for performance tests
-    @SuppressWarnings("unused")
-    private void createDummyInstances() {
-        for (int i = 0; i < 1e1; i++) {
-            createDummyTempSensor();
-        }
-
-        for (int i = 0; i < 1e1; i++) {
-            createDummyClass();
-        }
-    }
-
-    private void createDummyTempSensor() {
-        String sensorUid = UUID.randomUUID().toString();
-        OntClass sensorClass = openHabInstancesModel.getOntClass(DogontSchema.TemperatureSensor.getURI());
-        Individual newSensorInstance = openHabInstancesModel
-                .createIndividual(SemanticConstants.NS_INSTANCE + "DummySensor_" + sensorUid, sensorClass);
-
-        OntClass stateClass = openHabInstancesModel.getOntClass(DogontSchema.TemperatureState.getURI());
-        Individual stateInstance = openHabInstancesModel
-                .createIndividual(SemanticConstants.NS_INSTANCE + "State_DummySensor_" + sensorUid, stateClass);
-        newSensorInstance.addProperty(DogontSchema.hasState, stateInstance);
-
-        OntClass stateValueClass = openHabInstancesModel.getOntClass(DogontSchema.TemperatureStateValue.getURI());
-        Individual stateValueInstance = openHabInstancesModel.createIndividual(stateValueClass);
-        stateInstance.addProperty(DogontSchema.hasStateValue, stateValueInstance);
-
-        Literal literal = openHabInstancesModel.createTypedLiteral("2");
-        stateValueInstance.addProperty(DogontSchema.realStateValue, literal);
-    }
-
-    private void createDummyClass() {
-        String classUid = UUID.randomUUID().toString();
-        OntClass newClass = openHabInstancesModel.createClass(SemanticConstants.NS_INSTANCE + "DummyClass_" + classUid);
-        OntClass tempClass = openHabInstancesModel.getOntClass(DogontSchema.TemperatureSensor.getURI());
-        tempClass.addSubClass(newClass);
+    private void updateStateValue(Item item) {
+        // TODO update stmt
     }
 
     private void addSimpleThing(Thing thing) {
