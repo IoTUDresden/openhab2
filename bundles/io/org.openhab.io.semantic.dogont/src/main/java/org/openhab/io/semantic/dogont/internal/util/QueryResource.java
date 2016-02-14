@@ -156,5 +156,27 @@ public class QueryResource {
 	        + "    ?stateValue dogont:realStateValue ?realStateValue . "
 	        + "}";
 	
+	/**
+	 * Query to receive a thing which has the specified function or state.
+	 * Use String.format function name, state name. (Prefix for state or function is not needed)
+	 */
+	public static final String GetThingWithFunctionOrState = Prefix + "\n"
+	      + "SELECT ?thing ?func ?state"
+	      + "WHERE { "
+	      + "  { "
+	      + "      ?thing dogont:hasFunctionality instance:"+ SemanticConstants.FUNCTION_PREFIX + "%s . "
+	      + "      ?thing dogont:hasFunctionality ?func . "
+	      + "  } UNION { "
+	      + "     ?thing dogont:hasState instance:" + SemanticConstants.STATE_PREFIX + "%s . "
+	      + "     ?thing dogont:hasState ?state . "
+	      + "  } "
+	      + "} ";
+	
+	/**
+	 * Ask query to check, if the given subject already exists in the model.
+	 * Use String.format subject name.
+	 */
+	public static final String SubjectExistsInModel = Prefix + "\n"
+	        + "ASK { instance:%s ?p ?o }";
 	
 }
