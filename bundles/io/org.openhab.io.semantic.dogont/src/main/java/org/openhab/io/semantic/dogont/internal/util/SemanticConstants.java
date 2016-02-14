@@ -58,6 +58,10 @@ public class SemanticConstants {
      */
     public static final String NS_AND_THING_PREFIX = NS_INSTANCE + THING_PREFIX;
 
+    public static final String NS_AND_STATE_PREFIX = NS_INSTANCE + STATE_PREFIX;
+
+    public static final String NS_AND_FUNCTION_PREFIX = NS_INSTANCE + FUNCTION_PREFIX;
+
     /**
      * path to the instances
      */
