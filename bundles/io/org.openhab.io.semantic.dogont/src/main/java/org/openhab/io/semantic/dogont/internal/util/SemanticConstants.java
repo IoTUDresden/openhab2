@@ -28,10 +28,22 @@ public class SemanticConstants {
      */
     public static final String NS_INSTANCE = "http://openhab-semantic/0.1/instance#";
 
+    public static final String NS_TEMPLATE = "http://openhab-semantic/0.1/template#";
+
     /**
      * Model name for named model in tdb
      */
     public static final String MODEL_NAME = "http://openhab-semantic/0.1/instance";
+
+    /**
+     * Graph name for the instance graph
+     */
+    public static final String GRAPH_NAME_INSTANCE = "http://openhab-semantic/0.1/instance";
+
+    /**
+     * Graph name for the template graph
+     */
+    public static final String GRAPH_NAME_TEMPLATE = "http://openhab-semantic/0.1/template";
 
     /**
      * namepsace for the dogont schema
@@ -58,9 +70,30 @@ public class SemanticConstants {
      */
     public static final String NS_AND_THING_PREFIX = NS_INSTANCE + THING_PREFIX;
 
+    /**
+     * the complete prefix incl. dogont namespace and state prefix.
+     */
     public static final String NS_AND_STATE_PREFIX = NS_INSTANCE + STATE_PREFIX;
 
+    /**
+     * the complete prefix incl. dogont namespace and function prefix for.
+     */
     public static final String NS_AND_FUNCTION_PREFIX = NS_INSTANCE + FUNCTION_PREFIX;
+
+    /**
+     * the complete prefix incl. template namespace and thing prefix for 'BuildingThings'
+     */
+    public static final String NS_AND_THING_PREFIX_TEMPLATE = NS_TEMPLATE + THING_PREFIX;
+
+    /**
+     * the complete prefix incl. template namespace and state prefix.
+     */
+    public static final String NS_AND_STATE_PREFIX_TEMPLATE = NS_TEMPLATE + STATE_PREFIX;
+
+    /**
+     * the complete prefix incl. template namespace and function prefix for.
+     */
+    public static final String NS_AND_FUNCTION_PREFIX_TEMPLATE = NS_TEMPLATE + FUNCTION_PREFIX;
 
     /**
      * path to the instances

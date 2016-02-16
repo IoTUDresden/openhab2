@@ -27,7 +27,6 @@ import com.hp.hpl.jena.query.Query;
 import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.query.QueryExecutionFactory;
 import com.hp.hpl.jena.query.QueryFactory;
-import com.hp.hpl.jena.query.ReadWrite;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.NodeIterator;
@@ -257,7 +256,6 @@ public abstract class SemanticServiceImplBase extends AbstractItemEventSubscribe
      */
     public String getInstanceModelAsString() {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        openHabDataSet.begin(ReadWrite.READ);
         try {
             openHabInstances.enterCriticalSection(Lock.READ);
             openHabInstances.write(out, OUTPUT_FORMAT, SemanticConstants.MODEL_NAME);
