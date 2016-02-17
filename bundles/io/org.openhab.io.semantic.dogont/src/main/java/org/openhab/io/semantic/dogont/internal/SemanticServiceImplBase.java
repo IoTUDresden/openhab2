@@ -10,16 +10,14 @@ import org.eclipse.smarthome.core.items.ItemRegistry;
 import org.eclipse.smarthome.core.items.events.AbstractItemEventSubscriber;
 import org.eclipse.smarthome.core.items.events.ItemStateEvent;
 import org.eclipse.smarthome.core.thing.ThingRegistry;
-import org.openhab.io.semantic.dogont.internal.ontology.DogontSchema;
 import org.openhab.io.semantic.dogont.internal.util.LocationMapperCustom;
+import org.openhab.io.semantic.dogont.internal.util.ModelCopier;
 import org.openhab.io.semantic.dogont.internal.util.QueryResource;
 import org.openhab.io.semantic.dogont.internal.util.SchemaUtil;
 import org.openhab.io.semantic.dogont.internal.util.SemanticConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.hp.hpl.jena.ontology.Individual;
-import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.ontology.OntModelSpec;
 import com.hp.hpl.jena.query.Dataset;
@@ -27,10 +25,9 @@ import com.hp.hpl.jena.query.Query;
 import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.query.QueryExecutionFactory;
 import com.hp.hpl.jena.query.QueryFactory;
+import com.hp.hpl.jena.query.ReadWrite;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
-import com.hp.hpl.jena.rdf.model.NodeIterator;
-import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.shared.Lock;
 import com.hp.hpl.jena.tdb.TDB;
 import com.hp.hpl.jena.tdb.TDBFactory;
@@ -48,7 +45,6 @@ import com.hp.hpl.jena.util.LocationMapper;
 public abstract class SemanticServiceImplBase extends AbstractItemEventSubscriber {
     private static final Logger logger = LoggerFactory.getLogger(SemanticServiceImplBase.class);
     private static final String OUTPUT_FORMAT = "RDF/XML-ABBREV";
-    private static final String ITEM_NAME_DELIMITER = "_";
 
     protected ItemRegistry itemRegistry;
     protected ThingRegistry thingRegistry;
@@ -58,7 +54,8 @@ public abstract class SemanticServiceImplBase extends AbstractItemEventSubscribe
 
     private Dataset openHabDataSet;
     private OntModel openHabTemplates;
-    private boolean isReady = false;
+
+    private ModelCopier modelCopier;
 
     public void setItemRegistry(ItemRegistry itemRegistry) {
         this.itemRegistry = itemRegistry;
@@ -108,124 +105,20 @@ public abstract class SemanticServiceImplBase extends AbstractItemEventSubscribe
                 return;
             }
 
-            if (itemExistsInSemanticModel(element)) {
-                return;
+            try {
+                openHabDataSet.begin(ReadWrite.WRITE);
+                modelCopier.copyStateAndFunction(element);
+            } finally {
+                openHabDataSet.end();
             }
-
-            String itemId = getLastDelimiter(element.getName());
-            String itemNameWithoutId = removeLastDelimiter(element.getName());
-            String thingName = removeLastDelimiter(itemNameWithoutId);
-            String newThingName = thingName.concat(ITEM_NAME_DELIMITER).concat(itemId);
-
-            Individual thingToCopy = getExistingIndividual(SemanticConstants.NS_AND_THING_PREFIX, thingName,
-                    openHabTemplates);
-            Individual thingInstance = getExistingIndividual(SemanticConstants.NS_AND_THING_PREFIX, newThingName,
-                    openHabInstances);
-
-            if (thingToCopy == null && thingInstance == null) {
-                logger.error("cant add item with name '{}' cause no semantic template was found", element.getName());
-                return;
-            }
-
-            if (thingInstance == null && thingToCopy != null) {
-                thingInstance = copyThingTemplateToInstance(thingToCopy, newThingName);
-            }
-
-            copyStateAndFunction(thingToCopy, thingInstance, itemNameWithoutId, element.getName());
-
             logger.debug("item added");
         }
     };
-
-    private Individual copyThingTemplateToInstance(Individual thingToCopy, String newName) {
-        Individual individual = null;
-        try {
-            openHabInstances.enterCriticalSection(Lock.WRITE);
-            // openHabInstances.begin();
-            OntClass clazz = openHabInstances.getOntClass(thingToCopy.getOntClass().getURI());
-            individual = clazz.createIndividual(SemanticConstants.NS_AND_THING_PREFIX.concat(newName));
-            openHabInstances.commit();
-            TDB.sync(openHabInstances);
-            logger.debug("added thing to semantic: '{}'", newName);
-        } finally {
-            openHabInstances.leaveCriticalSection();
-        }
-        return individual;
-    }
-
-    private void copyStateAndFunction(Individual thingToCopy, Individual thingInstance, String itemNameWithoutId,
-            String itemName) {
-        try {
-            openHabInstances.enterCriticalSection(Lock.WRITE);
-            // openHabInstances.begin();
-            String withState = SemanticConstants.STATE_PREFIX.concat(itemNameWithoutId);
-            String withFunction = SemanticConstants.FUNCTION_PREFIX.concat(itemNameWithoutId);
-            NodeIterator iterator = thingToCopy.listPropertyValues(DogontSchema.hasState);
-            Individual state = null;
-            while (iterator.hasNext()) {
-                RDFNode rdfNode = iterator.next();
-                String localName = rdfNode.asResource().getLocalName();
-                if (localName.equals(withState)) {
-                    String uri = rdfNode.asResource().getURI();
-                    state = openHabTemplates.getIndividual(uri);
-                    break;
-                }
-            }
-
-            // thing has no state
-            if (state == null) {
-                return;
-            }
-
-            OntClass clazz = openHabInstances.getOntClass(state.getOntClass().getURI());
-            Individual stateToCopy = clazz.createIndividual(SemanticConstants.NS_AND_STATE_PREFIX.concat(itemName));
-            thingInstance.addProperty(DogontSchema.hasState, stateToCopy);
-
-            openHabInstances.commit();
-            TDB.sync(openHabInstances);
-        } finally {
-            openHabInstances.leaveCriticalSection();
-        }
-
-    }
-
-    private boolean itemExistsInSemanticModel(Item element) {
-        Individual individual = getExistingIndividual(SemanticConstants.NS_AND_STATE_PREFIX, element.getName(),
-                openHabInstances);
-        if (individual != null) {
-            return true;
-        }
-        individual = getExistingIndividual(SemanticConstants.NS_AND_FUNCTION_PREFIX, element.getName(),
-                openHabInstances);
-        if (individual != null) {
-            return true;
-        }
-        return false;
-    }
-
-    private static String getLastDelimiter(String name) {
-        int lastInd = name.lastIndexOf(ITEM_NAME_DELIMITER);
-        return name.substring(lastInd + 1);
-    }
-
-    private static String removeLastDelimiter(String name) {
-        int lastInd = name.lastIndexOf(ITEM_NAME_DELIMITER);
-        return name.substring(0, lastInd);
-    }
-
-    private static Individual getExistingIndividual(String prefix, String name, OntModel model) {
-        String uri = prefix.concat(name);
-        Individual individual = model.getIndividual(uri);
-        return individual;
-    }
 
     /**
      * Activation method for the semantic service. This method is used by OSGI to activate this service.
      */
     public void activate() {
-        if (isReady) {
-            return;
-        }
         LocationMapperCustom locationMapper = new LocationMapperCustom();
         LocationMapper.setGlobalLocationMapper(locationMapper);
         FileManager.get().setLocationMapper(locationMapper);
@@ -233,9 +126,8 @@ public abstract class SemanticServiceImplBase extends AbstractItemEventSubscribe
         // TODO automatic creation of resources
 
         createModels();
+        modelCopier = new ModelCopier(openHabDataSet);
         itemRegistry.addRegistryChangeListener(itemListener);
-
-        isReady = true;
         logger.debug("Dogont Semantic Service activated");
     }
 
@@ -292,9 +184,6 @@ public abstract class SemanticServiceImplBase extends AbstractItemEventSubscribe
 
     @Override
     protected void receiveUpdate(ItemStateEvent updateEvent) {
-        if (!isReady) {
-            return;
-        }
         String updateString = String.format(QueryResource.UpdateStateValue, updateEvent.getItemState().toString(),
                 updateEvent.getItemName());
         UpdateRequest update = UpdateFactory.create(updateString);

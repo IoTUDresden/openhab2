@@ -34,21 +34,33 @@ public class ModelCopier {
     }
 
     public void copyStateAndFunction(Item element) {
+        String id = getLastDelimiter(element.getName());
+        String templateName = removeLastDelimiter(element.getName());
+        copyState(templateName, id);
+        copyFunction(templateName, id);
     }
 
     /**
      * Copies the the state and all needed stuff from the template to the instance model.
+     *
      * @param element
      */
-    public void copyState(Item element){
-        String id = getLastDelimiter(element.getName());
-        String templateName = removeLastDelimiter(element.getName());
+    public void copyState(String templateName, String id) {
         LOGGER.debug("try to copy state '{}' from template", templateName);
+        executeUpdateAction(getCopyStateQuery(templateName, id));
+    }
 
-        String query = String.format(COPY_STATE, templateName, id, id);
-        UpdateRequest req = UpdateFactory.create(query);
+    public void copyFunction(String templateName, String id) {
+        // TODO
+
+        // LOGGER.debug("try to copy function '{}' from template", templateName);
+        // executeUpdateAction(getCopyFunctionQuery(templateName, id));
+    }
+
+    private void executeUpdateAction(String formatedQuery) {
+        UpdateRequest req = UpdateFactory.create(formatedQuery);
         UpdateAction.execute(req, dataset);
-        //TODO TDB sync or what??
+        // TODO TDB sync or what to do that a loaded model gets the new values??
     }
 
     private static String getLastDelimiter(String name) {
@@ -62,32 +74,45 @@ public class ModelCopier {
     }
 
     /**
-     * Copy the thing and state.
-     * Use String.format Template State name (without namespace and State_ prefix), new thing id, new state id
+     * Gets the copy state query as string to copy the thing and state.
+     *
+     * @param stateName
+     *            state name in template
+     * @param id
+     *            unique id for the item
+     * @return
      */
-    private static final String COPY_STATE = ""
-            +   "PREFIX dogont: <" + DogontSchema.NS +"> "
-            +   "PREFIX rdf: <" + SemanticConstants.NS_RDF_SYNTAX +"> "
-            +   "INSERT { "
-            +   "GRAPH <" + SemanticConstants.GRAPH_NAME_INSTANCE + "> { "
-            +   "   ?newThing dogont:hasState ?newState . "
-            +   "   ?newThing rdf:type ?type . "
-            +   "   ?newState ?sp ?so . "
-            +   "   ?newState rdf:type ?stateType . "
-            +   "   ?so ?p ?o . "
-            + " } "
-            +"} "
-            +"WHERE { "
-            +"  GRAPH <" + SemanticConstants.GRAPH_NAME_TEMPLATE + "> { "
-            +"      ?thing dogont:hasState ?state . "
-            +"      ?thing rdf:type ?type . "
-            +"      ?state ?sp ?so . "
-            +"      ?state rdf:type ?stateType . "
-            +"      ?so ?p ?o . "
-            +"      FILTER( ?state = "+ SemanticConstants.NS_AND_STATE_PREFIX_TEMPLATE + "%s ) "
-            +"      BIND (URI(CONCAT (\"" + SemanticConstants.NS_INSTANCE + "\", STRAFTER (STR(?thing),\"" + SemanticConstants.NS_TEMPLATE + "\"),\"_%s\")) AS ?newThing) "
-            +"      BIND (URI(CONCAT (\"" + SemanticConstants.NS_INSTANCE + "\", STRAFTER (STR(?state),\"" + SemanticConstants.NS_TEMPLATE + "\"),\"_%s\")) AS ?newState) "
-            +"  } "
-            +"} ";
+    private static String getCopyStateQuery(String stateName, String id) {
+        // String builder should be faster than String.format(...)
+        StringBuilder builder = new StringBuilder();
+        builder.append("PREFIX dogont: <" + DogontSchema.NS + "> ");
+        builder.append("PREFIX rdf: <" + SemanticConstants.NS_RDF_SYNTAX + "> ");
+        builder.append("INSERT { GRAPH < " + SemanticConstants.GRAPH_NAME_INSTANCE + "> { ");
+        builder.append("  ?newThing dogont:hasState ?newState . ");
+        builder.append("  ?newThing rdf:type ?type . ");
+        builder.append("  ?newState ?sp ?so . ");
+        builder.append("  ?newState rdf:type ?stateType . ");
+        builder.append("  ?so ?p ?o . ");
+        builder.append("}} ");
+        builder.append("WHERE { GRAPH <" + SemanticConstants.GRAPH_NAME_TEMPLATE + "> { ");
+        builder.append("  ?thing dogont:hasState ?state . ");
+        builder.append("  ?thing rdf:type ?type . ");
+        builder.append("  ?state ?sp ?so . ");
+        builder.append("  ?state rdf:type ?stateType . ");
+        builder.append("  ?so ?p ?o . ");
+        builder.append("  FILTER( ?state = <" + SemanticConstants.NS_AND_STATE_PREFIX_TEMPLATE + stateName + ">) ");
+        builder.append("  BIND (URI(CONCAT (\"" + SemanticConstants.NS_INSTANCE + "\", ");
+        builder.append("    STRAFTER (STR(?thing),\"" + SemanticConstants.NS_TEMPLATE + "\"), \"_" + id
+                + "\")) AS ?newThing) ");
+        builder.append("  BIND (URI(CONCAT (\"" + SemanticConstants.NS_INSTANCE + "\", ");
+        builder.append("    STRAFTER (STR(?state),\"" + SemanticConstants.NS_TEMPLATE + "\"), \"_" + id
+                + "\")) AS ?newState) ");
+        builder.append("}}");
+        return builder.toString();
+    }
+
+    private static String getCopyFunctionQuery(String functionName, String id) {
+        return "";
+    }
 
 }
