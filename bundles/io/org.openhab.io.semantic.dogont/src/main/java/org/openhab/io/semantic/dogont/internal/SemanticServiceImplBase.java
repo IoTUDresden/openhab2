@@ -21,15 +21,9 @@ import org.slf4j.LoggerFactory;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.ontology.OntModelSpec;
 import com.hp.hpl.jena.query.Dataset;
-import com.hp.hpl.jena.query.Query;
-import com.hp.hpl.jena.query.QueryExecution;
-import com.hp.hpl.jena.query.QueryExecutionFactory;
-import com.hp.hpl.jena.query.QueryFactory;
 import com.hp.hpl.jena.query.ReadWrite;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
-import com.hp.hpl.jena.shared.Lock;
-import com.hp.hpl.jena.tdb.TDB;
 import com.hp.hpl.jena.tdb.TDBFactory;
 import com.hp.hpl.jena.update.UpdateAction;
 import com.hp.hpl.jena.update.UpdateFactory;
@@ -49,11 +43,7 @@ public abstract class SemanticServiceImplBase extends AbstractItemEventSubscribe
     protected ItemRegistry itemRegistry;
     protected ThingRegistry thingRegistry;
     protected EventPublisher eventPublisher;
-
-    protected OntModel openHabInstances;
-
-    private Dataset openHabDataSet;
-    private OntModel openHabTemplates;
+    protected Dataset openHabDataSet;
 
     private ModelCopier modelCopier;
 
@@ -108,6 +98,7 @@ public abstract class SemanticServiceImplBase extends AbstractItemEventSubscribe
             try {
                 openHabDataSet.begin(ReadWrite.WRITE);
                 modelCopier.copyStateAndFunction(element);
+                openHabDataSet.commit();
             } finally {
                 openHabDataSet.end();
             }
@@ -137,7 +128,6 @@ public abstract class SemanticServiceImplBase extends AbstractItemEventSubscribe
     public void deactivate() {
         logger.debug("Dogont Semantic Service deactivated");
         itemRegistry.removeRegistryChangeListener(itemListener);
-        openHabTemplates.close();
         openHabDataSet.close();
     }
 
@@ -149,10 +139,10 @@ public abstract class SemanticServiceImplBase extends AbstractItemEventSubscribe
     public String getInstanceModelAsString() {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         try {
-            openHabInstances.enterCriticalSection(Lock.READ);
-            openHabInstances.write(out, OUTPUT_FORMAT, SemanticConstants.MODEL_NAME);
+            openHabDataSet.begin(ReadWrite.READ);
+            getInstanceModel().write(out, OUTPUT_FORMAT, SemanticConstants.GRAPH_NAME_INSTANCE);
         } finally {
-            openHabInstances.leaveCriticalSection();
+            openHabDataSet.end();
         }
         return new String(out.toByteArray());
     }
@@ -189,50 +179,35 @@ public abstract class SemanticServiceImplBase extends AbstractItemEventSubscribe
         UpdateRequest update = UpdateFactory.create(updateString);
 
         try {
-            openHabInstances.enterCriticalSection(Lock.WRITE);
-            openHabInstances.begin();
-            UpdateAction.execute(update, openHabInstances);
-            openHabInstances.commit();
-            TDB.sync(openHabInstances);
+            openHabDataSet.begin(ReadWrite.WRITE);
+            UpdateAction.execute(update, getInstanceModel());
+            openHabDataSet.commit();
         } finally {
-            openHabInstances.leaveCriticalSection();
+            openHabDataSet.end();
         }
     }
 
-    protected boolean subjectExistsInModel(String subjectName, Model model) {
-        String queryAsString = String.format(QueryResource.SubjectExistsInModel, subjectName);
-        Query query = QueryFactory.create(queryAsString);
-        QueryExecution qe = QueryExecutionFactory.create(query, openHabInstances);
-        boolean result = qe.execAsk();
-        qe.close();
-        return result;
+    protected Model getInstanceModel() {
+        return openHabDataSet.getNamedModel(SemanticConstants.GRAPH_NAME_INSTANCE);
     }
 
     private void createModels() {
         openHabDataSet = TDBFactory.createDataset(SemanticConstants.TDB_PATH_BASE);
-        Model modelTemplates = ModelFactory.createDefaultModel();
-        OntModelSpec spec = new OntModelSpec(OntModelSpec.OWL_MEM);
-        openHabTemplates = ModelFactory.createOntologyModel(spec, modelTemplates);
-        openHabTemplates.read(SemanticConstants.INSTANCE_FILE, SemanticConstants.TURTLE_STRING);
+        if (!openHabDataSet.containsNamedModel(SemanticConstants.GRAPH_NAME_INSTANCE)) {
+            try {
+                openHabDataSet.begin(ReadWrite.WRITE);
+                Model modelInstances = openHabDataSet.getNamedModel(SemanticConstants.GRAPH_NAME_INSTANCE);
+                Model modelTemplates = openHabDataSet.getNamedModel(SemanticConstants.GRAPH_NAME_TEMPLATE);
+                OntModel openHabInstances = ModelFactory.createOntologyModel(OntModelSpec.OWL_MEM, modelInstances);
+                OntModel openHabTemplates = ModelFactory.createOntologyModel(OntModelSpec.OWL_MEM, modelTemplates);
 
-        boolean hasInstanceModel = openHabDataSet.containsNamedModel(SemanticConstants.MODEL_NAME);
-        Model modelInstances = openHabDataSet.getNamedModel(SemanticConstants.MODEL_NAME);
-        openHabInstances = ModelFactory.createOntologyModel(OntModelSpec.OWL_MEM, modelInstances);
-        if (!hasInstanceModel) {
-            initCompleteNewModel();
-        }
-    }
-
-    private void initCompleteNewModel() {
-        try {
-            openHabInstances.enterCriticalSection(Lock.WRITE);
-            openHabInstances.begin();
-            SchemaUtil.addRequiredNamespacePrefixToInstanceModel(openHabInstances);
-            SchemaUtil.addOntologyInformation(openHabInstances);
-            openHabInstances.commit();
-            TDB.sync(openHabInstances);
-        } finally {
-            openHabInstances.leaveCriticalSection();
+                openHabTemplates.read(SemanticConstants.TEMPLATE_FILE, SemanticConstants.TURTLE_STRING);
+                SchemaUtil.addRequiredNamespacePrefixToInstanceModel(openHabInstances);
+                SchemaUtil.addOntologyInformation(openHabInstances);
+                openHabDataSet.commit();
+            } finally {
+                openHabDataSet.end();
+            }
         }
     }
 }

@@ -24,12 +24,12 @@ import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.query.QueryExecutionFactory;
 import com.hp.hpl.jena.query.QueryFactory;
 import com.hp.hpl.jena.query.QuerySolution;
+import com.hp.hpl.jena.query.ReadWrite;
 import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.query.ResultSetFactory;
 import com.hp.hpl.jena.query.ResultSetRewindable;
 import com.hp.hpl.jena.rdf.model.Literal;
 import com.hp.hpl.jena.rdf.model.RDFNode;
-import com.hp.hpl.jena.shared.Lock;
 
 /**
  * Implementation of the semantic service, with the <a
@@ -51,7 +51,7 @@ public class SemanticServiceImpl extends SemanticServiceImplBase implements Sema
         logger.debug("received select: {}\nwith latest values: {}", queryAsString, withLatestValues);
         QueryResult queryResult = null;
         try {
-            openHabInstances.enterCriticalSection(Lock.READ);
+            openHabDataSet.begin(ReadWrite.READ);
             QueryExecution qe = getQueryExecution(queryAsString, withLatestValues);
             if (qe != null) {
                 ResultSet resultSet = qe.execSelect();
@@ -59,7 +59,7 @@ public class SemanticServiceImpl extends SemanticServiceImplBase implements Sema
                 qe.close();
             }
         } finally {
-            openHabInstances.leaveCriticalSection();
+            openHabDataSet.end();
         }
         return queryResult;
     }
@@ -69,14 +69,14 @@ public class SemanticServiceImpl extends SemanticServiceImplBase implements Sema
         logger.debug("received ask: {}\nwith latest values: {}", askAsString, withLatestValues);
         boolean result = false;
         try {
-            openHabInstances.enterCriticalSection(Lock.READ);
+            openHabDataSet.begin(ReadWrite.READ);
             QueryExecution qe = getQueryExecution(askAsString, withLatestValues);
             result = qe == null ? false : qe.execAsk();
             if (qe != null) {
                 qe.close();
             }
         } finally {
-            openHabInstances.leaveCriticalSection();
+            openHabDataSet.end();
         }
         return result;
     }
@@ -96,7 +96,7 @@ public class SemanticServiceImpl extends SemanticServiceImplBase implements Sema
         logger.debug("trying to send command to items: command: {} query: {}", command, queryAsString);
         QueryResult qr = null;
         try {
-            openHabInstances.enterCriticalSection(Lock.READ);
+            openHabDataSet.begin(ReadWrite.READ);
             QueryExecution qe = getQueryExecution(queryAsString, withLatestValues);
             ResultSet rs = qe.execSelect();
             ResultSetRewindable rsw = ResultSetFactory.copyResults(rs);
@@ -118,7 +118,7 @@ public class SemanticServiceImpl extends SemanticServiceImplBase implements Sema
             }
             qe.close();
         } finally {
-            openHabInstances.leaveCriticalSection();
+            openHabDataSet.end();
         }
         return qr;
     }
@@ -181,13 +181,13 @@ public class SemanticServiceImpl extends SemanticServiceImplBase implements Sema
     public QueryResult getAllSensors() {
         QueryResult result = null;
         try {
-            openHabInstances.enterCriticalSection(Lock.READ);
+            openHabDataSet.begin(ReadWrite.READ);
             QueryExecution queryExecution = getQueryExecution(QueryResource.AllSensors, false);
             ResultSet rs = queryExecution.execSelect();
             result = new QueryResultImpl(rs);
             queryExecution.close();
         } finally {
-            openHabInstances.leaveCriticalSection();
+            openHabDataSet.end();
         }
         return result;
     }
@@ -257,13 +257,13 @@ public class SemanticServiceImpl extends SemanticServiceImplBase implements Sema
             return null;
         }
         Query query = QueryFactory.create(queryAsString);
-        return QueryExecutionFactory.create(query, openHabInstances);
+        return QueryExecutionFactory.create(query, getInstanceModel());
     }
 
     private String getLocationRealname(String baseQueryString, String stateOrFunctionOrThingName) {
         Literal node = null;
         try {
-            openHabInstances.enterCriticalSection(Lock.READ);
+            openHabDataSet.begin(ReadWrite.READ);
             String queryAsString = String.format(baseQueryString, stateOrFunctionOrThingName);
             QueryExecution query = getQueryExecution(queryAsString, false);
             ResultSet resultSet = query.execSelect();
@@ -272,7 +272,7 @@ public class SemanticServiceImpl extends SemanticServiceImplBase implements Sema
             }
             query.close();
         } finally {
-            openHabInstances.leaveCriticalSection();
+            openHabDataSet.end();
         }
         return node == null ? null : node.getString();
     }

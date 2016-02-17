@@ -31,6 +31,7 @@ public class SchemaUtil {
     public static void addOntologyInformation(OntModel model) {
         Ontology ont = model.createOntology("");
         ont.addImport(model.createResource(DogontSchema.NS));
+        ont.addVersionInfo("Created Automatically By OpenHAB SAL");
     }
 
 }

@@ -15,7 +15,6 @@ import com.hp.hpl.jena.update.UpdateRequest;
 /**
  * All functions need to be locked from the caller with WRITE! {@link OntModel#enterCriticalSection(boolean)} -
  * {@link Lock#WRITE}
- * This needs to be refactored if a reasoner is used on the template model.
  */
 public class ModelCopier {
     private static final Logger LOGGER = LoggerFactory.getLogger(ModelCopier.class);
@@ -25,6 +24,8 @@ public class ModelCopier {
 
     /**
      * Templates are READ from the base model and WRITTEN to the target model.
+     * The template/instance graph names are defined in {@link SemanticConstants#GRAPH_NAME_TEMPLATE} and
+     * {@link SemanticConstants#GRAPH_NAME_INSTANCE}.
      *
      * @param base
      * @param target
@@ -47,7 +48,10 @@ public class ModelCopier {
      */
     public void copyState(String templateName, String id) {
         LOGGER.debug("try to copy state '{}' from template", templateName);
-        executeUpdateAction(getCopyStateQuery(templateName, id));
+        String query = getCopyStateQuery(templateName, id);
+        System.out.println("Test Query 123");
+        System.out.println(query);
+        executeUpdateAction(query);
     }
 
     public void copyFunction(String templateName, String id) {
@@ -60,7 +64,6 @@ public class ModelCopier {
     private void executeUpdateAction(String formatedQuery) {
         UpdateRequest req = UpdateFactory.create(formatedQuery);
         UpdateAction.execute(req, dataset);
-        // TODO TDB sync or what to do that a loaded model gets the new values??
     }
 
     private static String getLastDelimiter(String name) {
@@ -87,7 +90,7 @@ public class ModelCopier {
         StringBuilder builder = new StringBuilder();
         builder.append("PREFIX dogont: <" + DogontSchema.NS + "> ");
         builder.append("PREFIX rdf: <" + SemanticConstants.NS_RDF_SYNTAX + "> ");
-        builder.append("INSERT { GRAPH < " + SemanticConstants.GRAPH_NAME_INSTANCE + "> { ");
+        builder.append("INSERT { GRAPH <" + SemanticConstants.GRAPH_NAME_INSTANCE + "> { ");
         builder.append("  ?newThing dogont:hasState ?newState . ");
         builder.append("  ?newThing rdf:type ?type . ");
         builder.append("  ?newState ?sp ?so . ");

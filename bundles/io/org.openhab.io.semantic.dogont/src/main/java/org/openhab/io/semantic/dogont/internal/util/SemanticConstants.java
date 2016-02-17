@@ -17,23 +17,16 @@ public class SemanticConstants {
      * Base path to the tdb folder
      */
     public static final String TDB_PATH_BASE = "semantic/tdb/";
-    //
-    // /**
-    // * Path for the openhab item instances model
-    // */
-    // public static final String TDB_PATH_OPENHAB = "OpenHABInstances";
 
     /**
      * namespace for the openhab dogont instances
      */
     public static final String NS_INSTANCE = "http://openhab-semantic/0.1/instance#";
 
-    public static final String NS_TEMPLATE = "http://openhab-semantic/0.1/template#";
-
     /**
-     * Model name for named model in tdb
+     * namespace for the openhab dogont templates
      */
-    public static final String MODEL_NAME = "http://openhab-semantic/0.1/instance";
+    public static final String NS_TEMPLATE = "http://openhab-semantic/0.1/template#";
 
     /**
      * Graph name for the instance graph
@@ -96,9 +89,9 @@ public class SemanticConstants {
     public static final String NS_AND_FUNCTION_PREFIX_TEMPLATE = NS_TEMPLATE + FUNCTION_PREFIX;
 
     /**
-     * path to the instances
+     * path to the templates
      */
-    public static final String INSTANCE_FILE = "semantic/resource/instance/openhab_instances.ttl";
+    public static final String TEMPLATE_FILE = "semantic/resource/instance/openhab_templates.ttl";
 
     /**
      * base path to the local models
