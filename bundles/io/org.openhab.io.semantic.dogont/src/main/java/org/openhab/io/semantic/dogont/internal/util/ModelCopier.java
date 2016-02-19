@@ -7,6 +7,11 @@ import org.slf4j.LoggerFactory;
 
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.query.Dataset;
+import com.hp.hpl.jena.query.Query;
+import com.hp.hpl.jena.query.QueryExecution;
+import com.hp.hpl.jena.query.QueryExecutionFactory;
+import com.hp.hpl.jena.query.QueryFactory;
+import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.shared.Lock;
 import com.hp.hpl.jena.update.UpdateAction;
 import com.hp.hpl.jena.update.UpdateFactory;
@@ -37,8 +42,14 @@ public class ModelCopier {
     public void copyStateAndFunction(Item element) {
         String id = getLastDelimiter(element.getName());
         String templateName = removeLastDelimiter(element.getName());
-        copyState(templateName, id);
-        copyFunction(templateName, id);
+
+        if (!instanceModelContainsState(element.getName())) {
+            copyState(templateName, id);
+        }
+
+        if (!instanceModelContainsFunction(element.getName())) {
+            copyFunction(templateName, id);
+        }
     }
 
     /**
@@ -48,10 +59,15 @@ public class ModelCopier {
      */
     public void copyState(String templateName, String id) {
         LOGGER.debug("try to copy state '{}' from template", templateName);
-        String query = getCopyStateQuery(templateName, id);
-        System.out.println("Test Query 123");
-        System.out.println(query);
-        executeUpdateAction(query);
+        String thingName = removeLastDelimiter(templateName);
+
+        executeUpdateAction(getCopyStateAllQuery(templateName, id));
+
+        if (instanceModelContainsThing(thingName)) {
+            executeUpdateAction(getAddStateToThingQuery(templateName, thingName, id));
+        } else {
+            executeUpdateAction(getCopyThingAndAddStateQuery(templateName, id));
+        }
     }
 
     public void copyFunction(String templateName, String id) {
@@ -76,33 +92,72 @@ public class ModelCopier {
         return name.substring(0, lastInd);
     }
 
-    /**
-     * Gets the copy state query as string to copy the thing and state.
-     *
-     * @param stateName
-     *            state name in template
-     * @param id
-     *            unique id for the item
-     * @return
-     */
-    private static String getCopyStateQuery(String stateName, String id) {
-        // String builder should be faster than String.format(...)
+    // no state prefix needed
+    private boolean instanceModelContainsState(String stateName) {
+        String query = getContainsQuery(SemanticConstants.STATE_PREFIX, stateName);
+        return executeAskOnInstanceModel(query);
+    }
+
+    private boolean instanceModelContainsFunction(String functionName) {
+        String query = getContainsQuery(SemanticConstants.FUNCTION_PREFIX, functionName);
+        return executeAskOnInstanceModel(query);
+    }
+
+    private boolean instanceModelContainsThing(String thingName) {
+        String query = getContainsQuery(SemanticConstants.THING_PREFIX, thingName);
+        return executeAskOnInstanceModel(query);
+    }
+
+    private boolean executeAskOnInstanceModel(String query) {
+        Model instanceModel = dataset.getNamedModel(SemanticConstants.GRAPH_NAME_INSTANCE);
+        Query q = QueryFactory.create(query);
+        QueryExecution qe = QueryExecutionFactory.create(q, instanceModel);
+        boolean result = qe.execAsk();
+        qe.close();
+        return result;
+    }
+
+    private static String getContainsQuery(String prefix, String resourceName) {
+        StringBuilder builder = new StringBuilder();
+        builder.append("PREFIX dogont: <" + DogontSchema.NS + "> ");
+        builder.append("PREFIX rdf: <" + SemanticConstants.NS_RDF_SYNTAX + "> ");
+        builder.append("PREFIX instance: <" + SemanticConstants.NS_INSTANCE + "> ");
+        builder.append("ASK  {  instance:" + prefix + resourceName + " rdf:type ?type . }");
+        return builder.toString();
+    }
+
+    private static String getCopyStateAllQuery(String stateName, String id) {
         StringBuilder builder = new StringBuilder();
         builder.append("PREFIX dogont: <" + DogontSchema.NS + "> ");
         builder.append("PREFIX rdf: <" + SemanticConstants.NS_RDF_SYNTAX + "> ");
         builder.append("INSERT { GRAPH <" + SemanticConstants.GRAPH_NAME_INSTANCE + "> { ");
-        builder.append("  ?newThing dogont:hasState ?newState . ");
-        builder.append("  ?newThing rdf:type ?type . ");
-        builder.append("  ?newState ?sp ?so . ");
-        builder.append("  ?newState rdf:type ?stateType . ");
-        builder.append("  ?so ?p ?o . ");
+        builder.append("  ?newState rdf:type ?stateType ; ");
+        builder.append("    dogont:hasStateValue [ ");
+        builder.append("      rdf:type ?stateValueType; dogont:realStateValue ?realStateValue; ");
+        builder.append("      dogont:unitOfMeasure ?unitOfMeasure  ] . ");
         builder.append("}} ");
         builder.append("WHERE { GRAPH <" + SemanticConstants.GRAPH_NAME_TEMPLATE + "> { ");
-        builder.append("  ?thing dogont:hasState ?state . ");
-        builder.append("  ?thing rdf:type ?type . ");
-        builder.append("  ?state ?sp ?so . ");
-        builder.append("  ?state rdf:type ?stateType . ");
-        builder.append("  ?so ?p ?o . ");
+        builder.append("  ?state rdf:type ?stateType ; dogont:hasStateValue ?stateValue . ");
+        builder.append("  ?stateValue rdf:type ?stateValueType . ");
+        builder.append("  OPTIONAL {?stateValue dogont:realStateValue ?realStateValue. } ");
+        builder.append("  OPTIONAL {?stateValue dogont:unitOfMeasure ?unitOfMeasure . } ");
+        builder.append("  FILTER( ?state = <" + SemanticConstants.NS_AND_STATE_PREFIX_TEMPLATE + stateName + ">) ");
+        builder.append("  BIND (URI(CONCAT (\"" + SemanticConstants.NS_INSTANCE + "\", ");
+        builder.append("    STRAFTER (STR(?state),\"" + SemanticConstants.NS_TEMPLATE + "\"), \"_" + id
+                + "\")) AS ?newState) ");
+        builder.append("}}");
+        return builder.toString();
+    }
+
+    private static String getCopyThingAndAddStateQuery(String stateName, String id) {
+        StringBuilder builder = new StringBuilder();
+        builder.append("PREFIX dogont: <" + DogontSchema.NS + "> ");
+        builder.append("PREFIX rdf: <" + SemanticConstants.NS_RDF_SYNTAX + "> ");
+        builder.append("INSERT { GRAPH <" + SemanticConstants.GRAPH_NAME_INSTANCE + "> { ");
+        builder.append("  ?newThing rdf:type ?thingType ; dogont:hasState ?newState . ");
+        builder.append("}} ");
+        builder.append("WHERE { GRAPH <" + SemanticConstants.GRAPH_NAME_TEMPLATE + "> { ");
+        builder.append("  ?thing dogont:hasState ?state; rdf:type ?thingType. ");
         builder.append("  FILTER( ?state = <" + SemanticConstants.NS_AND_STATE_PREFIX_TEMPLATE + stateName + ">) ");
         builder.append("  BIND (URI(CONCAT (\"" + SemanticConstants.NS_INSTANCE + "\", ");
         builder.append("    STRAFTER (STR(?thing),\"" + SemanticConstants.NS_TEMPLATE + "\"), \"_" + id
@@ -111,6 +166,18 @@ public class ModelCopier {
         builder.append("    STRAFTER (STR(?state),\"" + SemanticConstants.NS_TEMPLATE + "\"), \"_" + id
                 + "\")) AS ?newState) ");
         builder.append("}}");
+        return builder.toString();
+    }
+
+    private static String getAddStateToThingQuery(String stateName, String thingName, String id) {
+        StringBuilder builder = new StringBuilder();
+        builder.append("PREFIX dogont: <" + DogontSchema.NS + "> ");
+        builder.append("PREFIX instance: <" + SemanticConstants.NS_INSTANCE + "> ");
+        builder.append("PREFIX rdf: <" + SemanticConstants.NS_RDF_SYNTAX + "> ");
+        builder.append("INSERT { GRAPH <" + SemanticConstants.GRAPH_NAME_INSTANCE + "> { ");
+        builder.append("  instance:Thing_" + thingName + "_" + id + " dogont:hasState ");
+        builder.append("    instance:State_" + stateName + "_" + id + " . ");
+        builder.append("}} WHERE {}");
         return builder.toString();
     }
 
