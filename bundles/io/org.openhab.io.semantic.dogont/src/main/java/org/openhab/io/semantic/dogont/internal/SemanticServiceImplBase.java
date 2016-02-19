@@ -91,10 +91,6 @@ public abstract class SemanticServiceImplBase extends AbstractItemEventSubscribe
         public void added(Item element) {
             // runs at every startup for all items
 
-            if (!element.getName().startsWith("yahooweather_weather")) {
-                return;
-            }
-
             try {
                 openHabDataSet.begin(ReadWrite.WRITE);
                 modelCopier.copyStateAndFunction(element);

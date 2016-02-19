@@ -42,6 +42,9 @@ public class ModelCopier {
     public void copyStateAndFunction(Item element) {
         String id = getLastDelimiter(element.getName());
         String templateName = removeLastDelimiter(element.getName());
+        if (id == null || templateName == null) {
+            LOGGER.warn("cant get semantic template name for item '{}'", element.getName());
+        }
 
         if (!instanceModelContainsState(element.getName())) {
             copyState(templateName, id);
@@ -83,12 +86,24 @@ public class ModelCopier {
     }
 
     private static String getLastDelimiter(String name) {
+        if (name == null) {
+            return null;
+        }
         int lastInd = name.lastIndexOf(ITEM_NAME_DELIMITER);
+        if (lastInd < 1) {
+            return null;
+        }
         return name.substring(lastInd + 1);
     }
 
     private static String removeLastDelimiter(String name) {
+        if (name == null) {
+            return null;
+        }
         int lastInd = name.lastIndexOf(ITEM_NAME_DELIMITER);
+        if (lastInd < 1) {
+            return null;
+        }
         return name.substring(0, lastInd);
     }
 
