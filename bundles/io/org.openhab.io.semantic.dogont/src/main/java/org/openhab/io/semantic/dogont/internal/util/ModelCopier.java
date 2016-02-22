@@ -39,6 +39,11 @@ public class ModelCopier {
         this.dataset = dataset;
     }
 
+    /**
+     * Copies the state and function for one given element. The encapsulating thing is also generated.
+     *
+     * @param element
+     */
     public void copyStateAndFunction(Item element) {
         String id = getLastDelimiter(element.getName());
         String templateName = removeLastDelimiter(element.getName());
@@ -58,7 +63,10 @@ public class ModelCopier {
     /**
      * Copies the the state and all needed stuff from the template to the instance model.
      *
-     * @param element
+     * @param templateName
+     *            template name without id and function prefix
+     * @param id
+     *            id e.g. 'berlin'
      */
     public void copyState(String templateName, String id) {
         LOGGER.debug("try to copy state '{}' from template", templateName);
@@ -73,18 +81,33 @@ public class ModelCopier {
         }
     }
 
+    /**
+     * Copies the the functionality and all needed stuff from the template to the instance model.
+     *
+     * @param templateName
+     *            template name without id and function prefix
+     * @param id
+     *            id e.g. 'berlin'
+     */
     public void copyFunction(String templateName, String id) {
-        // TODO
+        LOGGER.debug("try to copy function '{}' from template", templateName);
+        String thingName = removeLastDelimiter(templateName);
 
-        // LOGGER.debug("try to copy function '{}' from template", templateName);
-        // executeUpdateAction(getCopyFunctionQuery(templateName, id));
+        executeUpdateAction(getCopyFunctionQuery(templateName, id));
+
+        if (instanceModelContainsThing(thingName)) {
+            executeUpdateAction(getAddFunctionToThingQuery(templateName, thingName, id));
+        } else {
+            executeUpdateAction(getCopyThingAndAddFunctionQuery(templateName, id));
+        }
+
     }
 
+    /**
+     * Copies all commands, which are used in the template model, to the instance model.
+     */
     public void copyCommands() {
-        String cm = getCopyAllCommandsQuery();
-        System.out.println("Command query");
-        System.out.println(cm);
-        executeUpdateAction(cm);
+        executeUpdateAction(getCopyAllCommandsQuery());
     }
 
     private void executeUpdateAction(String formatedQuery) {
@@ -222,7 +245,59 @@ public class ModelCopier {
     }
 
     private static String getCopyFunctionQuery(String functionName, String id) {
-        return "";
+        StringBuilder builder = new StringBuilder();
+        builder.append("PREFIX dogont: <" + DogontSchema.NS + "> ");
+        builder.append("PREFIX rdf: <" + SemanticConstants.NS_RDF_SYNTAX + "> ");
+        builder.append("INSERT { GRAPH <" + SemanticConstants.GRAPH_NAME_INSTANCE + "> { ");
+        builder.append("  ?newFunc rdf:type ?funcType . ");
+        builder.append("  ?newFunc dogont:hasCommand ?newCommand . ");
+        builder.append("}}");
+        builder.append("WHERE { GRAPH <" + SemanticConstants.GRAPH_NAME_TEMPLATE + "> { ");
+        builder.append("  ?func rdf:type ?funcType .");
+        builder.append("  OPTIONAL { ?func dogont:hasCommand ?command. } ");
+        builder.append(
+                "  FILTER( ?func = <" + SemanticConstants.NS_AND_FUNCTION_PREFIX_TEMPLATE + functionName + ">) ");
+        builder.append("  BIND (URI(CONCAT (\"" + SemanticConstants.NS_INSTANCE + "\", ");
+        builder.append(
+                "    STRAFTER (STR(?func),\"" + SemanticConstants.NS_TEMPLATE + "\"), \"_" + id + "\")) AS ?newFunc) ");
+        builder.append("  BIND (URI(CONCAT (\"" + SemanticConstants.NS_INSTANCE + "\", ");
+        builder.append("    STRAFTER (STR(?command),\"" + SemanticConstants.NS_TEMPLATE + "\"))) AS ?newCommand) ");
+        builder.append("}}");
+        return builder.toString();
+    }
+
+    private static String getAddFunctionToThingQuery(String functionName, String thingName, String id) {
+        StringBuilder builder = new StringBuilder();
+        builder.append("PREFIX dogont: <" + DogontSchema.NS + "> ");
+        builder.append("PREFIX instance: <" + SemanticConstants.NS_INSTANCE + "> ");
+        builder.append("PREFIX rdf: <" + SemanticConstants.NS_RDF_SYNTAX + "> ");
+        builder.append("INSERT { GRAPH <" + SemanticConstants.GRAPH_NAME_INSTANCE + "> { ");
+        builder.append(
+                "  instance:" + SemanticConstants.THING_PREFIX + thingName + "_" + id + " dogont:hasFunctionality ");
+        builder.append("    instance:" + SemanticConstants.FUNCTION_PREFIX + functionName + "_" + id + " . ");
+        builder.append("}} WHERE {}");
+        return builder.toString();
+    }
+
+    private static String getCopyThingAndAddFunctionQuery(String functionName, String id) {
+        StringBuilder builder = new StringBuilder();
+        builder.append("PREFIX dogont: <" + DogontSchema.NS + "> ");
+        builder.append("PREFIX rdf: <" + SemanticConstants.NS_RDF_SYNTAX + "> ");
+        builder.append("INSERT { GRAPH <" + SemanticConstants.GRAPH_NAME_INSTANCE + "> { ");
+        builder.append("  ?newThing rdf:type ?thingType ; dogont:hasFunctionality ?newFunc . ");
+        builder.append("}} ");
+        builder.append("WHERE { GRAPH <" + SemanticConstants.GRAPH_NAME_TEMPLATE + "> { ");
+        builder.append("  ?thing dogont:hasFunctionality ?func; rdf:type ?thingType. ");
+        builder.append(
+                "  FILTER( ?func = <" + SemanticConstants.NS_AND_FUNCTION_PREFIX_TEMPLATE + functionName + ">) ");
+        builder.append("  BIND (URI(CONCAT (\"" + SemanticConstants.NS_INSTANCE + "\", ");
+        builder.append("    STRAFTER (STR(?thing),\"" + SemanticConstants.NS_TEMPLATE + "\"), \"_" + id
+                + "\")) AS ?newThing) ");
+        builder.append("  BIND (URI(CONCAT (\"" + SemanticConstants.NS_INSTANCE + "\", ");
+        builder.append(
+                "    STRAFTER (STR(?func),\"" + SemanticConstants.NS_TEMPLATE + "\"), \"_" + id + "\")) AS ?newFunc) ");
+        builder.append("}}");
+        return builder.toString();
     }
 
 }
