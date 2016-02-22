@@ -77,20 +77,16 @@ public abstract class SemanticServiceImplBase extends AbstractItemEventSubscribe
         @Override
         public void updated(Item oldElement, Item element) {
             // cheack name change
-            logger.debug("item updated");
-
         }
 
         @Override
         public void removed(Item element) {
             // check if under the thing is one item left, else remove also the thing
-            logger.debug("item removed");
         }
 
         @Override
         public void added(Item element) {
             // runs at every startup for all items
-
             try {
                 openHabDataSet.begin(ReadWrite.WRITE);
                 modelCopier.copyStateAndFunction(element);
@@ -110,10 +106,8 @@ public abstract class SemanticServiceImplBase extends AbstractItemEventSubscribe
         LocationMapper.setGlobalLocationMapper(locationMapper);
         FileManager.get().setLocationMapper(locationMapper);
 
-        // TODO automatic creation of resources
-
         createModels();
-        modelCopier = new ModelCopier(openHabDataSet);
+
         itemRegistry.addRegistryChangeListener(itemListener);
         logger.debug("Dogont Semantic Service activated");
     }
@@ -189,6 +183,7 @@ public abstract class SemanticServiceImplBase extends AbstractItemEventSubscribe
 
     private void createModels() {
         openHabDataSet = TDBFactory.createDataset(SemanticConstants.TDB_PATH_BASE);
+        modelCopier = new ModelCopier(openHabDataSet);
         if (!openHabDataSet.containsNamedModel(SemanticConstants.GRAPH_NAME_INSTANCE)) {
             try {
                 openHabDataSet.begin(ReadWrite.WRITE);
@@ -200,6 +195,8 @@ public abstract class SemanticServiceImplBase extends AbstractItemEventSubscribe
                 openHabTemplates.read(SemanticConstants.TEMPLATE_FILE, SemanticConstants.TURTLE_STRING);
                 SchemaUtil.addRequiredNamespacePrefixToInstanceModel(openHabInstances);
                 SchemaUtil.addOntologyInformation(openHabInstances);
+
+                modelCopier.copyCommands();
                 openHabDataSet.commit();
             } finally {
                 openHabDataSet.end();

@@ -80,6 +80,13 @@ public class ModelCopier {
         // executeUpdateAction(getCopyFunctionQuery(templateName, id));
     }
 
+    public void copyCommands() {
+        String cm = getCopyAllCommandsQuery();
+        System.out.println("Command query");
+        System.out.println(cm);
+        executeUpdateAction(cm);
+    }
+
     private void executeUpdateAction(String formatedQuery) {
         UpdateRequest req = UpdateFactory.create(formatedQuery);
         UpdateAction.execute(req, dataset);
@@ -193,6 +200,24 @@ public class ModelCopier {
         builder.append("  instance:Thing_" + thingName + "_" + id + " dogont:hasState ");
         builder.append("    instance:State_" + stateName + "_" + id + " . ");
         builder.append("}} WHERE {}");
+        return builder.toString();
+    }
+
+    private static String getCopyAllCommandsQuery() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("PREFIX dogont: <" + DogontSchema.NS + "> ");
+        builder.append("PREFIX rdf: <" + SemanticConstants.NS_RDF_SYNTAX + "> ");
+        builder.append("INSERT { GRAPH <" + SemanticConstants.GRAPH_NAME_INSTANCE + "> { ");
+        builder.append("  ?newCommand rdf:type ?commandType; ");
+        builder.append("    dogont:realCommandName ?realCommandName . ");
+        builder.append("}}");
+        builder.append("WHERE { GRAPH <" + SemanticConstants.GRAPH_NAME_TEMPLATE + "> { ");
+        builder.append("  ?func dogont:hasCommand ?command .");
+        builder.append("  ?command rdf:type ?commandType .");
+        builder.append("  OPTIONAL {?command dogont:realCommandName ?realCommandName} .");
+        builder.append("  BIND (URI(CONCAT (\"" + SemanticConstants.NS_INSTANCE + "\", ");
+        builder.append("    STRAFTER (STR(?command),\"" + SemanticConstants.NS_TEMPLATE + "\"))) AS ?newCommand) ");
+        builder.append("}}");
         return builder.toString();
     }
 
