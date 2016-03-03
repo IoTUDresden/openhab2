@@ -142,5 +142,41 @@ public class QueryResource {
 			+	"} "			
 			+"}";
 	
+	/**
+	 * Update stmt for updating real state values in the sematic model.
+	 * Use String.format new Value, item name (the openhab item name can be used, 
+	 * cause the state prefix is contained in the query)
+	 * 
+	 */
+	public static final String UpdateStateValue = Prefix + "\n"
+	        + "DELETE { ?stateValue dogont:realStateValue ?realStateValue } "
+	        + "INSERT { ?stateValue dogont:realStateValue \"%s\" } "
+	        + "WHERE { "
+	        + "    instance:" + SemanticConstants.STATE_PREFIX + "%s dogont:hasStateValue  ?stateValue . "
+	        + "    ?stateValue dogont:realStateValue ?realStateValue . "
+	        + "}";
+	
+	/**
+	 * Query to receive a thing which has the specified function or state.
+	 * Use String.format function name, state name. (Prefix for state or function is not needed)
+	 */
+	public static final String GetThingWithFunctionOrState = Prefix + "\n"
+	      + "SELECT ?thing ?func ?state"
+	      + "WHERE { "
+	      + "  { "
+	      + "      ?thing dogont:hasFunctionality instance:"+ SemanticConstants.FUNCTION_PREFIX + "%s . "
+	      + "      ?thing dogont:hasFunctionality ?func . "
+	      + "  } UNION { "
+	      + "     ?thing dogont:hasState instance:" + SemanticConstants.STATE_PREFIX + "%s . "
+	      + "     ?thing dogont:hasState ?state . "
+	      + "  } "
+	      + "} ";
+	
+	/**
+	 * Ask query to check, if the given subject already exists in the model.
+	 * Use String.format subject name.
+	 */
+	public static final String SubjectExistsInModel = Prefix + "\n"
+	        + "ASK { instance:%s ?p ?o }";
 	
 }

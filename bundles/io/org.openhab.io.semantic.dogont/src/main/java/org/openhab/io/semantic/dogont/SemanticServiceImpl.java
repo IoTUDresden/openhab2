@@ -24,6 +24,7 @@ import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.query.QueryExecutionFactory;
 import com.hp.hpl.jena.query.QueryFactory;
 import com.hp.hpl.jena.query.QuerySolution;
+import com.hp.hpl.jena.query.ReadWrite;
 import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.query.ResultSetFactory;
 import com.hp.hpl.jena.query.ResultSetRewindable;
@@ -48,20 +49,36 @@ public class SemanticServiceImpl extends SemanticServiceImplBase implements Sema
     @Override
     public QueryResult executeSelect(String queryAsString, boolean withLatestValues) {
         logger.debug("received select: {}\nwith latest values: {}", queryAsString, withLatestValues);
-        QueryExecution qe = getQueryExecution(queryAsString, withLatestValues);
-        ResultSet resultSet = qe.execSelect();
-        QueryResult queryResult = new QueryResultImpl(resultSet);
-        qe.close();
+        QueryResult queryResult = null;
+        try {
+            openHabDataSet.begin(ReadWrite.READ);
+            QueryExecution qe = getQueryExecution(queryAsString, withLatestValues);
+            if (qe != null) {
+                ResultSet resultSet = qe.execSelect();
+                queryResult = new QueryResultImpl(resultSet);
+                qe.close();
+            }
+        } finally {
+            openHabDataSet.end();
+        }
         return queryResult;
     }
 
     @Override
     public boolean executeAsk(String askAsString, boolean withLatestValues) {
         logger.debug("received ask: {}\nwith latest values: {}", askAsString, withLatestValues);
-        QueryExecution qe = getQueryExecution(askAsString, withLatestValues);
-        if (qe == null)
-            return false;
-        return qe.execAsk();
+        boolean result = false;
+        try {
+            openHabDataSet.begin(ReadWrite.READ);
+            QueryExecution qe = getQueryExecution(askAsString, withLatestValues);
+            result = qe == null ? false : qe.execAsk();
+            if (qe != null) {
+                qe.close();
+            }
+        } finally {
+            openHabDataSet.end();
+        }
+        return result;
     }
 
     @Override
@@ -77,26 +94,32 @@ public class SemanticServiceImpl extends SemanticServiceImplBase implements Sema
     @Override
     public QueryResult sendCommand(String queryAsString, String command, boolean withLatestValues) {
         logger.debug("trying to send command to items: command: {} query: {}", command, queryAsString);
-        QueryExecution qe = getQueryExecution(queryAsString, withLatestValues);
-        ResultSet rs = qe.execSelect();
-        ResultSetRewindable rsw = ResultSetFactory.copyResults(rs);
-        QueryResult qr = new QueryResultImpl(rsw);
-        String varName = null;
-        boolean isFirst = true;
-        while (rsw.hasNext()) {
-            QuerySolution qs = rsw.next();
-            if (isFirst) {
-                varName = getFunctionVarFromQuerySolution(qs);
-                if (varName == null) {
-                    logger.error("No functions found under the varnames. No command is send. Check the query");
-                    qe.close();
-                    return qr;
+        QueryResult qr = null;
+        try {
+            openHabDataSet.begin(ReadWrite.READ);
+            QueryExecution qe = getQueryExecution(queryAsString, withLatestValues);
+            ResultSet rs = qe.execSelect();
+            ResultSetRewindable rsw = ResultSetFactory.copyResults(rs);
+            qr = new QueryResultImpl(rsw);
+            String varName = null;
+            boolean isFirst = true;
+            while (rsw.hasNext()) {
+                QuerySolution qs = rsw.next();
+                if (isFirst) {
+                    varName = getFunctionVarFromQuerySolution(qs);
+                    if (varName == null) {
+                        logger.error("No functions found under the varnames. No command is send. Check the query");
+                        qe.close();
+                        return qr;
+                    }
+                    isFirst = false;
                 }
-                isFirst = false;
+                postCommandToEventBus(qs, varName, command);
             }
-            postCommandToEventBus(qs, varName, command);
+            qe.close();
+        } finally {
+            openHabDataSet.end();
         }
-        qe.close();
         return qr;
     }
 
@@ -113,7 +136,7 @@ public class SemanticServiceImpl extends SemanticServiceImplBase implements Sema
 
     @Override
     public void setAllValues() {
-        addCurrentItemStatesToModelRealStateValues();
+
     }
 
     @Override
@@ -132,29 +155,40 @@ public class SemanticServiceImpl extends SemanticServiceImplBase implements Sema
     @Override
     public String getLocationName(String itemName) {
         logger.debug("get semantic location name for item or thing '{}'", itemName);
-        if (itemName.startsWith(SemanticConstants.THING_PREFIX))
+        if (itemName.startsWith(SemanticConstants.THING_PREFIX)) {
             return getLocationRealname(QueryResource.LocationNameOfThing, itemName);
-        if (itemName.startsWith(SemanticConstants.FUNCTION_PREFIX))
+        }
+        if (itemName.startsWith(SemanticConstants.FUNCTION_PREFIX)) {
             return getLocationRealname(QueryResource.LocationNameOfFunctionality, itemName);
-        if (itemName.startsWith(SemanticConstants.STATE_PREFIX))
+        }
+        if (itemName.startsWith(SemanticConstants.STATE_PREFIX)) {
             return getLocationRealname(QueryResource.LocationNameOfState, itemName);
+        }
 
         String loc = getLocationName(SemanticConstants.THING_PREFIX + itemName);
-        if (loc != null)
+        if (loc != null) {
             return loc;
+        }
         loc = getLocationName(SemanticConstants.FUNCTION_PREFIX + itemName);
-        if (loc != null)
+        if (loc != null) {
             return loc;
+        }
         loc = getLocationName(SemanticConstants.STATE_PREFIX + itemName);
         return loc;
     }
 
     @Override
     public QueryResult getAllSensors() {
-        QueryExecution queryExecution = getQueryExecution(QueryResource.AllSensors, false);
-        ResultSet rs = queryExecution.execSelect();
-        QueryResult result = new QueryResultImpl(rs);
-        queryExecution.close();
+        QueryResult result = null;
+        try {
+            openHabDataSet.begin(ReadWrite.READ);
+            QueryExecution queryExecution = getQueryExecution(QueryResource.AllSensors, false);
+            ResultSet rs = queryExecution.execSelect();
+            result = new QueryResultImpl(rs);
+            queryExecution.close();
+        } finally {
+            openHabDataSet.end();
+        }
         return result;
     }
 
@@ -184,14 +218,18 @@ public class SemanticServiceImpl extends SemanticServiceImplBase implements Sema
     private Command getCommand(String value, Item item) {
         Command command = null;
         if ("toggle".equalsIgnoreCase(value) && (item instanceof SwitchItem || item instanceof RollershutterItem)) {
-            if (OnOffType.ON.equals(item.getStateAs(OnOffType.class)))
+            if (OnOffType.ON.equals(item.getStateAs(OnOffType.class))) {
                 command = OnOffType.OFF;
-            if (OnOffType.OFF.equals(item.getStateAs(OnOffType.class)))
+            }
+            if (OnOffType.OFF.equals(item.getStateAs(OnOffType.class))) {
                 command = OnOffType.ON;
-            if (UpDownType.UP.equals(item.getStateAs(UpDownType.class)))
+            }
+            if (UpDownType.UP.equals(item.getStateAs(UpDownType.class))) {
                 command = UpDownType.DOWN;
-            if (UpDownType.DOWN.equals(item.getStateAs(UpDownType.class)))
+            }
+            if (UpDownType.DOWN.equals(item.getStateAs(UpDownType.class))) {
                 command = UpDownType.UP;
+            }
         } else {
             command = TypeParser.parseCommand(item.getAcceptedCommandTypes(), value);
         }
@@ -202,35 +240,40 @@ public class SemanticServiceImpl extends SemanticServiceImplBase implements Sema
         for (Iterator<String> iterator = querySolution.varNames(); iterator.hasNext();) {
             String varName = iterator.next();
             RDFNode node = querySolution.get(varName);
-            if (!node.isResource())
+            if (!node.isResource()) {
                 continue;
+            }
             String queryTmp = node.asResource().getLocalName();
             queryTmp = String.format(QueryResource.ResourceIsSubClassOfFunctionality, queryTmp);
-            if (executeAsk(queryTmp))
+            if (executeAsk(queryTmp)) {
                 return varName;
+            }
         }
         return null;
     }
 
     private QueryExecution getQueryExecution(String queryAsString, boolean withLatestValues) {
-        if (queryAsString == null || queryAsString.isEmpty())
+        if (queryAsString == null || queryAsString.isEmpty()) {
             return null;
-        if (withLatestValues)
-            addCurrentItemStatesToModelRealStateValues();
+        }
         Query query = QueryFactory.create(queryAsString);
-        return QueryExecutionFactory.create(query, openHabInstancesModel);
+        return QueryExecutionFactory.create(query, getInstanceModel());
     }
 
     private String getLocationRealname(String baseQueryString, String stateOrFunctionOrThingName) {
-        String queryAsString = String.format(baseQueryString, stateOrFunctionOrThingName);
-        QueryExecution query = getQueryExecution(queryAsString, false);
-        ResultSet resultSet = query.execSelect();
-        if (!resultSet.hasNext())
-            return null;
-        Literal node = resultSet.next().getLiteral("realname");
-        query.close();
-        if (node == null)
-            return null;
-        return node.getString();
+        Literal node = null;
+        try {
+            openHabDataSet.begin(ReadWrite.READ);
+            String queryAsString = String.format(baseQueryString, stateOrFunctionOrThingName);
+            QueryExecution query = getQueryExecution(queryAsString, false);
+            ResultSet resultSet = query.execSelect();
+            if (resultSet.hasNext()) {
+                node = resultSet.next().getLiteral("realname");
+            }
+            query.close();
+        } finally {
+            openHabDataSet.end();
+        }
+        return node == null ? null : node.getString();
     }
 }
