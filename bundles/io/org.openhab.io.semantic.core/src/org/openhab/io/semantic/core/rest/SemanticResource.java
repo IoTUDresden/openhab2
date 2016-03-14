@@ -112,7 +112,7 @@ public class SemanticResource implements RESTResource {
         double time = calcTimeDifInMs(start, end);
         logger.debug("sending semantic command takes {} ms", time);
 
-        // writeToFile("commandTime", String.valueOf(time));
+        writeToFile("commandTime", String.valueOf(time));
         return Response.ok(qr.getAsJsonString(), MediaType.APPLICATION_JSON).build();
     }
 
@@ -127,7 +127,7 @@ public class SemanticResource implements RESTResource {
         double time = calcTimeDifInMs(start, end);
         logger.debug("execute semantic select takes {} ms", time);
 
-        // writeToFile("selectTime", String.valueOf(time));
+        writeToFile("selectTime", String.valueOf(time));
         return result == null ? JsonNull.instance.toString() : result.getAsJsonString();
     }
 
@@ -142,7 +142,7 @@ public class SemanticResource implements RESTResource {
         double time = calcTimeDifInMs(start, end);
         logger.debug("execute semantic ask takes {} ms", time);
 
-        // writeToFile("askTime", String.valueOf(time));
+        writeToFile("askTime", String.valueOf(time));
         return String.format(JSON_BOOLEAN_FORMAT, result);
     }
 

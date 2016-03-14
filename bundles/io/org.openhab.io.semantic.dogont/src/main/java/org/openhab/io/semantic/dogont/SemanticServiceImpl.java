@@ -58,6 +58,8 @@ public class SemanticServiceImpl extends SemanticServiceImplBase implements Sema
                 queryResult = new QueryResultImpl(resultSet);
                 qe.close();
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             openHabDataSet.end();
         }
@@ -75,6 +77,8 @@ public class SemanticServiceImpl extends SemanticServiceImplBase implements Sema
             if (qe != null) {
                 qe.close();
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             openHabDataSet.end();
         }
@@ -117,6 +121,8 @@ public class SemanticServiceImpl extends SemanticServiceImplBase implements Sema
                 postCommandToEventBus(qs, varName, command);
             }
             qe.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             openHabDataSet.end();
         }
@@ -186,6 +192,8 @@ public class SemanticServiceImpl extends SemanticServiceImplBase implements Sema
             ResultSet rs = queryExecution.execSelect();
             result = new QueryResultImpl(rs);
             queryExecution.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             openHabDataSet.end();
         }
@@ -271,6 +279,8 @@ public class SemanticServiceImpl extends SemanticServiceImplBase implements Sema
                 node = resultSet.next().getLiteral("realname");
             }
             query.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             openHabDataSet.end();
         }
