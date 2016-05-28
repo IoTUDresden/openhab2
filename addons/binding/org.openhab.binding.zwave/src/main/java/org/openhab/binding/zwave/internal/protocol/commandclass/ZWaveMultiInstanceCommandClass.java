@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014-2015 openHAB UG (haftungsbeschraenkt) and others.
+ * Copyright (c) 2014-2016 by the respective copyright holders.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -26,6 +26,7 @@ import org.openhab.binding.zwave.internal.protocol.ZWaveDeviceClass.Generic;
 import org.openhab.binding.zwave.internal.protocol.ZWaveDeviceClass.Specific;
 import org.openhab.binding.zwave.internal.protocol.ZWaveEndpoint;
 import org.openhab.binding.zwave.internal.protocol.ZWaveNode;
+import org.openhab.binding.zwave.internal.protocol.ZWaveSerialMessageException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -87,6 +88,7 @@ public class ZWaveMultiInstanceCommandClass extends ZWaveCommandClass {
      */
     public ZWaveMultiInstanceCommandClass(ZWaveNode node, ZWaveController controller, ZWaveEndpoint endpoint) {
         super(node, controller, endpoint);
+        versionMax = MAX_SUPPORTED_VERSION;
     }
 
     /**
@@ -96,14 +98,6 @@ public class ZWaveMultiInstanceCommandClass extends ZWaveCommandClass {
     public CommandClass getCommandClass() {
         return CommandClass.MULTI_INSTANCE;
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int getMaxVersion() {
-        return MAX_SUPPORTED_VERSION;
-    };
 
     /**
      * Gets the endpoint object using it's endpoint ID as key.
@@ -129,9 +123,12 @@ public class ZWaveMultiInstanceCommandClass extends ZWaveCommandClass {
 
     /**
      * {@inheritDoc}
+     *
+     * @throws ZWaveSerialMessageException
      */
     @Override
-    public void handleApplicationCommandRequest(SerialMessage serialMessage, int offset, int endpointId) {
+    public void handleApplicationCommandRequest(SerialMessage serialMessage, int offset, int endpointId)
+            throws ZWaveSerialMessageException {
         logger.debug("NODE {}: Received Multi-instance/Multi-channel Request", this.getNode().getNodeId());
         int command = serialMessage.getMessagePayloadByte(offset);
         switch (command) {
@@ -164,8 +161,10 @@ public class ZWaveMultiInstanceCommandClass extends ZWaveCommandClass {
      *
      * @param serialMessage the serial message to process.
      * @param offset the offset at which to start processing.
+     * @throws ZWaveSerialMessageException
      */
-    private void handleMultiInstanceReportResponse(SerialMessage serialMessage, int offset) {
+    private void handleMultiInstanceReportResponse(SerialMessage serialMessage, int offset)
+            throws ZWaveSerialMessageException {
         logger.trace("Process Multi-instance Report");
         int commandClassCode = serialMessage.getMessagePayloadByte(offset);
         int instances = serialMessage.getMessagePayloadByte(offset + 1);
@@ -202,8 +201,10 @@ public class ZWaveMultiInstanceCommandClass extends ZWaveCommandClass {
      *
      * @param serialMessage the serial message to process.
      * @param offset the offset at which to start procesing.
+     * @throws ZWaveSerialMessageException
      */
-    private void handleMultiInstanceEncapResponse(SerialMessage serialMessage, int offset) {
+    private void handleMultiInstanceEncapResponse(SerialMessage serialMessage, int offset)
+            throws ZWaveSerialMessageException {
         logger.trace("Process Multi-instance Encapsulation");
         int instance = serialMessage.getMessagePayloadByte(offset);
         int commandClassCode = serialMessage.getMessagePayloadByte(offset + 1);
@@ -255,8 +256,10 @@ public class ZWaveMultiInstanceCommandClass extends ZWaveCommandClass {
      *
      * @param serialMessage the serial message to process.
      * @param offset the offset at which to start processing.
+     * @throws ZWaveSerialMessageException
      */
-    private void handleMultiChannelEndpointReportResponse(SerialMessage serialMessage, int offset) {
+    private void handleMultiChannelEndpointReportResponse(SerialMessage serialMessage, int offset)
+            throws ZWaveSerialMessageException {
         logger.debug("Process Multi-channel endpoint Report");
 
         boolean changingNumberOfEndpoints = (serialMessage.getMessagePayloadByte(offset) & 0x80) != 0;
@@ -290,8 +293,10 @@ public class ZWaveMultiInstanceCommandClass extends ZWaveCommandClass {
      *
      * @param serialMessage the serial message to process.
      * @param offset the offset at which to start processing.
+     * @throws ZWaveSerialMessageException
      */
-    private void handleMultiChannelCapabilityReportResponse(SerialMessage serialMessage, int offset) {
+    private void handleMultiChannelCapabilityReportResponse(SerialMessage serialMessage, int offset)
+            throws ZWaveSerialMessageException {
         logger.debug("NODE {}: Process Multi-channel capability Report", this.getNode().getNodeId());
         int receivedEndpointId = serialMessage.getMessagePayloadByte(offset) & 0x7F;
         boolean dynamic = ((serialMessage.getMessagePayloadByte(offset) & 0x80) != 0);
@@ -394,8 +399,10 @@ public class ZWaveMultiInstanceCommandClass extends ZWaveCommandClass {
      * @param serialMessage The message to get command classes from.
      * @param offset The offset in the message.
      * @param endpoint The endpoint
+     * @throws ZWaveSerialMessageException
      */
-    private void addSupportedCommandClasses(SerialMessage serialMessage, int offset, ZWaveEndpoint endpoint) {
+    private void addSupportedCommandClasses(SerialMessage serialMessage, int offset, ZWaveEndpoint endpoint)
+            throws ZWaveSerialMessageException {
         for (int i = 0; i < serialMessage.getMessagePayload().length - offset - 3; i++) {
             // Get the command class ID
             int data = serialMessage.getMessagePayloadByte(offset + 3 + i);
@@ -433,8 +440,10 @@ public class ZWaveMultiInstanceCommandClass extends ZWaveCommandClass {
      *
      * @param serialMessage the serial message to process.
      * @param offset the offset at which to start processing.
+     * @throws ZWaveSerialMessageException
      */
-    private void handleMultiChannelEncapResponse(SerialMessage serialMessage, int offset) {
+    private void handleMultiChannelEncapResponse(SerialMessage serialMessage, int offset)
+            throws ZWaveSerialMessageException {
         logger.trace("Process Multi-channel Encapsulation");
 
         if (serialMessage.getMessagePayload().length < offset + 2) {
@@ -444,7 +453,21 @@ public class ZWaveMultiInstanceCommandClass extends ZWaveCommandClass {
 
         CommandClass commandClass;
         ZWaveCommandClass zwaveCommandClass;
-        int endpointId = serialMessage.getMessagePayloadByte(offset);
+        int originatingEndpointId = serialMessage.getMessagePayloadByte(offset);
+
+        {
+            int destinationEndpointId = serialMessage.getMessagePayloadByte(offset + 1);
+
+            if (destinationEndpointId != 1 && originatingEndpointId == 1) {
+                logger.debug(
+                        "NODE {}: Controller has no endpoints. Probably originating ({}) and destination ({}) endpoints should be swapped.",
+                        this.getNode().getNodeId(), originatingEndpointId, destinationEndpointId);
+                // not a full swap. Do not use destinationEndpointId after this line
+                // and leave scope intact.
+                originatingEndpointId = destinationEndpointId;
+            }
+        }
+
         int commandClassCode = serialMessage.getMessagePayloadByte(offset + 2);
         commandClass = CommandClass.getCommandClass(commandClassCode);
 
@@ -456,11 +479,11 @@ public class ZWaveMultiInstanceCommandClass extends ZWaveCommandClass {
 
         logger.debug(String.format("NODE %d: Requested Command Class = %s (0x%02x)", this.getNode().getNodeId(),
                 commandClass.getLabel(), commandClassCode));
-        ZWaveEndpoint endpoint = this.endpoints.get(endpointId);
+        ZWaveEndpoint endpoint = this.endpoints.get(originatingEndpointId);
 
         if (endpoint == null) {
             logger.error("NODE {}: Endpoint {} not found. Cannot set command classes.", this.getNode().getNodeId(),
-                    endpointId);
+                    originatingEndpointId);
             return;
         }
 
@@ -469,7 +492,7 @@ public class ZWaveMultiInstanceCommandClass extends ZWaveCommandClass {
         if (zwaveCommandClass == null) {
             logger.warn(String.format(
                     "NODE %d: CommandClass %s (0x%02x) not implemented by endpoint %d, fallback to main node.",
-                    this.getNode().getNodeId(), commandClass.getLabel(), commandClassCode, endpointId));
+                    this.getNode().getNodeId(), commandClass.getLabel(), commandClassCode, originatingEndpointId));
             zwaveCommandClass = this.getNode().getCommandClass(commandClass);
         }
 
@@ -480,8 +503,8 @@ public class ZWaveMultiInstanceCommandClass extends ZWaveCommandClass {
         }
 
         logger.debug("NODE {}: Endpoint = {}, calling handleApplicationCommandRequest.", this.getNode().getNodeId(),
-                endpointId);
-        zwaveCommandClass.handleApplicationCommandRequest(serialMessage, offset + 3, endpointId);
+                originatingEndpointId);
+        zwaveCommandClass.handleApplicationCommandRequest(serialMessage, offset + 3, originatingEndpointId);
     }
 
     /**

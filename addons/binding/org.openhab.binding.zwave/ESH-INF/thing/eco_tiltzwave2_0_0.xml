@@ -4,7 +4,8 @@
   xmlns:thing="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0"
   xsi:schemaLocation="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0
                       http://eclipse.org/smarthome/schemas/thing-description/v1.0.0">
-  <thing-type id="eco_tiltzwave2_00_000">
+
+  <thing-type id="eco_tiltzwave2_00_000" listed="false">
     <label>TILTZWAVE2 Z-Wave Garage Door Sensor</label>
     <description>Z-Wave Garage Door Sensor</description>
 
@@ -35,9 +36,10 @@
       <property name="model">TILTZWAVE2</property>
       <property name="manufacturerId">014A</property>
       <property name="manufacturerRef">0001:0003</property>
-      <property name="DefaultAssociations">1</property>
+      <property name="defaultAssociations">1</property>
     </properties>
 
+    <!-- CONFIGURATION DESCRIPTIONS -->
     <config-description>
 
       <!-- ASSOCIATION DEFINITIONS -->
@@ -46,12 +48,12 @@
         <label>Association Groups</label>
       </parameter-group>
 
-      <parameter name="group_1" type="text" groupName="association"  multiple="true">
+      <parameter name="group_1" type="text" groupName="association" multiple="true">
         <label>1: Group 1</label>
         <multipleLimit>5</multipleLimit>
       </parameter>
 
-      <parameter name="group_2" type="text" groupName="association"  multiple="true">
+      <parameter name="group_2" type="text" groupName="association" multiple="true">
         <label>2: Group 2</label>
         <multipleLimit>5</multipleLimit>
       </parameter>

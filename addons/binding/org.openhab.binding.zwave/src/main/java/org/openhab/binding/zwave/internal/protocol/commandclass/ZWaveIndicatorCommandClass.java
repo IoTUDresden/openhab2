@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014-2015 openHAB UG (haftungsbeschraenkt) and others.
+ * Copyright (c) 2014-2016 by the respective copyright holders.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -19,6 +19,7 @@ import org.openhab.binding.zwave.internal.protocol.SerialMessage.SerialMessageTy
 import org.openhab.binding.zwave.internal.protocol.ZWaveController;
 import org.openhab.binding.zwave.internal.protocol.ZWaveEndpoint;
 import org.openhab.binding.zwave.internal.protocol.ZWaveNode;
+import org.openhab.binding.zwave.internal.protocol.ZWaveSerialMessageException;
 import org.openhab.binding.zwave.internal.protocol.event.ZWaveCommandClassValueEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -77,9 +78,12 @@ public class ZWaveIndicatorCommandClass extends ZWaveCommandClass
 
     /**
      * {@inheritDoc}
+     *
+     * @throws ZWaveSerialMessageException
      */
     @Override
-    public void handleApplicationCommandRequest(SerialMessage serialMessage, int offset, int endpoint) {
+    public void handleApplicationCommandRequest(SerialMessage serialMessage, int offset, int endpoint)
+            throws ZWaveSerialMessageException {
         logger.debug("NODE {}: Received Indicator Request", this.getNode().getNodeId());
         int command = serialMessage.getMessagePayloadByte(offset);
         switch (command) {
@@ -106,18 +110,19 @@ public class ZWaveIndicatorCommandClass extends ZWaveCommandClass
      * @param serialMessage the incoming message to process.
      * @param offset the offset position from which to start message processing.
      * @param endpoint the endpoint or instance number this message is meant for.
+     * @throws ZWaveSerialMessageException
      */
-    protected void processIndicatorReport(SerialMessage serialMessage, int offset, int endpoint) {
+    protected void processIndicatorReport(SerialMessage serialMessage, int offset, int endpoint)
+            throws ZWaveSerialMessageException {
         int newIndicator = serialMessage.getMessagePayloadByte(offset + 1);
 
-        logger.debug(
-                String.format("NODE %d: Indicator report, value = 0x%02X", this.getNode().getNodeId(), newIndicator));
+        logger.debug("NODE {}: Indicator report, value={}", this.getNode().getNodeId(), newIndicator);
 
-        ZWaveIndicatorCommandClassChangeEvent zEvent = new ZWaveIndicatorCommandClassChangeEvent(
-                this.getNode().getNodeId(), endpoint, this.getCommandClass(), newIndicator, indicator);
+        ZWaveIndicatorCommandClassChangeEvent zEvent = new ZWaveIndicatorCommandClassChangeEvent(getNode().getNodeId(),
+                endpoint, getCommandClass(), newIndicator, indicator);
 
         indicator = newIndicator;
-        this.getController().notifyEventListeners(zEvent);
+        getController().notifyEventListeners(zEvent);
     }
 
     /**

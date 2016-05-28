@@ -4,7 +4,8 @@
   xmlns:thing="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0"
   xsi:schemaLocation="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0
                       http://eclipse.org/smarthome/schemas/thing-description/v1.0.0">
-  <thing-type id="rcs_tbz48_00_000">
+
+  <thing-type id="rcs_tbz48_00_000" listed="false">
     <label>TBZ48 Thermostat</label>
     <description>Thermostat</description>
 
@@ -36,7 +37,7 @@
       <channel id="sensor_temperature" typeId="sensor_temperature">
         <label>Sensor (temperature)</label>
         <properties>
-          <property name="binding:*:DecimalType">SENSOR_MULTILEVEL;sensorType=TEMPERATURE</property>
+          <property name="binding:*:DecimalType">SENSOR_MULTILEVEL;type=TEMPERATURE</property>
         </properties>
       </channel>
       <channel id="thermostat_state" typeId="thermostat_state">
@@ -48,13 +49,13 @@
       <channel id="thermostat_setpoint_cooling" typeId="thermostat_setpoint">
         <label>Setpoint (cooling)</label>
         <properties>
-          <property name="binding:*:DecimalType">THERMOSTAT_SETPOINT;setpointType=COOLING</property>
+          <property name="binding:*:DecimalType">THERMOSTAT_SETPOINT;type=COOLING</property>
         </properties>
       </channel>
       <channel id="thermostat_setpoint_heating" typeId="thermostat_setpoint">
         <label>Setpoint (heating)</label>
         <properties>
-          <property name="binding:*:DecimalType">THERMOSTAT_SETPOINT;setpointType=HEATING</property>
+          <property name="binding:*:DecimalType">THERMOSTAT_SETPOINT;type=HEATING</property>
         </properties>
       </channel>
     </channels>
@@ -67,6 +68,7 @@
       <property name="manufacturerRef">5442:5432</property>
     </properties>
 
+    <!-- CONFIGURATION DESCRIPTIONS -->
     <config-description>
 
       <!-- ASSOCIATION DEFINITIONS -->
@@ -75,17 +77,17 @@
         <label>Association Groups</label>
       </parameter-group>
 
-      <parameter name="group_1" type="text" groupName="association"  multiple="true">
+      <parameter name="group_1" type="text" groupName="association" multiple="true">
         <label>1: Group 1</label>
         <multipleLimit>5</multipleLimit>
       </parameter>
 
-      <parameter name="group_2" type="text" groupName="association"  multiple="true">
+      <parameter name="group_2" type="text" groupName="association" multiple="true">
         <label>2: Group 2</label>
         <multipleLimit>5</multipleLimit>
       </parameter>
 
-      <parameter name="group_3" type="text" groupName="association"  multiple="true">
+      <parameter name="group_3" type="text" groupName="association" multiple="true">
         <label>3: Group 3</label>
         <multipleLimit>5</multipleLimit>
       </parameter>

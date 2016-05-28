@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014-2015 openHAB UG (haftungsbeschraenkt) and others.
+ * Copyright (c) 2014-2016 by the respective copyright holders.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -41,6 +41,8 @@ import org.openhab.binding.rfxcom.internal.messages.RFXComMessageFactory;
 import org.openhab.binding.rfxcom.internal.messages.RFXComTransmitterMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import gnu.io.NoSuchPortException;
 
 /**
  * {@link RFXComBridgeHandler} is the handler for a RFXCOM transceivers. All
@@ -204,6 +206,8 @@ public class RFXComBridgeHandler extends BaseBridgeHandler {
                 connector.sendMessage(RFXComMessageFactory.CMD_START_RECEIVER);
                 updateStatus(ThingStatus.ONLINE);
             }
+        } catch (NoSuchPortException e) {
+            logger.error("Connection to RFXCOM transceiver failed: invalid port");
         } catch (Exception e) {
             logger.error("Connection to RFXCOM transceiver failed: {}", e.getMessage());
         } catch (UnsatisfiedLinkError e) {

@@ -4,7 +4,8 @@
   xmlns:thing="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0"
   xsi:schemaLocation="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0
                       http://eclipse.org/smarthome/schemas/thing-description/v1.0.0">
-  <thing-type id="everspring_st812_00_000">
+
+  <thing-type id="everspring_st812_00_000" listed="false">
     <label>ST812 Flood Sensor</label>
     <description>Flood Sensor</description>
 
@@ -24,7 +25,7 @@
       <channel id="alarm_flood" typeId="alarm_flood">
         <label>Alarm (flood)</label>
         <properties>
-          <property name="binding:*:OnOffType">SENSOR_ALARM;sensorType=FLOOD</property>
+          <property name="binding:*:OnOffType">SENSOR_ALARM;type=FLOOD</property>
         </properties>
       </channel>
     </channels>
@@ -35,9 +36,10 @@
       <property name="model">ST812</property>
       <property name="manufacturerId">0060</property>
       <property name="manufacturerRef">000B:0001</property>
-      <property name="DefaultAssociations">1</property>
+      <property name="defaultAssociations">1</property>
     </properties>
 
+    <!-- CONFIGURATION DESCRIPTIONS -->
     <config-description>
 
       <!-- PARAMETER DEFINITIONS -->
@@ -60,11 +62,17 @@
       </parameter-group>
 
       <parameter name="group_1" type="text" groupName="association">
-        <label>1: Alarm notifications</label>
+        <label>1: Power applied and Sensor Alarm</label>
+        <description><![CDATA[
+<br /><h1>Overview</h1><p>The Detector will send ALARM_REPORT command to the nodes of Group 1 to inform the devices that the Detector is powered up.</p> <p>ALARM_REPORT Command: [Command Class Alarm, Alarm Type = 0x02, Alarm Level = 0x01]</p> <p>The second type for Group 1 is SENSOR_ALARM_REPORT.  255 = Alarm, 00 = Event clear.</p> <p>The third type for Group 1 is ALARM_REPORT type 0x01, Low battery</p>
+        ]]></description>
       </parameter>
 
-      <parameter name="group_2" type="text" groupName="association"  multiple="true">
+      <parameter name="group_2" type="text" groupName="association" multiple="true">
         <label>2: Device control</label>
+        <description><![CDATA[
+Group to send trigger value to<br /><h1>Overview</h1><p>Will send values of 0-99 to devices in Group 2.  Set the value to send in Parameter 1.</p>
+        ]]></description>
         <multipleLimit>3</multipleLimit>
       </parameter>
 

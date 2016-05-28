@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014-2015 openHAB UG (haftungsbeschraenkt) and others.
+ * Copyright (c) 2014-2016 by the respective copyright holders.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -22,6 +22,7 @@ import org.openhab.binding.zwave.internal.protocol.SerialMessage.SerialMessageTy
 import org.openhab.binding.zwave.internal.protocol.ZWaveController;
 import org.openhab.binding.zwave.internal.protocol.ZWaveEndpoint;
 import org.openhab.binding.zwave.internal.protocol.ZWaveNode;
+import org.openhab.binding.zwave.internal.protocol.ZWaveSerialMessageException;
 import org.openhab.binding.zwave.internal.protocol.event.ZWaveCommandClassValueEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -92,9 +93,12 @@ public class ZWaveThermostatSetpointCommandClass extends ZWaveCommandClass
 
     /**
      * {@inheritDoc}
+     *
+     * @throws ZWaveSerialMessageException
      */
     @Override
-    public void handleApplicationCommandRequest(SerialMessage serialMessage, int offset, int endpoint) {
+    public void handleApplicationCommandRequest(SerialMessage serialMessage, int offset, int endpoint)
+            throws ZWaveSerialMessageException {
         logger.debug("NODE {}: Received Thermostat Setpoint Request", this.getNode().getNodeId());
         int command = serialMessage.getMessagePayloadByte(offset);
         switch (command) {
@@ -145,8 +149,10 @@ public class ZWaveThermostatSetpointCommandClass extends ZWaveCommandClass
      * @param serialMessage the incoming message to process.
      * @param offset the offset position from which to start message processing.
      * @param endpoint the endpoint or instance number this message is meant for.
+     * @throws ZWaveSerialMessageException
      */
-    protected void processThermostatSetpointReport(SerialMessage serialMessage, int offset, int endpoint) {
+    protected void processThermostatSetpointReport(SerialMessage serialMessage, int offset, int endpoint)
+            throws ZWaveSerialMessageException {
 
         int setpointTypeCode = serialMessage.getMessagePayloadByte(offset + 1);
         int scale = (serialMessage.getMessagePayloadByte(offset + 2) >> 3) & 0x03;
@@ -359,6 +365,11 @@ public class ZWaveThermostatSetpointCommandClass extends ZWaveCommandClass
          */
         private static Map<Integer, SetpointType> codeToSetpointTypeMapping;
 
+        /**
+         * A mapping between the name,and its corresponding SetpointType to facilitate lookup by enumeration name.
+         */
+        private static Map<String, SetpointType> nameToSetpointTypeMapping;
+
         private int key;
         private String label;
 
@@ -369,8 +380,10 @@ public class ZWaveThermostatSetpointCommandClass extends ZWaveCommandClass
 
         private static void initMapping() {
             codeToSetpointTypeMapping = new HashMap<Integer, SetpointType>();
+            nameToSetpointTypeMapping = new HashMap<>();
             for (SetpointType s : values()) {
                 codeToSetpointTypeMapping.put(s.key, s);
+                nameToSetpointTypeMapping.put(s.name().toLowerCase(), s);
             }
         }
 
@@ -386,6 +399,20 @@ public class ZWaveThermostatSetpointCommandClass extends ZWaveCommandClass
                 initMapping();
             }
             return codeToSetpointTypeMapping.get(i);
+        }
+
+        /**
+         * Lookup function based on the name. Returns null if the name does not exist.
+         *
+         * @param name the name to lookup
+         * @return enumeration value of the setpoint type.
+         */
+        public static SetpointType getSetpointType(String name) {
+            if (nameToSetpointTypeMapping == null) {
+                initMapping();
+            }
+
+            return nameToSetpointTypeMapping.get(name.toLowerCase());
         }
 
         /**
@@ -408,6 +435,7 @@ public class ZWaveThermostatSetpointCommandClass extends ZWaveCommandClass
      *
      * @author Chris Jackson
      */
+    @XStreamAlias("setpoint")
     private class Setpoint {
         SetpointType setpointType;
         boolean initialised = false;

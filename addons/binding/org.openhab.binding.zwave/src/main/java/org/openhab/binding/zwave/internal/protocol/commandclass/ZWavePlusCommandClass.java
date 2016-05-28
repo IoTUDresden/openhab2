@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014-2015 openHAB UG (haftungsbeschraenkt) and others.
+ * Copyright (c) 2014-2016 by the respective copyright holders.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -20,6 +20,8 @@ import org.openhab.binding.zwave.internal.protocol.SerialMessage.SerialMessageTy
 import org.openhab.binding.zwave.internal.protocol.ZWaveController;
 import org.openhab.binding.zwave.internal.protocol.ZWaveEndpoint;
 import org.openhab.binding.zwave.internal.protocol.ZWaveNode;
+import org.openhab.binding.zwave.internal.protocol.ZWavePlusDeviceClass.ZWavePlusDeviceType;
+import org.openhab.binding.zwave.internal.protocol.ZWaveSerialMessageException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -81,9 +83,12 @@ public class ZWavePlusCommandClass extends ZWaveCommandClass
 
     /**
      * {@inheritDoc}
+     *
+     * @throws ZWaveSerialMessageException
      */
     @Override
-    public void handleApplicationCommandRequest(SerialMessage serialMessage, int offset, int endpointId) {
+    public void handleApplicationCommandRequest(SerialMessage serialMessage, int offset, int endpointId)
+            throws ZWaveSerialMessageException {
         logger.debug("NODE {}: Received ZWave Plus Request", this.getNode().getNodeId());
         int command = serialMessage.getMessagePayloadByte(offset);
         switch (command) {
@@ -101,8 +106,9 @@ public class ZWavePlusCommandClass extends ZWaveCommandClass
      *            The received message
      * @param offset
      *            The starting offset into the payload
+     * @throws ZWaveSerialMessageException
      */
-    private void handleZWavePlusReport(SerialMessage serialMessage, int offset) {
+    private void handleZWavePlusReport(SerialMessage serialMessage, int offset) throws ZWaveSerialMessageException {
 
         zwPlusVersion = serialMessage.getMessagePayloadByte(offset + 0);
         zwPlusRole = serialMessage.getMessagePayloadByte(offset + 1);
@@ -112,9 +118,31 @@ public class ZWavePlusCommandClass extends ZWaveCommandClass
         zwPlusDeviceType = (serialMessage.getMessagePayloadByte(offset + 5) << 8)
                 | serialMessage.getMessagePayloadByte(offset + 6);
 
-        initialiseDone = true;
+        ZWavePlusDeviceType deviceType = ZWavePlusDeviceType.getZWavePlusDeviceType(zwPlusDeviceType);
+        if (deviceType != null) {
+            logger.debug("NODE {}: Adding mandatory command classes for ZWavePlus device type {}",
+                    getNode().getNodeId(), deviceType);
 
-        // TODO: Set class types in node
+            // Add all missing mandatory plus command classes
+            for (CommandClass commandClass : deviceType.getMandatoryCommandClasses()) {
+                ZWaveCommandClass zwaveCommandClass = this.getNode().getCommandClass(commandClass);
+
+                // Add the mandatory class missing, ie not set via NIF
+                if (zwaveCommandClass == null) {
+                    zwaveCommandClass = ZWaveCommandClass.getInstance(commandClass.getKey(), getNode(),
+                            getController());
+                    if (zwaveCommandClass != null) {
+                        logger.debug(String.format("NODE %d: Adding command class %s (0x%02x)", getNode().getNodeId(),
+                                commandClass.getLabel(), commandClass.getKey()));
+                        getNode().addCommandClass(zwaveCommandClass);
+                    }
+                }
+            }
+        } else {
+            logger.info("NODE {}: unknown ZWavePlus device type: {}", getNode().getNodeId(), zwPlusDeviceType);
+        }
+
+        initialiseDone = true;
     }
 
     @Override
@@ -150,5 +178,19 @@ public class ZWavePlusCommandClass extends ZWaveCommandClass
         }
 
         return true;
+    }
+
+    /**
+     * Return the ZWave Plus Device Type
+     * 
+     * @return {@link ZWavePlusDeviceType}
+     */
+    public ZWavePlusDeviceType getZWavePlusDeviceType() {
+        ZWavePlusDeviceType deviceType = ZWavePlusDeviceType.getZWavePlusDeviceType(zwPlusDeviceType);
+        if (deviceType == null) {
+            deviceType = ZWavePlusDeviceType.UNKNOWN_TYPE;
+        }
+
+        return deviceType;
     }
 }

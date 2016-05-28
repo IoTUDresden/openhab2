@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014-2015 openHAB UG (haftungsbeschraenkt) and others.
+ * Copyright (c) 2014-2016 by the respective copyright holders.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -19,6 +19,7 @@ import org.openhab.binding.zwave.internal.protocol.SerialMessage;
 import org.openhab.binding.zwave.internal.protocol.ZWaveController;
 import org.openhab.binding.zwave.internal.protocol.ZWaveEndpoint;
 import org.openhab.binding.zwave.internal.protocol.ZWaveNode;
+import org.openhab.binding.zwave.internal.protocol.ZWaveSerialMessageException;
 import org.openhab.binding.zwave.internal.protocol.commandclass.proprietary.FibaroFGRM222CommandClass;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,7 +39,6 @@ public abstract class ZWaveCommandClass {
     @XStreamOmitField
     private static final Logger logger = LoggerFactory.getLogger(ZWaveCommandClass.class);
 
-    private static final int MAX_SUPPORTED_VERSION = 1;
     private static final int SIZE_MASK = 0x07;
     // private static final SCALE_MASK = 0x18; // unused
     // private static final SCALE_SHIFT = 0x03; // unused
@@ -54,6 +54,12 @@ public abstract class ZWaveCommandClass {
 
     private int version = 0;
     private int instances = 0;
+
+    @XStreamOmitField
+    protected int versionMax = 1;
+
+    @SuppressWarnings("unused")
+    private int versionSupported = 0;
 
     /**
      * Protected constructor. Initiates a new instance of a Command Class.
@@ -139,14 +145,28 @@ public abstract class ZWaveCommandClass {
      * @param version. The version number to set.
      */
     public void setVersion(int version) {
-        this.version = version;
+        // Record the version supported by the device
+        // This gets recorded in the XML so we know more about the device
+        versionSupported = version;
+
+        // Now set the version we are actually going to support
+        if (version > versionMax) {
+            this.version = versionMax;
+            logger.debug(
+                    "NODE {}: Version = {}, version set to maximum supported by the binding. Enabling extra functionality.",
+                    getNode().getNodeId(), versionMax);
+        } else {
+            this.version = version;
+            logger.debug("NODE {}: Version = {}, version set. Enabling extra functionality.", getNode().getNodeId(),
+                    version);
+        }
     }
 
     /**
      * The maximum version implemented by this command class.
      */
     public int getMaxVersion() {
-        return MAX_SUPPORTED_VERSION;
+        return versionMax;
     }
 
     /**
@@ -194,7 +214,8 @@ public abstract class ZWaveCommandClass {
      * @param offset the offset position from which to start message processing.
      * @param endpoint the endpoint or instance number this message is meant for.
      */
-    public abstract void handleApplicationCommandRequest(SerialMessage serialMessage, int offset, int endpoint);
+    public abstract void handleApplicationCommandRequest(SerialMessage serialMessage, int offset, int endpoint)
+            throws ZWaveSerialMessageException;
 
     /**
      * Gets an instance of the right command class.
@@ -243,15 +264,12 @@ public abstract class ZWaveCommandClass {
             Constructor<? extends ZWaveCommandClass> constructor = commandClassClass.getConstructor(ZWaveNode.class,
                     ZWaveController.class, ZWaveEndpoint.class);
             return constructor.newInstance(new Object[] { node, controller, endpoint });
-        } catch (InstantiationException e) {
-        } catch (IllegalAccessException e) {
-        } catch (IllegalArgumentException e) {
-        } catch (InvocationTargetException e) {
-        } catch (NoSuchMethodException e) {
-        } catch (SecurityException e) {
+        } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
+                | NoSuchMethodException | SecurityException e) {
+            logger.error(String.format("NODE %d: Error instantiating command class 0x%02x", node.getNodeId(), classId));
+            e.printStackTrace();
+            return null;
         }
-        logger.error(String.format("NODE %d: Error instantiating command class 0x%02x", node.getNodeId(), classId));
-        return null;
     }
 
     /**
@@ -266,8 +284,7 @@ public abstract class ZWaveCommandClass {
         int precision = (buffer[offset] & PRECISION_MASK) >> PRECISION_SHIFT;
 
         if ((size + offset) >= buffer.length) {
-            logger.error("Error extracting value - length={}, offset={}, size={}.",
-                    new Object[] { buffer.length, offset, size });
+            logger.error("Error extracting value - length={}, offset={}, size={}.", buffer.length, offset, size);
             throw new NumberFormatException();
         }
 
@@ -382,7 +399,7 @@ public abstract class ZWaveCommandClass {
     public enum CommandClass {
         NO_OPERATION(0x00, "NO_OPERATION", ZWaveNoOperationCommandClass.class),
         BASIC(0x20, "BASIC", ZWaveBasicCommandClass.class),
-        CONTROLLER_REPLICATION(0x21, "CONTROLLER_REPLICATION", null),
+        CONTROLLER_REPLICATION(0x21, "CONTROLLER_REPLICATION", ZWaveControllerReplicationCommandClass.class),
         APPLICATION_STATUS(0x22, "APPLICATION_STATUS", ZWaveApplicationStatusClass.class),
         ZIP_SERVICES(0x23, "ZIP_SERVICES", null),
         ZIP_SERVER(0x24, "ZIP_SERVER", null),
@@ -391,10 +408,10 @@ public abstract class ZWaveCommandClass {
         SWITCH_ALL(0x27, "SWITCH_ALL", ZWaveSwitchAllCommandClass.class),
         SWITCH_TOGGLE_BINARY(0x28, "SWITCH_TOGGLE_BINARY", ZWaveBinaryToggleSwitchCommandClass.class),
         SWITCH_TOGGLE_MULTILEVEL(0x29, "SWITCH_TOGGLE_MULTILEVEL", ZWaveMultiLevelToggleSwitchCommandClass.class),
-        CHIMNEY_FAN(0x2A, "CHIMNEY_FAN", null),
+        CHIMNEY_FAN(0x2A, "CHIMNEY_FAN", ZWaveChimneyFanCommandClass.class),
         SCENE_ACTIVATION(0x2B, "SCENE_ACTIVATION", ZWaveSceneActivationCommandClass.class),
-        SCENE_ACTUATOR_CONF(0x2C, "SCENE_ACTUATOR_CONF", null),
-        SCENE_CONTROLLER_CONF(0x2D, "SCENE_CONTROLLER_CONF", null),
+        SCENE_ACTUATOR_CONF(0x2C, "SCENE_ACTUATOR_CONF", ZWaveSceneActuatorConfigurationCommandClass.class),
+        SCENE_CONTROLLER_CONF(0x2D, "SCENE_CONTROLLER_CONF", ZWaveSceneControllerConfigurationCommandClass.class),
         ZIP_CLIENT(0x2E, "ZIP_CLIENT", null),
         ZIP_ADV_SERVICES(0x2F, "ZIP_ADV_SERVICES", null),
         SENSOR_BINARY(0x30, "SENSOR_BINARY", ZWaveBinarySensorCommandClass.class),
@@ -402,39 +419,43 @@ public abstract class ZWaveCommandClass {
         METER(0x32, "METER", ZWaveMeterCommandClass.class),
         COLOR(0x33, "COLOR", ZWaveColorCommandClass.class),
         ZIP_ADV_CLIENT(0x34, "ZIP_ADV_CLIENT", null),
-        METER_PULSE(0x35, "METER_PULSE", null),
-        METER_TBL_CONFIG(0x3C, "METER_TBL_CONFIG", null),
-        METER_TBL_MONITOR(0x3D, "METER_TBL_MONITOR", null),
+        METER_PULSE(0x35, "METER_PULSE", ZWaveMeterPulseCommandClass.class),
+        METER_TBL_CONFIG(0x3C, "METER_TBL_CONFIG", ZWaveMeterTblConfigurationCommandClass.class),
+        METER_TBL_MONITOR(0x3D, "METER_TBL_MONITOR", ZWaveMeterTblMonitorCommandClass.class),
         METER_TBL_PUSH(0x3E, "METER_TBL_PUSH", null),
+        HRV_STATUS(0x37, "HRV_STATUS", ZWaveHrvStatusCommandClass.class),
         THERMOSTAT_HEATING(0x38, "THERMOSTAT_HEATING", null),
+        HRV_CONTROL(0x39, "HRV_CONTROL", ZWaveHrvControlCommandClass.class),
         THERMOSTAT_MODE(0x40, "THERMOSTAT_MODE", ZWaveThermostatModeCommandClass.class),
         THERMOSTAT_OPERATING_STATE(0x42, "THERMOSTAT_OPERATING_STATE", ZWaveThermostatOperatingStateCommandClass.class),
         THERMOSTAT_SETPOINT(0x43, "THERMOSTAT_SETPOINT", ZWaveThermostatSetpointCommandClass.class),
         THERMOSTAT_FAN_MODE(0x44, "THERMOSTAT_FAN_MODE", ZWaveThermostatFanModeCommandClass.class),
         THERMOSTAT_FAN_STATE(0x45, "THERMOSTAT_FAN_STATE", ZWaveThermostatFanStateCommandClass.class),
         CLIMATE_CONTROL_SCHEDULE(0x46, "CLIMATE_CONTROL_SCHEDULE", ZWaveClimateControlScheduleCommandClass.class),
-        THERMOSTAT_SETBACK(0x47, "THERMOSTAT_SETBACK", null),
-        DOOR_LOCK_LOGGING(0x4C, "DOOR_LOCK_LOGGING", null),
-        SCHEDULE_ENTRY_LOCK(0x4E, "SCHEDULE_ENTRY_LOCK", null),
-        BASIC_WINDOW_COVERING(0x50, "BASIC_WINDOW_COVERING", null),
-        MTP_WINDOW_COVERING(0x51, "MTP_WINDOW_COVERING", null),
+        THERMOSTAT_SETBACK(0x47, "THERMOSTAT_SETBACK", ZWaveThermostatSetbackCommandClass.class),
+        DOOR_LOCK_LOGGING(0x4C, "DOOR_LOCK_LOGGING", ZWaveDoorLockLoggingCommandClass.class),
+        SCHEDULE_ENTRY_LOCK(0x4E, "SCHEDULE_ENTRY_LOCK", ZWaveScheduleEntryLockCommandClass.class),
+        BASIC_WINDOW_COVERING(0x50, "BASIC_WINDOW_COVERING", ZWaveBasicWindowCoveringCommandClass.class),
+        MTP_WINDOW_COVERING(0x51, "MTP_WINDOW_COVERING", ZWaveMtpWindowCoveringCommandClass.class),
+        SCHEDULE(0x53, "SCHEDULE", ZWaveScheduleCommandClass.class),
         CRC_16_ENCAP(0x56, "CRC_16_ENCAP", ZWaveCRC16EncapsulationCommandClass.class),
-        ASSOCIATION_GROUP_INFO(0x59, "ASSOCIATION_GROUP_INFO", null),
+        ASSOCIATION_GROUP_INFO(0x59, "ASSOCIATION_GROUP_INFO", ZwaveAssociationGroupInfoCommandClass.class),
         DEVICE_RESET_LOCALLY(0x5a, "DEVICE_RESET_LOCALLY", ZWaveDeviceResetLocallyCommandClass.class),
-        CENTRAL_SCENE(0x5b, "CENTRAL_SCENE", null),
+        CENTRAL_SCENE(0x5b, "CENTRAL_SCENE", ZWaveCentralSceneCommandClass.class),
         ZWAVE_PLUS_INFO(0x5e, "ZWAVE_PLUS_INFO", ZWavePlusCommandClass.class),
         MULTI_INSTANCE(0x60, "MULTI_INSTANCE", ZWaveMultiInstanceCommandClass.class),
-        DOOR_LOCK(0x62, "DOOR_LOCK", null),
+        DOOR_LOCK(0x62, "DOOR_LOCK", ZWaveDoorLockCommandClass.class),
         USER_CODE(0x63, "USER_CODE", ZWaveUserCodeCommandClass.class),
+        BARRIER_OPERATOR(0x66, "BARRIER_OPERATOR", ZWaveBarrierOperatorCommandClass.class),
         CONFIGURATION(0x70, "CONFIGURATION", ZWaveConfigurationCommandClass.class),
         ALARM(0x71, "ALARM", ZWaveAlarmCommandClass.class),
         MANUFACTURER_SPECIFIC(0x72, "MANUFACTURER_SPECIFIC", ZWaveManufacturerSpecificCommandClass.class),
         POWERLEVEL(0x73, "POWERLEVEL", ZWavePowerLevelCommandClass.class),
         PROTECTION(0x75, "PROTECTION", ZWaveProtectionCommandClass.class),
-        LOCK(0x76, "LOCK", null),
+        LOCK(0x76, "LOCK", ZWaveLockCommandClass.class),
         NODE_NAMING(0x77, "NODE_NAMING", ZWaveNodeNamingCommandClass.class),
-        FIRMWARE_UPDATE_MD(0x7A, "FIRMWARE_UPDATE_MD", null),
-        GROUPING_NAME(0x7B, "GROUPING_NAME", null),
+        FIRMWARE_UPDATE_MD(0x7A, "FIRMWARE_UPDATE_MD", ZWaveFirmwareUpdateCommandClass.class),
+        GROUPING_NAME(0x7B, "GROUPING_NAME", ZWaveGroupingNameCommandClass.class),
         REMOTE_ASSOCIATION_ACTIVATE(0x7C, "REMOTE_ASSOCIATION_ACTIVATE", null),
         REMOTE_ASSOCIATION(0x7D, "REMOTE_ASSOCIATION", null),
         BATTERY(0x80, "BATTERY", ZWaveBatteryCommandClass.class),
@@ -445,14 +466,14 @@ public abstract class ZWaveCommandClass {
         VERSION(0x86, "VERSION", ZWaveVersionCommandClass.class),
         INDICATOR(0x87, "INDICATOR", ZWaveIndicatorCommandClass.class),
         PROPRIETARY(0x88, "PROPRIETARY", null),
-        LANGUAGE(0x89, "LANGUAGE", null),
-        TIME(0x8A, "TIME", null),
-        TIME_PARAMETERS(0x8B, "TIME_PARAMETERS", null),
+        LANGUAGE(0x89, "LANGUAGE", ZWaveLanguageCommandClass.class),
+        TIME(0x8A, "TIME", ZWaveTimeCommandClass.class),
+        TIME_PARAMETERS(0x8B, "TIME_PARAMETERS", ZWaveTimeParametersCommandClass.class),
         GEOGRAPHIC_LOCATION(0x8C, "GEOGRAPHIC_LOCATION", null),
         COMPOSITE(0x8D, "COMPOSITE", null),
-        MULTI_INSTANCE_ASSOCIATION(0x8E, "MULTI_INSTANCE_ASSOCIATION", null),
+        MULTI_INSTANCE_ASSOCIATION(0x8E, "MULTI_INSTANCE_ASSOCIATION", null), // ZWaveMultiAssociationCommandClass.class),
         MULTI_CMD(0x8F, "MULTI_CMD", ZWaveMultiCommandCommandClass.class),
-        ENERGY_PRODUCTION(0x90, "ENERGY_PRODUCTION", null),
+        ENERGY_PRODUCTION(0x90, "ENERGY_PRODUCTION", ZWaveEnergyProductionCommandClass.class),
         // Note that MANUFACTURER_PROPRIETARY shouldn't be instantiated directly
         // The getInstance method will catch this and translate to the correct
         // class for the device.
@@ -463,13 +484,13 @@ public abstract class ZWaveCommandClass {
         AV_CONTENT_DIRECTORY_MD(0x95, "AV_CONTENT_DIRECTORY_MD", null),
         AV_RENDERER_STATUS(0x96, "AV_RENDERER_STATUS", null),
         AV_CONTENT_SEARCH_MD(0x97, "AV_CONTENT_SEARCH_MD", null),
-        SECURITY(0x98, "SECURITY", null),
+        SECURITY(0x98, "SECURITY", ZWaveSecurityCommandClassWithInitialization.class),
         AV_TAGGING_MD(0x99, "AV_TAGGING_MD", null),
         IP_CONFIGURATION(0x9A, "IP_CONFIGURATION", null),
         ASSOCIATION_COMMAND_CONFIGURATION(0x9B, "ASSOCIATION_COMMAND_CONFIGURATION", null),
         SENSOR_ALARM(0x9C, "SENSOR_ALARM", ZWaveAlarmSensorCommandClass.class),
-        SILENCE_ALARM(0x9D, "SILENCE_ALARM", null),
-        SENSOR_CONFIGURATION(0x9E, "SENSOR_CONFIGURATION", null),
+        SILENCE_ALARM(0x9D, "SILENCE_ALARM", ZWaveAlarmSilenceCommandClass.class),
+        SENSOR_CONFIGURATION(0x9E, "SENSOR_CONFIGURATION", ZWaveSensorConfigurationCommandClass.class),
         MARK(0xEF, "MARK", null),
         NON_INTEROPERABLE(0xF0, "NON_INTEROPERABLE", null),
 

@@ -4,7 +4,8 @@
   xmlns:thing="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0"
   xsi:schemaLocation="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0
                       http://eclipse.org/smarthome/schemas/thing-description/v1.0.0">
-  <thing-type id="ge_zw1001_00_000">
+
+  <thing-type id="ge_zw1001_00_000" listed="false">
     <label>ZW1001 Smart Outlet</label>
     <description>Smart Outlet</description>
 
@@ -26,6 +27,7 @@
       <property name="manufacturerRef">4952:3031</property>
     </properties>
 
+    <!-- CONFIGURATION DESCRIPTIONS -->
     <config-description>
 
       <!-- PARAMETER DEFINITIONS -->
@@ -34,12 +36,11 @@
         <label>Configuration Parameters</label>
       </parameter-group>
 
-      <parameter name="config_3_1" type="integer" groupName="configuration"
-                 min="0" max="255">
+      <parameter name="config_3_1" type="integer" groupName="configuration">
         <label>3: LED light</label>
         <description><![CDATA[
-Defines the behavior of the blue LED. <br />
-			Default is LED on when switch is off.    !]]></description>
+Defines the behavior of the blue LED. <br /> Default is LED on when switch is off.
+        ]]></description>
         <default>0</default>
         <options>
           <option value="0">LED on when switch is OFF</option>

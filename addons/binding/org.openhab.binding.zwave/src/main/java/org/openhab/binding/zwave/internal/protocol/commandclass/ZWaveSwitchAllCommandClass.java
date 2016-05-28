@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014-2015 openHAB UG (haftungsbeschraenkt) and others.
+ * Copyright (c) 2014-2016 by the respective copyright holders.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -16,6 +16,7 @@ import org.openhab.binding.zwave.internal.protocol.SerialMessage;
 import org.openhab.binding.zwave.internal.protocol.ZWaveController;
 import org.openhab.binding.zwave.internal.protocol.ZWaveEndpoint;
 import org.openhab.binding.zwave.internal.protocol.ZWaveNode;
+import org.openhab.binding.zwave.internal.protocol.ZWaveSerialMessageException;
 import org.openhab.binding.zwave.internal.protocol.event.ZWaveCommandClassValueEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,11 +36,11 @@ public class ZWaveSwitchAllCommandClass extends ZWaveCommandClass implements ZWa
     @XStreamOmitField
     private static final Logger logger = LoggerFactory.getLogger(ZWaveSwitchAllCommandClass.class);
 
-    private static final int SWITCH_ALL_SET = 0x01;
-    private static final int SWITCH_ALL_GET = 0x02;
-    private static final int SWITCH_ALL_REPORT = 0x03;
-    private static final int SWITCH_ALL_ON = 0x04;
-    private static final int SWITCH_ALL_OFF = 0x05;
+    private static final int SWITCH_ALL_SET = 1;
+    private static final int SWITCH_ALL_GET = 2;
+    private static final int SWITCH_ALL_REPORT = 3;
+    private static final int SWITCH_ALL_ON = 4;
+    private static final int SWITCH_ALL_OFF = 5;
 
     public enum SwitchAllMode {
         SWITCH_ALL_EXCLUDED(0x00, "not included in either All On or All Off groups"),
@@ -114,53 +115,57 @@ public class ZWaveSwitchAllCommandClass extends ZWaveCommandClass implements ZWa
 
     /**
      * {@inheritDoc}
+     *
+     * @throws ZWaveSerialMessageException
      */
     @Override
-    public void handleApplicationCommandRequest(SerialMessage serialMessage, int offset, int endpoint) {
-        logger.debug(String.format("Received Switch All Request for Node ID = %d", this.getNode().getNodeId()));
+    public void handleApplicationCommandRequest(SerialMessage serialMessage, int offset, int endpoint)
+            throws ZWaveSerialMessageException {
+        logger.debug("NODE {}: Received SWITCH_ALL command V{}", getNode().getNodeId());
         int command = serialMessage.getMessagePayloadByte(offset);
         switch (command) {
             case SWITCH_ALL_SET:
                 logger.debug("Switch All Set sent to the controller will be processed as Switch All Report");
-                this.processSwitchAllReport(serialMessage, offset, endpoint);
+                processSwitchAllReport(serialMessage, offset, endpoint);
                 break;
             case SWITCH_ALL_REPORT:
-                this.processSwitchAllReport(serialMessage, offset, endpoint);
+                processSwitchAllReport(serialMessage, offset, endpoint);
                 initialiseDone = true;
                 break;
             default:
                 logger.warn(String.format("Unsupported Command 0x%02X for command class %s (0x%02X).", command,
-                        this.getCommandClass().getLabel(), this.getCommandClass().getKey()));
+                        getCommandClass().getLabel(), getCommandClass().getKey()));
         }
     }
 
-    protected void processSwitchAllReport(SerialMessage serialMessage, int offset, int endpoint) {
+    protected void processSwitchAllReport(SerialMessage serialMessage, int offset, int endpoint)
+            throws ZWaveSerialMessageException {
         int m = serialMessage.getMessagePayloadByte(offset + 1);
         mode = SwitchAllMode.fromInteger(m);
 
         if (mode != null) {
-            logger.debug("NODE {}: Switch All report, {}.", this.getNode().getNodeId(), mode.getDescription());
+            logger.debug("NODE {}: Switch All report, {}.", getNode().getNodeId(), mode.getDescription());
         } else {
-            logger.debug("NODE {}: Switch All unsupported mode.", this.getNode().getNodeId());
+            logger.debug("NODE {}: Switch All unsupported mode.", getNode().getNodeId());
             return;
         }
 
-        ZWaveSwitchAllModeEvent zEvent = new ZWaveSwitchAllModeEvent(this.getNode().getNodeId(), endpoint,
-                new Integer(m));
-        this.getController().notifyEventListeners(zEvent);
+        ZWaveCommandClassValueEvent zEvent = new ZWaveCommandClassValueEvent(getNode().getNodeId(), endpoint,
+                CommandClass.SWITCH_ALL, new Integer(m));
+        getController().notifyEventListeners(zEvent);
     }
 
     public SerialMessage getValueMessage() {
-        if (!this.isGetSupported) {
-            logger.debug("NODE {}: Node doesn't support get requests", this.getNode().getNodeId());
+        if (!isGetSupported) {
+            logger.debug("NODE {}: Node doesn't support get requests", getNode().getNodeId());
             return null;
         }
 
-        logger.debug("NODE {}: Creating new message for command SWITCH_ALL_GET", this.getNode().getNodeId());
-        SerialMessage result = new SerialMessage(this.getNode().getNodeId(), SerialMessage.SerialMessageClass.SendData,
+        logger.debug("NODE {}: Creating new message for command SWITCH_ALL_GET", getNode().getNodeId());
+        SerialMessage result = new SerialMessage(getNode().getNodeId(), SerialMessage.SerialMessageClass.SendData,
                 SerialMessage.SerialMessageType.Request, SerialMessage.SerialMessageClass.ApplicationCommandHandler,
                 SerialMessage.SerialMessagePriority.Get);
-        byte[] newPayload = { (byte) this.getNode().getNodeId(), 2, (byte) this.getCommandClass().getKey(),
+        byte[] newPayload = { (byte) getNode().getNodeId(), 2, (byte) getCommandClass().getKey(),
                 (byte) SWITCH_ALL_GET };
         result.setMessagePayload(newPayload);
         return result;
@@ -178,17 +183,17 @@ public class ZWaveSwitchAllCommandClass extends ZWaveCommandClass implements ZWa
         mode = SwitchAllMode.fromInteger(newMode);
 
         if (mode != null) {
-            logger.debug("NODE {}: Switch All report, {}.", this.getNode().getNodeId(), mode.getDescription());
+            logger.debug("NODE {}: Switch All report, {}.", getNode().getNodeId(), mode.getDescription());
         } else {
-            logger.debug("NODE {}: Switch All unsupported mode.", this.getNode().getNodeId());
+            logger.debug("NODE {}: Switch All unsupported mode.", getNode().getNodeId());
             return null;
         }
 
-        SerialMessage result = new SerialMessage(this.getNode().getNodeId(), SerialMessage.SerialMessageClass.SendData,
+        SerialMessage result = new SerialMessage(getNode().getNodeId(), SerialMessage.SerialMessageClass.SendData,
                 SerialMessage.SerialMessageType.Request, SerialMessage.SerialMessageClass.SendData,
                 SerialMessage.SerialMessagePriority.Set);
-        byte[] newPayload = { (byte) this.getNode().getNodeId(), 3, (byte) this.getCommandClass().getKey(),
-                (byte) SWITCH_ALL_SET, (byte) newMode };
+        byte[] newPayload = { (byte) getNode().getNodeId(), 3, (byte) getCommandClass().getKey(), (byte) SWITCH_ALL_SET,
+                (byte) newMode };
 
         result.setMessagePayload(newPayload);
         return result;
@@ -200,11 +205,11 @@ public class ZWaveSwitchAllCommandClass extends ZWaveCommandClass implements ZWa
      * @return
      */
     public SerialMessage allOnMessage() {
-        logger.debug("NODE {}: Switch All - Creating All On message.", this.getNode().getNodeId());
-        SerialMessage result = new SerialMessage(this.getNode().getNodeId(), SerialMessage.SerialMessageClass.SendData,
+        logger.debug("NODE {}: Switch All - Creating All On message.", getNode().getNodeId());
+        SerialMessage result = new SerialMessage(getNode().getNodeId(), SerialMessage.SerialMessageClass.SendData,
                 SerialMessage.SerialMessageType.Request, SerialMessage.SerialMessageClass.SendData,
                 SerialMessage.SerialMessagePriority.Set);
-        byte[] newPayload = { (byte) this.getNode().getNodeId(), 2, (byte) this.getCommandClass().getKey(),
+        byte[] newPayload = { (byte) getNode().getNodeId(), 2, (byte) getCommandClass().getKey(),
                 (byte) SWITCH_ALL_ON };
         result.setMessagePayload(newPayload);
         return result;
@@ -216,11 +221,11 @@ public class ZWaveSwitchAllCommandClass extends ZWaveCommandClass implements ZWa
      * @return
      */
     public SerialMessage allOffMessage() {
-        logger.debug("NODE {}: Switch All - Creating All Off message.", this.getNode().getNodeId());
-        SerialMessage result = new SerialMessage(this.getNode().getNodeId(), SerialMessage.SerialMessageClass.SendData,
+        logger.debug("NODE {}: Switch All - Creating All Off message.", getNode().getNodeId());
+        SerialMessage result = new SerialMessage(getNode().getNodeId(), SerialMessage.SerialMessageClass.SendData,
                 SerialMessage.SerialMessageType.Request, SerialMessage.SerialMessageClass.SendData,
                 SerialMessage.SerialMessagePriority.Set);
-        byte[] newPayload = { (byte) this.getNode().getNodeId(), 2, (byte) this.getCommandClass().getKey(),
+        byte[] newPayload = { (byte) getNode().getNodeId(), 2, (byte) getCommandClass().getKey(),
                 (byte) SWITCH_ALL_OFF };
         result.setMessagePayload(newPayload);
         return result;
@@ -244,33 +249,13 @@ public class ZWaveSwitchAllCommandClass extends ZWaveCommandClass implements ZWa
         return mode;
     }
 
-    /**
-     * ZWave Switch All mode received event. Sent from the Switch All Command
-     * Class to the binding when the switch all mode is received.
-     *
-     * @author Pedro Paixao
-     */
-    public class ZWaveSwitchAllModeEvent extends ZWaveCommandClassValueEvent {
-
-        /**
-         * Constructor. Creates a new instance of the ZWaveSwitchAllModeEvent
-         * class.
-         *
-         * @param nodeId
-         *            the nodeId of the event
-         */
-        public ZWaveSwitchAllModeEvent(int nodeId, int endpoint, Integer mode) {
-            super(nodeId, endpoint, CommandClass.SWITCH_ALL, mode);
-        }
-    }
-
     @Override
     public Collection<SerialMessage> initialize(boolean refresh) {
         ArrayList<SerialMessage> result = new ArrayList<SerialMessage>();
         // If we're already initialized, then don't do it again unless we're
         // refreshing
         if (refresh == true || initialiseDone == false) {
-            result.add(this.getValueMessage());
+            result.add(getValueMessage());
         }
 
         return result;

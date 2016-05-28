@@ -4,7 +4,8 @@
   xmlns:thing="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0"
   xsi:schemaLocation="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0
                       http://eclipse.org/smarthome/schemas/thing-description/v1.0.0">
-  <thing-type id="sensative_1101011_00_000">
+
+  <thing-type id="sensative_1101011_00_000" listed="false">
     <label>11-01-011 Strips-MaZw</label>
     <description>Strips-MaZw</description>
 
@@ -19,7 +20,7 @@
       <channel id="sensor_luminance" typeId="sensor_luminance">
         <label>Sensor (luminance)</label>
         <properties>
-          <property name="binding:*:DecimalType">SENSOR_MULTILEVEL;sensorType=LUMINANCE</property>
+          <property name="binding:*:DecimalType">SENSOR_MULTILEVEL;type=LUMINANCE</property>
         </properties>
       </channel>
       <channel id="battery-level" typeId="system.battery-level">
@@ -41,9 +42,10 @@
       <property name="model">11-01-011</property>
       <property name="manufacturerId">019A</property>
       <property name="manufacturerRef">0003:0003</property>
-      <property name="DefaultAssociations">1</property>
+      <property name="defaultAssociations">1</property>
     </properties>
 
+    <!-- CONFIGURATION DESCRIPTIONS -->
     <config-description>
 
       <!-- PARAMETER DEFINITIONS -->
@@ -52,8 +54,7 @@
         <label>Configuration Parameters</label>
       </parameter-group>
 
-      <parameter name="config_1_1" type="integer" groupName="configuration"
-                 min="0" max="255">
+      <parameter name="config_1_1" type="integer" groupName="configuration">
         <label>1: Notification type</label>
         <description>Define the notification type.</description>
         <default>1</default>
@@ -64,8 +65,7 @@
         </options>
       </parameter>
 
-      <parameter name="config_2_1" type="integer" groupName="configuration"
-                 min="0" max="255">
+      <parameter name="config_2_1" type="integer" groupName="configuration">
         <label>2: LED indication</label>
         <description>Specify if LED should indicate special event.</description>
         <default>1</default>

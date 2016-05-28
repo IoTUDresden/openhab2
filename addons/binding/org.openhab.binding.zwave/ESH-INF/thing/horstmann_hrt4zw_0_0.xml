@@ -4,18 +4,19 @@
   xmlns:thing="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0"
   xsi:schemaLocation="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0
                       http://eclipse.org/smarthome/schemas/thing-description/v1.0.0">
-  <thing-type id="horstmann_hrt4zw_00_000">
+
+  <thing-type id="horstmann_hrt4zw_00_000" listed="false">
     <label>HRT4-ZW Battery Powered Wall Thermostat</label>
     <description><![CDATA[
 Battery Powered Wall Thermostat<br /><h1>Overview</h1><p><strong>Note</strong>: This device is also sold as Secure SRT321</p>
-    !]]></description>
+    ]]></description>
 
     <!-- CHANNEL DEFINITIONS -->
     <channels>
       <channel id="sensor_temperature" typeId="sensor_temperature">
         <label>Sensor (temperature)</label>
         <properties>
-          <property name="binding:*:DecimalType">SENSOR_MULTILEVEL;sensorType=TEMPERATURE</property>
+          <property name="binding:*:DecimalType">SENSOR_MULTILEVEL;type=TEMPERATURE</property>
         </properties>
       </channel>
       <channel id="thermostat_mode" typeId="horstmann_hrt4zw_00_000_thermostat_mode">
@@ -33,7 +34,7 @@ Battery Powered Wall Thermostat<br /><h1>Overview</h1><p><strong>Note</strong>: 
       <channel id="thermostat_setpoint_heating" typeId="thermostat_setpoint">
         <label>Setpoint (heating)</label>
         <properties>
-          <property name="binding:*:DecimalType">THERMOSTAT_SETPOINT;setpointType=HEATING</property>
+          <property name="binding:*:DecimalType">THERMOSTAT_SETPOINT;type=HEATING</property>
         </properties>
       </channel>
       <channel id="battery-level" typeId="system.battery-level">
@@ -49,9 +50,10 @@ Battery Powered Wall Thermostat<br /><h1>Overview</h1><p><strong>Note</strong>: 
       <property name="model">HRT4-ZW</property>
       <property name="manufacturerId">0059</property>
       <property name="manufacturerRef">0001:0003</property>
-      <property name="DefaultAssociations">1,2,3,4,5</property>
+      <property name="defaultAssociations">1,2,3,4,5</property>
     </properties>
 
+    <!-- CONFIGURATION DESCRIPTIONS -->
     <config-description>
 
       <!-- PARAMETER DEFINITIONS -->
@@ -60,8 +62,7 @@ Battery Powered Wall Thermostat<br /><h1>Overview</h1><p><strong>Note</strong>: 
         <label>Configuration Parameters</label>
       </parameter-group>
 
-      <parameter name="config_1_1" type="integer" groupName="configuration"
-                 min="0" max="255">
+      <parameter name="config_1_1" type="integer" groupName="configuration">
         <label>1: Enable Temperature Sensor</label>
         <description>Controls the use of the temperature sensor on the device</description>
         <default>0</default>
@@ -71,8 +72,7 @@ Battery Powered Wall Thermostat<br /><h1>Overview</h1><p><strong>Note</strong>: 
         </options>
       </parameter>
 
-      <parameter name="config_2_1" type="integer" groupName="configuration"
-                 min="0" max="255">
+      <parameter name="config_2_1" type="integer" groupName="configuration">
         <label>2: Temperature Scale</label>
         <description>Controls the temperature sensor scale</description>
         <default>0</default>
@@ -95,27 +95,27 @@ Battery Powered Wall Thermostat<br /><h1>Overview</h1><p><strong>Note</strong>: 
         <label>Association Groups</label>
       </parameter-group>
 
-      <parameter name="group_1" type="text" groupName="association"  multiple="true">
+      <parameter name="group_1" type="text" groupName="association" multiple="true">
         <label>1: Thermostat Mode Set</label>
         <multipleLimit>4</multipleLimit>
       </parameter>
 
-      <parameter name="group_2" type="text" groupName="association"  multiple="true">
+      <parameter name="group_2" type="text" groupName="association" multiple="true">
         <label>2: Binary Switch Set</label>
         <multipleLimit>4</multipleLimit>
       </parameter>
 
-      <parameter name="group_3" type="text" groupName="association"  multiple="true">
+      <parameter name="group_3" type="text" groupName="association" multiple="true">
         <label>3: Unsolicited Battery Level Reports</label>
         <multipleLimit>4</multipleLimit>
       </parameter>
 
-      <parameter name="group_4" type="text" groupName="association"  multiple="true">
+      <parameter name="group_4" type="text" groupName="association" multiple="true">
         <label>4: Thermostat Set Point Reports</label>
         <multipleLimit>4</multipleLimit>
       </parameter>
 
-      <parameter name="group_5" type="text" groupName="association"  multiple="true">
+      <parameter name="group_5" type="text" groupName="association" multiple="true">
         <label>5: Unsolicited Sensor Multilevel Reports</label>
         <multipleLimit>4</multipleLimit>
       </parameter>

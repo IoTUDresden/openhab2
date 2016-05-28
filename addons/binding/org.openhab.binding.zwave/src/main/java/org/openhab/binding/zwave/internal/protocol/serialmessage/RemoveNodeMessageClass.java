@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014-2015 openHAB UG (haftungsbeschraenkt) and others.
+ * Copyright (c) 2014-2016 by the respective copyright holders.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,42 +8,48 @@
  */
 package org.openhab.binding.zwave.internal.protocol.serialmessage;
 
+import java.io.ByteArrayOutputStream;
+
 import org.openhab.binding.zwave.internal.protocol.SerialMessage;
 import org.openhab.binding.zwave.internal.protocol.ZWaveController;
+import org.openhab.binding.zwave.internal.protocol.ZWaveSerialMessageException;
 import org.openhab.binding.zwave.internal.protocol.event.ZWaveInclusionEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * This class processes a serial message from the zwave controller
- * 
+ *
  * @author Chris Jackson
  */
 public class RemoveNodeMessageClass extends ZWaveCommandProcessor {
     private static final Logger logger = LoggerFactory.getLogger(RemoveNodeMessageClass.class);
 
-    private final int REMOVE_NODE_ANY = 0x01;
-    private final int REMOVE_NODE_CONTROLLER = 0x02;
-    private final int REMOVE_NODE_SLAVE = 0x03;
-    private final int REMOVE_NODE_STOP = 0x05;
+    private final int REMOVE_NODE_ANY = 1;
+    private final int REMOVE_NODE_CONTROLLER = 2;
+    private final int REMOVE_NODE_SLAVE = 3;
+    private final int REMOVE_NODE_STOP = 5;
 
-    private final int REMOVE_NODE_STATUS_LEARN_READY = 0x01;
-    private final int REMOVE_NODE_STATUS_NODE_FOUND = 0x02;
-    private final int REMOVE_NODE_STATUS_REMOVING_SLAVE = 0x03;
-    private final int REMOVE_NODE_STATUS_REMOVING_CONTROLLER = 0x04;
-    private final int REMOVE_NODE_STATUS_DONE = 0x06;
-    private final int REMOVE_NODE_STATUS_FAILED = 0x07;
+    private final int REMOVE_NODE_STATUS_LEARN_READY = 1;
+    private final int REMOVE_NODE_STATUS_NODE_FOUND = 2;
+    private final int REMOVE_NODE_STATUS_REMOVING_SLAVE = 3;
+    private final int REMOVE_NODE_STATUS_REMOVING_CONTROLLER = 4;
+    private final int REMOVE_NODE_STATUS_DONE = 6;
+    private final int REMOVE_NODE_STATUS_FAILED = 7;
 
-    public SerialMessage doRequestStart(boolean highPower) {
+    public SerialMessage doRequestStart() {
         logger.debug("Setting controller into EXCLUSION mode.");
 
         // Queue the request
         SerialMessage newMessage = new SerialMessage(SerialMessage.SerialMessageClass.RemoveNodeFromNetwork,
                 SerialMessage.SerialMessageType.Request, SerialMessage.SerialMessageClass.RemoveNodeFromNetwork,
                 SerialMessage.SerialMessagePriority.High);
-        byte[] newPayload = { (byte) REMOVE_NODE_ANY, (byte) 255 };
 
-        newMessage.setMessagePayload(newPayload);
+        ByteArrayOutputStream outputData = new ByteArrayOutputStream();
+        outputData.write(REMOVE_NODE_ANY);
+        outputData.write(0x01); // TODO: This should use the callbackId
+        newMessage.setMessagePayload(outputData.toByteArray());
+
         return newMessage;
     }
 
@@ -54,15 +60,18 @@ public class RemoveNodeMessageClass extends ZWaveCommandProcessor {
         SerialMessage newMessage = new SerialMessage(SerialMessage.SerialMessageClass.RemoveNodeFromNetwork,
                 SerialMessage.SerialMessageType.Request, SerialMessage.SerialMessageClass.RemoveNodeFromNetwork,
                 SerialMessage.SerialMessagePriority.High);
-        byte[] newPayload = { (byte) REMOVE_NODE_STOP };
 
-        newMessage.setMessagePayload(newPayload);
+        ByteArrayOutputStream outputData = new ByteArrayOutputStream();
+        outputData.write(REMOVE_NODE_STOP);
+        outputData.write(254); // TODO: This should use the callbackId
+        newMessage.setMessagePayload(outputData.toByteArray());
+
         return newMessage;
     }
 
     @Override
     public boolean handleRequest(ZWaveController zController, SerialMessage lastSentMessage,
-            SerialMessage incomingMessage) {
+            SerialMessage incomingMessage) throws ZWaveSerialMessageException {
         switch (incomingMessage.getMessagePayloadByte(1)) {
             case REMOVE_NODE_STATUS_LEARN_READY:
                 logger.debug("Remove Node: Learn ready.");
@@ -82,9 +91,12 @@ public class RemoveNodeMessageClass extends ZWaveCommandProcessor {
                         ZWaveInclusionEvent.Type.ExcludeControllerFound, incomingMessage.getMessagePayloadByte(2)));
                 break;
             case REMOVE_NODE_STATUS_DONE:
-                logger.debug("NODE {}: Removed from network.", incomingMessage.getMessagePayloadByte(2));
-                zController.notifyEventListeners(new ZWaveInclusionEvent(ZWaveInclusionEvent.Type.ExcludeDone,
-                        incomingMessage.getMessagePayloadByte(2)));
+                if (incomingMessage.getMessagePayloadByte(2) != 0) {
+                    logger.debug("NODE {}: Removed from network.", incomingMessage.getMessagePayloadByte(2));
+                    zController.notifyEventListeners(new ZWaveInclusionEvent(ZWaveInclusionEvent.Type.ExcludeDone,
+                            incomingMessage.getMessagePayloadByte(2)));
+                }
+                logger.debug("Remove Node: Done.");
                 break;
             case REMOVE_NODE_STATUS_FAILED:
                 logger.debug("Remove Node: Failed.");
