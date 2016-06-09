@@ -1,7 +1,6 @@
 package org.openhab.io.semantic.core.internal.util;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.smarthome.core.items.GroupItem;
@@ -82,12 +81,16 @@ public class ConfigHelper {
     private void appendFunctionsOrState(String stateOrFunctionPrefix, Thing thing) {
         Item tmpItem = null;
         for (Channel channel : thing.getChannels()) {
-            for (Iterator<Item> iterator = channel.getLinkedItems().iterator(); iterator.hasNext();) {
-                tmpItem = iterator.next();
-                out.append("        ").append(stateOrFunctionPrefix).append(tmpItem.getName()).append("\n");
-                out.append("                Type: ").append(tmpItem.getType()).append("\n");
-                allreadyAddedItems.add(tmpItem.getName());
-            }
+
+            // FIXME this can be removed, the resource are allocated automatically by the semantic layer
+            /*
+             * for (Iterator<Item> iterator = channel.getLinkedItems().iterator(); iterator.hasNext();) {
+             * tmpItem = iterator.next();
+             * out.append("        ").append(stateOrFunctionPrefix).append(tmpItem.getName()).append("\n");
+             * out.append("                Type: ").append(tmpItem.getType()).append("\n");
+             * allreadyAddedItems.add(tmpItem.getName());
+             * }
+             */
         }
     }
 
