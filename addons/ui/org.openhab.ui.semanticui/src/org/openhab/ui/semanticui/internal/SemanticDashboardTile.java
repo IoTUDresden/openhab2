@@ -2,7 +2,7 @@ package org.openhab.ui.semanticui.internal;
 
 import org.openhab.ui.dashboard.DashboardTile;
 
-public final class SemanticDashboardTile implements DashboardTile {
+public class SemanticDashboardTile implements DashboardTile {
 
     @Override
     public String getImageUrl() {
@@ -25,7 +25,7 @@ public final class SemanticDashboardTile implements DashboardTile {
 
     @Override
     public String getUrl() {
-        return ".." + SemanticUIApp.WEBAPP_ALIAS + "/index.html";
+        return SemanticUIApp.WEBAPP_ALIAS + "/index.html";
     }
 
 }

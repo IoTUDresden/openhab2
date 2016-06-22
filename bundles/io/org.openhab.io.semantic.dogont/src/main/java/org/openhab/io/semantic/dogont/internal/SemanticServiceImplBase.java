@@ -121,7 +121,7 @@ public abstract class SemanticServiceImplBase extends AbstractItemEventSubscribe
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                copyThingsForPerformanceTest();
+                // copyThingsForPerformanceTest();
             }
         });
 
