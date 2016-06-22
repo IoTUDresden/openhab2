@@ -1,4 +1,4 @@
-package org.openhab.io.semantic.core;
+package org.openhab.io.semantic.core.util;
 
 /**
  * The Result from a semantic query

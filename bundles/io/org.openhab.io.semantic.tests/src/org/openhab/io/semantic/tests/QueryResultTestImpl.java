@@ -1,6 +1,6 @@
 package org.openhab.io.semantic.tests;
 
-import org.openhab.io.semantic.core.QueryResult;
+import org.openhab.io.semantic.core.util.QueryResult;
 
 public class QueryResultTestImpl implements QueryResult {
 	

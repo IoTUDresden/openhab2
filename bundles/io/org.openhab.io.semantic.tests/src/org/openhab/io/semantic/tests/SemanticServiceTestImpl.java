@@ -1,7 +1,7 @@
 package org.openhab.io.semantic.tests;
 
-import org.openhab.io.semantic.core.QueryResult;
 import org.openhab.io.semantic.core.SemanticService;
+import org.openhab.io.semantic.core.util.QueryResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

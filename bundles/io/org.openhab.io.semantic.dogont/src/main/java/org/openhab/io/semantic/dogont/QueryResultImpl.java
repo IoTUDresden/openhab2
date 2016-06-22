@@ -2,7 +2,7 @@ package org.openhab.io.semantic.dogont;
 
 import java.io.ByteArrayOutputStream;
 
-import org.openhab.io.semantic.core.QueryResult;
+import org.openhab.io.semantic.core.util.QueryResult;
 
 import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.query.ResultSetFormatter;

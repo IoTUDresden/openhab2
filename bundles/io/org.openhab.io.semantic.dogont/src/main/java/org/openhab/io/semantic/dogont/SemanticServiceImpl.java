@@ -11,8 +11,8 @@ import org.eclipse.smarthome.core.library.types.OnOffType;
 import org.eclipse.smarthome.core.library.types.UpDownType;
 import org.eclipse.smarthome.core.types.Command;
 import org.eclipse.smarthome.core.types.TypeParser;
-import org.openhab.io.semantic.core.QueryResult;
 import org.openhab.io.semantic.core.SemanticService;
+import org.openhab.io.semantic.core.util.QueryResult;
 import org.openhab.io.semantic.dogont.internal.SemanticServiceImplBase;
 import org.openhab.io.semantic.dogont.internal.util.QueryResource;
 import org.openhab.io.semantic.dogont.internal.util.SemanticConstants;
@@ -38,7 +38,7 @@ import com.hp.hpl.jena.rdf.model.RDFNode;
  * @author André Kühnert
  *
  */
-public class SemanticServiceImpl extends SemanticServiceImplBase implements SemanticService {
+public final class SemanticServiceImpl extends SemanticServiceImplBase implements SemanticService {
     private static final Logger logger = LoggerFactory.getLogger(SemanticServiceImpl.class);
 
     @Override

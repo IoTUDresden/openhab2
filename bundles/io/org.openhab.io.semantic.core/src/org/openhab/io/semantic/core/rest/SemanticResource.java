@@ -19,10 +19,10 @@ import org.apache.jena.atlas.json.JsonNull;
 import org.eclipse.smarthome.core.items.ItemRegistry;
 import org.eclipse.smarthome.core.thing.ThingRegistry;
 import org.eclipse.smarthome.io.rest.RESTResource;
-import org.openhab.io.semantic.core.QueryResult;
 import org.openhab.io.semantic.core.SemanticService;
 import org.openhab.io.semantic.core.internal.util.ConfigHelper;
 import org.openhab.io.semantic.core.internal.util.SemanticPostCommandBean;
+import org.openhab.io.semantic.core.util.QueryResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

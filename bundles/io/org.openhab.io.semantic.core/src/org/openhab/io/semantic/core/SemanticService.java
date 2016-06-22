@@ -1,5 +1,7 @@
 package org.openhab.io.semantic.core;
 
+import org.openhab.io.semantic.core.util.QueryResult;
+
 /**
  * The Semantic Service provides methods to access the things and items of openhab via semantic
  * annotation.

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" activate="activate" deactivate="deactivate" name="org.openhab.io.semantic.core.config.rest">
+   <implementation class="org.openhab.io.semantic.core.rest.SemanticConfigResource"/>
+   <service>
+      <provide interface="org.eclipse.smarthome.io.rest.RESTResource"/>
+   </service>
+   <reference bind="setConfigService" cardinality="1..1" interface="org.openhab.io.semantic.core.SemanticConfigService" name="SemanticConfigService" policy="static"/>
+</scr:component>
