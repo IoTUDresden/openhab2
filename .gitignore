@@ -19,3 +19,8 @@ distribution/openhabhome/userdata/mapdb/storage.mapdb
 distribution/openhabhome/userdata/mapdb/storage.mapdb.p
 distribution/openhabhome/userdata/mapdb/storage.mapdb.t
 features/*/src/main/history
+features/*/src/main/history
+
+bundles/io/*/doc/javadoc-arq/
+bundles/io/*/doc/javadoc-core/
+bundles/io/*/doc/javadoc-tdb/
