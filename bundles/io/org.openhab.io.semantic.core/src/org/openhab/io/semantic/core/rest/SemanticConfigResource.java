@@ -9,6 +9,7 @@ import javax.ws.rs.core.MediaType;
 
 import org.eclipse.smarthome.io.rest.RESTResource;
 import org.openhab.io.semantic.core.SemanticConfigService;
+import org.openhab.io.semantic.core.util.SemanticPerson;
 import org.openhab.io.semantic.core.util.SemanticThing;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +24,7 @@ public class SemanticConfigResource implements RESTResource {
 
     private SemanticConfigService configService;
 
-    public static final String PATH_SEMANTIC_CONFIG = "semanticcfg";
+    public static final String PATH_SEMANTIC_CONFIG = "semantic/extended";
 
     public void unsetConfigService() {
         configService = null;
@@ -40,11 +41,19 @@ public class SemanticConfigResource implements RESTResource {
     }
 
     @GET
-    @Path("/semanticthings")
+    @Path("/things")
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Gets all known things semantic annotated.")
     public List<SemanticThing> getSemanticThings() {
         return configService.getSemanticThings();
+    }
+
+    @GET
+    @Path("/persons")
+    @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Gets all known things semantic annotated.")
+    public List<SemanticPerson> getSemanticPersons() {
+        return configService.getSemanticPersons();
     }
 
 }

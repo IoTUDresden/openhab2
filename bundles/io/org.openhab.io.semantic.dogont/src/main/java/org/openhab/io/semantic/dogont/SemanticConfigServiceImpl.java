@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.openhab.io.semantic.core.SemanticConfigService;
 import org.openhab.io.semantic.core.util.SemanticLocation;
+import org.openhab.io.semantic.core.util.SemanticPerson;
 import org.openhab.io.semantic.core.util.SemanticThing;
 import org.openhab.io.semantic.dogont.internal.SemanticConfigServiceImplBase;
 import org.slf4j.Logger;
@@ -12,11 +13,6 @@ import org.slf4j.LoggerFactory;
 
 public final class SemanticConfigServiceImpl extends SemanticConfigServiceImplBase implements SemanticConfigService {
     private static final Logger logger = LoggerFactory.getLogger(SemanticConfigServiceImpl.class);
-
-    @Override
-    public void addPerson() {
-
-    }
 
     @Override
     public List<SemanticThing> getSemanticThings() {
@@ -31,6 +27,20 @@ public final class SemanticConfigServiceImpl extends SemanticConfigServiceImplBa
         }
 
         return tmpList;
+    }
+
+    @Override
+    public void addPerson(SemanticPerson person) {
+        // TODO complete
+    }
+
+    @Override
+    public List<SemanticPerson> getSemanticPersons() {
+        List<SemanticPerson> persons = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            persons.add(new SemanticPerson("Testperson_" + i));
+        }
+        return persons;
     }
 
 }
