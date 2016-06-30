@@ -38,7 +38,9 @@ public final class SemanticConfigServiceImpl extends SemanticConfigServiceImplBa
     public List<SemanticPerson> getSemanticPersons() {
         List<SemanticPerson> persons = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-            persons.add(new SemanticPerson("Testperson_" + i));
+            SemanticPerson p = new SemanticPerson("Testperson_" + i);
+            p.setUid("UID_Testperson_" + i);
+            persons.add(p);
         }
         return persons;
     }
