@@ -7,7 +7,7 @@
  */
 package org.openhab.binding.viccirobot.internal;
 
-import static org.openhab.binding.viccirobot.VicciRobotBindingConstants.THING_TYPE_ROBOT;
+import static org.openhab.binding.viccirobot.VicciRobotBindingConstants.*;
 
 import java.util.Collections;
 import java.util.Set;
@@ -35,11 +35,21 @@ public class VicciRobotHandlerFactory extends BaseThingHandlerFactory {
 
     @Override
     protected ThingHandler createHandler(Thing thing) {
-
         ThingTypeUID thingTypeUID = thing.getThingTypeUID();
 
         if (thingTypeUID.equals(THING_TYPE_ROBOT)) {
-            return new VicciRobotHandler(thing);
+            Object roboType = thing.getConfiguration().get(PARAMETER_ROBOT_TYPE);
+            if (ROBOT_TYPE_TURTLEBOT.equals(roboType)) {
+                return new VicciRobotHandler(thing);
+            }
+
+            if (ROBOT_TYPE_YOUBOT.equals(roboType)) {
+                return new VicciRobotHandler(thing);
+            }
+
+            if (ROBOT_TYPE_NAO.equals(roboType)) {
+                return new VicciRobotHandler(thing);
+            }
         }
 
         return null;

@@ -1,31 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<thing:thing-descriptions bindingId="viccirobot"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xmlns:thing="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0"
-        xsi:schemaLocation="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0 http://eclipse.org/smarthome/schemas/thing-description-1.0.0.xsd">
+<thing:thing-descriptions bindingId="viccirobot" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:thing="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0"
+	xsi:schemaLocation="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0 http://eclipse.org/smarthome/schemas/thing-description-1.0.0.xsd">
 
-    <!-- robot -->
-    <thing-type id="robot">
-        <label>Vicci Robot</label>
-        <description>Thing for controlling vicci robots</description>
+	<!-- robot -->
+	<thing-type id="robot">
+		<label>Vicci Robot</label>
+		<description>Thing for controlling vicci robots</description>
 
-        <channels>
-            <channel id="moveToLocation" typeId="type_moveToLocation"/>
-            <channel id="movementState" typeId="type_movementState"/>
-        </channels>
-    </thing-type>
+		<channels>
+			<channel id="moveToLocation" typeId="type_moveToLocation" />
+			<channel id="movementState" typeId="type_movementState" />
+		</channels>
 
-    <!-- Channel Types -->
-    <channel-type id="type_moveToLocation">
-        <item-type>String</item-type>
-        <label>Move to</label>
-        <description>Move the robot to the given location</description>
-    </channel-type>
-    
-    <channel-type id="type_movementState">
-        <item-type>String</item-type>
-        <label>Movement State</label>
-        <description>State if the robot is moving or reached his location</description>
-    </channel-type>
+		<config-description>
+			<parameter name="robotType" type="text" required="true">
+				<label>Robot Type</label>
+				<description>The Type of the robot (turtlebot, nao, youbot)</description>
+				<default>turtlebot</default>
+			</parameter>
+		</config-description>
+
+	</thing-type>
+
+	<!-- Channel Types -->
+	<channel-type id="type_moveToLocation">
+		<item-type>String</item-type>
+		<label>Move to</label>
+		<description>Move the robot to the given location</description>
+	</channel-type>
+
+	<channel-type id="type_movementState">
+		<item-type>String</item-type>
+		<label>Movement State</label>
+		<description>State if the robot is moving or reached his location</description>
+	</channel-type>
 
 </thing:thing-descriptions>

@@ -26,4 +26,11 @@ public class VicciRobotBindingConstants {
     public final static String CHANNEL_MOVE_TO_LOCATION = "moveToLocation";
     public final static String CHANNEL_MOVEMENT_STATE = "movementState";
 
+    // List of all parameters
+    public final static String PARAMETER_ROBOT_TYPE = "robotType";
+
+    public final static String ROBOT_TYPE_TURTLEBOT = "turtlebot";
+    public final static String ROBOT_TYPE_NAO = "nao";
+    public final static String ROBOT_TYPE_YOUBOT = "youbot";
+
 }
