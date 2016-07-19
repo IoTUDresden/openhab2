@@ -16,7 +16,9 @@ import org.eclipse.smarthome.core.thing.Thing;
 import org.eclipse.smarthome.core.thing.ThingTypeUID;
 import org.eclipse.smarthome.core.thing.binding.BaseThingHandlerFactory;
 import org.eclipse.smarthome.core.thing.binding.ThingHandler;
-import org.openhab.binding.viccirobot.handler.VicciRobotHandler;
+import org.openhab.binding.viccirobot.handler.NaoHandler;
+import org.openhab.binding.viccirobot.handler.TurtlebotHandler;
+import org.openhab.binding.viccirobot.handler.YoubotHandler;
 
 /**
  * The {@link VicciRobotHandlerFactory} is responsible for creating things and thing
@@ -39,19 +41,23 @@ public class VicciRobotHandlerFactory extends BaseThingHandlerFactory {
 
         if (thingTypeUID.equals(THING_TYPE_ROBOT)) {
             Object roboType = thing.getConfiguration().get(PARAMETER_ROBOT_TYPE);
-            if (ROBOT_TYPE_TURTLEBOT.equals(roboType)) {
-                return new VicciRobotHandler(thing);
-            }
-
-            if (ROBOT_TYPE_YOUBOT.equals(roboType)) {
-                return new VicciRobotHandler(thing);
-            }
-
-            if (ROBOT_TYPE_NAO.equals(roboType)) {
-                return new VicciRobotHandler(thing);
-            }
+            int port = (int) thing.getConfiguration().get(PARAMETER_ROBOT_PORT);
+            String host = (String) thing.getConfiguration().get(PARAMETER_ROBOT_HOST);
+            return createHandler(thing, roboType, host, port);
         }
+        return null;
+    }
 
+    private ThingHandler createHandler(Thing thing, Object roboType, String host, int port) {
+        if (ROBOT_TYPE_TURTLEBOT.equals(roboType)) {
+            return new TurtlebotHandler(thing, host, port);
+        }
+        if (ROBOT_TYPE_YOUBOT.equals(roboType)) {
+            return new YoubotHandler(thing, host, port);
+        }
+        if (ROBOT_TYPE_NAO.equals(roboType)) {
+            return new NaoHandler(thing, host, port);
+        }
         return null;
     }
 }

@@ -9,6 +9,7 @@
 		<description>Thing for controlling vicci robots</description>
 
 		<channels>
+			<channel id="setCurrentLocation" typeId="type_setCurrentLocation" />
 			<channel id="moveToLocation" typeId="type_moveToLocation" />
 			<channel id="movementState" typeId="type_movementState" />
 		</channels>
@@ -19,11 +20,29 @@
 				<description>The Type of the robot (turtlebot, nao, youbot)</description>
 				<default>turtlebot</default>
 			</parameter>
-		</config-description>
 
+			<parameter name="robotHost" type="text" required="true">
+				<label>Robot Host</label>
+				<description>The host address for the ROS</description>
+				<default>http://192.168.1.15</default>
+			</parameter>
+
+			<parameter name="robotPort" type="integer" required="true">
+				<label>Robot Port</label>
+				<description>The Port on the host</description>
+				<default>9090</default>
+			</parameter>
+
+		</config-description>
 	</thing-type>
 
 	<!-- Channel Types -->
+	<channel-type id="type_setCurrentLocation">
+		<item-type>String</item-type>
+		<label>Set Location</label>
+		<description>Sets the current position of the robot(at start, the robot wont know, where it is).</description>
+	</channel-type>
+
 	<channel-type id="type_moveToLocation">
 		<item-type>String</item-type>
 		<label>Move to</label>
@@ -34,6 +53,7 @@
 		<item-type>String</item-type>
 		<label>Movement State</label>
 		<description>State if the robot is moving or reached his location</description>
+		<state readOnly="true" />
 	</channel-type>
 
 </thing:thing-descriptions>

@@ -5,7 +5,11 @@ Bundle-SymbolicName: org.openhab.binding.viccirobot;singleton:=true
 Bundle-Vendor: openHAB
 Bundle-Version: 2.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
-Bundle-ClassPath: .
+Bundle-ClassPath: .,
+ lib/nao.jar,
+ lib/robot.jar,
+ lib/turtlebot.jar,
+ lib/youbot.jar
 Import-Package: com.google.common.collect,
  org.eclipse.smarthome.config.core,
  org.eclipse.smarthome.core.library.types,

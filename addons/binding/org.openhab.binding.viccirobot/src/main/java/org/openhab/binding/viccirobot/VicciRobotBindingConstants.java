@@ -23,11 +23,14 @@ public class VicciRobotBindingConstants {
     public final static ThingTypeUID THING_TYPE_ROBOT = new ThingTypeUID(BINDING_ID, "robot");
 
     // List of all Channel ids
+    public final static String CHANNEL_SET_CURRENT_LOCATION = "setCurrentLocation";
     public final static String CHANNEL_MOVE_TO_LOCATION = "moveToLocation";
     public final static String CHANNEL_MOVEMENT_STATE = "movementState";
 
     // List of all parameters
     public final static String PARAMETER_ROBOT_TYPE = "robotType";
+    public final static String PARAMETER_ROBOT_HOST = "robotHost";
+    public final static String PARAMETER_ROBOT_PORT = "robotPort";
 
     public final static String ROBOT_TYPE_TURTLEBOT = "turtlebot";
     public final static String ROBOT_TYPE_NAO = "nao";
