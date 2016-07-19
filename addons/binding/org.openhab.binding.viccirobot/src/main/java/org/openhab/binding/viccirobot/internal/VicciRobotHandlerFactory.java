@@ -9,6 +9,7 @@ package org.openhab.binding.viccirobot.internal;
 
 import static org.openhab.binding.viccirobot.VicciRobotBindingConstants.*;
 
+import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.Set;
 
@@ -41,9 +42,9 @@ public class VicciRobotHandlerFactory extends BaseThingHandlerFactory {
 
         if (thingTypeUID.equals(THING_TYPE_ROBOT)) {
             Object roboType = thing.getConfiguration().get(PARAMETER_ROBOT_TYPE);
-            int port = (int) thing.getConfiguration().get(PARAMETER_ROBOT_PORT);
+            BigDecimal port = (BigDecimal) thing.getConfiguration().get(PARAMETER_ROBOT_PORT);
             String host = (String) thing.getConfiguration().get(PARAMETER_ROBOT_HOST);
-            return createHandler(thing, roboType, host, port);
+            return createHandler(thing, roboType, host, port.intValue());
         }
         return null;
     }

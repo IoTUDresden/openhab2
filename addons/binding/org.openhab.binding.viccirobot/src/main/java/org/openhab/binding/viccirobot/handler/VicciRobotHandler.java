@@ -17,6 +17,7 @@ import org.eclipse.smarthome.core.thing.ThingStatus;
 import org.eclipse.smarthome.core.thing.ThingStatusDetail;
 import org.eclipse.smarthome.core.thing.binding.BaseThingHandler;
 import org.eclipse.smarthome.core.types.Command;
+import org.eclipse.smarthome.core.types.RefreshType;
 import org.openhab.binding.viccirobot.internal.LocationUtil;
 import org.openhab.binding.viccirobot.internal.MovementState;
 import org.openhab.binding.viccirobot.internal.MovementState.ArrivedState;
@@ -59,6 +60,11 @@ public class VicciRobotHandler extends BaseThingHandler {
 
     @Override
     public void handleCommand(ChannelUID channelUID, Command command) {
+        if (command == RefreshType.REFRESH) {
+            // sometimes refresh command is send at startup, will cause a error message
+            return;
+        }
+
         if (channelUID.getId().equals(CHANNEL_MOVE_TO_LOCATION)) {
             moveToLocation(command);
         } else if (channelUID.getId().equals(CHANNEL_SET_CURRENT_LOCATION)) {
@@ -113,7 +119,8 @@ public class VicciRobotHandler extends BaseThingHandler {
     @Override
     public void initialize() {
         super.initialize();
-        tryConnect(200);
+        updateStatus(ThingStatus.INITIALIZING);
+        tryConnect(200, true);
         startConnectionStatePolling();
     }
 
@@ -133,7 +140,7 @@ public class VicciRobotHandler extends BaseThingHandler {
                     wasConnected = false;
                     updateStatus(ThingStatus.OFFLINE, ThingStatusDetail.COMMUNICATION_ERROR, MSG_NOT_CONNECTED);
                     if (tryReconnect) {
-                        tryConnect(0);
+                        tryConnect(0, false);
                     }
                 }
             }
@@ -141,11 +148,11 @@ public class VicciRobotHandler extends BaseThingHandler {
     }
 
     /**
-     * Trys to connect, till a connection could be established
+     * Tries to connect, till a connection could be established
      *
      * @param delay
      */
-    private void tryConnect(int delay) {
+    private void tryConnect(int delay, final boolean updateStatus) {
         scheduler.schedule(new Runnable() {
             @Override
             public void run() {
@@ -155,8 +162,10 @@ public class VicciRobotHandler extends BaseThingHandler {
                     wasConnected = true;
                 } catch (NotConnectedException e) {
                     logger.error(e.getMessage());
-                    updateStatus(ThingStatus.OFFLINE, ThingStatusDetail.COMMUNICATION_ERROR, MSG_NOT_CONNECTED);
-                    tryConnect(reconnectDelay);
+                    if (updateStatus) {
+                        updateStatus(ThingStatus.OFFLINE, ThingStatusDetail.COMMUNICATION_ERROR, MSG_NOT_CONNECTED);
+                    }
+                    tryConnect(reconnectDelay, false);
                 }
             }
         }, delay, TimeUnit.MILLISECONDS);
