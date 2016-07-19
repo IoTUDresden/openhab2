@@ -4,21 +4,28 @@
         xmlns:thing="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0"
         xsi:schemaLocation="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0 http://eclipse.org/smarthome/schemas/thing-description-1.0.0.xsd">
 
-    <!-- Sample Thing Type -->
-    <thing-type id="sample">
-        <label>VicciRobot Binding Thing</label>
-        <description>Sample thing for VicciRobot Binding</description>
+    <!-- robot -->
+    <thing-type id="robot">
+        <label>Vicci Robot</label>
+        <description>Thing for controlling vicci robots</description>
 
         <channels>
-            <channel id="channel1" typeId="sample-channel"/>
+            <channel id="moveToLocation" typeId="type_moveToLocation"/>
+            <channel id="movementState" typeId="type_movementState"/>
         </channels>
     </thing-type>
 
-    <!-- Sample Channel Type -->
-    <channel-type id="sample-channel">
-        <item-type>viccirobotItem</item-type>
-        <label>VicciRobot Binding Channel</label>
-        <description>Sample channel for VicciRobot Binding</description>
+    <!-- Channel Types -->
+    <channel-type id="type_moveToLocation">
+        <item-type>String</item-type>
+        <label>Move to</label>
+        <description>Move the robot to the given location</description>
+    </channel-type>
+    
+    <channel-type id="type_movementState">
+        <item-type>String</item-type>
+        <label>Movement State</label>
+        <description>State if the robot is moving or reached his location</description>
     </channel-type>
 
 </thing:thing-descriptions>

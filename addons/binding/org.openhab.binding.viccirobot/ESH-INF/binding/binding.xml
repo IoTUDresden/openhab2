@@ -5,7 +5,9 @@
         xsi:schemaLocation="http://eclipse.org/smarthome/schemas/binding/v1.0.0 http://eclipse.org/smarthome/schemas/binding-1.0.0.xsd">
 
     <name>VicciRobot Binding</name>
-    <description>This is the binding for VicciRobot.</description>
+    <description>
+    This is the binding for VicciRobot. This binding enables controlling of robots (nao, turtlebot, youbot - only turtle is fully tested).    
+    </description>
     <author>Andre Kuehnert</author>
 
 </binding:binding>

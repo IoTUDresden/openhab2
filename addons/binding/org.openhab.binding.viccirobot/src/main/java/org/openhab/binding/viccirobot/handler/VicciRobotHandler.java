@@ -7,7 +7,7 @@
  */
 package org.openhab.binding.viccirobot.handler;
 
-import static org.openhab.binding.viccirobot.VicciRobotBindingConstants.*;
+import static org.openhab.binding.viccirobot.VicciRobotBindingConstants.CHANNEL_MOVE_TO_LOCATION;
 
 import org.eclipse.smarthome.core.thing.ChannelUID;
 import org.eclipse.smarthome.core.thing.Thing;
@@ -19,21 +19,21 @@ import org.slf4j.LoggerFactory;
 /**
  * The {@link VicciRobotHandler} is responsible for handling commands, which are
  * sent to one of the channels.
- * 
+ *
  * @author Andre Kuehnert - Initial contribution
  */
 public class VicciRobotHandler extends BaseThingHandler {
 
     private Logger logger = LoggerFactory.getLogger(VicciRobotHandler.class);
 
-	public VicciRobotHandler(Thing thing) {
-		super(thing);
-	}
+    public VicciRobotHandler(Thing thing) {
+        super(thing);
+    }
 
-	@Override
-	public void handleCommand(ChannelUID channelUID, Command command) {
-        if(channelUID.getId().equals(CHANNEL_1)) {
+    @Override
+    public void handleCommand(ChannelUID channelUID, Command command) {
+        if (channelUID.getId().equals(CHANNEL_MOVE_TO_LOCATION)) {
             // TODO: handle command
         }
-	}
+    }
 }

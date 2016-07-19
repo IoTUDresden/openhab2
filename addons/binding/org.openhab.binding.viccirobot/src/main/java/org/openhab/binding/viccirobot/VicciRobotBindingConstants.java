@@ -10,19 +10,20 @@ package org.openhab.binding.viccirobot;
 import org.eclipse.smarthome.core.thing.ThingTypeUID;
 
 /**
- * The {@link VicciRobotBinding} class defines common constants, which are 
+ * The {@link VicciRobotBinding} class defines common constants, which are
  * used across the whole binding.
- * 
+ *
  * @author Andre Kuehnert - Initial contribution
  */
 public class VicciRobotBindingConstants {
 
     public static final String BINDING_ID = "viccirobot";
-    
+
     // List of all Thing Type UIDs
-    public final static ThingTypeUID THING_TYPE_SAMPLE = new ThingTypeUID(BINDING_ID, "sample");
+    public final static ThingTypeUID THING_TYPE_ROBOT = new ThingTypeUID(BINDING_ID, "robot");
 
     // List of all Channel ids
-    public final static String CHANNEL_1 = "channel1";
+    public final static String CHANNEL_MOVE_TO_LOCATION = "moveToLocation";
+    public final static String CHANNEL_MOVEMENT_STATE = "movementState";
 
 }
