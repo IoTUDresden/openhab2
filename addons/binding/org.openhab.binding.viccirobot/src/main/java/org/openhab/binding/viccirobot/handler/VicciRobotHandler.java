@@ -11,6 +11,7 @@ import static org.openhab.binding.viccirobot.VicciRobotBindingConstants.*;
 
 import java.util.concurrent.TimeUnit;
 
+import org.eclipse.smarthome.core.library.types.StringType;
 import org.eclipse.smarthome.core.thing.ChannelUID;
 import org.eclipse.smarthome.core.thing.Thing;
 import org.eclipse.smarthome.core.thing.ThingStatus;
@@ -22,6 +23,7 @@ import org.openhab.binding.viccirobot.internal.LocationUtil;
 import org.openhab.binding.viccirobot.internal.MovementState;
 import org.openhab.binding.viccirobot.internal.MovementState.ArrivedState;
 import org.openhab.binding.viccirobot.internal.MovementState.ErrorState;
+import org.openhab.binding.viccirobot.internal.MovementState.MovingState;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -48,9 +50,10 @@ public class VicciRobotHandler extends BaseThingHandler {
     private static final int reconnectDelay = 3000;
 
     // ms for the interval to check the connection state of the robot
-    private static final int connectCheckingInterval = 3000;
+    private static final int connectCheckingInterval = 1000;
 
     private Robot robot;
+    private Location lastLocation;
     private volatile boolean wasConnected = false;
 
     public VicciRobotHandler(Thing thing, Robot robot) {
@@ -67,7 +70,7 @@ public class VicciRobotHandler extends BaseThingHandler {
 
         if (channelUID.getId().equals(CHANNEL_MOVE_TO_LOCATION)) {
             moveToLocation(command);
-        } else if (channelUID.getId().equals(CHANNEL_SET_CURRENT_LOCATION)) {
+        } else if (channelUID.getId().equals(CHANNEL_CURRENT_LOCATION)) {
             setCurrentLocation(command);
         }
     }
@@ -92,9 +95,10 @@ public class VicciRobotHandler extends BaseThingHandler {
         }
 
         try {
-            robot.moveTo(location); // TODO This Method should Block, after that, the robot should have reached his
-                                    // position
-            // maybe we need also to lock, till the robot is finished
+            updateMovementState(new MovingState(command.toString()));
+            robot.moveTo(location);
+            // TODO after moving we must check if the robot has arrived the given location.
+            // There is no error if the robot abort moving
             updateMovementState(new ArrivedState(command.toString()));
         } catch (NotConnectedException | CannotMoveToMovementTargetException e) {
             logger.error(e.getMessage());
@@ -121,30 +125,56 @@ public class VicciRobotHandler extends BaseThingHandler {
         super.initialize();
         updateStatus(ThingStatus.INITIALIZING);
         tryConnect(200, true);
-        startConnectionStatePolling();
+        startConnectionAndLocationPolling();
     }
 
     /**
      * Checks if connected, and starts reconnection if not connected
      */
-    private void startConnectionStatePolling() {
+    private void startConnectionAndLocationPolling() {
         scheduler.scheduleWithFixedDelay(new Runnable() {
             @Override
             public void run() {
-                if (robot.getIsConnected() && !wasConnected) {
-                    updateStatus(ThingStatus.ONLINE);
-                }
-
-                if (!robot.getIsConnected() && wasConnected) {
-                    boolean tryReconnect = wasConnected;
-                    wasConnected = false;
-                    updateStatus(ThingStatus.OFFLINE, ThingStatusDetail.COMMUNICATION_ERROR, MSG_NOT_CONNECTED);
-                    if (tryReconnect) {
-                        tryConnect(0, false);
-                    }
-                }
+                updateLocation();
+                updateConnectStatus();
             }
         }, 2000, connectCheckingInterval, TimeUnit.MILLISECONDS);
+    }
+
+    private void updateLocation() {
+        if (robot.getIsConnected()) {
+            Location l = robot.getLocation();
+            if (l != null && locationHasChanged(l)) {
+                lastLocation = l;
+                updateState(CHANNEL_CURRENT_LOCATION, new StringType(l.toString()));
+            }
+
+            if (l == null) {
+                updateState(CHANNEL_CURRENT_LOCATION, new StringType("ERROR"));
+            }
+        }
+    }
+
+    private boolean locationHasChanged(Location newLocation) {
+        if (lastLocation == null) {
+            return true;
+        }
+        return !newLocation.equals(lastLocation);
+    }
+
+    private void updateConnectStatus() {
+        if (robot.getIsConnected() && !wasConnected) {
+            updateStatus(ThingStatus.ONLINE);
+        }
+
+        if (!robot.getIsConnected() && wasConnected) {
+            boolean tryReconnect = wasConnected;
+            wasConnected = false;
+            updateStatus(ThingStatus.OFFLINE, ThingStatusDetail.COMMUNICATION_ERROR, MSG_NOT_CONNECTED);
+            if (tryReconnect) {
+                tryConnect(0, false);
+            }
+        }
     }
 
     /**

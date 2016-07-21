@@ -9,7 +9,7 @@
 		<description>Thing for controlling vicci robots</description>
 
 		<channels>
-			<channel id="setCurrentLocation" typeId="type_setCurrentLocation" />
+			<channel id="currentLocation" typeId="type_currentLocation" />
 			<channel id="moveToLocation" typeId="type_moveToLocation" />
 			<channel id="movementState" typeId="type_movementState" />
 		</channels>
@@ -54,6 +54,12 @@
 		<label>Movement State</label>
 		<description>State if the robot is moving or reached his location</description>
 		<state readOnly="true" />
+	</channel-type>
+
+	<channel-type id="type_currentLocation">
+		<item-type>String</item-type>
+		<label>Current Location</label>
+		<description>Current Location of the robot. You can also set the position (P: 12,12 11,12 O: 10,23 0,8)</description>
 	</channel-type>
 
 </thing:thing-descriptions>
