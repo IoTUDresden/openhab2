@@ -4,30 +4,31 @@
 <head>
 
 <!-- TODO use static site generator http://webgen.gettalong.org/ -->
+<!-- http://startbootstrap.com/template-overviews/sb-admin/ -->
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
 
-    <title>Semantic Configuration</title>
+<title>Semantic Configuration</title>
 
-    <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+<!-- Bootstrap Core CSS -->
+<link href="css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Custom CSS -->
-    <link href="css/sb-admin.css" rel="stylesheet">
+<!-- Custom CSS -->
+<link href="css/sb-admin.css" rel="stylesheet">
 
-    <!-- Morris Charts CSS -->
-    <link href="css/plugins/morris.css" rel="stylesheet">
+<!-- Morris Charts CSS -->
+<link href="css/plugins/morris.css" rel="stylesheet">
 
-    <!-- Custom Fonts -->
-    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<!-- Custom Fonts -->
+<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
@@ -36,79 +37,126 @@
 
 <body>
 
-    <div id="wrapper">
+	<div id="wrapper">
 
-        <!-- Navigation -->
-        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="index.html">Semantic Configuration</a>
-            </div>
+		<!-- Navigation -->
+		<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="index.html">Semantic Configuration</a>
+			</div>
 
-            <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
-            <div class="collapse navbar-collapse navbar-ex1-collapse">
-                <ul class="nav navbar-nav side-nav">
-                    <li class="active">
-                        <a href="index.html"><i class="fa fa-fw fa-wrench"></i> Things</a>
-                    </li>
-                    <li>
-                        <a href="persons.html"><i class="fa fa-fw fa-users"></i> Persons</a>
-                    </li>
-                    <li>
-                        <a href="locations.html"><i class="fa fa-fw fa-map-marker"></i> Locations</a>
-                    </li>
-                </ul>
-            </div>
-            <!-- /.navbar-collapse -->
-        </nav>
+			<!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav side-nav">
+					<li class="active"><a href="index.html"><i class="fa fa-fw fa-wrench"></i> Things</a></li>
+					<li><a href="persons.html"><i class="fa fa-fw fa-users"></i> Persons</a></li>
+					<li><a href="locations.html"><i class="fa fa-fw fa-map-marker"></i> Locations</a></li>
+				</ul>
+			</div>
+			<!-- /.navbar-collapse -->
+		</nav>
 
-        <div id="page-wrapper">
+		<div id="page-wrapper">
 
-            <div class="container-fluid">
+			<div class="container-fluid">
 
-                <!-- Page Heading -->
-                <div class="row">
-                    <div class="col-lg-12">
-                        <h1 class="page-header">
-                            RoSI <small>Things</small>
-                        </h1>
-                        <ol class="breadcrumb">
-                            <li>
-                                <i class="fa fa-wrench"></i>  <a href="index.html">Semantic Configuration</a>
-                            </li>
-                            <li class="active">
-                                <i class="fa fa-wrench"></i> Things
-                            </li>
-                        </ol>
-                    </div>
-                </div>
-                <!-- /.row -->
+				<!-- Page Heading -->
+				<div class="row">
+					<div class="col-lg-12">
+						<h1 class="page-header">
+							RoSI <small>Things</small>
+						</h1>
+						<ol class="breadcrumb">
+							<li><i class="fa fa-wrench"></i> <a href="index.html">Semantic Configuration</a></li>
+							<li class="active"><i class="fa fa-wrench"></i> Things</li>
+						</ol>
+					</div>
+				</div>
+				<!-- /.row -->
 
-            </div>
-            <!-- /.container-fluid -->
 
-        </div>
-        <!-- /#page-wrapper -->
+				<div class="table-responsive">
+					<table class="table table-bordered table-hover table-striped">
+						<thead>
+							<tr>
+								<th>Name</th>
+								<th>ID</th>
+								<th>Items</th>
+								<th>Location</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>tinkerforge_temp_1</td>
+								<td>Thing_tinkerforge_temp_1</td>
+								<td>tinkerforge_temp_1</td>
+								<td>
+									<div class="form-group">
+										<select class="form-control">
+											<option>first select is current loc</option>
+											<option>kitchen</option>
+											<option>living room</option>
+										</select>
+									</div>
+								</td>
+							</tr>
+							<tr>
+                                <td>tinkerforge_temp_2</td>
+                                <td>Thing_tinkerforge_temp_2</td>
+                                <td>tinkerforge_temp_2</td>
+                                <td>
+                                    <div class="form-group">
+                                        <select class="form-control">
+                                            <option>first select is current loc</option>
+                                            <option>kitchen</option>
+                                            <option>living room</option>
+                                        </select>
+                                    </div>
+                                </td>
+							</tr>
+							<tr>
+                                <td>tinkerforge_temp_3</td>
+                                <td>Thing_tinkerforge_temp_3</td>
+                                <td>tinkerforge_temp_3</td>
+                                <td>
+                                    <div class="form-group">
+                                        <select class="form-control">
+                                            <option>first select is current loc</option>
+                                            <option>kitchen</option>
+                                            <option>living room</option>
+                                        </select>
+                                    </div>
+                                </td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 
-    </div>
-    <!-- /#wrapper -->
 
-    <!-- jQuery -->
-    <script src="js/jquery.js"></script>
+			</div>
+			<!-- /.container-fluid -->
 
-    <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
+		</div>
+		<!-- /#page-wrapper -->
 
-    <!-- Morris Charts JavaScript -->
-    <script src="js/plugins/morris/raphael.min.js"></script>
-    <script src="js/plugins/morris/morris.min.js"></script>
-    <script src="js/plugins/morris/morris-data.js"></script>
+	</div>
+	<!-- /#wrapper -->
+
+	<!-- jQuery -->
+	<script src="js/jquery.js"></script>
+
+	<!-- Bootstrap Core JavaScript -->
+	<script src="js/bootstrap.min.js"></script>
+
+	<!-- Morris Charts JavaScript -->
+	<script src="js/plugins/morris/raphael.min.js"></script>
+	<script src="js/plugins/morris/morris.min.js"></script>
+	<script src="js/plugins/morris/morris-data.js"></script>
 
 </body>
 
