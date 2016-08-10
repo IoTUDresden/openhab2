@@ -30,6 +30,9 @@ import com.hp.hpl.jena.query.ResultSetFactory;
 import com.hp.hpl.jena.query.ResultSetRewindable;
 import com.hp.hpl.jena.rdf.model.Literal;
 import com.hp.hpl.jena.rdf.model.RDFNode;
+import com.hp.hpl.jena.update.UpdateAction;
+import com.hp.hpl.jena.update.UpdateFactory;
+import com.hp.hpl.jena.update.UpdateRequest;
 
 /**
  * Implementation of the semantic service, with the <a
@@ -285,5 +288,29 @@ public final class SemanticServiceImpl extends SemanticServiceImplBase implement
             openHabDataSet.end();
         }
         return node == null ? null : node.getString();
+    }
+
+    @Override
+    public boolean executeUpdate(String updateStmt) {
+        boolean success = false;
+        if (updateStmt == null) {
+            logger.error("No update stmt. Update not executed.");
+            return success;
+        }
+
+        try {
+            openHabDataSet.begin(ReadWrite.WRITE);
+            UpdateRequest req = UpdateFactory.create(updateStmt);
+            UpdateAction.execute(req, getInstanceModel());
+            openHabDataSet.commit();
+            success = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error(e.getMessage());
+        } finally {
+            openHabDataSet.end();
+        }
+
+        return success;
     }
 }

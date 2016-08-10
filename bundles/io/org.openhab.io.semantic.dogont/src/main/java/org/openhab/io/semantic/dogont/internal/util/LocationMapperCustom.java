@@ -21,6 +21,8 @@ public class LocationMapperCustom extends LocationMapper {
         // seems that the dogont, ucum and muo-vocab is enough at this moment
         addAltEntry("http://elite.polito.it/ontologies/dogont.owl",
                 SemanticConstants.DEFAULT_ONTOLOGY_PATH + "dogont.owl");
+        addAltEntry("http://openhab-semantic/0.1/dogont-vicci-extension",
+                SemanticConstants.DEFAULT_ONTOLOGY_PATH + "dogont-vicci-extension.ttl");
         addAltEntry("http://purl.org/NET/muo/ucum/", SemanticConstants.DEFAULT_ONTOLOGY_PATH + "ucum.ttl");
         addAltEntry("http://purl.org/NET/muo/muo-vocab.owl/",
                 SemanticConstants.DEFAULT_ONTOLOGY_PATH + "muo-vocab.owl.ttl");

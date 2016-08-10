@@ -1,6 +1,7 @@
 package org.openhab.io.semantic.dogont.internal.util;
 
 import org.openhab.io.semantic.dogont.internal.ontology.DogontSchema;
+import org.openhab.io.semantic.dogont.internal.ontology.VicciExtensionSchema;
 
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.ontology.Ontology;
@@ -15,6 +16,7 @@ public class SchemaUtil {
      */
     public static void addRequiredNamespacePrefixToInstanceModel(Model model) {
         model.setNsPrefix("base", "http://openhab-semantic/0.1/instance");
+        model.setNsPrefix("vicci", "http://openhab-semantic/0.1/dogont-vicci-extension#");
         model.setNsPrefix("dogont", "http://elite.polito.it/ontologies/dogont.owl#");
         model.setNsPrefix("instance", "http://openhab-semantic/0.1/instance#");
         model.setNsPrefix("owl", "http://www.w3.org/2002/07/owl#");
@@ -31,6 +33,7 @@ public class SchemaUtil {
     public static void addOntologyInformation(OntModel model) {
         Ontology ont = model.createOntology("");
         ont.addImport(model.createResource(DogontSchema.NS));
+        ont.addImport(model.createResource(VicciExtensionSchema.NS));
         ont.addVersionInfo("Created Automatically By OpenHAB SAL");
     }
 

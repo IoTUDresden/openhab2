@@ -7,7 +7,8 @@ Bundle-Activator: org.openhab.io.semantic.dogont.internal.DogontActivator
 Require-Bundle: org.openhab.io.semantic.core;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
-Import-Package: org.apache.xerces.dom;version="2.11.0",
+Import-Package: com.google.gson;version="2.5.0",
+ org.apache.xerces.dom;version="2.11.0",
  org.apache.xerces.dom.events;version="2.11.0",
  org.apache.xerces.dom3.as;version="2.11.0",
  org.apache.xerces.impl;version="2.11.0",

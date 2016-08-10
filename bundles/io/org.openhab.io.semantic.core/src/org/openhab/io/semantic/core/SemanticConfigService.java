@@ -2,6 +2,7 @@ package org.openhab.io.semantic.core;
 
 import java.util.List;
 
+import org.openhab.io.semantic.core.util.Poi;
 import org.openhab.io.semantic.core.util.SemanticPerson;
 import org.openhab.io.semantic.core.util.SemanticThing;
 
@@ -28,5 +29,31 @@ public interface SemanticConfigService {
      * @return
      */
     List<SemanticThing> getSemanticThings();
+
+    /**
+     * Gets the {@link Poi} of an item if any exists.
+     *
+     * @param itemName
+     * @return
+     */
+    Poi getItemPoi(String itemName);
+
+    /**
+     * Updates the {@link Poi} for a given item.
+     *
+     * @param itemName
+     * @param newPoi
+     * @return true if succeeded
+     */
+    boolean updateItemPoi(String itemName, Poi newPoi);
+
+    /**
+     * Updates the {@link Poi} of a given Thing
+     *
+     * @param thingName
+     * @param newPoi
+     * @return true if update request succeeded
+     */
+    boolean updateThingPoi(String thingName, Poi newPoi);
 
 }

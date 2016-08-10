@@ -60,6 +60,15 @@ public interface SemanticService {
     boolean executeAsk(String askAsString, boolean withLatestValues);
 
     /**
+     * Executes a update statement
+     *
+     * @param updateStmt
+     *            The update statement should also contain all prefixes, otherwise the execution will fail
+     * @return true if execution was successful executed, otherwise false.
+     */
+    boolean executeUpdate(String updateStmt);
+
+    /**
      * Sends a command to all items which are selected by the query. The query must contain a
      * variable, which holds the function of the specific item/thing. If the query contains no such
      * variable, than no command is send to the openhab event bus.
@@ -141,4 +150,5 @@ public interface SemanticService {
      *         - thingName: the name of the type which encapsulates the sensor
      */
     QueryResult getAllSensors();
+
 }
