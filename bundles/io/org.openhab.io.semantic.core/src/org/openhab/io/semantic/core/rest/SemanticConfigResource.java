@@ -15,6 +15,7 @@ import javax.ws.rs.core.Response.Status;
 import org.eclipse.smarthome.io.rest.RESTResource;
 import org.openhab.io.semantic.core.SemanticConfigService;
 import org.openhab.io.semantic.core.util.Poi;
+import org.openhab.io.semantic.core.util.SemanticLocation;
 import org.openhab.io.semantic.core.util.SemanticPerson;
 import org.openhab.io.semantic.core.util.SemanticThing;
 import org.slf4j.Logger;
@@ -65,6 +66,14 @@ public class SemanticConfigResource implements RESTResource {
         }
         boolean success = configService.updateThingPoi(thingName, newPoi);
         return success ? Response.ok().build() : Response.status(Status.NOT_MODIFIED).build();
+    }
+
+    @GET
+    @Path("/locations")
+    @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Gets all semantic locations")
+    public List<SemanticLocation> getLocations() {
+        return configService.getSemanticLocations();
     }
 
     @GET

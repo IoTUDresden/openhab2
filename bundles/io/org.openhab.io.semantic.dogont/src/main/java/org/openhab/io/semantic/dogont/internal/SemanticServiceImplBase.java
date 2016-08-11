@@ -37,7 +37,11 @@ import com.hp.hpl.jena.util.FileManager;
 import com.hp.hpl.jena.util.LocationMapper;
 
 /**
- * Base Class for the SemanticService Implementation
+ * Base Class for the SemanticService Implementation.<br>
+ * <br>
+ *
+ * TODO Is there a way to use a reasoner on a dataset?
+ * At the moment always ontmodel with correct specs is needed.
  *
  * @author André Kühnert
  */
@@ -216,20 +220,20 @@ public abstract class SemanticServiceImplBase extends AbstractItemEventSubscribe
             try {
                 openHabDataSet.begin(ReadWrite.WRITE);
                 Model modelInstances = openHabDataSet.getNamedModel(SemanticConstants.GRAPH_NAME_INSTANCE);
-                // Model modelExtension = openHabDataSet.getNamedModel(VicciExtensionSchema.BASE_URI);
                 Model modelTemplates = openHabDataSet.getNamedModel(SemanticConstants.GRAPH_NAME_TEMPLATE);
 
                 OntModel openHabInstances = ModelFactory.createOntologyModel(OntModelSpec.OWL_MEM_TRANS_INF,
                         modelInstances);
                 OntModel openHabTemplates = ModelFactory.createOntologyModel(OntModelSpec.OWL_MEM_TRANS_INF,
                         modelTemplates);
-
-                // modelExtension.read(SemanticConstants.VICCI_EXTENSION_FILE, SemanticConstants.TURTLE_STRING);
                 openHabTemplates.read(SemanticConstants.TEMPLATE_FILE, SemanticConstants.TURTLE_STRING);
                 SchemaUtil.addRequiredNamespacePrefixToInstanceModel(openHabInstances);
                 SchemaUtil.addOntologyInformation(openHabInstances);
 
+                openHabInstances.addSubModel(openHabTemplates);
                 modelCopier.copyCommands();
+                // merged (template + instance) ontmodel needed here because reasoner is needed
+                modelCopier.copyLocations(openHabInstances);
                 openHabDataSet.commit();
             } finally {
                 openHabDataSet.end();

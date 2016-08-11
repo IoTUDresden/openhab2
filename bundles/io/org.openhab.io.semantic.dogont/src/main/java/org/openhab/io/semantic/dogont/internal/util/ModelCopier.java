@@ -110,6 +110,15 @@ public class ModelCopier {
         executeUpdateAction(getCopyAllCommandsQuery());
     }
 
+    /**
+     * Copies all locations from the template model to the instance model
+     * Use a OntModel otherwise Reasoning will not work for the query.
+     */
+    public void copyLocations(OntModel model) {
+        UpdateRequest req = UpdateFactory.create(getCopyLocationsQuery());
+        UpdateAction.execute(req, model);
+    }
+
     private void executeUpdateAction(String formatedQuery) {
         UpdateRequest req = UpdateFactory.create(formatedQuery);
         UpdateAction.execute(req, dataset);
@@ -297,6 +306,42 @@ public class ModelCopier {
         builder.append(
                 "    STRAFTER (STR(?func),\"" + SemanticConstants.NS_TEMPLATE + "\"), \"_" + id + "\")) AS ?newFunc) ");
         builder.append("}}");
+        return builder.toString();
+    }
+
+    private static String getCopyLocationsQuery2() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("PREFIX dogont: <" + DogontSchema.NS + "> ");
+        builder.append("PREFIX rdf: <" + SemanticConstants.NS_RDF_SYNTAX + "> ");
+        builder.append("PREFIX rdfs: <" + SemanticConstants.NS_RDFS_SCHEMA + "> ");
+        builder.append("INSERT { GRAPH <" + SemanticConstants.GRAPH_NAME_INSTANCE + "> { ");
+        builder.append("  ?newLoc rdf:type ?class; rdfs:label ?realLoc . ");
+        builder.append(" }}");
+        builder.append("WHERE { GRAPH <" + SemanticConstants.GRAPH_NAME_TEMPLATE + "> { ");
+        builder.append("  ?class rdfs:subClassOf* dogont:BuildingEnvironment . ");
+        builder.append("  ?loc rdf:type ?class . ");
+        builder.append("  ?loc rdfs:label ?realLoc . ");
+        builder.append("   BIND(URI(CONCAT( \"" + SemanticConstants.NS_INSTANCE + "\" , STRAFTER(STR(?loc), \""
+                + SemanticConstants.NS_TEMPLATE + "\"))) AS ?newLoc)");
+        builder.append("}}");
+        return builder.toString();
+    }
+
+    private static String getCopyLocationsQuery() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("PREFIX dogont: <" + DogontSchema.NS + "> ");
+        builder.append("PREFIX rdf: <" + SemanticConstants.NS_RDF_SYNTAX + "> ");
+        builder.append("PREFIX rdfs: <" + SemanticConstants.NS_RDFS_SCHEMA + "> ");
+        builder.append("INSERT {  ");
+        builder.append("  ?newLoc rdf:type ?class; rdfs:label ?realLoc . ");
+        builder.append(" }");
+        builder.append("WHERE { ");
+        builder.append("  ?class rdfs:subClassOf* dogont:BuildingEnvironment . ");
+        builder.append("  ?loc rdf:type ?class . ");
+        builder.append("  ?loc rdfs:label ?realLoc . ");
+        builder.append("   BIND(URI(CONCAT( \"" + SemanticConstants.NS_INSTANCE + "\" , STRAFTER(STR(?loc), \""
+                + SemanticConstants.NS_TEMPLATE + "\"))) AS ?newLoc)");
+        builder.append("}");
         return builder.toString();
     }
 

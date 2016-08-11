@@ -3,6 +3,7 @@ package org.openhab.io.semantic.core;
 import java.util.List;
 
 import org.openhab.io.semantic.core.util.Poi;
+import org.openhab.io.semantic.core.util.SemanticLocation;
 import org.openhab.io.semantic.core.util.SemanticPerson;
 import org.openhab.io.semantic.core.util.SemanticThing;
 
@@ -55,5 +56,12 @@ public interface SemanticConfigService {
      * @return true if update request succeeded
      */
     boolean updateThingPoi(String thingName, Poi newPoi);
+
+    /**
+     * Gets all {@link SemanticLocation}s
+     * 
+     * @return
+     */
+    List<SemanticLocation> getSemanticLocations();
 
 }

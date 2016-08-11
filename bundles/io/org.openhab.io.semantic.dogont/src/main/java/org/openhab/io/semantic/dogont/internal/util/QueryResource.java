@@ -176,17 +176,38 @@ public class QueryResource {
      * @return
      */
     public static final String getThings() {
-        return Prefix + " SELECT ?thing ?thingName ?class ?loc ?realLoc ?position ?orientation" + "        WHERE {"
-                + "     ?class rdfs:subClassOf* dogont:Controllable ." + "    ?thing rdf:type ?class."
-                + "    OPTIONAL { " + "         ?thing dogont:isIn ?loc." + "         ?loc rdfs:label ?realLoc ."
-                + "     }" + "      OPTIONAL { " + "          ?thing vicci:hasRobotPosition ?p ."
-                + "          ?p vicci:hasOrientation ?orientation ." + "          ?p vicci:hasPosition ?position . "
-                + "       }" + "       BIND(STRAFTER(STR(?thing), '" + SemanticConstants.NS_AND_THING_PREFIX
-                + "') as ?thingName)" + "   }";
+        StringBuilder builder = new StringBuilder();
+        builder.append(Prefix);
+        builder.append("SELECT ?thing ?thingName ?class ?loc ?realLoc ?position ?orientation ?locType");
+        builder.append("WHERE { ");
+        builder.append("  ?class rdfs:subClassOf* dogont:Controllable ." + " ?thing rdf:type ?class. ");
+        builder.append("  OPTIONAL {    ");
+        builder.append("    ?thing dogont:isIn ?loc." + " ?loc rdfs:label ?realLoc . ?loc rdfs:type ?locType");
+        builder.append("  }");
+        builder.append("  OPTIONAL {");
+        builder.append("    ?thing vicci:hasRobotPosition ?p .");
+        builder.append("    ?p vicci:hasOrientation ?orientation ." + " ?p vicci:hasPosition ?position .");
+        builder.append("  }");
+        builder.append("  BIND(STRAFTER(STR(?thing), '" + SemanticConstants.NS_AND_THING_PREFIX + "') as ?thingName)");
+        builder.append("}");
+        return builder.toString();
     }
 
+    /**
+     * Gets all Locations
+     *
+     * @return
+     */
     public static final String getLocations() {
-        return Prefix;
+        StringBuilder builder = new StringBuilder();
+        builder.append(Prefix);
+        builder.append("SELECT ?loc ?realLoc ?class ");
+        builder.append("WHERE { ");
+        builder.append("  ?class rdfs:subClassOf* dogont:BuildingEnvironment . ");
+        builder.append("  ?loc rdf:type ?class.   ");
+        builder.append("  ?loc rdfs:label ?realLoc.  ");
+        builder.append("}");
+        return builder.toString();
     }
 
 }

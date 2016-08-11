@@ -50,9 +50,10 @@ public final class SemanticConfigServiceImpl extends SemanticConfigServiceImplBa
             // optional vars
             String loc = getStringMemberFromJsonObject(jsonElement, "loc");
             String realLoc = getStringMemberFromJsonObject(jsonElement, "realLoc");
+            String locType = getStringMemberFromJsonObject(jsonElement, "locType");
             String position = getStringMemberFromJsonObject(jsonElement, "position");
             String orientation = getStringMemberFromJsonObject(jsonElement, "orientation");
-            SemanticThing t = new SemanticThing(thing, thingName, clazz, new SemanticLocation(loc, realLoc),
+            SemanticThing t = new SemanticThing(thing, thingName, clazz, new SemanticLocation(loc, realLoc, locType),
                     new Poi(position, orientation));
             list.add(t);
         }
@@ -156,5 +157,28 @@ public final class SemanticConfigServiceImpl extends SemanticConfigServiceImplBa
             return split[1];
         }
         return null;
+    }
+
+    @Override
+    public List<SemanticLocation> getSemanticLocations() {
+        QueryResult r = semanticService.executeSelect(QueryResource.getLocations());
+        return processLocationResults(r);
+    }
+
+    private List<SemanticLocation> processLocationResults(QueryResult r) {
+        List<SemanticLocation> tmpL = new ArrayList<>();
+        JsonArray binds = getBindingsArrayFromQuery(r);
+        if (binds == null) {
+            logger.error("failed location query");
+            return tmpL;
+        }
+
+        for (JsonElement jsonElement : binds) {
+            String uri = getStringMemberFromJsonObject(jsonElement, "loc");
+            String name = getStringMemberFromJsonObject(jsonElement, "realLoc");
+            String clazz = getStringMemberFromJsonObject(jsonElement, "class");
+            tmpL.add(new SemanticLocation(uri, name, clazz));
+        }
+        return tmpL;
     }
 }
