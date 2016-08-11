@@ -14,21 +14,24 @@ public final class SemanticThing {
     private List<SemanticItem> items = new ArrayList<>();
     private String semanticUri;
     private String openHabName;
+    private String clazz;
     private SemanticLocation location;
     private Poi poi;
 
     public SemanticThing() {
     }
 
-    public SemanticThing(String semanticUri, String openHabName) {
-        this(semanticUri, openHabName, null, null);
+    public SemanticThing(String semanticUri, String openHabName, String clazz) {
+        this(semanticUri, openHabName, clazz, null, null);
     }
 
-    public SemanticThing(String semanticUri, String openHabName, SemanticLocation location, Poi poi) {
+    public SemanticThing(String semanticUri, String openHabName, String clazz, SemanticLocation location, Poi poi) {
         this.semanticUri = semanticUri;
         this.openHabName = openHabName;
+        this.clazz = clazz;
         this.location = location;
         this.poi = poi;
+
     }
 
     public List<SemanticItem> getItems() {
@@ -69,5 +72,13 @@ public final class SemanticThing {
 
     public void setPoi(Poi poi) {
         this.poi = poi;
+    }
+
+    public String getClazz() {
+        return clazz;
+    }
+
+    public void setClazz(String clazz) {
+        this.clazz = clazz;
     }
 }

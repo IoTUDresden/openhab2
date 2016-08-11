@@ -133,7 +133,7 @@ public class QueryResource {
      * @param itemName
      * @return
      */
-    public static final String ItemPoi(String itemName) {
+    public static final String thingPoi(String itemName) {
         // SELECT *
         // WHERE {
         // ?thing dogont:hasFunctionality template:Function_homematic_co2_co2.
@@ -151,7 +151,7 @@ public class QueryResource {
      * @param newPoi
      * @return
      */
-    public static final String UpdateThingPoi(String thingName, Poi newPoi) {
+    public static final String updateThingPoi(String thingName, Poi newPoi) {
         return Prefix + "DELETE { " + " ?thing vicci:hasRobotPosition ?poi." + " ?poi vicci:hasPosition ?p."
                 + " ?poi vicci:hasOrientation ?o." + " ?poi rdf:type vicci:RobotPosition." + "}" + "INSERT {"
                 + "   ?thing vicci:hasRobotPosition [" + "        rdf:type vicci:RobotPosition; "
@@ -159,6 +159,30 @@ public class QueryResource {
                 + newPoi.getOrientation() + "'" + "        ] ." + " }" + "WHERE {" + "    BIND(" + "instance:"
                 + thingName + " as ?thing)" + "     OPTIONAL { " + "         ?thing vicci:hasRobotPosition ?poi. "
                 + "         ?poi vicci:hasPosition ?p." + "         ?poi vicci:hasOrientation ?o." + "  }}";
+    }
+
+    /**
+     * Gets all things with their<br>
+     * <br>
+     * ?thing: uri of thing <br>
+     * ?thingName: thing name without prefixes <br>
+     * ?class: type class<br>
+     * ?loc: location uri<br>
+     * ?realLoc: location name<br>
+     * ?position: robot position<br>
+     * ?orientation: roboto orientation<br>
+     *
+     *
+     * @return
+     */
+    public static final String getThings() {
+        return Prefix + " SELECT ?thing ?thingName ?class ?loc ?realLoc ?position ?orientation" + "        WHERE {"
+                + "     ?class rdfs:subClassOf* dogont:Controllable ." + "    ?thing rdf:type ?class."
+                + "    OPTIONAL { " + "         ?thing dogont:isIn ?loc." + "         ?loc rdfs:label ?realLoc ."
+                + "     }" + "      OPTIONAL { " + "          ?thing vicci:hasRobotPosition ?p ."
+                + "          ?p vicci:hasOrientation ?orientation ." + "          ?p vicci:hasPosition ?position . "
+                + "       }" + "       BIND(STRAFTER(STR(?thing), '" + SemanticConstants.NS_AND_THING_PREFIX
+                + "') as ?thingName)" + "   }";
     }
 
 }

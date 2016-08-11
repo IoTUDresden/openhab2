@@ -94,6 +94,11 @@ public class SemanticConstants {
     public static final String TEMPLATE_FILE = "semantic/resource/instance/openhab_templates.ttl";
 
     /**
+     * path to the Vicci Extension File
+     */
+    public static final String VICCI_EXTENSION_FILE = "semantic/resource/models/dogont-vicci-extension.ttl";
+
+    /**
      * base path to the local models
      */
     public static final String DEFAULT_ONTOLOGY_PATH = "file:semantic/resource/models/";

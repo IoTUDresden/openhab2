@@ -62,6 +62,7 @@ public final class SemanticServiceImpl extends SemanticServiceImplBase implement
                 qe.close();
             }
         } catch (Exception e) {
+            logger.error(e.getMessage());
             e.printStackTrace();
         } finally {
             openHabDataSet.end();
@@ -81,6 +82,7 @@ public final class SemanticServiceImpl extends SemanticServiceImplBase implement
                 qe.close();
             }
         } catch (Exception e) {
+            logger.error(e.getMessage());
             e.printStackTrace();
         } finally {
             openHabDataSet.end();
@@ -125,6 +127,7 @@ public final class SemanticServiceImpl extends SemanticServiceImplBase implement
             }
             qe.close();
         } catch (Exception e) {
+            logger.error(e.getMessage());
             e.printStackTrace();
         } finally {
             openHabDataSet.end();
@@ -196,6 +199,7 @@ public final class SemanticServiceImpl extends SemanticServiceImplBase implement
             result = new QueryResultImpl(rs);
             queryExecution.close();
         } catch (Exception e) {
+            logger.error(e.getMessage());
             e.printStackTrace();
         } finally {
             openHabDataSet.end();
@@ -283,6 +287,7 @@ public final class SemanticServiceImpl extends SemanticServiceImplBase implement
             }
             query.close();
         } catch (Exception e) {
+            logger.error(e.getMessage());
             e.printStackTrace();
         } finally {
             openHabDataSet.end();
@@ -305,6 +310,7 @@ public final class SemanticServiceImpl extends SemanticServiceImplBase implement
             openHabDataSet.commit();
             success = true;
         } catch (Exception e) {
+            logger.error(e.getMessage());
             e.printStackTrace();
             logger.error(e.getMessage());
         } finally {

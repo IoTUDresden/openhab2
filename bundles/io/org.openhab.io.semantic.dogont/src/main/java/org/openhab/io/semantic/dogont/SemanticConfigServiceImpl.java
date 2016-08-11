@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -23,17 +24,50 @@ public final class SemanticConfigServiceImpl extends SemanticConfigServiceImplBa
 
     @Override
     public List<SemanticThing> getSemanticThings() {
-        // do a query on the semantic service to get all the
-        // things with items and than build the list from the query
-        // result
-        List<SemanticThing> tmpList = new ArrayList<>();
-        SemanticLocation l = new SemanticLocation("Dummy_Loc", "dummy living room");
-        for (int i = 0; i < 10; i++) {
-            SemanticThing t = new SemanticThing("Thing_Dummy_" + i, "OpenhabName_" + i, l, null);
-            tmpList.add(t);
+        QueryResult r = semanticService.executeSelect(QueryResource.getThings());
+        return processThingsResult(r);
+    }
+
+    private List<SemanticThing> processThingsResult(QueryResult r) {
+        List<SemanticThing> tmpL = new ArrayList<>();
+        if (r == null) {
+            logger.error("no things received in query");
+            return tmpL;
         }
 
-        return tmpList;
+        JsonArray binds = getBindingsArrayFromQuery(r);
+        createThingsAndPutToList(tmpL, binds);
+        return tmpL;
+    }
+
+    private void createThingsAndPutToList(List<SemanticThing> list, JsonArray binds) {
+        for (JsonElement jsonElement : binds) {
+            String thing = jsonElement.getAsJsonObject().get("thing").getAsJsonObject().get("value").getAsString();
+            String thingName = jsonElement.getAsJsonObject().get("thingName").getAsJsonObject().get("value")
+                    .getAsString();
+            String clazz = jsonElement.getAsJsonObject().get("class").getAsJsonObject().get("value").getAsString();
+
+            // optional vars
+            String loc = getStringMemberFromJsonObject(jsonElement, "loc");
+            String realLoc = getStringMemberFromJsonObject(jsonElement, "realLoc");
+            String position = getStringMemberFromJsonObject(jsonElement, "position");
+            String orientation = getStringMemberFromJsonObject(jsonElement, "orientation");
+            SemanticThing t = new SemanticThing(thing, thingName, clazz, new SemanticLocation(loc, realLoc),
+                    new Poi(position, orientation));
+            list.add(t);
+        }
+    }
+
+    // null if member not exists
+    private String getStringMemberFromJsonObject(JsonElement object, String memberName) {
+        if (!object.isJsonObject()) {
+            return null;
+        }
+        JsonElement e = object.getAsJsonObject().get(memberName);
+        if (e == null) {
+            return null;
+        }
+        return e.getAsJsonObject().get("value").getAsString();
     }
 
     @Override
@@ -55,13 +89,14 @@ public final class SemanticConfigServiceImpl extends SemanticConfigServiceImplBa
     @Override
     public Poi getItemPoi(String itemName) {
         // TODO sparql query
-        QueryResult qr = semanticService.executeSelect(QueryResource.ItemPoi(itemName));
+        QueryResult qr = semanticService.executeSelect(QueryResource.thingPoi(itemName));
         // Process json result
 
         return null;
     }
 
     public Poi getThingPoi(String thingPoi) {
+        // TODO
         return null;
     }
 
@@ -77,7 +112,7 @@ public final class SemanticConfigServiceImpl extends SemanticConfigServiceImplBa
             logger.error("updating thing poi failed. no thingName or poi given");
             return false;
         }
-        String queryString = QueryResource.UpdateThingPoi(thingName, newPoi);
+        String queryString = QueryResource.updateThingPoi(thingName, newPoi);
         return semanticService.executeUpdate(queryString);
     }
 
@@ -97,10 +132,7 @@ public final class SemanticConfigServiceImpl extends SemanticConfigServiceImplBa
             return null;
         }
 
-        JsonParser parser = new JsonParser();
-        JsonObject el = parser.parse(r.getAsJsonString()).getAsJsonObject();
-        JsonObject res = el.get("results").getAsJsonObject();
-        JsonArray bind = res.get("bindings").getAsJsonArray();
+        JsonArray bind = getBindingsArrayFromQuery(r);
         if (bind.size() < 1) {
             logger.error("no thing found for item '{}'", itemName);
             return null;
@@ -109,6 +141,13 @@ public final class SemanticConfigServiceImpl extends SemanticConfigServiceImplBa
         JsonObject first = bind.get(0).getAsJsonObject();
         String found = first.get("thing").getAsJsonObject().get("value").getAsString();
         return splitUri(found);
+    }
+
+    private JsonArray getBindingsArrayFromQuery(QueryResult r) {
+        JsonParser parser = new JsonParser();
+        JsonObject el = parser.parse(r.getAsJsonString()).getAsJsonObject();
+        JsonObject res = el.get("results").getAsJsonObject();
+        return res.get("bindings").getAsJsonArray();
     }
 
     private String splitUri(String uri) {
