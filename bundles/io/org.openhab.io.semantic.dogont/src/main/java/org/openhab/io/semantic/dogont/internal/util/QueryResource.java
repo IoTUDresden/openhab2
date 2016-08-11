@@ -185,4 +185,8 @@ public class QueryResource {
                 + "') as ?thingName)" + "   }";
     }
 
+    public static final String getLocations() {
+        return Prefix;
+    }
+
 }

@@ -29,7 +29,7 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-    
+
 
 
 </head>
@@ -78,88 +78,29 @@
 				</div>
 				<!-- /.row -->
 
+				<div class="form-group">
+					<label>Select robot for position editing</label> <select class="form-control">
+						<option>select robot</option>
+						<option>Turtle (TODO)</option>
+						<option>NAO (TODO)</option>
+						<option>YouBot (TODO)</option>
+					</select>
+				</div>
+
 
 				<div class="table-responsive">
-					<table class="table table-bordered table-hover table-striped">
+					<table id="things_table" class="table table-bordered table-hover table-striped">
 						<thead>
 							<tr>
 								<th>Name</th>
-								<th>ID</th>
-								<th>Items</th>
+								<th>Class</th>
 								<th>Location</th>
 								<th>POI</th>
+								<th></th>
 							</tr>
 						</thead>
-						<tbody>
-							<tr>
-								<td>tinkerforge_temp_1</td>
-								<td>Thing_tinkerforge_temp_1</td>
-								<td>tinkerforge_temp_1</td>
-								<td>
-									<div class="form-group">
-										<select class="form-control">
-											<option>first select is current loc</option>
-											<option>kitchen</option>
-											<option>living room</option>
-										</select>
-									</div>
-								</td>
-								<td>
-									<div class="form-group">
-										<select class="form-control">
-											<option>first select is current poi</option>
-											<option>temp_1_poi</option>
-											<option>temp_2_poi</option>
-										</select>
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td>tinkerforge_temp_2</td>
-								<td>Thing_tinkerforge_temp_2</td>
-								<td>tinkerforge_temp_2</td>
-								<td>
-									<div class="form-group">
-										<select class="form-control">
-											<option>first select is current loc</option>
-											<option>kitchen</option>
-											<option>living room</option>
-										</select>
-									</div>
-								</td>
-								<td>
-									<div class="form-group">
-										<select class="form-control">
-											<option>first select is current poi</option>
-											<option>temp_1_poi</option>
-											<option>temp_2_poi</option>
-										</select>
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td>tinkerforge_temp_3</td>
-								<td>Thing_tinkerforge_temp_3</td>
-								<td>tinkerforge_temp_3</td>
-								<td>
-									<div class="form-group">
-										<select class="form-control">
-											<option>first select is current loc</option>
-											<option>kitchen</option>
-											<option>living room</option>
-										</select>
-									</div>
-								</td>
-								<td>
-									<div class="form-group">
-										<select class="form-control">
-											<option>first select is current poi</option>
-											<option>temp_1_poi</option>
-											<option>temp_2_poi</option>
-										</select>
-									</div>
-								</td>
-							</tr>
+						<tbody id="things_table_body">
+							<!-- loaded from SAL via AJAX -->
 						</tbody>
 					</table>
 				</div>
@@ -179,13 +120,13 @@
 
 	<!-- Bootstrap Core JavaScript -->
 	<script src="js/bootstrap.min.js"></script>
-	
+
 	<!-- Requests and stuff for semantic -->
 	<script src="js/requests.js"></script>
-	
-	    <script type="text/javascript">
-    $( document ).ready(loadSemanticThingsTable());
-    </script>
+
+	<script type="text/javascript">
+		$(document).ready(loadSemanticThingsTable());
+	</script>
 
 </body>
 
