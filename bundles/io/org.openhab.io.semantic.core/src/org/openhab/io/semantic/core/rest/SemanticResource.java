@@ -106,8 +106,7 @@ public class SemanticResource implements RESTResource {
                 || commandBean.statement.isEmpty() || commandBean.command.isEmpty()) {
             return Response.status(Status.BAD_REQUEST).build();
         }
-        QueryResult qr = semanticService.sendCommand(commandBean.statement, commandBean.command,
-                commandBean.withlatest);
+        QueryResult qr = semanticService.sendCommand(commandBean.statement, commandBean.command);
         long end = System.nanoTime();
         double time = calcTimeDifInMs(start, end);
         logger.debug("sending semantic command takes {} ms", time);
@@ -122,7 +121,7 @@ public class SemanticResource implements RESTResource {
     @ApiOperation(value = "Executes a select query on the semantic model.")
     public String select(@QueryParam("statement") String query, @QueryParam("withlatest") boolean withLatest) {
         long start = System.nanoTime();
-        QueryResult result = semanticService.executeSelect(query, withLatest);
+        QueryResult result = semanticService.executeSelect(query);
         long end = System.nanoTime();
         double time = calcTimeDifInMs(start, end);
         logger.debug("execute semantic select takes {} ms", time);
@@ -137,7 +136,7 @@ public class SemanticResource implements RESTResource {
     @ApiOperation(value = "Executes a ask query on the semantic model.")
     public String ask(@QueryParam("statement") String query, @QueryParam("withlatest") boolean withLatest) {
         long start = System.nanoTime();
-        boolean result = semanticService.executeAsk(query, withLatest);
+        boolean result = semanticService.executeAsk(query);
         long end = System.nanoTime();
         double time = calcTimeDifInMs(start, end);
         logger.debug("execute semantic ask takes {} ms", time);
@@ -153,15 +152,6 @@ public class SemanticResource implements RESTResource {
     public String getAllSensors() {
         QueryResult qr = semanticService.getAllSensors();
         return qr.getAsJsonString();
-    }
-
-    @GET
-    @Path("/testvaluesetting")
-    @Produces(MediaType.TEXT_PLAIN)
-    @ApiOperation(value = "Forces the semantic layer to update all state values.")
-    public String getCurrentValues() {
-        semanticService.setAllValues();
-        return semanticService.getCurrentInstanceAsString();
     }
 
     @GET
@@ -199,7 +189,6 @@ public class SemanticResource implements RESTResource {
                 e.printStackTrace();
             }
         }
-
     }
 
     private static double calcTimeDifInMs(long start, long end) {

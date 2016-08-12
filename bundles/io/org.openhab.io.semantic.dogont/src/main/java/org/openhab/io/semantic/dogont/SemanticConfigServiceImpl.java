@@ -181,4 +181,20 @@ public final class SemanticConfigServiceImpl extends SemanticConfigServiceImplBa
         }
         return tmpL;
     }
+
+    @Override
+    public SemanticLocation getSemanticLocationForThing(String thingName) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public boolean updateSemanticLocationForThing(String thingName, SemanticLocation location) {
+        if (location == null || location.getSemanticUri() == null || location.getSemanticUri().isEmpty()) {
+            String delQuery = QueryResource.deleteThingLocation(thingName);
+            return semanticService.executeUpdate(delQuery);
+        }
+        String updateQuery = QueryResource.updateThingLocation(thingName, location.getSemanticUri());
+        return semanticService.executeUpdate(updateQuery);
+    }
 }

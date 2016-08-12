@@ -3,7 +3,7 @@
  * **************************************
  ******************************************************************************/
 var locations;
-  
+
 /**
  * First load locations -> then all things -> build the table
  */
@@ -27,6 +27,22 @@ function loadThings() {
 	});
 }
 
+function updateThingLocation(thingName, locationUri) {
+	var pData = {
+		semanticUri : locationUri,
+		realLocationName : "",
+		clazz : ""
+	}
+
+	$.ajax("/rest/semantic/extended/things/" + thingName + "/location", {
+		data : JSON.stringify(pData),
+		contentType : "application/json",
+		method : "POST",
+		success : showSuccess,
+		error : showFailed
+	});
+}
+
 /*******************************************************************************
  * ******************************** Events
  * ****************************************
@@ -35,8 +51,7 @@ function loadThings() {
 // selected location changed
 $(document).on('change', "select[name='location-select']", function() {
 	var value = $(this).find(":selected").data("value");
-	alert(value.thing+ "\n" + value.loc);
-	// TODO send post to change value
+	updateThingLocation(value.thing, value.loc);
 });
 
 /*******************************************************************************
@@ -44,10 +59,10 @@ $(document).on('change', "select[name='location-select']", function() {
  * ***************************************
  ******************************************************************************/
 
-function locationsReceived(data){
+function locationsReceived(data) {
 	locations = data;
 	loadThings();
-} 
+}
 
 // fills the options in the Things table with the locations
 function fillLocations(data) {
@@ -114,14 +129,15 @@ function addLocationSelect(row, obj) {
 	if ("location" in obj && "semanticUri" in obj.location) {
 		curLoc = obj.location.semanticUri;
 	}
-	
-	//empty select for deleting
-	var opt = createOptionAndSelect(obj.semanticUri, "", " ", curLoc == "");
+
+	// empty select for deleting
+	var opt = createOptionAndSelect(obj.openHabName, "", " ", curLoc == "");
 	sel.appendChild(opt);
-	
-	for(k = 0; k < locations.length; k++){
+
+	for (k = 0; k < locations.length; k++) {
 		var select = locations[k].semanticUri == curLoc;
-		opt = createOptionAndSelect(obj.semanticUri, locations[k].semanticUri, locations[k].realLocationName, select);
+		opt = createOptionAndSelect(obj.openHabName, locations[k].semanticUri,
+				locations[k].realLocationName, select);
 		sel.appendChild(opt);
 	}
 
@@ -130,10 +146,13 @@ function addLocationSelect(row, obj) {
 }
 
 // select = true -> selected entry
-function createOptionAndSelect(thingUri, locUri, text, select) {
+function createOptionAndSelect(thingName, locUri, text, select) {
 	var opt = document.createElement('option');
 	var txt = document.createTextNode(text);
-	var data = {thing: thingUri, loc: locUri};	
+	var data = {
+		thing : thingName,
+		loc : locUri
+	};
 
 	opt.setAttribute("data-value", JSON.stringify(data));
 	if (select) {
@@ -185,6 +204,14 @@ function addValueToRow(row, value) {
 	var cont = document.createTextNode(value);
 	cell.appendChild(cont);
 	row.appendChild(cell);
+}
+
+function showSuccess() {
+
+}
+
+function showFailed(jqXHR, textStatus, errorThrown) {
+	console.log("Error: " + errorThrown + ": " + jqXHR.responseText);
 }
 
 // removes all childs from the parent

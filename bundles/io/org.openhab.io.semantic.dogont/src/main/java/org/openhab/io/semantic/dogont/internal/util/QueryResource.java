@@ -178,11 +178,11 @@ public class QueryResource {
     public static final String getThings() {
         StringBuilder builder = new StringBuilder();
         builder.append(Prefix);
-        builder.append("SELECT ?thing ?thingName ?class ?loc ?realLoc ?position ?orientation ?locType");
+        builder.append("SELECT ?thing ?thingName ?class ?loc ?realLoc ?position ?orientation ?locType ");
         builder.append("WHERE { ");
         builder.append("  ?class rdfs:subClassOf* dogont:Controllable ." + " ?thing rdf:type ?class. ");
         builder.append("  OPTIONAL {    ");
-        builder.append("    ?thing dogont:isIn ?loc." + " ?loc rdfs:label ?realLoc . ?loc rdfs:type ?locType");
+        builder.append("    ?thing dogont:isIn ?loc." + " ?loc rdfs:label ?realLoc . ?loc rdf:type ?locType");
         builder.append("  }");
         builder.append("  OPTIONAL {");
         builder.append("    ?thing vicci:hasRobotPosition ?p .");
@@ -210,4 +210,51 @@ public class QueryResource {
         return builder.toString();
     }
 
+    /**
+     * Updates the thing location
+     *
+     * @param thingName
+     *            openHab Thing name
+     * @param locationUri
+     *            uri of location e.g. http://openhab...#location
+     * @return
+     */
+    public static final String updateThingLocation(String thingName, String locationUri) {
+        thingName = SemanticConstants.NS_AND_THING_PREFIX + thingName;
+        StringBuilder builder = new StringBuilder();
+        builder.append(Prefix);
+        builder.append("DELETE { ");
+        builder.append("  ?thing dogont:isIn ?oldLoc . ");
+        builder.append("} ");
+        builder.append("INSERT { ");
+        builder.append("  ?thing dogont:isIn ?newLoc . ");
+        builder.append("} ");
+        builder.append("WHERE { ");
+        builder.append("  BIND(URI('" + locationUri + "') as ?newLoc) ");
+        builder.append("  BIND(URI('" + thingName + "') as ?thing) ");
+        builder.append("  OPTIONAL { ?thing dogont:isIn ?oldLoc . }");
+        builder.append("}");
+        return builder.toString();
+    }
+
+    /**
+     * Deletes the existing Location from a thing
+     *
+     * @param thingName
+     *            openHab Thing name
+     * @return
+     */
+    public static final String deleteThingLocation(String thingName) {
+        thingName = SemanticConstants.NS_AND_THING_PREFIX + thingName;
+        StringBuilder builder = new StringBuilder();
+        builder.append(Prefix);
+        builder.append("DELETE { ");
+        builder.append("  ?thing dogont:isIn ?oldLoc . ");
+        builder.append("} ");
+        builder.append("WHERE { ");
+        builder.append("  BIND(URI('" + thingName + "') as ?thing) ");
+        builder.append("  ?thing dogont:isIn ?oldLoc .");
+        builder.append("}");
+        return builder.toString();
+    }
 }

@@ -59,9 +59,27 @@ public interface SemanticConfigService {
 
     /**
      * Gets all {@link SemanticLocation}s
-     * 
+     *
      * @return
      */
     List<SemanticLocation> getSemanticLocations();
+
+    /**
+     * Gets the {@link SemanticLocation} for a given thing.
+     *
+     * @param thingName
+     * @return null if thing has no location
+     */
+    SemanticLocation getSemanticLocationForThing(String thingName);
+
+    /**
+     * Updates the {@link SemanticLocation} for an item. If location == null or has no semanticUri,
+     * the existing location of the thing will be deleted.
+     * 
+     * @param thingName
+     * @param location
+     * @return
+     */
+    boolean updateSemanticLocationForThing(String thingName, SemanticLocation location);
 
 }

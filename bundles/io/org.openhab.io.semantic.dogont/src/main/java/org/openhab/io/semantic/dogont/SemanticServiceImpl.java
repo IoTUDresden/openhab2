@@ -304,6 +304,7 @@ public final class SemanticServiceImpl extends SemanticServiceImplBase implement
         }
 
         try {
+            logger.debug("execute update \n{}", updateStmt);
             openHabDataSet.begin(ReadWrite.WRITE);
             UpdateRequest req = UpdateFactory.create(updateStmt);
             UpdateAction.execute(req, getInstanceModel());
@@ -312,7 +313,6 @@ public final class SemanticServiceImpl extends SemanticServiceImplBase implement
         } catch (Exception e) {
             logger.error(e.getMessage());
             e.printStackTrace();
-            logger.error(e.getMessage());
         } finally {
             openHabDataSet.end();
         }

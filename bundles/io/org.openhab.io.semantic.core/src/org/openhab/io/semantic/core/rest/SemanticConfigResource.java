@@ -68,6 +68,27 @@ public class SemanticConfigResource implements RESTResource {
         return success ? Response.ok().build() : Response.status(Status.NOT_MODIFIED).build();
     }
 
+    @POST
+    @Path("/things/{thingName: [a-zA-Z_0-9]*}/location")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Sets/updates the location for a given thing.")
+    public Response updateThingLocation(@PathParam("thingName") String thingName, SemanticLocation location) {
+        if (location == null || thingName == null || thingName.isEmpty()) {
+            return Response.status(Status.BAD_REQUEST).build();
+        }
+
+        boolean success = configService.updateSemanticLocationForThing(thingName, location);
+        return success ? Response.ok().build() : Response.status(Status.NOT_MODIFIED).build();
+    }
+
+    @GET
+    @Path("/things/{thingName: [a-zA-Z_0-9]*}/location")
+    @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Get the location of the thing")
+    public SemanticLocation getThingLocations(@PathParam("thingName") String thingName) {
+        return configService.getSemanticLocationForThing(thingName);
+    }
+
     @GET
     @Path("/locations")
     @Produces(MediaType.APPLICATION_JSON)
