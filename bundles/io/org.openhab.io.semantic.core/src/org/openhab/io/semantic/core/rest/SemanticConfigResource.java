@@ -60,8 +60,7 @@ public class SemanticConfigResource implements RESTResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Sets/updates the poi for a given thing.")
     public Response updateThingPoi(@PathParam("thingName") String thingName, Poi newPoi) {
-        if (newPoi == null || thingName == null || newPoi.getOrientation() == null || newPoi.getOrientation().isEmpty()
-                || newPoi.getPosition() == null || newPoi.getPosition().isEmpty()) {
+        if (thingName == null) {
             return Response.status(Status.BAD_REQUEST).build();
         }
         boolean success = configService.updateThingPoi(thingName, newPoi);

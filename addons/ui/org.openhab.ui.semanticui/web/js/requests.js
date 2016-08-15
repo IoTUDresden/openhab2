@@ -1,8 +1,16 @@
 /*******************************************************************************
+ * ******************************** Public Vars
+ * **************************************
+ ******************************************************************************/
+
+var locations;
+var curRobot = "";
+
+/*******************************************************************************
  * ******************************** Requests
  * **************************************
  ******************************************************************************/
-var locations;
+
 
 /**
  * First load locations -> then all things -> build the table
@@ -43,6 +51,16 @@ function updateThingLocation(thingName, locationUri) {
 	});
 }
 
+function updateThingPoi(thingName, poi){
+	$.ajax("/rest/semantic/extended/things/" + thingName + "/poi", {
+		data : JSON.stringify(poi),
+		contentType : "application/json",
+		method : "POST",
+		success : showSuccess,
+		error : showFailed
+	});
+}
+
 /*******************************************************************************
  * ******************************** Events
  * ****************************************
@@ -54,10 +72,34 @@ $(document).on('change', "select[name='location-select']", function() {
 	updateThingLocation(value.thing, value.loc);
 });
 
+// set poi pressed
+$(document).on('click', "button[name='setThingPoiBtn']", function() {
+	var thingName = $(this).attr("value");
+	if(curRobot == ""){
+		alert("please select a robot above, which indicates the poi for this thing");	
+	}
+	else{
+		//get position
+		//send request
+	}
+
+});
+
+//set poi pressed
+$(document).on('click', "button[name='deleteThingPoiBtn']", function() {
+	var thingName = $(this).attr("value");	
+	updateThingPoi(thingName, "");
+});
+
+
 /*******************************************************************************
  * ******************************** Helpers
  * ***************************************
  ******************************************************************************/
+
+function getCurrentRobot(){
+	return "";
+}
 
 function locationsReceived(data) {
 	locations = data;
@@ -114,7 +156,7 @@ function fillThingsTable(data) {
 			addValueToRow(row, "");
 		}
 
-		addThingPoiBtn(obj.semanticUri, row);
+		addThingPoiBtn(obj.openHabName, row);
 		tBody.appendChild(row);
 	}
 }
@@ -169,11 +211,14 @@ function addThingPoiBtn(btnValue, row) {
 	var node = document.createTextNode("set to current");
 
 	setBtn.setAttribute("class", "btn btn-sm btn-primary");
+	setBtn.setAttribute("name", "setThingPoiBtn");
 	setBtn.setAttribute("value", btnValue);
 	setBtn.appendChild(node);
 
 	var delBtn = document.createElement('button');
 	node = document.createTextNode("delete");
+
+	delBtn.setAttribute("name", "deleteThingPoiBtn");
 	delBtn.setAttribute("class", "btn btn-sm btn-danger");
 	delBtn.setAttribute("value", btnValue);
 	delBtn.appendChild(node);

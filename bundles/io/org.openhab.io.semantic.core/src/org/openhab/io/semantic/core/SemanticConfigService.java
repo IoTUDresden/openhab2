@@ -49,7 +49,8 @@ public interface SemanticConfigService {
     boolean updateItemPoi(String itemName, Poi newPoi);
 
     /**
-     * Updates the {@link Poi} of a given Thing
+     * Updates the {@link Poi} of a given Thing.
+     * If newPoi == null, the existing poi for the fing is deleted.
      *
      * @param thingName
      * @param newPoi
@@ -75,7 +76,7 @@ public interface SemanticConfigService {
     /**
      * Updates the {@link SemanticLocation} for an item. If location == null or has no semanticUri,
      * the existing location of the thing will be deleted.
-     * 
+     *
      * @param thingName
      * @param location
      * @return

@@ -109,11 +109,21 @@ public final class SemanticConfigServiceImpl extends SemanticConfigServiceImplBa
 
     @Override
     public boolean updateThingPoi(String thingName, Poi newPoi) {
-        if (newPoi == null || thingName == null) {
+        if (thingName == null) {
             logger.error("updating thing poi failed. no thingName or poi given");
             return false;
         }
-        String queryString = QueryResource.updateThingPoi(thingName, newPoi);
+
+        String queryString = "";
+
+        if (newPoi == null || newPoi.getOrientation() == null || newPoi.getPosition() == null
+                || newPoi.getOrientation().isEmpty() || newPoi.getPosition().isEmpty()) {
+            // TODO delete query
+            queryString = QueryResource.updateThingPoi(thingName, newPoi);
+        } else {
+            queryString = QueryResource.updateThingPoi(thingName, newPoi);
+        }
+
         return semanticService.executeUpdate(queryString);
     }
 
