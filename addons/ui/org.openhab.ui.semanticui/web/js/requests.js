@@ -99,10 +99,7 @@ $(document).on('change', "#robot_select", function() {
 });
 
 // set poi pressed
-$(document)
-		.on(
-				'click',
-				"button[name='setThingPoiBtn']",
+$(document).on('click',	"button[name='setThingPoiBtn']",
 				function() {
 					var thingName = $(this).attr("value");
 					if (curRobot == "" || curRobot === undefined) {
@@ -116,6 +113,12 @@ $(document)
 
 // set poi pressed
 $(document).on('click', "button[name='deleteThingPoiBtn']", function() {
+	var thingName = $(this).attr("value");
+	updateThingPoi(thingName, createPoi("", ""));
+});
+
+// move Robot clicked
+$(document).on('click', "button[name='moveRobotToThingPoiBtn']", function() {
 	var thingName = $(this).attr("value");
 	updateThingPoi(thingName, createPoi("", ""));
 });
@@ -146,6 +149,11 @@ function locationsReceived(data) {
 	locations = data;
 	loadThings();
 }
+
+/*******************************************************************************
+ * ******************************** Page creation
+ * ***************************************
+ ******************************************************************************/
 
 // fills the options in the Things table with the locations
 function fillLocations(data) {
@@ -248,6 +256,8 @@ function createOptionAndSelect(thingName, locUri, text, select) {
 
 function addThingPoiBtn(btnValue, row) {
 	var cell = document.createElement('td');
+	
+	//set to current btn
 	var setBtn = document.createElement('button');
 	var node = document.createTextNode("set to current");
 
@@ -256,6 +266,7 @@ function addThingPoiBtn(btnValue, row) {
 	setBtn.setAttribute("value", btnValue);
 	setBtn.appendChild(node);
 
+	// del btn
 	var delBtn = document.createElement('button');
 	node = document.createTextNode("delete");
 
@@ -263,9 +274,18 @@ function addThingPoiBtn(btnValue, row) {
 	delBtn.setAttribute("class", "btn btn-sm btn-danger");
 	delBtn.setAttribute("value", btnValue);
 	delBtn.appendChild(node);
+	
+	// robot move btn
+	var moveBtn = document.createElement('button');
+	node = document.createTextNode("move robot");
+	moveBtn.setAttribute("name", "moveRobotToThingPoiBtn");
+	moveBtn.setAttribute("class", "btn btn-sm btn-warning");
+	moveBtn.setAttribute("value", btnValue);
+	moveBtn.appendChild(node);
 
 	cell.appendChild(setBtn);
 	cell.appendChild(delBtn);
+	cell.appendChild(moveBtn);
 	row.appendChild(cell);
 }
 
