@@ -111,8 +111,10 @@ public class VicciRobotHandler extends BaseThingHandler {
     }
 
     private Location getLocation(Command command) {
-        Position position = LocationUtil.getPosition(command);
-        Orientation orientation = LocationUtil.getOrientation(command);
+        LocationUtil util = new LocationUtil(command.toString());
+        Position position = util.getPosition();
+        Orientation orientation = util.getOrientation();
+
         if (position == null || orientation == null) {
             logger.error(MSG_CONVERSION_FAILED, command.toString());
             return null;
@@ -146,7 +148,7 @@ public class VicciRobotHandler extends BaseThingHandler {
             Location l = robot.getLocation();
             if (l != null && locationHasChanged(l)) {
                 lastLocation = l;
-                updateState(CHANNEL_CURRENT_LOCATION, new StringType(l.toString()));
+                updateState(CHANNEL_CURRENT_LOCATION, new StringType(LocationUtil.getFormatedString(l)));
             }
 
             if (l == null) {
