@@ -128,20 +128,46 @@ public class QueryResource {
     public static final String SubjectExistsInModel = Prefix + "\n" + "ASK { instance:%s ?p ?o }";
 
     /**
-     * Select Query to get the of a item
+     * Gets the poi of a thing
      *
-     * @param itemName
+     * @param thingName
      * @return
      */
-    public static final String thingPoi(String itemName) {
-        // SELECT *
-        // WHERE {
-        // ?thing dogont:hasFunctionality template:Function_homematic_co2_co2.
-        // ?thing vicci:hasRobotPosition ?poi.
-        // ?poi vicci:hasPosition ?p.
-        // ?poi vicci:hasOrientation ?o.
-        // }
-        return null;
+    public static final String getThingPoi(String thingName) {
+        thingName = SemanticConstants.NS_AND_THING_PREFIX + thingName;
+        StringBuilder builder = new StringBuilder();
+        builder.append(Prefix);
+        builder.append(" SELECT ?position ?orientation");
+        builder.append("  WHERE  {");
+        builder.append("      BIND(URI(\"" + thingName + "\") as ?thing)");
+        builder.append(" ?thing vicci:hasRobotPosition ?poi.");
+        builder.append(" ?poi vicci:hasPosition ?position.");
+        builder.append("  ?poi vicci:hasOrientation ?orientation.  }");
+        return builder.toString();
+    }
+
+    /**
+     * Delete stmt for the poi of a thing
+     *
+     * @param thingName
+     * @return
+     */
+    public static final String deleteThingPoi(String thingName) {
+        thingName = SemanticConstants.NS_AND_THING_PREFIX + thingName;
+        StringBuilder builder = new StringBuilder();
+        builder.append(Prefix);
+        builder.append(" DELETE { ");
+        builder.append("  ?thing vicci:hasRobotPosition ?poi .");
+        builder.append("  ?poi vicci:hasPosition ?p .");
+        builder.append("  ?poi vicci:hasOrientation ?o . ");
+        builder.append("  ?poi rdf:type vicci:RobotPosition . ");
+        builder.append("} WHERE { ");
+        builder.append("  BIND(URI( \"" + thingName + "\") as ?thing) ");
+        builder.append("  ?thing vicci:hasRobotPosition ?poi. ");
+        builder.append("  ?poi vicci:hasPosition ?p. ");
+        builder.append("  ?poi vicci:hasOrientation ?o. ");
+        builder.append("} ");
+        return builder.toString();
     }
 
     /**
@@ -152,13 +178,29 @@ public class QueryResource {
      * @return
      */
     public static final String updateThingPoi(String thingName, Poi newPoi) {
-        return Prefix + "DELETE { " + " ?thing vicci:hasRobotPosition ?poi." + " ?poi vicci:hasPosition ?p."
-                + " ?poi vicci:hasOrientation ?o." + " ?poi rdf:type vicci:RobotPosition." + "}" + "INSERT {"
-                + "   ?thing vicci:hasRobotPosition [" + "        rdf:type vicci:RobotPosition; "
-                + "        vicci:hasPosition '" + newPoi.getPosition() + "'; " + "        vicci:hasOrientation '"
-                + newPoi.getOrientation() + "'" + "        ] ." + " }" + "WHERE {" + "    BIND(" + "instance:"
-                + thingName + " as ?thing)" + "     OPTIONAL { " + "         ?thing vicci:hasRobotPosition ?poi. "
-                + "         ?poi vicci:hasPosition ?p." + "         ?poi vicci:hasOrientation ?o." + "  }}";
+        thingName = SemanticConstants.NS_AND_THING_PREFIX + thingName;
+        StringBuilder builder = new StringBuilder();
+        builder.append(Prefix);
+        builder.append("DELETE { ");
+        builder.append("  ?thing vicci:hasRobotPosition ?poi. ");
+        builder.append("  ?poi vicci:hasPosition ?p. ");
+        builder.append("  ?poi vicci:hasOrientation ?o. ");
+        builder.append("  ?poi rdf:type vicci:RobotPosition . ");
+        builder.append("} ");
+        builder.append("INSERT { ");
+        builder.append("  ?thing vicci:hasRobotPosition [");
+        builder.append("  rdf:type vicci:RobotPosition; ");
+        builder.append("  vicci:hasPosition \"" + newPoi.getPosition() + "\"; ");
+        builder.append("  vicci:hasOrientation \"" + newPoi.getOrientation() + "\" ] .");
+        builder.append("} ");
+        builder.append("WHERE { ");
+        builder.append("  BIND(URI( \"" + thingName + "\") as ?thing)");
+        builder.append("  OPTIONAL { ");
+        builder.append("    ?thing vicci:hasRobotPosition ?poi. ");
+        builder.append("    ?poi vicci:hasPosition ?position.");
+        builder.append("    ?poi vicci:hasOrientation ?orientation.");
+        builder.append(" }};");
+        return builder.toString();
     }
 
     /**
@@ -190,6 +232,7 @@ public class QueryResource {
         builder.append("  }");
         builder.append("  BIND(STRAFTER(STR(?thing), '" + SemanticConstants.NS_AND_THING_PREFIX + "') as ?thingName)");
         builder.append("}");
+        builder.append("ORDER BY ?thingName");
         return builder.toString();
     }
 

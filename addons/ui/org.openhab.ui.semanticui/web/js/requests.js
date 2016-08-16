@@ -5,12 +5,12 @@
 
 var locations;
 var curRobot = "";
+var lastThingClicked = "";
 
 /*******************************************************************************
  * ******************************** Requests
  * **************************************
  ******************************************************************************/
-
 
 /**
  * First load locations -> then all things -> build the table
@@ -19,6 +19,9 @@ function loadSemanticThingsTable() {
 	loadLocationsForThings();
 }
 
+/**
+ * loads all available locations
+ */
 function loadLocationsForThings() {
 	$.ajax("/rest/semantic/extended/locations", {
 		method : "GET",
@@ -27,6 +30,9 @@ function loadLocationsForThings() {
 	});
 }
 
+/**
+ * load all things
+ */
 function loadThings() {
 	$.ajax("/rest/semantic/extended/things", {
 		method : "GET",
@@ -35,6 +41,9 @@ function loadThings() {
 	});
 }
 
+/**
+ * Updates the location for a thing
+ */
 function updateThingLocation(thingName, locationUri) {
 	var pData = {
 		semanticUri : locationUri,
@@ -46,18 +55,29 @@ function updateThingLocation(thingName, locationUri) {
 		data : JSON.stringify(pData),
 		contentType : "application/json",
 		method : "POST",
-		success : showSuccess,
+		success : thingLocationUpdated,
 		error : showFailed
 	});
 }
 
-function updateThingPoi(thingName, poi){
+/**
+ * updates the poi for a thing
+ */
+function updateThingPoi(thingName, poi) {
 	$.ajax("/rest/semantic/extended/things/" + thingName + "/poi", {
 		data : JSON.stringify(poi),
 		contentType : "application/json",
 		method : "POST",
-		success : showSuccess,
+		success : thingPoiUpdated,
 		error : showFailed
+	});
+}
+
+function getRobotLocation(poiItem) {
+	$.ajax("/rest/items/" + poiItem + "/state", {
+		method : "GET",
+		success : setThingPoi,
+		error : handleResponseError
 	});
 }
 
@@ -72,33 +92,54 @@ $(document).on('change', "select[name='location-select']", function() {
 	updateThingLocation(value.thing, value.loc);
 });
 
+// selected robot changed
+$(document).on('change', "#robot_select", function() {
+	var value = $(this).find(":selected").val();
+	curRobot = value;
+});
+
 // set poi pressed
-$(document).on('click', "button[name='setThingPoiBtn']", function() {
-	var thingName = $(this).attr("value");
-	if(curRobot == ""){
-		alert("please select a robot above, which indicates the poi for this thing");	
-	}
-	else{
-		//get position
-		//send request
-	}
+$(document)
+		.on(
+				'click',
+				"button[name='setThingPoiBtn']",
+				function() {
+					var thingName = $(this).attr("value");
+					if (curRobot == "" || curRobot === undefined) {
+						alert("please select a robot above, which indicates the poi for this thing");
+					} else {
+						lastThingClicked = thingName;
+						getRobotLocation(curRobot);
+					}
 
-});
+				});
 
-//set poi pressed
+// set poi pressed
 $(document).on('click', "button[name='deleteThingPoiBtn']", function() {
-	var thingName = $(this).attr("value");	
-	updateThingPoi(thingName, "");
+	var thingName = $(this).attr("value");
+	updateThingPoi(thingName, createPoi("", ""));
 });
-
 
 /*******************************************************************************
  * ******************************** Helpers
  * ***************************************
  ******************************************************************************/
 
-function getCurrentRobot(){
-	return "";
+function setThingPoi(data) {
+	if (lastThingClicked == "") {
+		return;
+	}
+	updateThingPoi(lastThingClicked, createPoi("1,02 12,33",
+			"0,000001 -0,000012"))
+}
+
+function thingPoiUpdated() {
+	showSuccess("poi updated");
+	loadSemanticThingsTable();
+}
+
+function thingLocationUpdated() {
+	showSuccess("location updated");
 }
 
 function locationsReceived(data) {
@@ -251,20 +292,55 @@ function addValueToRow(row, value) {
 	row.appendChild(cell);
 }
 
-function showSuccess() {
-
-}
-
-function showFailed(jqXHR, textStatus, errorThrown) {
-	console.log("Error: " + errorThrown + ": " + jqXHR.responseText);
-}
-
 // removes all childs from the parent
 function removeAllChilds(root) {
 	while (root.firstChild)
 		root.removeChild(root.firstChild);
 }
 
+/*******************************************************************************
+ * ******************************** Status Messages
+ * ***************************************
+ ******************************************************************************/
+
+function showSuccess(message) {
+	showStatusMessage(message, false);
+}
+
+function showFailed(jqXHR, textStatus, errorThrown) {
+	showStatusMessage(textStatus, true);
+	console.log("Error: " + errorThrown + ": " + jqXHR.responseText);
+}
+
 function handleResponseError(jqXHR, textStatus, errorThrown) {
 	console.log("Error: " + errorThrown + ": " + jqXHR.responseText);
+}
+
+function showStatusMessage(message, isError) {
+	var container = document.getElementById("status_box");
+	container.setAttribute("class", "");
+
+	if (isError)
+		container.setAttribute("class", "alert alert-danger");
+	else
+		container.setAttribute("class", "alert alert-success");
+
+	container.style.visibility = 'visible';
+	container.innerHTML = message;
+
+	setTimeout(function() {
+		container.style.visibility = 'hidden'
+	}, 5000);
+}
+
+/*******************************************************************************
+ * ******************************** Constructor
+ * ***************************************
+ ******************************************************************************/
+
+function createPoi(position, orientation) {
+	return {
+		position : position,
+		orientation : orientation
+	};
 }

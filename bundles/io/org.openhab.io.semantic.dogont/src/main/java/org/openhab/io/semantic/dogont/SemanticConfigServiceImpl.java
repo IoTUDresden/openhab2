@@ -89,16 +89,11 @@ public final class SemanticConfigServiceImpl extends SemanticConfigServiceImplBa
 
     @Override
     public Poi getItemPoi(String itemName) {
-        // TODO sparql query
-        QueryResult qr = semanticService.executeSelect(QueryResource.thingPoi(itemName));
-        // Process json result
-
-        return null;
+        throw new UnsupportedOperationException("not implementet yet");
     }
 
     public Poi getThingPoi(String thingPoi) {
-        // TODO
-        return null;
+        throw new UnsupportedOperationException("not implementet yet");
     }
 
     @Override
@@ -110,21 +105,18 @@ public final class SemanticConfigServiceImpl extends SemanticConfigServiceImplBa
     @Override
     public boolean updateThingPoi(String thingName, Poi newPoi) {
         if (thingName == null) {
-            logger.error("updating thing poi failed. no thingName or poi given");
+            logger.error("updating thing poi failed. no thingName given");
             return false;
         }
-
-        String queryString = "";
-
-        if (newPoi == null || newPoi.getOrientation() == null || newPoi.getPosition() == null
-                || newPoi.getOrientation().isEmpty() || newPoi.getPosition().isEmpty()) {
-            // TODO delete query
-            queryString = QueryResource.updateThingPoi(thingName, newPoi);
-        } else {
-            queryString = QueryResource.updateThingPoi(thingName, newPoi);
-        }
+        String queryString = isEmptyPoi(newPoi) ? QueryResource.deleteThingPoi(thingName)
+                : QueryResource.updateThingPoi(thingName, newPoi);
 
         return semanticService.executeUpdate(queryString);
+    }
+
+    private boolean isEmptyPoi(Poi poi) {
+        return poi == null || poi.getPosition() == null || poi.getPosition().isEmpty() || poi.getOrientation() == null
+                || poi.getOrientation().isEmpty();
     }
 
     private String getThingNameForItem(String itemName) {

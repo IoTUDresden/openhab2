@@ -40,7 +40,8 @@ public interface SemanticConfigService {
     Poi getItemPoi(String itemName);
 
     /**
-     * Updates the {@link Poi} for a given item.
+     * Updates the {@link Poi} for a given item. If the newPoi is empty
+     * (orientation || position == null) or null, an existing poi for the thing will be deleted
      *
      * @param itemName
      * @param newPoi

@@ -79,11 +79,11 @@
 				<!-- /.row -->
 
 				<div class="form-group">
-					<label>Select robot for position editing</label> <select class="form-control">
-						<option>select robot</option>
-						<option>Turtle (TODO)</option>
-						<option>NAO (TODO)</option>
-						<option>YouBot (TODO)</option>
+					<label>Select robot for position editing</label> <select class="form-control" id="robot_select">
+						<option value="">select robot</option>
+						<option value="viccirobot_robot_currentLocation_1">Turtle (TODO)</option>
+						<option value="nao">NAO (TODO)</option>
+						<option value="youbot">YouBot (TODO)</option>
 					</select>
 				</div>
 
@@ -111,9 +111,10 @@
 
 		</div>
 		<!-- /#page-wrapper -->
-
 	</div>
 	<!-- /#wrapper -->
+	
+	<div id="status_box" class="alert alert-success" style="z-index:99999; visibility: hidden; position: fixed; bottom: 0px; left:10px;"> </div>
 
 	<!-- jQuery -->
 	<script src="js/jquery.js"></script>
