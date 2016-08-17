@@ -24,7 +24,7 @@
 			<parameter name="robotHost" type="text" required="true">
 				<label>Robot Host</label>
 				<description>The host address for the ROS</description>
-				<default>http://192.168.1.15</default>
+				<default>192.168.1.69</default>
 			</parameter>
 
 			<parameter name="robotPort" type="integer" required="true">

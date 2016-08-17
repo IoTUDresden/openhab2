@@ -4,7 +4,7 @@
  ******************************************************************************/
 
 var locations;
-var curRobot = "";
+var curRobot = {position: "", move: ""};
 var lastThingClicked = "";
 
 /*******************************************************************************
@@ -105,7 +105,7 @@ $(document).on('change', "select[name='location-select']", function() {
 
 // selected robot changed
 $(document).on('change', "#robot_select", function() {
-	var value = $(this).find(":selected").val();
+	var value = $(this).find(":selected").data("value");
 	curRobot = value;
 });
 
@@ -113,11 +113,11 @@ $(document).on('change', "#robot_select", function() {
 $(document).on('click',	"button[name='setThingPoiBtn']",
 				function() {
 					var thingName = $(this).attr("value");
-					if (curRobot == "" || curRobot === undefined) {
+					if (curRobot == "" || curRobot === undefined || curRobot.position == "") {
 						alert("please select a robot above, which indicates the poi for this thing");
 					} else {
 						lastThingClicked = thingName;
-						getRobotLocation(curRobot);
+						getRobotLocation(curRobot.position);
 					}
 
 				});
@@ -131,7 +131,7 @@ $(document).on('click', "button[name='deleteThingPoiBtn']", function() {
 // move Robot clicked
 $(document).on('click', "button[name='moveRobotToThingPoiBtn']", function() {
 	var poiStr = $(this).val();
-	if(curRobot == ""){
+	if(curRobot == "" || curRobot.move == ""){
 		alert("Please select a robot above before moving");
 		return;
 	}
@@ -140,7 +140,7 @@ $(document).on('click', "button[name='moveRobotToThingPoiBtn']", function() {
 		return;
 	}	
 	
-	postItemCommand(curRobot, poiStr);
+	postItemCommand(curRobot.move, poiStr);
 });
 
 /*******************************************************************************

@@ -19,7 +19,7 @@ public class LocationUtil {
 
     private static final String rxPos = "^\\s*P:\\s*((?:-?[0-9]+[,|\\.][0-9]+\\s+){2,3})\\s*O:\\s*((?:(?:(?:-?[0-9]+[,|\\.][0-9]+(?:\\s+)){3}|(?:-?[0-9]+[,|\\.][0-9]+(?:\\s+)){1})-?[0-9]+[,|\\.][0-9]+(?:\\s*)))";
     private static final Pattern pattern = Pattern.compile(rxPos);
-    private static final int DEFAULT_PRECISION = 10;
+    private static final int DEFAULT_PRECISION = 18;
 
     private Position position;
     private Orientation orientation;
