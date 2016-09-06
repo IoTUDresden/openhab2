@@ -1,6 +1,7 @@
 package org.openhab.io.semantic.dogont.internal.util;
 
 import org.openhab.io.semantic.core.util.Poi;
+import org.openhab.io.semantic.core.util.SemanticPerson;
 import org.openhab.io.semantic.dogont.internal.ontology.DogontSchema;
 import org.openhab.io.semantic.dogont.internal.ontology.VicciExtensionSchema;
 
@@ -297,6 +298,65 @@ public class QueryResource {
         builder.append("WHERE { ");
         builder.append("  BIND(URI('" + thingName + "') as ?thing) ");
         builder.append("  ?thing dogont:isIn ?oldLoc .");
+        builder.append("}");
+        return builder.toString();
+    }
+
+    /**
+     * Updates or adds a {@link SemanticPerson} to the instance model.
+     * Uid of person should not be empty!.
+     *
+     * @param person
+     * @return
+     */
+    public static final String addPerson(SemanticPerson person) {
+        String thing = SemanticConstants.NS_AND_THING_PREFIX + person.getUid();
+
+        StringBuilder builder = new StringBuilder();
+        builder.append(Prefix);
+        builder.append("DELETE{ ");
+        builder.append("  ?person vicci:hasFirstname ?fName .");
+        builder.append("  ?person vicci:hasLastname ?lName .");
+        builder.append("  ?person vicci:hasGender ?gender .");
+        builder.append("  ?person vicci:hasAge ?age .");
+        builder.append("}  ");
+        builder.append("INSERT{ ");
+        builder.append("  ?person vicci:hasFirstname '" + person.getFirstName() + "'^^xsd:string .");
+        builder.append("  ?person vicci:hasLastname '" + person.getLastName() + "'^^xsd:string .");
+        builder.append("  ?person vicci:hasGender '" + person.getGender() + "'^^xsd:string .   ");
+        builder.append("  ?person vicci:hasAge '" + person.getAge() + "'^^xsd:string .    ");
+        builder.append("}  ");
+        builder.append("WHERE {  ");
+        builder.append(" bind(uri('" + thing + "') as ?person).");
+        builder.append(" ?person rdf:type ?class.");
+        builder.append("  OPTIONAL { ");
+        builder.append("    ?person vicci:hasFirstname ?fName . ");
+        builder.append("    ?person vicci:hasLastname ?lName . ");
+        builder.append("    ?person vicci:hasGender ?gender . ");
+        builder.append("    ?person vicci:hasAge ?age .");
+        builder.append("}} ");
+        return builder.toString();
+    }
+
+    /**
+     * Gets all {@link SemanticPerson}s query
+     *
+     * @return
+     */
+    public static final String getPersons() {
+        StringBuilder builder = new StringBuilder();
+        builder.append(Prefix);
+        builder.append("SELECT ?class ?fName ?lName ?age ?gender ?uid ");
+        builder.append("WHERE { ");
+        builder.append("  ?class rdfs:subClassOf* vicci:Person .");
+        builder.append("  ?person rdf:type ?class .");
+        builder.append("  OPTIONAL { ");
+        builder.append("    ?person vicci:hasFirstname ?fName .");
+        builder.append("    ?person vicci:hasLastname ?lName .");
+        builder.append("    ?person vicci:hasAge ?age .");
+        builder.append("    ?person vicci:hasGender ?gender .");
+        builder.append("  } ");
+        builder.append("  bind(strafter(str(?person), '" + SemanticConstants.NS_AND_THING_PREFIX + "') as ?uid).");
         builder.append("}");
         return builder.toString();
     }

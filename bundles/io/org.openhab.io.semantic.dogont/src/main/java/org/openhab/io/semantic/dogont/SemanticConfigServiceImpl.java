@@ -73,18 +73,35 @@ public final class SemanticConfigServiceImpl extends SemanticConfigServiceImplBa
 
     @Override
     public void addPerson(SemanticPerson person) {
-        // TODO complete
+        if (person == null || person.getUid() == null || person.getUid().isEmpty()) {
+            logger.error("cant update person. P is null or has no uid");
+            return;
+        }
+        semanticService.executeUpdate(QueryResource.addPerson(person));
     }
 
     @Override
     public List<SemanticPerson> getSemanticPersons() {
+        QueryResult result = semanticService.executeSelect(QueryResource.getPersons());
         List<SemanticPerson> persons = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            SemanticPerson p = new SemanticPerson("Testperson_" + i);
-            p.setUid("UID_Testperson_" + i);
-            persons.add(p);
-        }
+        createPersonsAndPutToList(persons, getBindingsArrayFromQuery(result));
         return persons;
+    }
+
+    private List<SemanticPerson> createPersonsAndPutToList(List<SemanticPerson> list, JsonArray binds) {
+        for (JsonElement jsonElement : binds) {
+            String uid = jsonElement.getAsJsonObject().get("uid").getAsJsonObject().get("value").getAsString();
+
+            // optionals
+            String fName = getStringMemberFromJsonObject(jsonElement, "fName");
+            String lName = getStringMemberFromJsonObject(jsonElement, "lName");
+            String age = getStringMemberFromJsonObject(jsonElement, "age");
+            String gender = getStringMemberFromJsonObject(jsonElement, "gender");
+
+            SemanticPerson p = new SemanticPerson(uid, fName, lName, age, gender);
+            list.add(p);
+        }
+        return list;
     }
 
     @Override
