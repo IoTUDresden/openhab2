@@ -4,13 +4,20 @@
  ******************************************************************************/
 
 var locations;
-var curRobot = {position: "", move: ""};
+var curRobot = {
+	position : "",
+	move : ""
+};
 var lastThingClicked = "";
 
 /*******************************************************************************
  * ******************************** Requests
  * **************************************
  ******************************************************************************/
+
+function loadPersonsTable() {
+	getPersons();
+}
 
 /**
  * First load locations -> then all things -> build the table
@@ -82,14 +89,22 @@ function getRobotLocation(poiItem) {
 	});
 }
 
-function postItemCommand(itemName, command){
-	$.ajax("/rest/items/" + itemName , {
+function postItemCommand(itemName, command) {
+	$.ajax("/rest/items/" + itemName, {
 		data : command,
 		contentType : "text/plain",
 		method : "POST",
 		success : commandSendToItem,
 		error : showFailed
-	});	
+	});
+}
+
+function getPersons() {
+	$.ajax("/rest/semantic/extended/persons", {
+		method : "GET",
+		success : fillPersonsTable,
+		error : handleResponseError
+	});
 }
 
 /*******************************************************************************
@@ -110,10 +125,14 @@ $(document).on('change', "#robot_select", function() {
 });
 
 // set poi pressed
-$(document).on('click',	"button[name='setThingPoiBtn']",
+$(document)
+		.on(
+				'click',
+				"button[name='setThingPoiBtn']",
 				function() {
 					var thingName = $(this).attr("value");
-					if (curRobot == "" || curRobot === undefined || curRobot.position == "") {
+					if (curRobot == "" || curRobot === undefined
+							|| curRobot.position == "") {
 						alert("please select a robot above, which indicates the poi for this thing");
 					} else {
 						lastThingClicked = thingName;
@@ -131,15 +150,15 @@ $(document).on('click', "button[name='deleteThingPoiBtn']", function() {
 // move Robot clicked
 $(document).on('click', "button[name='moveRobotToThingPoiBtn']", function() {
 	var poiStr = $(this).val();
-	if(curRobot == "" || curRobot.move == ""){
+	if (curRobot == "" || curRobot.move == "") {
 		alert("Please select a robot above before moving");
 		return;
 	}
-	if(poiStr == ""){
+	if (poiStr == "") {
 		alert("Please set a poi at first.");
 		return;
-	}	
-	
+	}
+
 	postItemCommand(curRobot.move, poiStr);
 });
 
@@ -147,8 +166,8 @@ $(document).on('click', "button[name='moveRobotToThingPoiBtn']", function() {
  * ******************************** Helpers
  * ***************************************
  ******************************************************************************/
-	
-function commandSendToItem(){
+
+function commandSendToItem() {
 	showSuccess("command send to item");
 }
 
@@ -156,26 +175,27 @@ function setThingPoi(data) {
 	if (lastThingClicked == "") {
 		return;
 	}
-	if(data == "NULL" || data == "" || data === undefined){
+	if (data == "NULL" || data == "" || data === undefined) {
 		showFailedShort("robot position not found");
 		return;
 	}
-	
-	var poi = getPoiFromString(data);	
-	if(poi == ""){
-		alert("the given poi '" + data +"' is not valid");
-	}
-	else{
+
+	var poi = getPoiFromString(data);
+	if (poi == "") {
+		alert("the given poi '" + data + "' is not valid");
+	} else {
 		updateThingPoi(lastThingClicked, poi);
 	}
 }
 
-function getPoiFromString(poiStr){
+function getPoiFromString(poiStr) {
 	// regex pattern
 	// ^\s*P:\s*((?:-?[0-9]+[,|\.][0-9]+\s+){2,3})\s*O:\s*((?:(?:(?:-?[0-9]+[,|\.][0-9]+(?:\s+)){3}|(?:-?[0-9]+[,|\.][0-9]+(?:\s+)){1})-?[0-9]+[,|\.][0-9]+(?:\s*)))
-	var rxPoi = new RegExp('^\\s*P:\\s*((?:-?[0-9]+[,|\\.][0-9]+\\s+){2,3})\\s*O:\\s*((?:(?:(?:-?[0-9]+[,|\\.][0-9]+(?:\\s+)){3}|(?:-?[0-9]+[,|\\.][0-9]+(?:\\s+)){1})-?[0-9]+[,|\\.][0-9]+(?:\\s*)))', 'g');
+	var rxPoi = new RegExp(
+			'^\\s*P:\\s*((?:-?[0-9]+[,|\\.][0-9]+\\s+){2,3})\\s*O:\\s*((?:(?:(?:-?[0-9]+[,|\\.][0-9]+(?:\\s+)){3}|(?:-?[0-9]+[,|\\.][0-9]+(?:\\s+)){1})-?[0-9]+[,|\\.][0-9]+(?:\\s*)))',
+			'g');
 	var res = rxPoi.exec(poiStr);
-	if(res == null || res.length < 3){
+	if (res == null || res.length < 3) {
 		showFailedShort("the poi is not valid");
 		return "";
 	}
@@ -226,6 +246,56 @@ function getLastSelectedValue(select) {
 	return " ";
 }
 
+// fills the persons table
+function fillPersonsTable(data) {
+	var tBody = document.getElementById("persons_table_body");
+	removeAllChilds(tBody);
+	for ( var i = 0; i < data.length; i++) {
+		var obj = data[i];
+		var row = document.createElement('tr');
+		if (!addedEmptyRow("uid", obj, row)) {
+			addValueToRow(row, obj.uid);
+		}
+
+		addInputCellToRow("firstName", obj, row);
+		addInputCellToRow("lastName", obj, row);
+		addInputCellToRow("age", obj, row);
+		addInputCellToRow("gender", obj, row);
+		addInputCellToRow("healthMonitorUid", obj, row);
+		addUpdatePersonBtn(row);
+		tBody.appendChild(row);
+	}
+}
+
+function addUpdatePersonBtn(row) {
+	var cell = document.createElement('td');
+	// set to current btn
+	var setBtn = document.createElement('button');
+	var node = document.createTextNode("update");
+
+	setBtn.setAttribute("class", "btn btn-sm btn-primary");
+	setBtn.setAttribute("name", "updatePersonBtn");
+	setBtn.appendChild(node);
+	cell.appendChild(setBtn);	
+	row.appendChild(cell);
+}
+
+function addInputCellToRow(propertyName, object, row) {
+	// TODO a text input
+	var cell = document.createElement('td');
+	var input = document.createElement('input');
+	var value = "";
+	if (propertyName in object) {
+		value = object[propertyName];
+	}
+	
+	input.setAttribute("class", "form-control");
+	input.setAttribute("value", value);
+	
+	cell.appendChild(input);
+	row.appendChild(cell);
+}
+
 // fills the things table
 function fillThingsTable(data) {
 	var tBody = document.getElementById("things_table_body");
@@ -245,7 +315,7 @@ function fillThingsTable(data) {
 		addLocationSelect(row, obj)
 
 		var poiStr = "";
-		if ("poi" in obj ) {
+		if ("poi" in obj) {
 			poiStr = poiToString(obj.poi);
 			addValueToRow(row, poiStr);
 		} else {
@@ -303,8 +373,8 @@ function createOptionAndSelect(thingName, locUri, text, select) {
 
 function addThingPoiBtn(thingName, poiStr, row) {
 	var cell = document.createElement('td');
-	
-	//set to current btn
+
+	// set to current btn
 	var setBtn = document.createElement('button');
 	var node = document.createTextNode("set to current");
 
@@ -321,14 +391,14 @@ function addThingPoiBtn(thingName, poiStr, row) {
 	delBtn.setAttribute("class", "btn btn-sm btn-danger");
 	delBtn.setAttribute("value", thingName);
 	delBtn.appendChild(node);
-	
+
 	// robot move btn
 	var moveBtn = document.createElement('button');
 	node = document.createTextNode("move robot");
 	moveBtn.setAttribute("name", "moveRobotToThingPoiBtn");
 	moveBtn.setAttribute("class", "btn btn-sm btn-warning");
 	moveBtn.setAttribute("value", poiStr);
-	
+
 	moveBtn.appendChild(node);
 
 	cell.appendChild(setBtn);
@@ -375,8 +445,8 @@ function showSuccess(message) {
 	showStatusMessage(message, false);
 }
 
-function showFailedShort(message){
-	showStatusMessage(message, true);	
+function showFailedShort(message) {
+	showStatusMessage(message, true);
 }
 
 function showFailed(jqXHR, textStatus, errorThrown) {
@@ -417,13 +487,10 @@ function createPoi(position, orientation) {
 	};
 }
 
-function poiToString(poi){
-	if(!("orientation" in poi)
-			|| !("position" in poi) 
-			|| poi.position == "" 
-			|| poi.position === undefined 
-			|| poi.orientation == "" 
-			|| poi.orientation === undefined){
+function poiToString(poi) {
+	if (!("orientation" in poi) || !("position" in poi) || poi.position == ""
+			|| poi.position === undefined || poi.orientation == ""
+			|| poi.orientation === undefined) {
 		return "";
 	}
 	return "P: " + poi.position + " O: " + poi.orientation;

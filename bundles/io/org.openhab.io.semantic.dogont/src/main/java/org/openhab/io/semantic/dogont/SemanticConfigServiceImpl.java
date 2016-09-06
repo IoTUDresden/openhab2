@@ -98,7 +98,7 @@ public final class SemanticConfigServiceImpl extends SemanticConfigServiceImplBa
             String age = getStringMemberFromJsonObject(jsonElement, "age");
             String gender = getStringMemberFromJsonObject(jsonElement, "gender");
 
-            SemanticPerson p = new SemanticPerson(uid, fName, lName, age, gender);
+            SemanticPerson p = new SemanticPerson(uid, fName, lName, age, gender, "");
             list.add(p);
         }
         return list;

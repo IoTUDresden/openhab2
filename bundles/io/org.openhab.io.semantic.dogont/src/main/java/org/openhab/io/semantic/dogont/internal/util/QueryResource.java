@@ -311,6 +311,11 @@ public class QueryResource {
      */
     public static final String addPerson(SemanticPerson person) {
         String thing = SemanticConstants.NS_AND_THING_PREFIX + person.getUid();
+        String monitor = SemanticConstants.NS_AND_THING_PREFIX;
+        boolean hasHealthMonitor = person.getHealthMonitorUid() != null && !person.getHealthMonitorUid().isEmpty();
+        if (hasHealthMonitor) {
+            monitor = monitor + person.getHealthMonitorUid();
+        }
 
         StringBuilder builder = new StringBuilder();
         builder.append(Prefix);
@@ -319,21 +324,33 @@ public class QueryResource {
         builder.append("  ?person vicci:hasLastname ?lName .");
         builder.append("  ?person vicci:hasGender ?gender .");
         builder.append("  ?person vicci:hasAge ?age .");
+        builder.append("  ?person vicci:hasHealthMonitor ?monitor");
         builder.append("}  ");
         builder.append("INSERT{ ");
         builder.append("  ?person vicci:hasFirstname '" + person.getFirstName() + "'^^xsd:string .");
         builder.append("  ?person vicci:hasLastname '" + person.getLastName() + "'^^xsd:string .");
         builder.append("  ?person vicci:hasGender '" + person.getGender() + "'^^xsd:string .   ");
         builder.append("  ?person vicci:hasAge '" + person.getAge() + "'^^xsd:string .    ");
+
+        if (hasHealthMonitor) {
+            builder.append("  ?person vicci:hasHealthMonitor ?monitorUri . ");
+        }
+
         builder.append("}  ");
         builder.append("WHERE {  ");
-        builder.append(" bind(uri('" + thing + "') as ?person).");
+        builder.append("  bind(uri('" + thing + "') as ?person).");
+
+        if (hasHealthMonitor) {
+            builder.append("  bind(uri('" + monitor + "') as ?monitorUri).");
+        }
+
         builder.append(" ?person rdf:type ?class.");
         builder.append("  OPTIONAL { ");
         builder.append("    ?person vicci:hasFirstname ?fName . ");
         builder.append("    ?person vicci:hasLastname ?lName . ");
         builder.append("    ?person vicci:hasGender ?gender . ");
         builder.append("    ?person vicci:hasAge ?age .");
+        builder.append("    ?person vicci:hasHealthMonitor ?monitor");
         builder.append("}} ");
         return builder.toString();
     }
@@ -346,7 +363,7 @@ public class QueryResource {
     public static final String getPersons() {
         StringBuilder builder = new StringBuilder();
         builder.append(Prefix);
-        builder.append("SELECT ?class ?fName ?lName ?age ?gender ?uid ");
+        builder.append("SELECT ?class ?fName ?lName ?age ?gender ?uid ?healthMonitorUid ");
         builder.append("WHERE { ");
         builder.append("  ?class rdfs:subClassOf* vicci:Person .");
         builder.append("  ?person rdf:type ?class .");
@@ -355,6 +372,9 @@ public class QueryResource {
         builder.append("    ?person vicci:hasLastname ?lName .");
         builder.append("    ?person vicci:hasAge ?age .");
         builder.append("    ?person vicci:hasGender ?gender .");
+        builder.append("    ?person vicci:hasHealthMonitor ?healthMonitor");
+        builder.append("    bind(strafter(str(?healthMonitor), '" + SemanticConstants.NS_AND_THING_PREFIX
+                + "') as ?healthMonitorUid).");
         builder.append("  } ");
         builder.append("  bind(strafter(str(?person), '" + SemanticConstants.NS_AND_THING_PREFIX + "') as ?uid).");
         builder.append("}");
