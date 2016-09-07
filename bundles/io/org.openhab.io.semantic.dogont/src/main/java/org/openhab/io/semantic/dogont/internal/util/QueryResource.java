@@ -391,11 +391,25 @@ public class QueryResource {
     public static final String getAllRobots() {
         StringBuilder builder = new StringBuilder();
         builder.append(Prefix);
-        builder.append("SELECT ?class ?robot ?uid ");
+        builder.append("SELECT ?class ?robot ?uid ?moveUid ?moveStateUid ?posStateUid ");
         builder.append("WHERE { ");
         builder.append("  ?class rdfs:subClassOf* vicci:Robot . ");
         builder.append("  ?robot rdf:type ?class . ");
         builder.append("  bind(strafter(str(?robot), '" + SemanticConstants.NS_AND_THING_PREFIX + "') as ?uid)");
+        builder.append("  OPTIONAL {");
+        builder.append("    ?robot dogont:hasFunctionality ?move .");
+        builder.append("    ?move rdf:type vicci:RobotMovementFunctionality .");
+        builder.append(
+                "    bind(strafter(str(?move), '" + SemanticConstants.NS_AND_FUNCTION_PREFIX + "') as ?moveUid)");
+        builder.append("    ?robot dogont:hasState ?moveState .");
+        builder.append("    ?moveState rdf:type vicci:RobotMovementState .");
+        builder.append("    bind(strafter(str(?moveState), '" + SemanticConstants.NS_AND_STATE_PREFIX
+                + "') as ?moveStateUid)");
+        builder.append("    ?robot dogont:hasState ?posState .");
+        builder.append("    ?posState rdf:type vicci:RobotPositionState .");
+        builder.append(
+                " bind(strafter(str(?posState), '" + SemanticConstants.NS_AND_STATE_PREFIX + "') as ?posStateUid)");
+        builder.append("  }");
         builder.append("}");
         return builder.toString();
     }

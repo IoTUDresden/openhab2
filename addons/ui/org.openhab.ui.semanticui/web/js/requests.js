@@ -26,6 +26,7 @@ function loadPersonsTable() {
  */
 function loadSemanticThingsTable() {
 	loadLocationsForThings();
+	loadRobotsForThings();
 }
 
 /**
@@ -35,6 +36,14 @@ function loadLocationsForThings() {
 	$.ajax("/rest/semantic/extended/locations", {
 		method : "GET",
 		success : locationsReceived,
+		error : handleResponseError
+	});
+}
+
+function loadRobotsForThings() {
+	$.ajax("/rest/semantic/extended/robots", {
+		method : "GET",
+		success : robotsReceived,
 		error : handleResponseError
 	});
 }
@@ -113,14 +122,6 @@ function beginPersonTable() {
 	$.ajax("/rest/semantic/extended/health/sensors", {
 		method : "GET",
 		success : beginPersonTableHealthReceived,
-		error : handleResponseError
-	});
-}
-
-function getRobots() {
-	$.ajax("/rest/semantic/extended/robots", {
-		method : "GET",
-		success : fillPersonsTable,
 		error : handleResponseError
 	});
 }
@@ -237,7 +238,30 @@ function locationsReceived(data) {
 /*******************************************************************************
  * ******************************** Page creation
  * ***************************************
- ******************************************************************************/
+ ******************************************************************************/	
+ 
+function robotsReceived(data){
+	//<option data-value='{"position": "viccirobot_robot_currentLocation_1", "move": "viccirobot_robot_moveToLocation_1"}'>Turtle (TODO)</option>
+
+	var sel = document.getElementById('robot_select');
+	var opt = "";
+	var txt = "";
+	var dValue = "";
+	
+	for(var i = 0; i < data.length; i++){
+		opt = document.createElement('option');
+		txt = document.createTextNode(data[i].uid);
+		if('positionUid' in data[i] && 'moveUid' in data[i]){
+			dValue = { position: data[i].positionUid, move: data[i].moveUid };			
+		}
+		else{
+		    dValue = { position: '', move: ''};
+		}
+		opt.setAttribute('data-value', JSON.stringify(dValue));
+		opt.appendChild(txt);
+		sel.appendChild(opt);
+	}
+}
 
 // fills the options in the Things table with the locations
 function fillLocations(data) {
@@ -264,10 +288,10 @@ function getLastSelectedValue(select) {
 	return " ";
 }
 
-//starts to build the person table
-function beginPersonTableHealthReceived(data){
+// starts to build the person table
+function beginPersonTableHealthReceived(data) {
 	healthMonitors = data;
-	getPersons();	
+	getPersons();
 }
 
 // fills the persons table
@@ -305,8 +329,8 @@ function addHealthSensorSelect(obj, row) {
 	// empty select for deleting
 	var opt = createHealthOptionAndSelect("", "", curHealthMonitor == "");
 	sel.appendChild(opt);
-	
-	if(healthMonitors == ""){
+
+	if (healthMonitors == "") {
 		cell.appendChild(sel);
 		row.appendChild(cell);
 		return;
@@ -314,7 +338,8 @@ function addHealthSensorSelect(obj, row) {
 
 	for (k = 0; k < healthMonitors.length; k++) {
 		var select = healthMonitors[k].uid == curHealthMonitor;
-		opt = createHealthOptionAndSelect(healthMonitors[k].uid, healthMonitors[k].uid, select);
+		opt = createHealthOptionAndSelect(healthMonitors[k].uid,
+				healthMonitors[k].uid, select);
 		sel.appendChild(opt);
 	}
 
@@ -322,7 +347,7 @@ function addHealthSensorSelect(obj, row) {
 	row.appendChild(cell);
 }
 
-function createHealthOptionAndSelect(text, value, select){
+function createHealthOptionAndSelect(text, value, select) {
 	var opt = document.createElement('option');
 	var txt = document.createTextNode(text);
 
@@ -333,9 +358,8 @@ function createHealthOptionAndSelect(text, value, select){
 
 	opt.appendChild(txt);
 	return opt;
-		
-}
 
+}
 
 function addUpdatePersonBtn(row) {
 	var cell = document.createElement('td');

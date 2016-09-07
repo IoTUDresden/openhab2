@@ -229,7 +229,12 @@ public final class SemanticConfigServiceImpl extends SemanticConfigServiceImplBa
     private void createRobotsAndPutToList(List<SemanticRobot> list, JsonArray binds) {
         for (JsonElement jsonElement : binds) {
             String uid = jsonElement.getAsJsonObject().get("uid").getAsJsonObject().get("value").getAsString();
-            SemanticRobot r = new SemanticRobot(uid);
+            // optionals
+            String moveUid = getStringMemberFromJsonObject(jsonElement, "moveUid");
+            String moveStateUid = getStringMemberFromJsonObject(jsonElement, "moveStateUid");
+            String posStateUid = getStringMemberFromJsonObject(jsonElement, "posStateUid");
+
+            SemanticRobot r = new SemanticRobot(uid, posStateUid, moveStateUid, moveUid);
             list.add(r);
         }
     }
