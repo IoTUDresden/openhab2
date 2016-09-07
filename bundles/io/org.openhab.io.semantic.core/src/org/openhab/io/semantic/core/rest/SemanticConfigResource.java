@@ -15,8 +15,10 @@ import javax.ws.rs.core.Response.Status;
 import org.eclipse.smarthome.io.rest.RESTResource;
 import org.openhab.io.semantic.core.SemanticConfigService;
 import org.openhab.io.semantic.core.util.Poi;
+import org.openhab.io.semantic.core.util.SemanticHealthSensor;
 import org.openhab.io.semantic.core.util.SemanticLocation;
 import org.openhab.io.semantic.core.util.SemanticPerson;
+import org.openhab.io.semantic.core.util.SemanticRobot;
 import org.openhab.io.semantic.core.util.SemanticThing;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -102,6 +104,22 @@ public class SemanticConfigResource implements RESTResource {
     @ApiOperation(value = "Gets all known things semantic annotated.")
     public List<SemanticPerson> getSemanticPersons() {
         return configService.getSemanticPersons();
+    }
+
+    @GET
+    @Path("/robots")
+    @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Gets all known robots.")
+    public List<SemanticRobot> getSemanticRobots() {
+        return configService.getSemanticRobots();
+    }
+
+    @GET
+    @Path("/health/sensors")
+    @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Gets all known health sensors.")
+    public List<SemanticHealthSensor> getSemanticHealthSensors() {
+        return configService.getSemanticHealthSensors();
     }
 
     @GET

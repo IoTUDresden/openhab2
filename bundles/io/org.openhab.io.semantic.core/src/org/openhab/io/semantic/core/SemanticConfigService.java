@@ -3,8 +3,10 @@ package org.openhab.io.semantic.core;
 import java.util.List;
 
 import org.openhab.io.semantic.core.util.Poi;
+import org.openhab.io.semantic.core.util.SemanticHealthSensor;
 import org.openhab.io.semantic.core.util.SemanticLocation;
 import org.openhab.io.semantic.core.util.SemanticPerson;
+import org.openhab.io.semantic.core.util.SemanticRobot;
 import org.openhab.io.semantic.core.util.SemanticThing;
 
 public interface SemanticConfigService {
@@ -83,5 +85,19 @@ public interface SemanticConfigService {
      * @return
      */
     boolean updateSemanticLocationForThing(String thingName, SemanticLocation location);
+
+    /**
+     * Gets all {@link SemanticRobot}s.
+     *
+     * @return
+     */
+    List<SemanticRobot> getSemanticRobots();
+
+    /**
+     * Gets all {@link SemanticHealthSensor}s
+     *
+     * @return
+     */
+    List<SemanticHealthSensor> getSemanticHealthSensors();
 
 }

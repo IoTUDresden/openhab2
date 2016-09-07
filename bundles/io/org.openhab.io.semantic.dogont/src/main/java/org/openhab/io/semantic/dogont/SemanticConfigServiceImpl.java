@@ -6,8 +6,10 @@ import java.util.List;
 import org.openhab.io.semantic.core.SemanticConfigService;
 import org.openhab.io.semantic.core.util.Poi;
 import org.openhab.io.semantic.core.util.QueryResult;
+import org.openhab.io.semantic.core.util.SemanticHealthSensor;
 import org.openhab.io.semantic.core.util.SemanticLocation;
 import org.openhab.io.semantic.core.util.SemanticPerson;
+import org.openhab.io.semantic.core.util.SemanticRobot;
 import org.openhab.io.semantic.core.util.SemanticThing;
 import org.openhab.io.semantic.dogont.internal.SemanticConfigServiceImplBase;
 import org.openhab.io.semantic.dogont.internal.util.QueryResource;
@@ -88,7 +90,7 @@ public final class SemanticConfigServiceImpl extends SemanticConfigServiceImplBa
         return persons;
     }
 
-    private List<SemanticPerson> createPersonsAndPutToList(List<SemanticPerson> list, JsonArray binds) {
+    private void createPersonsAndPutToList(List<SemanticPerson> list, JsonArray binds) {
         for (JsonElement jsonElement : binds) {
             String uid = jsonElement.getAsJsonObject().get("uid").getAsJsonObject().get("value").getAsString();
 
@@ -101,7 +103,6 @@ public final class SemanticConfigServiceImpl extends SemanticConfigServiceImplBa
             SemanticPerson p = new SemanticPerson(uid, fName, lName, age, gender, "");
             list.add(p);
         }
-        return list;
     }
 
     @Override
@@ -215,5 +216,42 @@ public final class SemanticConfigServiceImpl extends SemanticConfigServiceImplBa
         }
         String updateQuery = QueryResource.updateThingLocation(thingName, location.getSemanticUri());
         return semanticService.executeUpdate(updateQuery);
+    }
+
+    @Override
+    public List<SemanticRobot> getSemanticRobots() {
+        QueryResult result = semanticService.executeSelect(QueryResource.getAllRobots());
+        List<SemanticRobot> robots = new ArrayList<>();
+        createRobotsAndPutToList(robots, getBindingsArrayFromQuery(result));
+        return robots;
+    }
+
+    private void createRobotsAndPutToList(List<SemanticRobot> list, JsonArray binds) {
+        for (JsonElement jsonElement : binds) {
+            String uid = jsonElement.getAsJsonObject().get("uid").getAsJsonObject().get("value").getAsString();
+            SemanticRobot r = new SemanticRobot(uid);
+            list.add(r);
+        }
+    }
+
+    @Override
+    public List<SemanticHealthSensor> getSemanticHealthSensors() {
+        QueryResult result = semanticService.executeSelect(QueryResource.getAllHealthSensors());
+        List<SemanticHealthSensor> sensors = new ArrayList<>();
+        createHealthSensorsAndPutToList(sensors, getBindingsArrayFromQuery(result));
+        return sensors;
+    }
+
+    private void createHealthSensorsAndPutToList(List<SemanticHealthSensor> list, JsonArray binds) {
+        for (JsonElement jsonElement : binds) {
+            String uid = jsonElement.getAsJsonObject().get("uid").getAsJsonObject().get("value").getAsString();
+            // optionals
+            String heartUid = getStringMemberFromJsonObject(jsonElement, "heartUid");
+            String heartRateValue = getStringMemberFromJsonObject(jsonElement, "heartUid");
+            String oxygenUid = getStringMemberFromJsonObject(jsonElement, "oxygenUid");
+            String oxygenValue = getStringMemberFromJsonObject(jsonElement, "oxygenValue");
+            SemanticHealthSensor s = new SemanticHealthSensor(uid, heartRateValue, oxygenValue, heartUid, oxygenUid);
+            list.add(s);
+        }
     }
 }
