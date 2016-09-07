@@ -17,7 +17,8 @@ public class QueryResource {
     public static final String Prefix = "" + "PREFIX rdfs: <" + SemanticConstants.NS_RDFS_SCHEMA + "> "
             + "PREFIX rdf: <" + SemanticConstants.NS_RDF_SYNTAX + "> " + "PREFIX dogont: <" + DogontSchema.NS + "> "
             + "PREFIX instance: <" + SemanticConstants.NS_INSTANCE + "> " + "PREFIX uomvocab: <"
-            + SemanticConstants.NS_UOMVOCAB + "> " + "PREFIX vicci: <" + VicciExtensionSchema.NS + "> \n";
+            + SemanticConstants.NS_UOMVOCAB + "> " + "PREFIX vicci: <" + VicciExtensionSchema.NS + "> " + "PREFIX xsd:<"
+            + SemanticConstants.XSD_NAMESPACE + "> \n";
 
     /**
      * Use String.format: Namespace, Property, Value
@@ -322,17 +323,17 @@ public class QueryResource {
         StringBuilder builder = new StringBuilder();
         builder.append(Prefix);
         builder.append("DELETE{ ");
-        builder.append("  ?person vicci:hasFirstname ?fName .");
-        builder.append("  ?person vicci:hasLastname ?lName .");
-        builder.append("  ?person vicci:hasGender ?gender .");
-        builder.append("  ?person vicci:hasAge ?age .");
-        builder.append("  ?person vicci:hasHealthMonitor ?monitor");
+        builder.append("  ?person vicci:hasFirstname ?fName . ");
+        builder.append("  ?person vicci:hasLastname ?lName . ");
+        builder.append("  ?person vicci:hasGender ?gender . ");
+        builder.append("  ?person vicci:hasAge ?age . ");
+        builder.append("  ?person vicci:hasHealthMonitor ?monitor ");
         builder.append("}  ");
         builder.append("INSERT{ ");
-        builder.append("  ?person vicci:hasFirstname '" + person.getFirstName() + "'^^xsd:string .");
-        builder.append("  ?person vicci:hasLastname '" + person.getLastName() + "'^^xsd:string .");
-        builder.append("  ?person vicci:hasGender '" + person.getGender() + "'^^xsd:string .   ");
-        builder.append("  ?person vicci:hasAge '" + person.getAge() + "'^^xsd:string .    ");
+        builder.append(" ?person vicci:hasFirstname '" + person.getFirstName() + "'^^xsd:string . ");
+        builder.append(" ?person vicci:hasLastname '" + person.getLastName() + "'^^xsd:string . ");
+        builder.append(" ?person vicci:hasGender '" + person.getGender() + "'^^xsd:string . ");
+        builder.append(" ?person vicci:hasAge '" + person.getAge() + "'^^xsd:string . ");
 
         if (hasHealthMonitor) {
             builder.append("  ?person vicci:hasHealthMonitor ?monitorUri . ");
@@ -340,20 +341,19 @@ public class QueryResource {
 
         builder.append("}  ");
         builder.append("WHERE {  ");
-        builder.append("  bind(uri('" + thing + "') as ?person).");
+        builder.append("  bind(uri('" + thing + "') as ?person)");
 
         if (hasHealthMonitor) {
-            builder.append("  bind(uri('" + monitor + "') as ?monitorUri).");
+            builder.append("  bind(uri('" + monitor + "') as ?monitorUri) ");
         }
 
         builder.append(" ?person rdf:type ?class.");
-        builder.append("  OPTIONAL { ");
-        builder.append("    ?person vicci:hasFirstname ?fName . ");
-        builder.append("    ?person vicci:hasLastname ?lName . ");
-        builder.append("    ?person vicci:hasGender ?gender . ");
-        builder.append("    ?person vicci:hasAge ?age .");
-        builder.append("    ?person vicci:hasHealthMonitor ?monitor");
-        builder.append("}} ");
+        builder.append("  OPTIONAL {  ?person vicci:hasFirstname ?fName . }");
+        builder.append("  OPTIONAL {  ?person vicci:hasLastname ?lName . }");
+        builder.append("  OPTIONAL {  ?person vicci:hasGender ?gender . }");
+        builder.append("  OPTIONAL {  ?person vicci:hasAge ?age .}");
+        builder.append("  OPTIONAL {  ?person vicci:hasHealthMonitor ?monitor . }");
+        builder.append("} ");
         return builder.toString();
     }
 
@@ -374,11 +374,13 @@ public class QueryResource {
         builder.append("    ?person vicci:hasLastname ?lName .");
         builder.append("    ?person vicci:hasAge ?age .");
         builder.append("    ?person vicci:hasGender ?gender .");
+        // builder.append(" }");
+        // builder.append(" OPTIONAL { ");
         builder.append("    ?person vicci:hasHealthMonitor ?healthMonitor");
         builder.append("    bind(strafter(str(?healthMonitor), '" + SemanticConstants.NS_AND_THING_PREFIX
-                + "') as ?healthMonitorUid).");
+                + "') as ?healthMonitorUid)");
         builder.append("  } ");
-        builder.append("  bind(strafter(str(?person), '" + SemanticConstants.NS_AND_THING_PREFIX + "') as ?uid).");
+        builder.append("  bind(strafter(str(?person), '" + SemanticConstants.NS_AND_THING_PREFIX + "') as ?uid)");
         builder.append("}");
         return builder.toString();
     }

@@ -126,6 +126,16 @@ function beginPersonTable() {
 	});
 }
 
+function updatePerson(person) {
+	$.ajax("/rest/semantic/extended/persons/" + person.uid, {
+		data : JSON.stringify(person),
+		contentType : "application/json",
+		method : "POST",
+		success : personUpdated,
+		error : showFailed
+	});
+}
+
 /*******************************************************************************
  * ******************************** Events
  * ****************************************
@@ -181,13 +191,48 @@ $(document).on('click', "button[name='moveRobotToThingPoiBtn']", function() {
 	postItemCommand(curRobot.move, poiStr);
 });
 
+// update person clicked
+$(document).on('click', "button[name='updatePersonBtn']", function() {
+	var row = $(this).closest('tr')[0];
+	var uid = row.cells[0].innerText;
+	var fName = getInputValueOfTd(row.cells[1]);
+	var lName = getInputValueOfTd(row.cells[2]);
+	var age = getInputValueOfTd(row.cells[3]);
+	var gender = getInputValueOfTd(row.cells[4]);
+	var healthM = getInputValueOfSelect(row.cells[5]);
+	
+	var person = {
+		firstName : fName,
+		lastName : lName,
+		age : age,
+		gender : gender,
+		uid : uid,
+		healthMonitorUid : healthM
+	}
+	updatePerson(person);
+});
+
 /*******************************************************************************
  * ******************************** Helpers
  * ***************************************
  ******************************************************************************/
 
+function getInputValueOfSelect(cell) {
+	var select = cell.getElementsByTagName("select")[0];
+	return select.options[select.selectedIndex].value;
+}
+
+function getInputValueOfTd(cell) {
+	var input = cell.getElementsByTagName("input")[0];
+	return input.value;
+}
+
 function commandSendToItem() {
 	showSuccess("command send to item");
+}
+
+function personUpdated() {
+	showSuccess("person updated");
 }
 
 function setThingPoi(data) {
@@ -238,24 +283,27 @@ function locationsReceived(data) {
 /*******************************************************************************
  * ******************************** Page creation
  * ***************************************
- ******************************************************************************/	
- 
-function robotsReceived(data){
-	//<option data-value='{"position": "viccirobot_robot_currentLocation_1", "move": "viccirobot_robot_moveToLocation_1"}'>Turtle (TODO)</option>
+ ******************************************************************************/
 
+function robotsReceived(data) {
 	var sel = document.getElementById('robot_select');
 	var opt = "";
 	var txt = "";
 	var dValue = "";
-	
-	for(var i = 0; i < data.length; i++){
+
+	for ( var i = 0; i < data.length; i++) {
 		opt = document.createElement('option');
 		txt = document.createTextNode(data[i].uid);
-		if('positionUid' in data[i] && 'moveUid' in data[i]){
-			dValue = { position: data[i].positionUid, move: data[i].moveUid };			
-		}
-		else{
-		    dValue = { position: '', move: ''};
+		if ('positionUid' in data[i] && 'moveUid' in data[i]) {
+			dValue = {
+				position : data[i].positionUid,
+				move : data[i].moveUid
+			};
+		} else {
+			dValue = {
+				position : '',
+				move : ''
+			};
 		}
 		opt.setAttribute('data-value', JSON.stringify(dValue));
 		opt.appendChild(txt);

@@ -16,7 +16,7 @@ public interface SemanticConfigService {
      *
      * @param person
      */
-    void addPerson(SemanticPerson person);
+    boolean addPerson(SemanticPerson person);
 
     /**
      * Gets {@link SemanticPerson}s

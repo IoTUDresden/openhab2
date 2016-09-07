@@ -106,6 +106,18 @@ public class SemanticConfigResource implements RESTResource {
         return configService.getSemanticPersons();
     }
 
+    @POST
+    @Path("/persons/{personUid: [a-zA-Z_0-9]*}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Updates the infos of the given person")
+    public Response updateSemanticPerson(@PathParam("personUid") String personUid, SemanticPerson person) {
+        if (personUid == null || person == null || person.getUid() == null || person.getUid().isEmpty()) {
+            return Response.status(Status.BAD_REQUEST).build();
+        }
+        boolean success = configService.addPerson(person);
+        return success ? Response.ok().build() : Response.status(Status.NOT_MODIFIED).build();
+    }
+
     @GET
     @Path("/robots")
     @Produces(MediaType.APPLICATION_JSON)

@@ -74,12 +74,12 @@ public final class SemanticConfigServiceImpl extends SemanticConfigServiceImplBa
     }
 
     @Override
-    public void addPerson(SemanticPerson person) {
+    public boolean addPerson(SemanticPerson person) {
         if (person == null || person.getUid() == null || person.getUid().isEmpty()) {
             logger.error("cant update person. P is null or has no uid");
-            return;
+            return false;
         }
-        semanticService.executeUpdate(QueryResource.addPerson(person));
+        return semanticService.executeUpdate(QueryResource.addPerson(person));
     }
 
     @Override
@@ -99,8 +99,9 @@ public final class SemanticConfigServiceImpl extends SemanticConfigServiceImplBa
             String lName = getStringMemberFromJsonObject(jsonElement, "lName");
             String age = getStringMemberFromJsonObject(jsonElement, "age");
             String gender = getStringMemberFromJsonObject(jsonElement, "gender");
+            String healthMonitorUid = getStringMemberFromJsonObject(jsonElement, "healthMonitorUid");
 
-            SemanticPerson p = new SemanticPerson(uid, fName, lName, age, gender, "");
+            SemanticPerson p = new SemanticPerson(uid, fName, lName, age, gender, healthMonitorUid);
             list.add(p);
         }
     }

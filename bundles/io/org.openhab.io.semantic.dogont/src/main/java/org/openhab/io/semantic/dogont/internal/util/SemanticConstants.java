@@ -88,6 +88,8 @@ public class SemanticConstants {
      */
     public static final String NS_AND_FUNCTION_PREFIX_TEMPLATE = NS_TEMPLATE + FUNCTION_PREFIX;
 
+    public static final String XSD_NAMESPACE = "http://www.w3.org/2001/XMLSchema#";
+
     /**
      * path to the templates
      */
