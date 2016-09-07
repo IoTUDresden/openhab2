@@ -247,7 +247,7 @@ public final class SemanticConfigServiceImpl extends SemanticConfigServiceImplBa
             String uid = jsonElement.getAsJsonObject().get("uid").getAsJsonObject().get("value").getAsString();
             // optionals
             String heartUid = getStringMemberFromJsonObject(jsonElement, "heartUid");
-            String heartRateValue = getStringMemberFromJsonObject(jsonElement, "heartUid");
+            String heartRateValue = getStringMemberFromJsonObject(jsonElement, "heartRateValue");
             String oxygenUid = getStringMemberFromJsonObject(jsonElement, "oxygenUid");
             String oxygenValue = getStringMemberFromJsonObject(jsonElement, "oxygenValue");
             SemanticHealthSensor s = new SemanticHealthSensor(uid, heartRateValue, oxygenValue, heartUid, oxygenUid);

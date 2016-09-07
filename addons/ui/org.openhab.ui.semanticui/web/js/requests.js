@@ -4,6 +4,8 @@
  ******************************************************************************/
 
 var locations;
+var healthMonitors = "";
+
 var curRobot = {
 	position : "",
 	move : ""
@@ -16,7 +18,7 @@ var lastThingClicked = "";
  ******************************************************************************/
 
 function loadPersonsTable() {
-	getPersons();
+	beginPersonTable();
 }
 
 /**
@@ -101,6 +103,22 @@ function postItemCommand(itemName, command) {
 
 function getPersons() {
 	$.ajax("/rest/semantic/extended/persons", {
+		method : "GET",
+		success : fillPersonsTable,
+		error : handleResponseError
+	});
+}
+
+function beginPersonTable() {
+	$.ajax("/rest/semantic/extended/health/sensors", {
+		method : "GET",
+		success : beginPersonTableHealthReceived,
+		error : handleResponseError
+	});
+}
+
+function getRobots() {
+	$.ajax("/rest/semantic/extended/robots", {
 		method : "GET",
 		success : fillPersonsTable,
 		error : handleResponseError
@@ -246,6 +264,12 @@ function getLastSelectedValue(select) {
 	return " ";
 }
 
+//starts to build the person table
+function beginPersonTableHealthReceived(data){
+	healthMonitors = data;
+	getPersons();	
+}
+
 // fills the persons table
 function fillPersonsTable(data) {
 	var tBody = document.getElementById("persons_table_body");
@@ -261,11 +285,57 @@ function fillPersonsTable(data) {
 		addInputCellToRow("lastName", obj, row);
 		addInputCellToRow("age", obj, row);
 		addInputCellToRow("gender", obj, row);
-		addInputCellToRow("healthMonitorUid", obj, row);
+		addHealthSensorSelect(obj, row);
 		addUpdatePersonBtn(row);
 		tBody.appendChild(row);
 	}
 }
+
+function addHealthSensorSelect(obj, row) {
+	var cell = document.createElement('td');
+	var sel = document.createElement('select');
+	var curHealthMonitor = "";
+	sel.setAttribute("class", "form-control");
+	sel.setAttribute("name", "health-select");
+
+	if ("healthMonitorUid" in obj) {
+		curHealthMonitor = obj.healthMonitorUid;
+	}
+
+	// empty select for deleting
+	var opt = createHealthOptionAndSelect("", "", curHealthMonitor == "");
+	sel.appendChild(opt);
+	
+	if(healthMonitors == ""){
+		cell.appendChild(sel);
+		row.appendChild(cell);
+		return;
+	}
+
+	for (k = 0; k < healthMonitors.length; k++) {
+		var select = healthMonitors[k].uid == curHealthMonitor;
+		opt = createHealthOptionAndSelect(healthMonitors[k].uid, healthMonitors[k].uid, select);
+		sel.appendChild(opt);
+	}
+
+	cell.appendChild(sel);
+	row.appendChild(cell);
+}
+
+function createHealthOptionAndSelect(text, value, select){
+	var opt = document.createElement('option');
+	var txt = document.createTextNode(text);
+
+	opt.setAttribute("value", value);
+	if (select) {
+		opt.setAttribute("selected", "");
+	}
+
+	opt.appendChild(txt);
+	return opt;
+		
+}
+
 
 function addUpdatePersonBtn(row) {
 	var cell = document.createElement('td');
@@ -276,7 +346,7 @@ function addUpdatePersonBtn(row) {
 	setBtn.setAttribute("class", "btn btn-sm btn-primary");
 	setBtn.setAttribute("name", "updatePersonBtn");
 	setBtn.appendChild(node);
-	cell.appendChild(setBtn);	
+	cell.appendChild(setBtn);
 	row.appendChild(cell);
 }
 
@@ -288,10 +358,10 @@ function addInputCellToRow(propertyName, object, row) {
 	if (propertyName in object) {
 		value = object[propertyName];
 	}
-	
+
 	input.setAttribute("class", "form-control");
 	input.setAttribute("value", value);
-	
+
 	cell.appendChild(input);
 	row.appendChild(cell);
 }

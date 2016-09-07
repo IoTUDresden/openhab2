@@ -409,23 +409,24 @@ public class QueryResource {
         StringBuilder builder = new StringBuilder();
         builder.append(Prefix);
         builder.append(
-                "SELECT ?class ?robot ?heartState ?heartUid ?heartRateValue ?oxygenState ?oxygenUid ?oxygenValue ");
+                "SELECT ?class ?uid ?healtM ?heartState ?heartUid ?heartRateValue ?oxygenState ?oxygenUid ?oxygenValue ");
         builder.append("WHERE { ");
         builder.append("  ?class rdfs:subClassOf* vicci:HealthMonitor .");
-        builder.append("  ?robot rdf:type ?class .");
+        builder.append("  ?healtM rdf:type ?class .");
+        builder.append("   bind(strafter(str(?healtM), '" + SemanticConstants.NS_AND_THING_PREFIX + "') as ?uid)");
         builder.append("  OPTIONAL {");
-        builder.append("    ?robot dogont:hasState ?heartState .");
+        builder.append("    ?healtM dogont:hasState ?heartState .");
         builder.append("    ?heartState rdf:type vicci:HeartRateMeasurementState .");
         builder.append("    ?heartState dogont:hasStateValue ?heartV .");
         builder.append("    ?heartV dogont:realStateValue ?heartRateValue .");
-        builder.append("    ?robot dogont:hasState ?oxygenState .");
+        builder.append("    ?healtM dogont:hasState ?oxygenState .");
         builder.append("    ?oxygenState rdf:type vicci:BloodOxygenSaturationMeasurementState .");
         builder.append("    ?oxygenState dogont:hasStateValue ?oxygenV .");
         builder.append("    ?oxygenV dogont:realStateValue ?oxygenValue .");
         builder.append(
-                "    bind(strafter(str(?heartState), '" + SemanticConstants.NS_AND_THING_PREFIX + "') as ?heartUid)");
+                "    bind(strafter(str(?heartState), '" + SemanticConstants.NS_AND_STATE_PREFIX + "') as ?heartUid)");
         builder.append(
-                "    bind(strafter(str(?oxygenState), '" + SemanticConstants.NS_AND_THING_PREFIX + "') as ?oxygenUid)");
+                "    bind(strafter(str(?oxygenState), '" + SemanticConstants.NS_AND_STATE_PREFIX + "') as ?oxygenUid)");
         builder.append("}}");
         return builder.toString();
     }
