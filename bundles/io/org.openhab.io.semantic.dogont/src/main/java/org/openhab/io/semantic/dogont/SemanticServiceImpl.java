@@ -76,11 +76,7 @@ public final class SemanticServiceImpl extends SemanticServiceImplBase implement
         boolean result = false;
         try {
             openHabDataSet.begin(ReadWrite.READ);
-            QueryExecution qe = getQueryExecution(askAsString, withLatestValues);
-            result = qe == null ? false : qe.execAsk();
-            if (qe != null) {
-                qe.close();
-            }
+            result = executeAskPrivate(askAsString);
         } catch (Exception e) {
             logger.error(e.getMessage());
             e.printStackTrace();
@@ -260,11 +256,21 @@ public final class SemanticServiceImpl extends SemanticServiceImplBase implement
             }
             String queryTmp = node.asResource().getLocalName();
             queryTmp = String.format(QueryResource.ResourceIsSubClassOfFunctionality, queryTmp);
-            if (executeAsk(queryTmp)) {
+            if (executeAskPrivate(queryTmp)) {
                 return varName;
             }
         }
         return null;
+    }
+
+    // must be executed within a transaction
+    private boolean executeAskPrivate(String query) {
+        QueryExecution qe = getQueryExecution(query, false);
+        boolean result = qe == null ? false : qe.execAsk();
+        if (qe != null) {
+            qe.close();
+        }
+        return result;
     }
 
     private QueryExecution getQueryExecution(String queryAsString, boolean withLatestValues) {
