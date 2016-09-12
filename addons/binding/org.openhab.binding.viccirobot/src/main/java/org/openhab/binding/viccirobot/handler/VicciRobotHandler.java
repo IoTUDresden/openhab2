@@ -72,6 +72,8 @@ public class VicciRobotHandler extends BaseThingHandler {
             moveToLocation(command);
         } else if (channelUID.getId().equals(CHANNEL_CURRENT_LOCATION)) {
             setCurrentLocation(command);
+        } else if (channelUID.getId().equals(CHANNEL_STOP_MOVEMENT)) {
+            stopMovement();
         }
     }
 
@@ -103,6 +105,14 @@ public class VicciRobotHandler extends BaseThingHandler {
         } catch (NotConnectedException | CannotMoveToMovementTargetException e) {
             logger.error(e.getMessage());
             updateMovementState(new ErrorState(command.toString()));
+        }
+    }
+
+    private void stopMovement() {
+        try {
+            robot.stopMovement();
+        } catch (NotConnectedException e) {
+            logger.error(e.getMessage());
         }
     }
 
