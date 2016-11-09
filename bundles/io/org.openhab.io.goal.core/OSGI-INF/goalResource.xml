@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" activate="activate" deactivate="deactivate" name="org.openhab.io.goal.core">
+   <implementation class="org.openhab.io.goal.core.rest.GoalResource"/>
+   <service>
+      <provide interface="org.eclipse.smarthome.io.rest.RESTResource"/>
+   </service>
+   <reference bind="setGoalService" cardinality="1..1" interface="org.openhab.io.goal.core.GoalService" name="GoalService" policy="static" unbind="unsetGoalService"/>
+</scr:component>
