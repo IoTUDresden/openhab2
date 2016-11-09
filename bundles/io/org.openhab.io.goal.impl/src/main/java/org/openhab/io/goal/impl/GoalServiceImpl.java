@@ -3,6 +3,7 @@ package org.openhab.io.goal.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.openhab.io.goal.core.ExecuteGoalCommandBean;
 import org.openhab.io.goal.core.Goal;
 import org.openhab.io.goal.core.GoalService;
 import org.openhab.io.goal.core.Quality;
@@ -57,6 +58,12 @@ public class GoalServiceImpl implements GoalService {
 
         }
         return qualities;
+    }
+
+    @Override
+    public boolean executeGoal(ExecuteGoalCommandBean command) {
+        // return true if successful, otherwise false
+        return true;
     }
 
 }

@@ -10,4 +10,12 @@ public interface GoalService {
 
     List<Quality> getQualities();
 
+    /**
+     * Execute the goal
+     * 
+     * @param command
+     * @return false if error happened, otherwise true
+     */
+    boolean executeGoal(ExecuteGoalCommandBean command);
+
 }

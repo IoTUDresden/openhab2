@@ -2,12 +2,17 @@ package org.openhab.io.goal.core.rest;
 
 import java.util.List;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
 import org.eclipse.smarthome.io.rest.RESTResource;
+import org.openhab.io.goal.core.ExecuteGoalCommandBean;
 import org.openhab.io.goal.core.Goal;
 import org.openhab.io.goal.core.GoalService;
 import org.openhab.io.goal.core.Quality;
@@ -58,6 +63,23 @@ public class GoalResource implements RESTResource {
     @ApiOperation(value = "Gets all available qualities.")
     public List<Quality> getQualities() {
         return goalService.getQualities();
+    }
+
+    @POST
+    @Path("/execute/goal")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Executes the given goal.")
+    public Response executeGoal(ExecuteGoalCommandBean command) {
+        if (!checkCommandParameter(command)) {
+            return Response.status(Status.BAD_REQUEST).build();
+        }
+
+        boolean success = goalService.executeGoal(command);
+        return success ? Response.ok().build() : Response.status(Status.NOT_MODIFIED).build();
+    }
+
+    private boolean checkCommandParameter(ExecuteGoalCommandBean command) {
+        return command != null && command.goal != null && command.goal.name != null && !command.goal.name.isEmpty();
     }
 
 }
