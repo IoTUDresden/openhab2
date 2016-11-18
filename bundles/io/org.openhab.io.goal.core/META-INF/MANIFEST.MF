@@ -1,11 +1,11 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Core
-Bundle-SymbolicName: org.openhab.io.goal.core
+Bundle-Name: Goal Core
+Bundle-SymbolicName: org.openhab.io.goal.core;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: org.openhab.io.goal.core.internal.Activator
+Export-Package: org.openhab.io.goal.core
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Bundle-ActivationPolicy: lazy
 Import-Package: io.swagger.annotations;version="1.5.5.SNAPSHOT",
  io.swagger.models;version="1.5.5.SNAPSHOT",
  javax.ws.rs;version="2.0.1",
@@ -14,5 +14,7 @@ Import-Package: io.swagger.annotations;version="1.5.5.SNAPSHOT",
  org.openhab.io.semantic.core.util,
  org.osgi.framework;version="1.8.0",
  org.slf4j;version="1.7.2"
-Export-Package: org.openhab.io.goal.core
 Service-Component: OSGI-INF/goalResource.xml
+Bundle-ActivationPolicy: lazy
+Bundle-ClassPath: .
+Bundle-Vendor: TUD
