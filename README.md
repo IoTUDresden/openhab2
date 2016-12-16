@@ -1,7 +1,7 @@
 
 OpenHab2-Addons fork.
 
-See the followingp publications for more detail:
+See the following publications for more detail:
 
 Huber, S., Seiger, R., & Schlegel, T. (2016, February). Using semantic queries to enable dynamic service invocation for processes in the Internet of Things. In 2016 IEEE Tenth International Conference on Semantic Computing (ICSC) (pp. 214-221). IEEE.
 
