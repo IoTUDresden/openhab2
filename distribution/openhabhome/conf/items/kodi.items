@@ -1,9 +1,0 @@
-String kodi_friendly_name "Name" (CS_Kodi) {channel="kodi:kodicontrol:firstinstance:friendly-name"}
-
-String kodi_uptime "Uptime" (CS_Kodi) {channel="kodi:kodicontrol:firstinstance:uptime"}
-
-String kodi_notification "Notification" (CS_Kodi) {channel="kodi:kodicontrol:firstinstance:gui-show-notification"}
-
-String kodi_play_file "Play File" (CS_Kodi) {channel="kodi:kodicontrol:firstinstance:player-play-file"}
-
-Switch kodi_stop "Stop" (CS_Kodi) {channel="kodi:kodicontrol:firstinstance:player-stop"}

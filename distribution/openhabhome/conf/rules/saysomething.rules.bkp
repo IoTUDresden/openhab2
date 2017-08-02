@@ -1,6 +1,0 @@
-rule "say something"
-	when
-		Item Say_Text received command
-	then
-		say("Hello Motherfucker")
-end

@@ -1,4 +1,0 @@
-/* Fingerscanner */
-Switch fingerscan_start "Start Scan" (CS_Fingerscan) {channel="fingerscanner:identify:firstinstance:channel-identify"}
-
-String fingerscan_person "Read" (CS_Fingerscan) {channel="fingerscanner:identify:firstinstance:channel-person"}
