@@ -81,4 +81,9 @@ public class PerformanceItem implements Item {
         return null;
     }
 
+    @Override
+    public String getUID() {
+        return "UID_for_" + name;
+    }
+
 }
