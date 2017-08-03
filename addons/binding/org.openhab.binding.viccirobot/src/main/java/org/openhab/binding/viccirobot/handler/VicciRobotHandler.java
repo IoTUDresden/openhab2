@@ -135,6 +135,7 @@ public class VicciRobotHandler extends BaseThingHandler {
     @Override
     public void initialize() {
         super.initialize();
+        updateStatus(ThingStatus.UNKNOWN);
         tryConnect(200, true);
         startConnectionAndLocationPolling();
     }

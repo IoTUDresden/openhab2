@@ -60,9 +60,9 @@ Import-Package: io.swagger.annotations;version="1.5.4",
  org.eclipse.smarthome.core.transform,
  org.eclipse.smarthome.core.types,
  org.eclipse.smarthome.io.rest,
- org.osgi.framework;version="1.3.0",
- org.osgi.util.tracker;version="1.5.1",
- org.slf4j;version="1.7.2"
+ org.osgi.framework,
+ org.osgi.util.tracker,
+ org.slf4j
 Service-Component: OSGI-INF/semanticResource.xml,
  OSGI-INF/semanticConfigResource.xml
 Export-Package: org.openhab.io.semantic.core;uses:="org.eclipse.smarthome.core.items",
