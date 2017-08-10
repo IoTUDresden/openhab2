@@ -13,6 +13,7 @@
 			<channel id="moveToLocation" typeId="type_moveToLocation" />
 			<channel id="movementState" typeId="type_movementState" />
 			<channel id="stopMovement" typeId="type_stopMovement" />
+			<channel id="simpleLocation" typeId="type_simpleLocation" />
 		</channels>
 
 		<config-description>
@@ -68,5 +69,11 @@
 	   <label>Stop Movement</label>
 	   <description>Cancel all currently active move operations and come to a halt.</description>
 	</channel-type>
+	
+	<channel-type id="type_simpleLocation">
+       <item-type>String</item-type>
+       <label>Simple Location</label>
+       <description>A simple current location of the robot. Better for comparison</description>
+    </channel-type>
 
 </thing:thing-descriptions>
