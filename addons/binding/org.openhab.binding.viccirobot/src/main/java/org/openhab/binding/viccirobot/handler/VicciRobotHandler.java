@@ -54,6 +54,7 @@ public class VicciRobotHandler extends BaseThingHandler {
 
     private Robot robot;
     private Location lastLocation;
+    private Location lastSimplePosition;
     private volatile boolean wasConnected = false;
 
     public VicciRobotHandler(Thing thing, Robot robot) {
@@ -156,7 +157,8 @@ public class VicciRobotHandler extends BaseThingHandler {
     private void updateLocation() {
         if (robot.getIsConnected()) {
             Location l = robot.getLocation();
-            if (l != null && locationHasChanged(l)) {
+            updateSimpleLocation();
+            if (l != null && locationHasChanged(lastLocation, l)) {
                 lastLocation = l;
                 updateState(CHANNEL_CURRENT_LOCATION, new StringType(LocationUtil.getFormatedString(l)));
             }
@@ -167,11 +169,23 @@ public class VicciRobotHandler extends BaseThingHandler {
         }
     }
 
-    private boolean locationHasChanged(Location newLocation) {
-        if (lastLocation == null) {
+    private void updateSimpleLocation() {
+        Location sl = robot.getSimpleBeSpoonLocation();
+        if (sl != null && locationHasChanged(lastSimplePosition, sl)) {
+            updateState(CHANNEL_SIMPLE_POSITION, new StringType(LocationUtil.getFormatedString(sl)));
+        }
+
+        if (sl == null) {
+            logger.error("no BeSpoon location found");
+            updateState(CHANNEL_SIMPLE_POSITION, new StringType("ERROR"));
+        }
+    }
+
+    private boolean locationHasChanged(Location oldLocation, Location newLocation) {
+        if (oldLocation == null) {
             return true;
         }
-        return !newLocation.equals(lastLocation);
+        return !newLocation.equals(oldLocation);
     }
 
     private void updateConnectStatus() {
