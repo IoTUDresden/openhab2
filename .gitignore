@@ -19,10 +19,6 @@ distribution/openhabhome/userdata/mapdb/storage.mapdb
 distribution/openhabhome/userdata/mapdb/storage.mapdb.p
 distribution/openhabhome/userdata/mapdb/storage.mapdb.t
 features/*/src/main/history
-
-
-bundles/io/org.openhab.io.semantic.dogont/doc/
-
 addons/voice/org.openhab.voice.marytts/lib/emotionml-checker-java-1.0-SNAPSHOT.jar
 addons/voice/org.openhab.voice.marytts/lib/freetts-1.0.jar
 addons/voice/org.openhab.voice.marytts/lib/freetts-de-1.0.jar
