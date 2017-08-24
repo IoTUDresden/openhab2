@@ -25,6 +25,7 @@ Bundle-ClassPath: .,
  lib/eu.vicci.driver.youbot-0.0.1-20170810.110442-1.jar,
  neededlibs/Java-WebSocket.jar
 Import-Package: com.google.common.collect,
+ org.eclipse.jdt.annotation,
  org.eclipse.smarthome.config.core,
  org.eclipse.smarthome.core.library.types,
  org.eclipse.smarthome.core.thing,
