@@ -1,0 +1,40 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: openHAB HTTP Binding
+Bundle-SymbolicName: org.openhab.binding.http
+Bundle-Version: 1.10.0
+Bundle-ClassPath: org.openhab.binding.http-1.10.0.jar
+Bundle-Activator: org.openhab.binding.http.internal.HttpActivator
+Bundle-Vendor: openHAB.org
+Import-Package: com.google.common.base,
+  com.google.common.collect,
+  org.apache.commons.collections,
+  org.apache.commons.collections.list,
+  org.apache.commons.io,
+  org.apache.commons.lang,
+  org.openhab.core.binding,
+  org.openhab.core.events,
+  org.openhab.core.items,
+  org.openhab.core.library.items,
+  org.openhab.core.library.types,
+  org.openhab.core.transform,
+  org.openhab.core.types,
+  org.openhab.io.net.http,
+  org.openhab.model.item.binding,
+  org.osgi.framework,
+  org.osgi.service.cm,
+  org.osgi.service.component,
+  org.osgi.service.event,
+  org.slf4j
+Built-By: kai
+Bundle-Description: This is the HTTP binding of the open Home Automation Bus (openHAB)
+Bundle-DocURL: http://www.openhab.org
+Ignore-Package: org.openhab.binding.http.internal
+Created-By: Apache Maven 3.3.3
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-License: http://www.eclipse.org/legal/epl-v10.html
+Private-Package: org.openhab.binding.http.internal
+Build-Jdk: 1.8.0_112
+Service-Component: OSGI-INF/genericbindingprovider.xml, OSGI-INF/binding.xml
+Bundle-ActivationPolicy: lazy
+Archiver-Version: Plexus Archiver
