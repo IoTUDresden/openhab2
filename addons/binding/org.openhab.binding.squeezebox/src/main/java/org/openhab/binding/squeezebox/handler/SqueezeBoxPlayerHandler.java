@@ -39,7 +39,7 @@ import org.eclipse.smarthome.core.types.Command;
 import org.eclipse.smarthome.core.types.RefreshType;
 import org.eclipse.smarthome.core.types.State;
 import org.openhab.binding.squeezebox.SqueezeBoxBindingConstants;
-import org.openhab.binding.squeezebox.config.SqueezeBoxPlayerConfig;
+import org.openhab.binding.squeezebox.internal.config.SqueezeBoxPlayerConfig;
 import org.openhab.binding.squeezebox.internal.utils.HttpUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -524,7 +524,7 @@ public class SqueezeBoxPlayerHandler extends BaseThingHandler implements Squeeze
             }
         };
 
-        timeCounterJob = scheduler.scheduleAtFixedRate(runnable, 0, 1, TimeUnit.SECONDS);
+        timeCounterJob = scheduler.scheduleWithFixedDelay(runnable, 0, 1, TimeUnit.SECONDS);
     }
 
     private boolean isMe(String mac) {
