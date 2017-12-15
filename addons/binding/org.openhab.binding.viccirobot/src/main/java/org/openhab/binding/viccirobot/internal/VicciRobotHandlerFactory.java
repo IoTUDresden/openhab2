@@ -46,6 +46,7 @@ public class VicciRobotHandlerFactory extends BaseThingHandlerFactory {
             String host = (String) thing.getConfiguration().get(PARAMETER_ROBOT_HOST);
             return createHandler(thing, roboType, host, port.intValue());
         }
+
         return null;
     }
 
