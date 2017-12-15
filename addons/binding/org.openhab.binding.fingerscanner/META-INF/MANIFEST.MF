@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: FingerScanner Binding
 Bundle-SymbolicName: org.openhab.binding.fingerscanner;singleton:=true
 Bundle-Vendor: openHAB
-Bundle-Version: 2.0.0.qualifier
+Bundle-Version: 2.2.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ClassPath: .,
  lib/fr.ocroquette.wampoc-0.0.1-SNAPSHOT.jar,
