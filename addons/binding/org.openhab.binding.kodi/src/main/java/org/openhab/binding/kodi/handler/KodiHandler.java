@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2010-2017 by the respective copyright holders.
+ * Copyright (c) 2010-2018 by the respective copyright holders.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -196,6 +196,14 @@ public class KodiHandler extends BaseThingHandler implements KodiEventListener {
                     updateState(CHANNEL_INPUTTEXT, UnDefType.UNDEF);
                 } else if (command.equals(RefreshType.REFRESH)) {
                     updateState(CHANNEL_INPUTTEXT, UnDefType.UNDEF);
+                }
+                break;
+            case CHANNEL_INPUTACTION:
+                if (command instanceof StringType) {
+                    connection.inputAction(command.toString());
+                    updateState(CHANNEL_INPUTACTION, UnDefType.UNDEF);
+                } else if (command.equals(RefreshType.REFRESH)) {
+                    updateState(CHANNEL_INPUTACTION, UnDefType.UNDEF);
                 }
                 break;
             case CHANNEL_SYSTEMCOMMAND:

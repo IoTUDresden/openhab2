@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2010-2017 by the respective copyright holders.
+ * Copyright (c) 2010-2018 by the respective copyright holders.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -35,6 +35,8 @@ import org.openhab.binding.tplinksmarthome.internal.model.TransitionLightStateRe
  */
 @NonNullByDefault
 public class BulbDevice extends SmartHomeDevice {
+
+    private static final int MILLIWATT_TO_WATT = 1000;
 
     protected Commands commands = new Commands();
 
@@ -133,10 +135,19 @@ public class BulbDevice extends SmartHomeDevice {
             case CHANNEL_SWITCH:
                 state = lightState.getOnOff();
                 break;
+            case CHANNEL_ENERGY_POWER:
+                state = getWattValue(deviceState);
+                break;
             default:
                 state = UnDefType.UNDEF;
                 break;
         }
         return state;
+    }
+
+    private DecimalType getWattValue(DeviceState deviceState) {
+        double powerMilliWatt = deviceState.getRealtime().getPower();
+
+        return new DecimalType(powerMilliWatt > 0 ? (powerMilliWatt / MILLIWATT_TO_WATT) : 0.0);
     }
 }
