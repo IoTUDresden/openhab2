@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: SemanticTests
+Bundle-SymbolicName: org.openhab.io.semantic.tests
+Bundle-Version: 1.0.0.0
+Bundle-Activator: org.openhab.io.semantic.tests.Activator
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-ActivationPolicy: lazy
+Import-Package: org.eclipse.smarthome.core.common.osgi,
+ org.eclipse.smarthome.core.items,
+ org.openhab.io.semantic.core,
+ org.openhab.io.semantic.core.util,
+ org.osgi.framework;version="1.8.0",
+ org.osgi.util.tracker;version="1.5.1",
+ org.slf4j;version="1.7.2"
+Service-Component: OSGI-INF/semanticService.xml

@@ -1,0 +1,28 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: openHAB Serial Binding
+Bundle-SymbolicName: org.openhab.binding.serial
+Bundle-Version: 1.12.0.201801280209
+Bundle-ClassPath: org.openhab.binding.serial-1.12.0-SNAPSHOT.jar
+Bundle-Activator: org.openhab.binding.serial.internal.SerialActivator
+Bundle-Vendor: openHAB.org
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Archiver-Version: Plexus Archiver
+Build-Jdk: 1.8.0_102
+Created-By: Apache Maven 3.3.9
+Service-Component: OSGI-INF/serialbinding.xml
+Built-By: jenkins
+Import-Package: gnu.io,
+  org.apache.commons.codec.binary,
+  org.apache.commons.io,
+  org.openhab.core.events,
+  org.openhab.core.items,
+  org.openhab.core.library.items,
+  org.openhab.core.library.types,
+  org.openhab.core.transform,
+  org.openhab.core.types,
+  org.openhab.model.item.binding,
+  org.osgi.framework,
+  org.osgi.service.cm,
+  org.osgi.service.event,
+  org.slf4j

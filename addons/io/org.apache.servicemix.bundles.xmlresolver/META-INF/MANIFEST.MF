@@ -1,0 +1,51 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Apache ServiceMix :: Bundles :: xmlresolver
+Bundle-SymbolicName: org.apache.servicemix.bundles.xmlresolver
+Bundle-Version: 1.2.0.5
+Bundle-ClassPath: org.apache.servicemix.bundles.xmlresolver-1.2_5.jar
+Bundle-Vendor: The Apache Software Foundation
+Export-Package: org.apache.xml.resolver;version="1.2";uses:="org.apache.xml.resolver.helpers,javax.xml.parsers,org.apache.xml.resolver.readers",
+ org.apache.xml.resolver.apps;version="1.2";
+  uses:="org.apache.xml.resolver.helpers,
+   org.xml.sax,
+   org.apache.xml.resolver.tools,
+   org.apache.xml.resolver,
+   org.xml.sax.helpers",
+ org.apache.xml.resolver.etc;version="1.2",
+ org.apache.xml.resolver.helpers;version="1.2";
+  uses:="javax.xml.transform,
+   javax.xml.transform.sax,
+   org.xml.sax,
+   org.w3c.dom",
+ org.apache.xml.resolver.readers;version="1.2";
+  uses:="org.apache.xml.resolver,
+   org.w3c.dom,
+   org.apache.xml.resolver.helpers,
+   javax.xml.parsers,
+   org.xml.sax,
+   org.xml.sax.helpers",
+ org.apache.xml.resolver.tests;version="1.2",
+ org.apache.xml.resolver.tools;version="1.2";
+  uses:="javax.xml.transform,
+   org.apache.xml.resolver,
+   org.apache.xml.resolver.helpers,
+   javax.xml.parsers,
+   javax.xml.transform.sax,
+   org.xml.sax,
+   org.xml.sax.helpers"
+Bnd-LastModified: 1328021655838
+Build-Jdk: 1.6.0_26
+Import-Package: javax.xml.parsers,
+ javax.xml.transform,
+ javax.xml.transform.sax,
+ org.slf4j;version="1.7.2",
+ org.w3c.dom,
+ org.xml.sax,
+ org.xml.sax.helpers
+Bundle-DocURL: http://www.apache.org/
+Created-By: Apache Maven Bundle Plugin
+Built-By: jbonofre
+Bundle-Description: This OSGi bundle wraps xmlresolver 1.2 jar file.
+Bundle-License: http://www.apache.org/licenses/LICENSE-2.0.txt
+Tool: Bnd-1.50.0
