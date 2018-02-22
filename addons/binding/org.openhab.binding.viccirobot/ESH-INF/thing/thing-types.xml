@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<thing:thing-descriptions bindingId="viccirobot" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:thing="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0"
+	xsi:schemaLocation="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0 http://eclipse.org/smarthome/schemas/thing-description-1.0.0.xsd">
+
+	<!-- robot -->
+	<thing-type id="robot">
+		<label>Vicci Robot</label>
+		<description>Thing for controlling vicci robots</description>
+
+		<channels>
+			<channel id="currentLocation" typeId="type_currentLocation" />
+			<channel id="moveToLocation" typeId="type_moveToLocation" />
+			<channel id="movementState" typeId="type_movementState" />
+			<channel id="stopMovement" typeId="type_stopMovement" />
+			<channel id="simplePosition" typeId="type_simplePosition" />
+		</channels>
+
+		<config-description>
+			<parameter name="robotType" type="text" required="true">
+				<label>Robot Type</label>
+				<description>The Type of the robot (turtlebot, nao, youbot)</description>
+				<default>turtlebot</default>
+			</parameter>
+
+			<parameter name="robotHost" type="text" required="true">
+				<label>Robot Host</label>
+				<description>The host address for the ROS</description>
+				<default>192.168.1.69</default>
+			</parameter>
+
+			<parameter name="robotPort" type="integer" required="true">
+				<label>Robot Port</label>
+				<description>The Port on the host</description>
+				<default>9090</default>
+			</parameter>
+
+		</config-description>
+	</thing-type>
+
+	<!-- Channel Types -->
+	<channel-type id="type_setCurrentLocation">
+		<item-type>String</item-type>
+		<label>Set Location</label>
+		<description>Sets the current position of the robot(at start, the robot wont know, where it is).</description>
+	</channel-type>
+
+	<channel-type id="type_moveToLocation">
+		<item-type>String</item-type>
+		<label>Move to</label>
+		<description>Move the robot to the given location</description>
+	</channel-type>
+
+	<channel-type id="type_movementState">
+		<item-type>String</item-type>
+		<label>Movement State</label>
+		<description>State if the robot is moving or reached his location</description>
+		<state readOnly="true" />
+	</channel-type>
+
+	<channel-type id="type_currentLocation">
+		<item-type>String</item-type>
+		<label>Current Location</label>
+		<description>Current Location of the robot. You can also set the position (P: 12,12 11,12 O: 10,23 0,8)</description>
+	</channel-type>
+	
+	<channel-type id="type_stopMovement">
+	   <item-type>Switch</item-type>
+	   <label>Stop Movement</label>
+	   <description>Cancel all currently active move operations and come to a halt.</description>
+	</channel-type>
+	
+	<channel-type id="type_simplePosition">
+       <item-type>String</item-type>
+       <label>Simple Location</label>
+       <description>A simple current location of the robot. Better for comparison</description>
+    </channel-type>
+
+</thing:thing-descriptions>
